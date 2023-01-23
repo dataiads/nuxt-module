@@ -2,11 +2,31 @@
   "name": "@dataiads/nuxt-module",
   "version": "0.1.0",
   "description": "Nuxt module for Dataiads pages",
-  "main": "./dist/module.js",
+  "main": "./dist/module.cjs",
   "repository": "git@github.com:dataiads/nuxt-module.git",
-  "author": "Emile Caron <emile@dataiads.io>",
-  "license": "GPLv3",
+  "contributors": [
+    "Emile Caron <emile@dataiads.io>"
+  ],
+  "license": "GPL-3.0",
   "dependencies": {
     "@nuxt/kit": "^3.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "types": "./dist/types.d.ts",
+  "typings": "./index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "nuxt-module-build"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^0.2.1",
+    "@types/node": "^18.11.18"
   }
 }
