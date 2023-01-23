@@ -17,7 +17,7 @@ const module = defineNuxtModule({
   defaults: {},
   hooks: {},
   async setup(moduleOptions, nuxt) {
-    addPlugin(resolve("./runtime/"));
+    addPlugin(resolve("runtime/gtm"));
   }
 });
 

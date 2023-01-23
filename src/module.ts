@@ -26,6 +26,6 @@ export default defineNuxtModule<ModuleOptions>({
   hooks: {},
   async setup(moduleOptions, nuxt) {
 
-    addPlugin(resolve('./runtime/'))
+    addPlugin(resolve('runtime/gtm'))
   }
 })
