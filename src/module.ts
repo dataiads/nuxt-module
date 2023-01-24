@@ -63,6 +63,9 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // TODO mandatory plugins (error handler, main product load)
+    // TODO components (filter-checkbox, searchbar, quantity selector)
+    // TODO composable (product helpers, etc)
+    // TODO load types somewhere
 
     // load optional plugins
     if (moduleOptions.gtmPlugin) {
