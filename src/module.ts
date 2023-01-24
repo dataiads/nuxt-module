@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   hooks: {},
   async setup(moduleOptions, nuxt) {
-    // core
+    // check minimal configuration
     if (!moduleOptions.lpoDomain) {
       throw new Error("lpoDomain must be provided")
     }
@@ -48,7 +48,21 @@ export default defineNuxtModule<ModuleOptions>({
       throw new Error("mirroredDomain must be provided")
     }
 
-    // optional plugins
+    // inject runtimeConfig defaults
+    nuxt.options.runtimeConfig.public.lpoDomain = moduleOptions.lpoDomain
+    nuxt.options.runtimeConfig.public.mirroredDomain = moduleOptions.mirroredDomain
+
+    // setup development proxy
+    nuxt.options.nitro = {
+      devProxy: {
+        "/api/": {
+          target: (process.env.PROXY_URL || moduleOptions.lpoDomain) + "/api/",
+          changeOrigin: true,
+        },
+      },
+    }
+
+    // load optional plugins
     if (moduleOptions.gtmPlugin) {
       addPlugin(resolve('runtime/plugins/gtm'))
     }
