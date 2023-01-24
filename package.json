@@ -1,6 +1,6 @@
 {
   "name": "@dataiads/nuxt-module",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nuxt module for Dataiads pages",
   "main": "./dist/module.cjs",
   "repository": "git@github.com:dataiads/nuxt-module.git",
@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "build": "nuxt-module-build",
-    "release": "standard-version && git push --follow-tags && yarn publish"
+    "release": "standard-version && git push --follow-tags && yarn publish",
+    "artifactregistry-login": "npx google-artifactregistry-auth"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.2.1",
