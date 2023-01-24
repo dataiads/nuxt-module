@@ -4,6 +4,11 @@ import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
 const { resolve } = createResolver(import.meta.url)
 
 export interface ModuleOptions {
+  // mandatory settings
+  lpoDomain: string
+  mirroredDomain: string
+
+  // optional flags
   gtmPlugin: boolean
 }
 
@@ -29,13 +34,23 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options for your module
   defaults: {
+    lpoDomain: null,
+    mirroredDomain: null,
     gtmPlugin: true,
   },
   hooks: {},
   async setup(moduleOptions, nuxt) {
+    // core
+    if (!moduleOptions.lpoDomain) {
+      throw new Error("lpoDomain must be provided")
+    }
+    if (!moduleOptions.mirroredDomain) {
+      throw new Error("mirroredDomain must be provided")
+    }
 
+    // optional plugins
     if (moduleOptions.gtmPlugin) {
-      addPlugin(resolve('runtime/gtm'))
+      addPlugin(resolve('runtime/plugins/gtm'))
     }
   }
 })

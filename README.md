@@ -5,30 +5,28 @@ Generic blocks for building Dataïads landing pages
 ## installation
 First install package using `yarn add dataiads-nuxt-plugin`.
 
-Enable the module by adding it to your `nuxt.config.ts` modules
-```
-export default defineNuxtConfig({
-  modules: [
-    "dataiads-nuxt-module"
-  ]
-})
-```
-
-All module elements are loaded by default, but plugins/components can be specifically selected.
+Enable the module by adding it to your `nuxt.config.ts` modules. All module elements are loaded by default, but plugins/components can be specifically selected.
 ```
 export default defineNuxtConfig({
   modules: [
     "dataiads-nuxt-module"
   ],
 
-  dataiadsNuxtModules: {
+  dataiadsNuxtModule: {
+    lpoDomain: "https://lpo-demo.dataiads.io",
+    mirroredDomain: "https://shop.dataiads.io",
+
+    // optional
     gtmPlugin: true,
     googleFontsPlugin: false
   }
 })
 ```
 
-## Public configuration
+## Configuration
+
+All settings should be provided inside `config.public` in `nuxt.config.ts` file.
+
 
 |key|default|description
 | - | - | - |
