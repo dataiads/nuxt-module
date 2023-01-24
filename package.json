@@ -1,6 +1,6 @@
 {
   "name": "@dataiads/nuxt-module",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Nuxt module for Dataiads pages",
   "main": "./dist/module.cjs",
   "repository": "git@github.com:dataiads/nuxt-module.git",
