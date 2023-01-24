@@ -62,6 +62,8 @@ export default defineNuxtModule<ModuleOptions>({
       },
     }
 
+    // TODO mandatory plugins (error handler, main product load)
+
     // load optional plugins
     if (moduleOptions.gtmPlugin) {
       addPlugin(resolve('runtime/plugins/gtm'))
