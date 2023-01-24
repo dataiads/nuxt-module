@@ -2,7 +2,7 @@
 // @ts-ignore
 import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((options) => {
   const gtmId = useRuntimeConfig()?.public.gtm?.id;
 
   if (!gtmId) { return }
