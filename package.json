@@ -1,6 +1,6 @@
 {
   "name": "@dataiads/nuxt-module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt module for Dataiads pages",
   "main": "./dist/module.cjs",
   "repository": "git@github.com:dataiads/nuxt-module.git",
@@ -23,11 +23,13 @@
     "dist"
   ],
   "scripts": {
-    "build": "nuxt-module-build"
+    "build": "nuxt-module-build",
+    "release": "standard-version && git push --follow-tags && yarn publish"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.2.1",
     "@nuxt/schema": "^3.0.0",
-    "@types/node": "^18.11.18"
+    "@types/node": "^18.11.18",
+    "standard-version": "^9.5.0"
   }
 }
