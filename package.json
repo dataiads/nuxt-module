@@ -1,5 +1,5 @@
 {
-  "name": "@dataiads/nuxt-module",
+  "name": "nuxt-module",
   "version": "0.1.7",
   "description": "Nuxt module for Dataiads pages",
   "main": "./dist/module.cjs",
