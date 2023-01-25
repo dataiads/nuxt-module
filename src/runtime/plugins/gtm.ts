@@ -2,6 +2,9 @@
 // @ts-ignore
 import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
 
+/*
+ * Injects GTM in the page
+ */
 export default defineNuxtPlugin((options) => {
   const gtmId = useRuntimeConfig()?.public.gtm?.id;
 

@@ -10,14 +10,31 @@ export interface ModuleOptions {
 
   // optional flags
   gtmPlugin: boolean
+  googleFontsPlugin: boolean
+}
+
+export interface TimeoutConfig {
+  pageDataLoad: number
+  initialPageLoad: number
 }
 
 export interface GtmConfig {
   id: string
 }
 
+export interface GoogleFontConfig {
+  family: string
+  weights: string[]
+}
+
 export interface ModulePublicRuntimeConfig {
+  lpoDomain: string
+  mirroredDomain: string
+  lang: string
+
+  timeout: TimeoutConfig
   gtm: GtmConfig
+  googleFonts: GoogleFontConfig[]
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -52,24 +69,41 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.lpoDomain = moduleOptions.lpoDomain
     nuxt.options.runtimeConfig.public.mirroredDomain = moduleOptions.mirroredDomain
 
-    // setup development proxy
-    nuxt.options.nitro = {
-      devProxy: {
-        "/api/": {
-          target: (process.env.PROXY_URL || moduleOptions.lpoDomain) + "/api/",
-          changeOrigin: true,
-        },
+    if (!nuxt.options.runtimeConfig.public.timeouts) {
+      nuxt.options.runtimeConfig.public.timeout = {}
+    }
+    nuxt.options.runtimeConfig.public.timeout.pageDataLoad = 1000
+    nuxt.options.runtimeConfig.public.timeout.initialPageLoad = 5000
+
+    // production build configuration
+    nuxt.options.app.cdnURL = process.env.CDN_URL || ""
+
+    // development environment configuration
+    if (!nuxt.options.nitro) {
+      nuxt.options.nitro = {}
+    }
+    nuxt.options.nitro.devProxy = {
+      "/api/": {
+        target: (process.env.PROXY_URL || moduleOptions.lpoDomain) + "/api/",
+        changeOrigin: true,
       },
     }
 
-    // TODO mandatory plugins (error handler, main product load)
+    // Core plugins
+    addPlugin(resolve('runtime/plugins/core'))
+
     // TODO components (filter-checkbox, searchbar, quantity selector)
     // TODO composable (product helpers, etc)
-    // TODO load types somewhere
 
     // load optional plugins
     if (moduleOptions.gtmPlugin) {
       addPlugin(resolve('runtime/plugins/gtm'))
     }
+    if (moduleOptions.googleFontsPlugin) {
+      addPlugin(resolve('runtime/plugins/google-fonts'))
+    }
+    //TODO googleFontsPlugin
+    //TODO axceptio
+    //TODO imageLoader
   }
 })

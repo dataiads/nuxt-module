@@ -23,7 +23,16 @@ export default defineNuxtConfig({
 })
 ```
 
-## Configuration
+## Module configuration configuration
+Settings  provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
+
+|key|default|description
+| - | - | - |
+| `gtmPlugin` | `true` | enable GTM plugin
+| `googleFontsPlugin` | `true` | enable Google Fonts plugin
+
+
+## Runtime configuration
 
 All settings should be provided inside `config.public` in `nuxt.config.ts` file.
 
@@ -31,6 +40,8 @@ All settings should be provided inside `config.public` in `nuxt.config.ts` file.
 |key|default|description
 | - | - | - |
 | `gtm.id` | | provide id to inject GTM snippet in the page
+| `googleFonts[].family` | | Google fonts family to load
+| `googleFonts[].weights` | | weights to load for this Google Font family
 
 
 ## Plugins

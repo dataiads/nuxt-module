@@ -7,11 +7,13 @@
         "esModuleInterop": true,
         "declaration": true,
         "types": [
-            "node"
+            "node",
+            "@nuxt/types"
         ]
     },
     "include": [
         "src",
-        "node_modules"
+        "node_modules",
+        "types"
     ]
 }
