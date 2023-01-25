@@ -46,9 +46,9 @@ Settings provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
 ### Core
 Handles page initialization, error handling configuration and initial page data load.
 Provides the following functions:
-* `fetchProductRecommendations` to retrieve product recommendations from Dataïads api
-* `errorRedirect` to fallback on mirrored domain product page when a critical error occurs
-* `reportError` to report an error to Dataïads api
+* `$fetchProductRecommendations` to retrieve product recommendations from Dataïads api
+* `$errorRedirect` to fallback on mirrored domain product page when a critical error occurs
+* `$reportError` to report an error to Dataïads api
 
 This plugin cannot be disabled.
 
