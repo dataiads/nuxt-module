@@ -1,5 +1,5 @@
 
-import { defineNuxtModule, addPlugin, createResolver, addImportsDir } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addComponentsDir } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -102,7 +102,10 @@ export default defineNuxtModule<ModuleOptions>({
     // Add composables directory
     addImportsDir(resolve("runtime/composables"))
 
-    // TODO components (filter-checkbox, searchbar, quantity selector)
+    // Import components
+    addComponentsDir({
+      path: resolve('runtime/components')
+    })
 
     // load optional plugins
     if (moduleOptions.gtmPlugin) {
