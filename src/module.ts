@@ -118,3 +118,12 @@ export default defineNuxtModule<ModuleOptions>({
     //TODO imageLoader
   }
 })
+
+declare module '@nuxt/schema' {
+  interface RuntimeConfig {
+    // @ts-ignore
+    public: {
+      dataiadsNuxtModule: ModuleOptions
+    }
+  }
+}
