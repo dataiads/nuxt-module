@@ -123,3 +123,8 @@ todo
 
 ## Layouts
 todo
+
+## TODO
+* Optimized image load
+* LIA
+* I18
