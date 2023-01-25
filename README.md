@@ -33,7 +33,7 @@ Settings provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
 | `axeptio` | `true` | enable Axeptio plugin
 
 
-## Composables
+## Available composables
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
 * `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
@@ -118,5 +118,8 @@ export default defineNuxtConfig({
 })
 ```
 
-
 ## Components
+todo
+
+## Layouts
+todo
