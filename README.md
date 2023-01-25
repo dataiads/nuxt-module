@@ -126,5 +126,9 @@ todo
 
 ## TODO
 * Optimized image load
+* Filters
 * LIA
 * I18
+* Ori-URL
+* Components
+* Layouts
