@@ -1,5 +1,5 @@
 
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -15,8 +15,9 @@ export interface ModuleOptions {
 }
 
 export interface TimeoutConfig {
-  pageDataLoad: number
   initialPageLoad: number
+  pageDataLoad: number
+  recommendationsLoad: number
 }
 
 export interface GtmConfig {
@@ -78,6 +79,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
     nuxt.options.runtimeConfig.public.timeout.pageDataLoad = 1000
     nuxt.options.runtimeConfig.public.timeout.initialPageLoad = 5000
+    nuxt.options.runtimeConfig.public.timeout.recommendationsLoad = 10000
 
     // production build configuration
     nuxt.options.app.cdnURL = process.env.CDN_URL || ""
@@ -96,8 +98,10 @@ export default defineNuxtModule<ModuleOptions>({
     // Core plugins
     addPlugin(resolve('runtime/plugins/core'))
 
+    // Add composables directory
+    addImportsDir(resolve("runtime/composables"))
+
     // TODO components (filter-checkbox, searchbar, quantity selector)
-    // TODO composable (product helpers, etc)
 
     // load optional plugins
     if (moduleOptions.gtmPlugin) {
@@ -109,6 +113,7 @@ export default defineNuxtModule<ModuleOptions>({
     if (moduleOptions.axeptioPlugin) {
       addPlugin(resolve('runtime/plugins/axeptio'))
     }
+
     //TODO axceptio
     //TODO imageLoader
   }

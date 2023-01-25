@@ -1,6 +1,6 @@
 
 // @ts-ignore
-import { defineNuxtPlugin, useRuntimeConfig, useHead, useState, useFetch } from "#app";
+import { defineNuxtPlugin, useRuntimeConfig, useHead, useState, useFetch, useLazyFetch } from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
@@ -20,7 +20,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   })
 
   // register error handlers
-  nuxtApp.vueApp.config.errorHandler = (error, context) => {
+  nuxtApp.vueApp.config.errorHandler = (error) => {
+      reportError(error)
       return errorRedirect(error)
   }
 
@@ -46,17 +47,20 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (error.value) {
       errorRedirect(error.value);
     }
-    const product = useState("product", () => pageData.value.product)
+    useState<Product>("product", () => pageData.value.product)
+    useState<AssocString>("collectorData", () => pageData.value.collectorData)
 
     useHead({
-      title: product.value.extraData?.title ?? product.value.data.title
+      title: pageData.value.product.extraData?.title ?? pageData.value.product.data.title
     })
 
   })
 
   return {
     provide: {
+      fetchProductRecommendations,
       errorRedirect,
+      reportError,
     }
   }
 })
@@ -70,7 +74,35 @@ function errorRedirect(reason: unknown): void {
   if (process.env.NODE_ENV === 'development') {
       console.error(`Production app would have redirected to ${errorUri}: ${reason}`)
   } else {
-      reportError(reason);
       window.location.replace(errorUri);
   }
+}
+
+export function reportError(err: string) {
+  const data = {
+    error: `${err} on ${location.toString()}`,
+    service: "landing-page",
+    version: "1.0",
+  };
+
+  return useFetch<void>("/api/error/report", {
+    method: "POST",
+    headers: [["Content-Type", "application/json"]],
+    body: JSON.stringify(data),
+  });
+}
+
+function fetchProductRecommendations(recommender: string, algo: string, params?: Record<string, any>) {
+  const runtimeConfig = useRuntimeConfig()
+
+  const fetcher = useLazyFetch<Product[]>(`/api/recommendations/${recommender}/${algo}`, {
+      params: params,
+  })
+  setTimeout(() => {
+      if (fetcher.pending.value) {
+          errorRedirect("product recommendations timeout")
+      }
+  }, runtimeConfig.public.timeout.recommendationsLoad);
+
+  return fetcher
 }

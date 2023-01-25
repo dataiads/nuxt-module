@@ -23,8 +23,8 @@ export default defineNuxtConfig({
 })
 ```
 
-## Module configuration configuration
-Settings  provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
+## Module configuration
+Settings provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
 
 |key|default|description
 | - | - | - |
@@ -33,23 +33,90 @@ Settings  provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
 | `axeptio` | `true` | enable Axeptio plugin
 
 
-## Runtime configuration
-
-All settings should be provided inside `config.public` in `nuxt.config.ts` file.
-
-
-|key|default|description
-| - | - | - |
-| `gtm.id` | | provide id to inject GTM snippet in the page
-| `googleFonts[].family` | | Google fonts family to load
-| `googleFonts[].weights` | | weights to load for this Google Font family
-|`axeptio`| | Axeptio settings. must include a `clientId` key|
+## Composables
+* `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
+* `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
+* `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
+* `salePriceDifference` to get a products regular/sale price difference as a percentage
+* `mask` a utility function to extract parts of a string using a regular expression
+* `isSafeLink` a utility function to check that a links redirects to the mirrored domain
 
 
 ## Plugins
+### Core
+Handles page initialization, error handling configuration and initial page data load.
+Provides the following functions:
+* `fetchProductRecommendations` to retrieve product recommendations from Dataïads api
+* `errorRedirect` to fallback on mirrored domain product page when a critical error occurs
+* `reportError` to report an error to Dataïads api
+
+This plugin cannot be disabled.
+
+### Google Fonts
+Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
+```
+export default defineNuxtConfig({
+  modules: [
+    "dataiads-nuxt-module"
+  ],
+
+  dataiadsNuxtModule: {
+    lpoDomain: "https://lpo-demo.dataiads.io",
+    mirroredDomain: "https://shop.dataiads.io",
+  },
+
+  config: {
+    public: {
+        googleFonts: [
+            { family: "Roboto", weights: ["600", "800"] }
+        ]
+    }
+  }
+})
+```
 
 ### GTM
+Inject GTM snippet in the page.
+```
+export default defineNuxtConfig({
+  modules: [
+    "dataiads-nuxt-module"
+  ],
+
+  dataiadsNuxtModule: {
+    lpoDomain: "https://lpo-demo.dataiads.io",
+    mirroredDomain: "https://shop.dataiads.io",
+  },
+
+  config: {
+    public: {
+        gtm: { id: "FOOBAR" }
+    }
+  }
+})
+```
+
+### Axeptio
+Inject Axeptio snippet in the page. `clientId` is mandatory. All other attributes are also injected in the configuration object.
+
+```
+export default defineNuxtConfig({
+  modules: [
+    "dataiads-nuxt-module"
+  ],
+
+  dataiadsNuxtModule: {
+    lpoDomain: "https://lpo-demo.dataiads.io",
+    mirroredDomain: "https://shop.dataiads.io",
+  },
+
+  config: {
+    public: {
+        axeptio: { clientId: "123", otherSetting: "value" }
+    }
+  }
+})
+```
+
 
 ## Components
-
-## Composable
