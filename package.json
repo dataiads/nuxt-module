@@ -18,8 +18,7 @@
       "require": "./dist/module.cjs"
     }
   },
-  "types": "./dist/types.d.ts",
-  "typings": "./index.d.ts",
+  "types": "./types",
   "files": [
     "dist"
   ],
