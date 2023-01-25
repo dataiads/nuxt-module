@@ -30,6 +30,7 @@ Settings  provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
 | - | - | - |
 | `gtmPlugin` | `true` | enable GTM plugin
 | `googleFontsPlugin` | `true` | enable Google Fonts plugin
+| `axeptio` | `true` | enable Axeptio plugin
 
 
 ## Runtime configuration
@@ -42,6 +43,7 @@ All settings should be provided inside `config.public` in `nuxt.config.ts` file.
 | `gtm.id` | | provide id to inject GTM snippet in the page
 | `googleFonts[].family` | | Google fonts family to load
 | `googleFonts[].weights` | | weights to load for this Google Font family
+|`axeptio`| | Axeptio settings. must include a `clientId` key|
 
 
 ## Plugins

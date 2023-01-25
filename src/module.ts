@@ -11,6 +11,7 @@ export interface ModuleOptions {
   // optional flags
   gtmPlugin: boolean
   googleFontsPlugin: boolean
+  axeptioPlugin: boolean
 }
 
 export interface TimeoutConfig {
@@ -35,6 +36,7 @@ export interface ModulePublicRuntimeConfig {
   timeout: TimeoutConfig
   gtm: GtmConfig
   googleFonts: GoogleFontConfig[]
+  axeptio: Record<string, any>
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -54,6 +56,8 @@ export default defineNuxtModule<ModuleOptions>({
     lpoDomain: null,
     mirroredDomain: null,
     gtmPlugin: true,
+    googleFontsPlugin: true,
+    axeptioPlugin: true,
   },
   hooks: {},
   async setup(moduleOptions, nuxt) {
@@ -102,7 +106,9 @@ export default defineNuxtModule<ModuleOptions>({
     if (moduleOptions.googleFontsPlugin) {
       addPlugin(resolve('runtime/plugins/google-fonts'))
     }
-    //TODO googleFontsPlugin
+    if (moduleOptions.axeptioPlugin) {
+      addPlugin(resolve('runtime/plugins/axeptio'))
+    }
     //TODO axceptio
     //TODO imageLoader
   }
