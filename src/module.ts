@@ -29,15 +29,23 @@ export interface GoogleFontConfig {
   weights: string[]
 }
 
-export interface ModulePublicRuntimeConfig {
-  lpoDomain: string
-  mirroredDomain: string
-  lang: string
+declare module '@nuxt/schema' {
+  interface NuxtOptions {
+    dataiadsNuxtModule?: ModuleOptions
+  }
+  interface RuntimeConfig {
+    // @ts-ignore
+    public: {
+    lpoDomain: string
+    mirroredDomain: string
+    lang: string
 
-  timeout: TimeoutConfig
-  gtm: GtmConfig
-  googleFonts: GoogleFontConfig[]
-  axeptio: Record<string, any>
+    timeout: TimeoutConfig
+    gtm: GtmConfig
+    googleFonts: GoogleFontConfig[]
+    axeptio: Record<string, any>
+    }
+  }
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -118,12 +126,3 @@ export default defineNuxtModule<ModuleOptions>({
     //TODO imageLoader
   }
 })
-
-declare module '@nuxt/schema' {
-  interface RuntimeConfig {
-    // @ts-ignore
-    public: {
-      dataiadsNuxtModule: ModuleOptions
-    }
-  }
-}
