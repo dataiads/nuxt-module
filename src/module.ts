@@ -1,5 +1,5 @@
 
-import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addComponentsDir } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImportsDir, addComponentsDir, addComponent } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -55,8 +55,8 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options for your module
   defaults: {
-    lpoDomain: null,
-    mirroredDomain: null,
+    lpoDomain: "",
+    mirroredDomain: "",
     gtmPlugin: true,
     googleFontsPlugin: true,
     axeptioPlugin: true,

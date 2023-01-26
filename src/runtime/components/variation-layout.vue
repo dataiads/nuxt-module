@@ -3,28 +3,27 @@
 import { useRuntimeConfig } from "#app"
 
 const config = useRuntimeConfig()
-/*
-<template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
-  <slot :name="name" v-bind="data"></slot>
-</template>
-*/
-const layoutComponent = resolveComponent(`variations-${config.public.variation}`)
-console.log("FU", layoutComponent)
-console.log("FAILSOLVE", resolveComponent(`wall-du-trucWoulai`))
-console.log(this)
+
 </script>
 
 <template>
-<div>
-    <h1>LAYOUT</h1>
-    <component is="RecoProduct"></component>
-    <component :is="layoutComponent">
-        <!--
-        <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
-        <slot :name="name" v-bind="data"></slot>
-        </template>
-        -->
-    </component>
-    <h1>LAYOUT OVER</h1>
-</div>
+    <LayoutsCatalog v-if="config.public.variation === 'catalog'">
+        <template #header><slot name="header"></slot></template>
+        <template #main-product><slot name="main-product"></slot></template>
+        <template #reco-slider><slot name="reco-slider"></slot></template>
+        <template #filters><slot name="filters"></slot></template>
+        <template #reco-main><slot name="reco-main"></slot></template>
+        <template #footer><slot name="footer"></slot></template>
+    </LayoutsCatalog>
+
+    <LayoutsExample v-else-if="config.public.variation === 'example'">
+        <template #header><slot name="header"></slot></template>
+        <template #main-product><slot name="main-product"></slot></template>
+        <template #reco-slider><slot name="reco-slider"></slot></template>
+        <template #filters><slot name="filters"></slot></template>
+        <template #reco-main><slot name="reco-main"></slot></template>
+        <template #footer><slot name="footer"></slot></template>
+    </LayoutsExample>
+
+    <slot v-else></slot>
 </template>

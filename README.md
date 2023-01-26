@@ -122,7 +122,8 @@ export default defineNuxtConfig({
 todo
 
 ## Layouts
-todo
+**Tailwindcss module should be installed!**
+
 
 ## TODO
 * Optimized image load
