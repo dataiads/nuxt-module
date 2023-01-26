@@ -1,6 +1,6 @@
 <template>
-<div class="lg:container lg:mx-auto">
-    <header class="w-full" id="header">
+<div class="md:container md:mx-auto md:pt-4 md:mt-4 md:text-center">
+    <header class="w-full lg:container" id="header">
         <div style="height: 60px; background: yellow; border: 1px solid black;">header</div>
     </header>
 
