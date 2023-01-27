@@ -1,37 +1,32 @@
-# dataiads-nuxt-module
+# dataiads-nuxt-layer
 
-Generic blocks for building Dataïads landing pages
+Generic layer for building Dataïads landing pages
 
 ## installation
-First install package using `yarn add dataiads-nuxt-plugin`.
+First install package using `yarn add dataiads-nuxt-layer`.
 
-Enable the module by adding it to your `nuxt.config.ts` modules. All module elements are loaded by default, but plugins/components can be specifically selected.
+Update your ts config to use the layer.
+
 ```
 export default defineNuxtConfig({
-  modules: [
-    "dataiads-nuxt-module"
+  ssr: false,
+
+  typescript: {
+    strict: true,
+  },
+
+  extends: [
+    "dataiads-nuxt-layer"
   ],
 
-  dataiadsNuxtModule: {
-    lpoDomain: "https://lpo-demo.dataiads.io",
-    mirroredDomain: "https://shop.dataiads.io",
-
-    // optional
-    gtmPlugin: true,
-    googleFontsPlugin: false
+  runtimeConfig: {
+    public: {
+      lpoDomain: "https://lpo-demo.dataiads.io",
+      mirroredDomain: "https://shop.dataiads.io",
+    }
   }
 })
 ```
-
-## Module configuration
-Settings provided inside `dataiadsNuxtModule` in `nuxt.config.ts`
-
-|key|default|description
-| - | - | - |
-| `gtmPlugin` | `true` | enable GTM plugin
-| `googleFontsPlugin` | `true` | enable Google Fonts plugin
-| `axeptio` | `true` | enable Axeptio plugin
-
 
 ## Available composables
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
@@ -56,16 +51,7 @@ This plugin cannot be disabled.
 Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
 ```
 export default defineNuxtConfig({
-  modules: [
-    "dataiads-nuxt-module"
-  ],
-
-  dataiadsNuxtModule: {
-    lpoDomain: "https://lpo-demo.dataiads.io",
-    mirroredDomain: "https://shop.dataiads.io",
-  },
-
-  config: {
+  runtimeConfig: {
     public: {
         googleFonts: [
             { family: "Roboto", weights: ["600", "800"] }
@@ -79,16 +65,7 @@ export default defineNuxtConfig({
 Inject GTM snippet in the page.
 ```
 export default defineNuxtConfig({
-  modules: [
-    "dataiads-nuxt-module"
-  ],
-
-  dataiadsNuxtModule: {
-    lpoDomain: "https://lpo-demo.dataiads.io",
-    mirroredDomain: "https://shop.dataiads.io",
-  },
-
-  config: {
+  runtimeConfig: {
     public: {
         gtm: { id: "FOOBAR" }
     }
@@ -101,16 +78,7 @@ Inject Axeptio snippet in the page. `clientId` is mandatory. All other attribute
 
 ```
 export default defineNuxtConfig({
-  modules: [
-    "dataiads-nuxt-module"
-  ],
-
-  dataiadsNuxtModule: {
-    lpoDomain: "https://lpo-demo.dataiads.io",
-    mirroredDomain: "https://shop.dataiads.io",
-  },
-
-  config: {
+  runtimeConfig: {
     public: {
         axeptio: { clientId: "123", otherSetting: "value" }
     }
@@ -122,7 +90,6 @@ export default defineNuxtConfig({
 todo
 
 ## Layouts
-**Tailwindcss module should be installed!**
 
 
 ## TODO
