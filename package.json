@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
@@ -29,6 +29,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18.11.18",
     "nuxt": "^3.1.1",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.0",
+    "standard-version": "^9.5.0"
   }
 }
