@@ -12,9 +12,6 @@
   "license": "MIT",
   "dependencies": {},
   "types": "./types",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "release": "standard-version && git push --follow-tags && yarn publish"
   },
