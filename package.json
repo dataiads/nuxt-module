@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
@@ -16,8 +16,6 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "yarn build",
-    "build": "nuxt-module-build",
     "release": "standard-version && git push --follow-tags && yarn publish"
   },
   "devDependencies": {
