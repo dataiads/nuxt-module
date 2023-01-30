@@ -1,7 +1,9 @@
 
 import { defineNuxtConfig } from "nuxt/config"
 import { createResolver } from '@nuxt/kit'
+
 const { resolve } = createResolver(import.meta.url)
+ 
 
 export default defineNuxtConfig({
     modules: [
@@ -13,19 +15,31 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         public: {
+            // mandatory configuration
             lpoDomain: "",
             mirroredDomain: "",
 
+            // default timeouts for server interaction
             timeout: {
                 pageDataLoad: 1000,
-                initialPageLoad: 1000,
-                recommendationsLoad: 1000,
-            }
+                initialPageLoad: 5000,
+                recommendationsLoad: 10000,
+            },
+
+            // expose cdn url inside config
+            cdnURL: process.env.CDN_URL || "",
+
+            // toggle optimized images component
+            optimizeImageLoad: true
+
+            
+
         }
     },
 
     tailwindcss: {
         config: {
+            content: [],
             plugins: [
                 require('@tailwindcss/forms'),
                 require('@tailwindcss/typography'),
@@ -41,11 +55,9 @@ export default defineNuxtConfig({
             name: "imageProvider",
             provider: resolve("./utils/image-provider"),
             options: {
-              // Relative URL helps avoid cases where same template is deployed on multiple platforms and all image traffic is sent to a single platform.
               providerURL: "/api/images/resize",
             },
           },
         },
     }
 })
- 

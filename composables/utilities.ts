@@ -22,12 +22,6 @@ export const mask = (value:string, regex: RegExp): string => {
     return match.slice(1).join('')
 }
 
-/* validates a link against the mirrored domain */
-export const isSafeLink = (url: string): boolean => {
-    const config = useRuntimeConfig()
-    return url.startsWith(`${config.public.mirroredDomain}/`) || url === config.public.mirroredDomain
-}
-
 // get a product customAttribute value by its name.
 // extraData will take precedence over regular data
 export const getCustomAttr = (product: Product, attr: string): string|null => { 

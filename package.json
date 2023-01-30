@@ -15,18 +15,19 @@
     "release": "standard-version && git push --follow-tags && yarn publish"
   },
   "dependencies": {
+    "@nuxt/image-edge": "^1.0.0-27913696.5d122a3",
+    "@nuxt/schema": "^3.1.1",
     "@nuxtjs/tailwindcss": "^6.3.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
-    "@nuxt/image-edge": "^1.0.0-27913696.5d122a3",
     "@types/node": "^18.11.18",
     "nuxt": "^3.1.1",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0"
   },
   "devDependencies": {
-    "standard-version": "^9.5.0",
-    "@nuxt/kit": "^3.1.1"
+    "@nuxt/kit": "^3.1.1",
+    "standard-version": "^9.5.0"
   }
 }

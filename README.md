@@ -34,7 +34,6 @@ export default defineNuxtConfig({
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
 * `salePriceDifference` to get a products regular/sale price difference as a percentage
 * `mask` a utility function to extract parts of a string using a regular expression
-* `isSafeLink` a utility function to check that a links redirects to the mirrored domain
 
 
 ## Plugins
@@ -46,6 +45,11 @@ Provides the following functions:
 * `$reportError` to report an error to Dataïads api
 
 This plugin cannot be disabled.
+
+### Urls
+Exposes URL related functions
+* `oriUrl(link: string, query?: Record<string, string>): string` forces mirrored domain from runtime configuration on a link, with optional extra query paramaeters.
+* `isSafeLink(link: string): boolean` a utility function to check that a links redirects to the mirrored domain
 
 ### Google Fonts
 Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
@@ -87,7 +91,15 @@ export default defineNuxtConfig({
 ```
 
 ## Components
-todo
+
+### Image
+Display images from remote sources using Dataïads caching proxy servers and CDN.
+```
+<Image src="https://shop.dataiads.io/assets/product.png" height="300" width="400"/>
+```
+Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt options.
+
+
 
 ## Layouts
 

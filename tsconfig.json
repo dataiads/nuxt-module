@@ -10,7 +10,9 @@
         "types": [
             "node",
             "@nuxt/types",
-            "./types"
+            "@nuxtjs/tailwindcss",
+            "@nuxt/image-edge",
+            "./types/index.d.ts"
         ]
     },
     "include": [
