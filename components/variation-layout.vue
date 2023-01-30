@@ -4,6 +4,7 @@ import { useRuntimeConfig } from "#app"
 
 const config = useRuntimeConfig()
 
+//TODO dynamic import
 </script>
 
 <template>

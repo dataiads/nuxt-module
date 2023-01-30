@@ -50,6 +50,7 @@ This plugin cannot be disabled.
 Exposes URL related functions
 * `oriUrl(link: string, query?: Record<string, string>): string` forces mirrored domain from runtime configuration on a link, with optional extra query paramaeters.
 * `isSafeLink(link: string): boolean` a utility function to check that a links redirects to the mirrored domain
+*  `addToCartUrl(searchParams?: Record<string, string>): string` 
 
 ### Google Fonts
 Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
@@ -105,10 +106,8 @@ Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt opti
 
 
 ## TODO
-* Optimized image load
 * Filters
 * LIA
 * I18
-* Ori-URL
 * Components
 * Layouts
