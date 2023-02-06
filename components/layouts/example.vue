@@ -1,8 +1,26 @@
+<script setup lang="ts">
+// @ts-ignore
+import { useRuntimeConfig } from "#app"
+
+const config = useRuntimeConfig()
+const layoutStyle = config.public.layoutStyle
+console.log("LAYOUT STYLE", layoutStyle)
+</script>
+
 <template>
 <div class="lg:mx-auto">
-    <header class="col-span-full w-full z-[2] bg-yellow-500" id="header">
-        <div class="lg:container mx-auto" style="height: 60px;">header</div>
+    <header
+        id="header"
+        class="col-span-full w-full z-[2]"
+        :class="layoutStyle.header.class"
+    >
+        <slot name="header"></slot>
     </header>
+    <!--
+    <header class="col-span-full w-full z-[2] bg-yellow-500" id="header">
+        <div class="lg:container lg:mx-auto" style="height: 60px;">header</div>
+    </header>
+    -->
 
     <div class="w-full lg:container mx-auto" id="main-product">
         <div style="height: 300px; background: red; border: 1px solid black;">main product</div>
@@ -54,17 +72,6 @@
             </div>
         </div>
     </div>
-
-
-
-    
-
-
-
-
-
-
-
 
     <slot name="footer"></slot>
     <footer class="w-full mt-auto bg-green-500" id="footer">

@@ -30,10 +30,14 @@ export default defineNuxtConfig({
             cdnURL: process.env.CDN_URL || "",
 
             // toggle optimized images component
-            optimizeImageLoad: true
+            optimizeImageLoad: true,
 
-            
-
+            // customize layouts behaviour
+            layoutStyle: {
+                header: {
+                    class: "", // custom classes for header parent element
+                },
+            },
         }
     },
 
