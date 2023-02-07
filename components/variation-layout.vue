@@ -3,37 +3,19 @@
 import { useRuntimeConfig } from "#app"
 
 const config = useRuntimeConfig()
+
+const props = defineProps<{
+    recoSliderProducts: Product[],
+}>()
 </script>
 
 <template>
-    <LayoutsCatalog v-if="config.public.variation === 'catalog'">
-        <template v-for="(index, name) in $slots" v-slot:[name]>
-            <slot :name="name"></slot>
-        </template>
-
-        <!--
-        <template v-slot:[] v-for=""></template>
-        <template #header><slot name="header"></slot></template>
-        <template #main-product><slot name="main-product"></slot></template>
-        <template #reco-slider><slot name="reco-slider"></slot></template>
-        <template #filters><slot name="filters"></slot></template>
-        <template #reco-main><slot name="reco-main"></slot></template>
-        <template #footer><slot name="footer"></slot></template>
-        -->
+    <LayoutsCatalog v-if="config.public.variation === 'catalog'" v-bind="props">
+        <template v-for="(_, name) in $slots" v-slot:[name]><slot :name="name"></slot></template>
     </LayoutsCatalog>
 
-    <LayoutsExample v-else-if="config.public.variation === 'example'">
-        <template v-for="(index, name) in $slots" v-slot:[name]>
-            <slot :name="name"></slot>
-        </template>
-        <!--
-        <template #header><slot name="header"></slot></template>
-        <template #main-product><slot name="main-product"></slot></template>
-        <template #reco-slider><slot name="reco-slider"></slot></template>
-        <template #filters><slot name="filters"></slot></template>
-        <template #reco-main><slot name="reco-main"></slot></template>
-        <template #footer><slot name="footer"></slot></template>
-        -->
+    <LayoutsExample v-else-if="config.public.variation === 'example'" v-bind="props">
+        <template v-for="(_, name) in $slots" v-slot:[name]><slot :name="name"></slot></template>
     </LayoutsExample>
 
     <span v-else>error: unknown variation</span>

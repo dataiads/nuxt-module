@@ -52,7 +52,8 @@ export default defineNuxtConfig({
     tailwindcss: {
         config: {
             content: [
-                "./nuxt.config.ts", // scan nuxt config for tailwind css classes
+                resolve("./nuxt.config.ts"), // scan layer nuxt.config.ts for tailwind classes
+                "./nuxt.config.ts", // scan client nuxt.config.ts for tailwind classes
             ],
             plugins: [
                 require('@tailwindcss/forms'),
