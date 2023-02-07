@@ -3,46 +3,28 @@
 import { useRuntimeConfig } from "#app"
 
 const config = useRuntimeConfig()
-const layoutStyle = config.public.layoutStyle
-console.log("LAYOUT STYLE", layoutStyle)
+const s = config.public.layoutStyle
 </script>
 
 <template>
 <div class="lg:mx-auto">
-    <header
-        id="header"
-        class="col-span-full w-full z-[2]"
-        :class="layoutStyle.header.class"
-    >
+    <header id="header" :class="s.header.class">
         <slot name="header"></slot>
     </header>
-    <!--
-    <header class="col-span-full w-full z-[2] bg-yellow-500" id="header">
-        <div class="lg:container lg:mx-auto" style="height: 60px;">header</div>
-    </header>
-    -->
 
-    <div class="w-full lg:container mx-auto" id="main-product">
-        <div style="height: 300px; background: red; border: 1px solid black;">main product</div>
+    <div id="main-product" :class="s.mainProduct.class">
+        <slot name="main-product"></slot>
     </div>
 
-    <div class="w-full bg-blue-500" id="reco-slider">
-        <div class="lg:container mx-auto py-4">
-            <div class="w-full">Title slider</div>
-            <div class="bg-yellow-100 h-[150px] grid grid-cols-1 gap-2 overflow-x-scroll scrollbar-hide sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-                <div class="flex flex-nowrap space-x-5 py-5 sliding-reco md:mx-0">
-                    <div class="bg-white p-4 border border-black min-w-[300px]"></div>
-                    <div class="bg-white p-4 border border-black min-w-[300px]"></div>
-                    <div class="bg-white p-4 border border-black min-w-[300px]"></div>
-                    <div class="bg-white p-4 border border-black min-w-[300px]"></div>
-                    <div class="bg-white p-4 border border-black min-w-[300px]"></div> 
-                </div>
+    <div id="reco-slider" :class="s.recoSlider.class">
+        <div :class="s.recoSlider.containerClass">
+            <slot name="reco-slider-header"></slot>
+            <div :class="s.recoSlider.sliderClass">
+                <slot v-for="_ in 5" name="reco-slider-item">
+                </slot>
             </div>
         </div>
     </div>
-
-    <slot name="filters"></slot>
-    <slot name="reco-main"></slot>
 
     <div class="col-span-full bg-white">
         <div class="grid md:grid-flow-col md:auto-cols-auto lg:container mx-auto h-full">

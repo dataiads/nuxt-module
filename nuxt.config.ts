@@ -35,7 +35,15 @@ export default defineNuxtConfig({
             // customize layouts behaviour
             layoutStyle: {
                 header: {
-                    class: "", // custom classes for header parent element
+                    class: ["col-span-full", "w-full", "z-[2]"],
+                },
+                mainProduct: {
+                    class: ["w-full", "lg:container", "mx-auto"],
+                },
+                recoSlider: {
+                    class: ["w-full"],
+                    containerClass: ["lg:container", "mx-auto"],
+                    sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
                 },
             },
         }
@@ -43,7 +51,9 @@ export default defineNuxtConfig({
 
     tailwindcss: {
         config: {
-            content: [],
+            content: [
+                "./nuxt.config.ts", // scan nuxt config for tailwind css classes
+            ],
             plugins: [
                 require('@tailwindcss/forms'),
                 require('@tailwindcss/typography'),
