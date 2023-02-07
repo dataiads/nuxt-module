@@ -45,6 +45,16 @@ export default defineNuxtConfig({
                     containerClass: ["lg:container", "mx-auto"],
                     sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
                 },
+                filters: {
+                    class: ["h-full", "flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
+                    asideClass: ["flex-none", "w-auto", "md:w-[256px]", "h-[50px]", "md:h-auto",
+                                 "flex", "flex-row", "md:flex-col",
+                                 //"overflow-x-scroll", "md:overflow-x-none", "overflow-y-none", "md:overflow-y-scroll"
+                                ],
+                    contentClass: [],
+                    contentHeaderClass: [],
+                    contentGridClass: [],
+                },
             },
         }
     },
