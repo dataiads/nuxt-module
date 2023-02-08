@@ -47,13 +47,13 @@ export default defineNuxtConfig({
                 },
                 filters: {
                     class: ["h-full", "flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
-                    asideClass: ["flex-none", "w-auto", "md:w-[256px]", "h-[50px]", "md:h-auto",
+                    asideClass: ["flex-none", "w-auto", "md:w-[256px]", "h-[50px]", "md:h-auto", "flex", "items-stretch",
                                  "flex", "flex-row", "md:flex-col",
-                                 //"overflow-x-scroll", "md:overflow-x-none", "overflow-y-none", "md:overflow-y-scroll"
-                                ],
-                    contentClass: [],
+                                 "overflow-x-scroll", "md:overflow-x-none", "overflow-y-none", "md:overflow-y-scroll"
+                    ],
+                    contentClass: ["grow"],
                     contentHeaderClass: [],
-                    contentGridClass: [],
+                    contentGridClass: ["grid", "grid-cols-2", "gap-4", "md:gap-8", "lg:grid-cols-3", "xl:grid-cols-4"],
                 },
             },
         }
