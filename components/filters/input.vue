@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
+
+console.log("DEBOUNCE", debounce)
 
 const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
