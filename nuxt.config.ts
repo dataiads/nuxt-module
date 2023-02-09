@@ -32,6 +32,9 @@ export default defineNuxtConfig({
             // toggle optimized images component
             optimizeImageLoad: true,
 
+            // disable i18n by default
+            locale: "",
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {
