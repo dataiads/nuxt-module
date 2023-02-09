@@ -14,6 +14,16 @@ const props = defineProps<{
   min: string
 }>();
 
+const debounce = (callback, wait) => {
+  let timeoutId;
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback.apply(null, args);
+    }, wait);
+  };
+}
+
 let value = computed(() => props.filter.getFirstRuleValue(props.group) || "");
 let change = debounce((evt: Event) => {
   let val = (evt.target as HTMLInputElement).value;
@@ -24,16 +34,6 @@ let change = debounce((evt: Event) => {
   }
 }, 200);
 
-
-const debounce = (callback, wait) => {
-  let timeoutId;
-  return (...args) => {
-    window.clearTimeout(timeoutId);
-    timeoutId = window.setTimeout(() => {
-      callback.apply(null, args);
-    }, wait);
-  };
-}
 </script>
 
 <template>
