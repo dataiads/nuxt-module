@@ -2,6 +2,27 @@
 // @ts-ignore
 import { defineNuxtPlugin, useRuntimeConfig, useHead, useState, useFetch, useLazyFetch } from "#app";
 
+/* fetch main product data for this page
+  handles compatibility with url based product match
+  when no lpoid parameter is present
+ */
+function fetchPageData(loc: Location) {
+  const u = new URL(loc.href)
+  const lpoid = u.searchParams.get("lpoid")
+
+  if (lpoid == null) {
+    // backward compatibility: use path matching when no lpoid
+    return useFetch<PageData>("/api/page-data", {
+      params: {
+        uri: loc.pathname + loc.search,
+        fragment: loc.hash.replace("#", "")
+      } 
+    })
+  }
+
+  return useFetch<PageData>(`/api/page-data/${lpoid}`)
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
 
@@ -46,12 +67,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // fetch the product on init
   nuxtApp.hook('app:created', async () => {
     const dataTimeout = setTimeout(() => errorRedirect("page data timeout"), runtimeConfig.timeout.pageDataLoad);
-    const { data: pageData, error } = await useFetch<PageData>("/api/page-data", {
-      params: {
-        uri: window.location.pathname + window.location.search,
-        fragment: window.location.hash.replace("#", "")
-      } 
-    });
+    const { data: pageData, error } = await fetchPageData(window.location)
     clearTimeout(dataTimeout);
     if (error.value) {
       errorRedirect(error.value);
