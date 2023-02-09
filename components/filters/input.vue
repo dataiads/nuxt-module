@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { debounce } from "lodash";
 
-const uuid = Math.floor(Math.random() * 10 ** 16);
+const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
 const props = defineProps<{
   label: string
@@ -25,19 +25,21 @@ let change = debounce((evt: Event) => {
 }, 200);
 </script>
 
-<template lang="pug">
-div.flex.items-center.my-4
-	input.w-full.text-black.border-black.font-normal(
-		class="focus:border-secondary text-black focus:ring-black focus:ring-1"
-        :id="uuid"
-        :value="value"
-        @change="change"
-        @keyup="change"
-        :placeholder="props.placeholder"
-        :type="type"
-        :min="props.min"
-	)
-	label.ml-3.font-normal.text-black(class="leading-[15px]" :for="uuid")
-		span(v-if="props.label") {{ props.label }}
-		slot(v-else)
+<template>
+<div class="flex items-center my-4">
+	<input
+		class="focus:border-secondary text-black focus:ring-black focus:ring-1 w-full text-black border-black font-normal"
+      :id="uuid"
+      :value="value"
+      @change="change"
+      @keyup="change"
+      :placeholder="props.placeholder"
+      :type="type"
+      :min="props.min"
+	/>
+	<label class="ml-3 font-normal text-black leading-[15px]" :for="uuid">
+		<span v-if="props.label">{{ props.label }}</span>
+		<slot v-else></slot>
+  </label>
+</div>
 </template>

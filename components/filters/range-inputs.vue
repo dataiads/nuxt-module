@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const uuid = Math.floor(Math.random() * 10 ** 16);
-
 interface Props {
   filter: Filter;
   criteria: string;
@@ -30,28 +28,13 @@ const minGroup = props.group + "-min";
 const maxGroup = props.group + "-max";
 </script>
 
-<template lang="pug">
-div(:class="props.class")
-    FiltersInput(
-        type="number"
-        :filter="filter"
-        :group="minGroup"
-        :criteria="props.criteria"
-        :operator="props.minOperator"
-        :class="props.inputClass"
-        :min="props.min"
-        :max="props.max"
-        :placeholder="props.minPlaceholder"
-    )
-    FiltersInput(
-        type="number"
-        :filter="filter"
-        :group="maxGroup"
-        :criteria="props.criteria"
-        :operator="props.maxOperator"
-        :class="props.inputClass"
-        :min="props.min"
-        :max="props.max"
-        :placeholder="props.maxPlaceholder"
-    )
+<template>
+  <div :class="props.class">
+    <FiltersInput type="number" :filter="filter" :group="minGroup" :criteria="props.criteria"
+      :operator="props.minOperator" :class="props.inputClass" :min="props.min" :max="props.max"
+      :placeholder="props.minPlaceholder" />
+    <FiltersInput type="number" :filter="filter" :group="maxGroup" :criteria="props.criteria"
+      :operator="props.maxOperator" :class="props.inputClass" :min="props.min" :max="props.max"
+      :placeholder="props.maxPlaceholder" />
+  </div>
 </template>

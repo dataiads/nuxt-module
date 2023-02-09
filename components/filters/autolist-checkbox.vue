@@ -13,12 +13,12 @@ const props = defineProps<{
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
 </script>
 
-<template lang="pug">
-FiltersCheckbox(
+<template>
+<FiltersCheckbox
   v-for="(count, value) in availableValues"
   operator="EQUAL"
   :value="value"
   :label="`${value} (${count})`"
   v-bind="props"
-)
+/>
 </template>
