@@ -23,7 +23,6 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
     "@types/lodash.debounce": "^4.0.7",
-    "lodash.debounce": "^4.0.8",
     "nuxt": "^3.1.1",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",

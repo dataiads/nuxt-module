@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import debounce from "lodash/debounce";
+
 
 const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
@@ -23,6 +23,17 @@ let change = debounce((evt: Event) => {
     props.filter.removeAllRules(props.group);
   }
 }, 200);
+
+
+const debounce = (callback, wait) => {
+  let timeoutId;
+  return (...args) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      callback.apply(null, args);
+    }, wait);
+  };
+}
 </script>
 
 <template>
