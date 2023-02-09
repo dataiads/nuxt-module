@@ -66,6 +66,23 @@ export default defineNuxtConfig({
 })
 ```
 
+### I18n
+Enable internationalization using vue-i18n package. 
+Translation data must be available inside `locales/` directory. When adding a new locale data file, dont forget to import it inside `locales/index.ts`.
+
+Set a locale value to enable this plugin:
+```
+export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      locale: "fr-fr"
+    }
+  }
+})
+
+Provides `$t()` helper in templates
+
+
 ### GTM
 Inject GTM snippet in the page.
 ```
@@ -99,15 +116,3 @@ Display images from remote sources using Dataïads caching proxy servers and CDN
 <Image src="https://shop.dataiads.io/assets/product.png" height="300" width="400"/>
 ```
 Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt options.
-
-
-
-## Layouts
-
-
-## TODO
-* Filters
-* LIA
-* I18
-* Components
-* Layouts

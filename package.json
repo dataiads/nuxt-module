@@ -26,7 +26,8 @@
     "lodash.debounce": "^4.0.8",
     "nuxt": "^3.1.1",
     "sass": "^1.57.1",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.0",
+    "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.1.1",

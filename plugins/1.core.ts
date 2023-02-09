@@ -62,6 +62,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   )
   nuxtApp.hook('app:suspense:resolve', () => {
     clearTimeout(pageLoadTimeout)
+    console.log("Powered by Dataïads");
   })
 
   // fetch the product on init
