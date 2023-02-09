@@ -7,6 +7,7 @@ const config = useRuntimeConfig()
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
+    filter: Filter;
 }>()
 </script>
 

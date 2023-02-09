@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRuntimeConfig } from "#app"
-import { FilterProperty } from "csstype";
 
 
 const props = defineProps<{
@@ -32,7 +31,7 @@ const s = config.public.layoutStyle
                 <div :class="s.recoSlider.sliderClass">
                     <slot
                         name="reco-slider-item"
-                        v-for="item in filterProducts"
+                        v-for="item in props.recoSliderProducts"
                         :key="item.id"
                         :item="item"
                     ></slot>
@@ -59,10 +58,7 @@ const s = config.public.layoutStyle
         </div>
     </div>
 
-    <slot name="footer"></slot>
-    <footer class="w-full mt-auto bg-green-500" id="footer">
-        <div class="lg:container mx-auto">
-            <div style="height: 140px;">footer</div>
-        </div>
+    <footer id="footer" :class="s.footer.class">
+        <slot name="footer"></slot>
     </footer>
 </template>

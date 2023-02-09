@@ -55,6 +55,9 @@ export default defineNuxtConfig({
                     contentHeaderClass: [],
                     contentGridClass: ["grid", "grid-cols-2", "gap-4", "md:gap-8", "lg:grid-cols-3", "xl:grid-cols-4"],
                 },
+                footer: {
+                    class: ["col-span-full", "w-full"],
+                },
             },
         }
     },
@@ -69,7 +72,14 @@ export default defineNuxtConfig({
                 require('@tailwindcss/forms'),
                 require('@tailwindcss/typography'),
                 require('@tailwindcss/line-clamp'),
-            ]
+            ],
+            theme: {
+                extend: {
+                    transitionProperty: {
+                        height: 'height',
+                    }
+                }
+            }
         }
     },
 
