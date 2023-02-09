@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { debounce } from "lodash";
+import _ from "lodash";
 
 const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
@@ -15,7 +15,7 @@ const props = defineProps<{
 }>();
 
 let value = computed(() => props.filter.getFirstRuleValue(props.group) || "");
-let change = debounce((evt: Event) => {
+let change = _.debounce((evt: Event) => {
   let val = (evt.target as HTMLInputElement).value;
   if (val != "") {
     props.filter.setOnlyRule(props.group, props.criteria, props.operator, val);
