@@ -38,10 +38,14 @@ export default defineNuxtConfig({
             // customize layouts behaviour
             layoutStyle: {
                 header: {
-                    class: ["col-span-full", "w-full", "z-[2]"],
+                    class: [],
+                    container: false,
+                    //class: ["col-span-full", "w-full", "z-[2]"],
                 },
                 mainProduct: {
-                    class: ["w-full", "lg:container", "mx-auto"],
+                    class: [],
+                    container: true,
+                    //class: ["w-full", "lg:container", "mx-auto"],
                 },
                 recoSlider: {
                     class: ["w-full"],
