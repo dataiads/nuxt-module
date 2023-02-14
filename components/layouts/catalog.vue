@@ -28,14 +28,17 @@ const s = config.public.layoutStyle
         <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
             <div :class="s.recoSlider.containerClass">
                 <slot name="reco-slider-header"></slot>
-                <div :class="s.recoSlider.sliderClass">
-                    <slot
-                        name="reco-slider-item"
-                        v-for="item in props.recoSliderProducts"
-                        :key="item.id"
-                        :item="item"
-                    ></slot>
-                </div>
+                <slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass">
+                    <template #item="{item}">
+                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
+                    </template>
+                    <template #previous-btn="scope">
+                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
+                    </template>
+                    <template #next-btn="scope">
+                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
+                    </template>
+                </slider>
             </div>
         </div>
 
