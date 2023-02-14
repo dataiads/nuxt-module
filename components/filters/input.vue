@@ -3,23 +3,32 @@
 
 const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
-const props = defineProps<{
+
+interface Props {
   label: string
   filter: Filter
   criteria: string
   operator: string
-  placeholder: string
   group: string
-  type: string
-  min: string
-}>();
+  placeholder?: string
+  type?: string
+  min?: string
+  max?: string
+}
 
-const debounce = (callback, wait) => {
-  let timeoutId;
-  return (...args) => {
+const props = withDefaults(defineProps<Props>(), {
+  placeholder: "",
+  type: "text",
+  min: "0",
+  max: "",
+});
+
+const debounce = (callback: (_: Event) => void, wait: number) => {
+  let timeoutId: number;
+  return (evt: Event) => {
     window.clearTimeout(timeoutId);
     timeoutId = window.setTimeout(() => {
-      callback.apply(null, args);
+      callback.apply(null, [evt]);
     }, wait);
   };
 }
@@ -45,8 +54,9 @@ let change = debounce((evt: Event) => {
       @change="change"
       @keyup="change"
       :placeholder="props.placeholder"
-      :type="type"
+      :type="props.type"
       :min="props.min"
+      :max="props.max"
 	/>
 	<label class="ml-3 font-normal text-black leading-[15px]" :for="uuid">
 		<span v-if="props.label">{{ props.label }}</span>
