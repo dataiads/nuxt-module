@@ -42,7 +42,6 @@ const previous = () => {
 }
 
 const next = () => {
-    console.log("NEXT")
     if (scrollerEl.value) {
         const scrollPos = props.direction === "horizontal" ? scrollerEl.value.scrollLeft : scrollerEl.value.scrollTop
         const scrollSize = props.direction === "horizontal" ? scrollerEl.value.clientWidth : scrollerEl.value.clientHeight
