@@ -54,6 +54,7 @@ export default defineNuxtConfig({
                     class: ["w-full"],
                     containerClass: ["lg:container", "mx-auto"],
                     sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
+                    autoscroll: false,
                 },
                 filters: {
                     class: ["h-full", "flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],

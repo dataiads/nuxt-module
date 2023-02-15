@@ -10,6 +10,7 @@ interface Props<T> {
     direction?: ScrollDirection
     class?: string[]
     scrollerClass?: string[]
+    autoscroll?: boolean 
 }
 
 const props = withDefaults(defineProps<Props<any>>(), {
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
     scrollBehavior: "smooth",
     class: () => [],
     scrollerClass: () => [],
+    autoscroll: false,
 })
 
 const scrollerEl = ref<HTMLElement>()
@@ -61,6 +63,19 @@ const next = () => {
     }
 }
 
+const hover = ref(false)
+if (props.autoscroll) {
+    window.setInterval(() => {
+        if (scrollerEl.value && !hover.value) {
+            if (props.direction === "horizontal") {
+                scrollerEl.value.scrollBy(1, 0)
+            } else {
+                scrollerEl.value.scrollBy(0, 1)
+            }
+        }
+    }, 10)
+}
+
 const mainClass = [
     "relative",
     "block",
@@ -81,7 +96,8 @@ const previousClass = [
     "hidden",
     "md:block",
     "top-0",
-    "left-0",
+    //"left-0",
+    "right-0",
     props.direction === "horizontal" ? "bottom-0" : "right-0",
 ]
 
@@ -90,7 +106,8 @@ const nextClass = [
     "hidden",
     "md:block",
     "bottom-0",
-    "right-0",
+    //"right-0",
+    ""
     props.direction === "horizontal" ? "top-0" : "left-0",
 ]
 
@@ -107,7 +124,7 @@ const nextContentClass = previousContentClass.concat()
 
 <template>
     <div :class="mainClass" v-if="props.items">
-        <div :class="scrollerClass" ref="scrollerEl">
+        <div :class="scrollerClass" ref="scrollerEl" @mouseenter="hover=true" @mouseleave="hover=false">
             <slot name="item" v-for="item in props.items" :item="item"> </slot>
         </div>
         <div :class="previousClass">
