@@ -10,9 +10,16 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
         "@nuxt/image-edge"
     ],
+
+    app: {
+        // use cdn url from environment
+        cdnURL: process.env.CDN_URL || "",
+    },
+
     css: [
         resolve("./assets/css/tailwind.css")
     ],
+
     runtimeConfig: {
         public: {
             // mandatory configuration
