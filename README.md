@@ -79,6 +79,7 @@ export default defineNuxtConfig({
     }
   }
 })
+```
 
 Provides `$t()` helper in templates
 
