@@ -116,3 +116,32 @@ Display images from remote sources using Dataïads caching proxy servers and CDN
 <Image src="https://shop.dataiads.io/assets/product.png" height="300" width="400"/>
 ```
 Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt options.
+
+
+### Product Image
+Main product image display. Shows the product primary image and any other additional images on the side.
+Style can be customized using the two image slots or using class props
+```
+<ProductImage :product="product" aside="left-scroll" :max-additional-images="4">
+  <template #main-image="{ src, alt }">
+    <Image class="mx-auto w-auto" height="400" width="400" :src="src" :alt="alt" />
+  </template>
+
+  <template #aside-image="{ src, alt, active }">
+    <Image height="80" width="80" class="border border-transparent mr-2 mb-2 cursor-pointer" :class="{ border: active, 'border-black': active }" :src="src"
+      :alt="alt" />
+  </template>
+
+</ProductImage>
+```
+
+### Slider
+Horizontal or vertical slider with next / previous buttons on large screens. Can be toggled to autoscroll.
+Buttons and items can be configured using slots and class props
+```
+<Slider :items="items" autoscroll>
+    <template #item="{item}">{{ item.name }}</template>
+    <template #previous-btn="scope"> prev </template>
+    <template #next-btn="scope"> next </template>
+</Slider>
+```
