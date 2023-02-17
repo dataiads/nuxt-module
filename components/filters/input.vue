@@ -46,7 +46,7 @@ let change = debounce((evt: Event) => {
 </script>
 
 <template>
-<div class="flex items-center my-4">
+<div class="flex items-center">
 	<input
 		class="focus:border-secondary text-black focus:ring-black focus:ring-1 w-full text-black border-black font-normal"
       :id="uuid"
@@ -58,7 +58,7 @@ let change = debounce((evt: Event) => {
       :min="props.min"
       :max="props.max"
 	/>
-	<label class="ml-3 font-normal text-black leading-[15px]" :for="uuid">
+	<label class="font-normal text-black leading-[15px]" :for="uuid">
 		<span v-if="props.label">{{ props.label }}</span>
 		<slot v-else></slot>
   </label>

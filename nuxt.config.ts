@@ -66,6 +66,9 @@ export default defineNuxtConfig({
                     contentHeaderClass: [],
                     contentGridClass: ["grid", "grid-cols-2", "gap-4", "md:gap-8", "lg:grid-cols-3", "xl:grid-cols-4"],
                 },
+                crossSell: {
+                    class: ["lg:container", "mx-auto"]
+                },
                 footer: {
                     class: ["col-span-full", "w-full"],
                 },

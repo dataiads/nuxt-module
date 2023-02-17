@@ -123,9 +123,12 @@ Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt opti
 Main product image display. Shows the product primary image and any other additional images on the side.
 Style can be customized using the two image slots or using class props
 ```
-<ProductImage :product="product" aside="left-scroll" :max-additional-images="4">
+<ProductImage :product="product" :max-additional-images="4"
+  class="flex flex-row"
+  aside-class="hidden md:flex flex-col flex-nowrap overflow-y-scroll scrollbar-hide"
+>
   <template #main-image="{ src, alt }">
-    <Image class="mx-auto w-auto" height="400" width="400" :src="src" :alt="alt" />
+    <Image class="mx-auto w-auto" height="400" width="400" :src="src" :alt="alt" ref="ref"/>
   </template>
 
   <template #aside-image="{ src, alt, active }">
@@ -133,6 +136,13 @@ Style can be customized using the two image slots or using class props
       :alt="alt" />
   </template>
 
+  <template #previous-btn>
+    <div class="mx-1 p-8 cursor-pointer bg-green-100">&lt;</div> 
+  </template>
+
+  <template #next-btn>
+    <div class="mx-1 p-8 cursor-pointer bg-green-100">&gt;</div> 
+  </template>
 </ProductImage>
 ```
 

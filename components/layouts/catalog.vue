@@ -61,6 +61,10 @@ const s = config.public.layoutStyle
         </div>
     </div>
 
+    <div id="cross-sell" :class="s.crossSell.class">
+        <slot name="cross-sell"></slot>
+    </div>
+
     <footer id="footer" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>

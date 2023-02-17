@@ -1,8 +1,4 @@
 
-<script lang="ts">
-export type ProductImageAsideBehaviour = "none" | "left-justify" |  "left-scroll" |  "bottom-justify" |  "bottom-scroll"
-</script>
-
 <script setup lang="ts">
 
 interface Props {
@@ -11,22 +7,18 @@ interface Props {
     // customize images alt attribute
     alt?: string
 
-    // customize how additional images are displayed
-    aside?: ProductImageAsideBehaviour
-
     // display additional images on the side
     maxAdditionalImages?: number
 
     // custom layout instead of using "aside" parameter
-    class?: string[]
-    asideClass?: string[]
+    class?: string | string[]
+    asideClass?: string | string[]
 
 }
 const props = withDefaults(defineProps<Props>(), {
-    class: () => [], 
-    asideClass: () => [], 
+    class: () => ["flex", "flex-row"],
+    asideClass: () => ["flex", "flex-col", "flex-nowrap", "overflow-y-scroll", "scrollbar-hide"],
     alt: ({ product }) => product.data?.title || "product image",
-    aside: "left-scroll",
     maxAdditionalImages: Infinity,
 })
 
@@ -59,75 +51,118 @@ if (allImages.length > 0) {
     selectedImage.value = allImages[0]
 }
 
-const hoveredImage = ref<string>("")
-const mouseenter = (link: string) => {
-    hoveredImage.value = link
+const selectImage = (imageIndex: number) => {
+    if (imageIndex > -1 && imageIndex < allImages.length) {
+        selectedImage.value = allImages[imageIndex]
+        scrollIntoView(imageIndex)
+    }
+}
+
+const selectedIndex = computed(() => allImages.indexOf(selectedImage.value))
+
+const clickPrevious = () => {
+    if (selectedIndex.value > 0) {
+        selectImage((selectedIndex.value - 1))
+    }
+}
+
+const clickNext = () => {
+    if (selectedIndex.value < (allImages.length - 1)) {
+        selectImage((selectedIndex.value + 1))
+    }
+}
+
+const mouseenter = (imageIndex: number) => {
+    scrollIntoView(imageIndex)
 }
 
 const mouseleave = () => {
-    hoveredImage.value = ""
+    scrollIntoView(selectedIndex.value)
 }
 
-const activeImage = computed(() => hoveredImage.value || selectedImage.value)
+const scrollerRef = ref<HTMLElement>()
+const mainImagesRef = ref<HTMLElement[]>([])
+let ignoreNextScrollEvent = false
 
-
-let mainClass: string[]
-let asideClass: string[]
-switch (props.aside) {
-    case "none":
-        mainClass = ["flex"]
-        asideClass = ["hidden"]
-        break
-    case "left-justify":
-        mainClass = ["flex", "flex-row"]
-        asideClass = ["flex", "flex-col", "flex-nowrap", "justify-between"]
-        break
-    case "left-scroll":
-        mainClass = ["flex", "flex-row"]
-        asideClass = ["flex", "flex-col", "flex-nowrap", "overflow-y-scroll"]
-        break
-    case "bottom-justify":
-        mainClass = ["flex", "flex-col"]
-        asideClass = ["flex", "flex-row", "flex-nowrap", "justify-between"]
-        break
-    case "bottom-scroll":
-        mainClass = ["flex", "flex-col"]
-        asideClass = ["flex", "flex-row", "flex-nowrap", "overflow-x-scroll"]
-        break
-    default:
-        mainClass = props.class.concat()
-        asideClass = props.asideClass.concat()
-        break
+// update selected image on scroll
+const onScroll = () => {
+    if (ignoreNextScrollEvent) {
+        ignoreNextScrollEvent = false
+        return
+    }
+    if (scrollerRef.value) {
+        const parentLeft = scrollerRef.value.getBoundingClientRect().left
+        const [visibleIndex, _] = mainImagesRef.value.reduce(([minIndex, minValue], ref, index) => {
+            const value = Math.abs(parentLeft - ref.getBoundingClientRect().left)
+            if (minIndex == -1 || value < minValue) {
+                return [index, value]
+            }
+            return [minIndex, minValue]
+        }, [-1, 0])
+        if (visibleIndex > -1) {
+            selectedImage.value = allImages[visibleIndex]
+        }
+    }
 }
 
-
-
+// scroll an image into view
+const scrollIntoView = (index: number) => {
+    if (scrollerRef.value && index > -1 && index < mainImagesRef.value.length) {
+        const pos = mainImagesRef.value[index].offsetLeft
+        ignoreNextScrollEvent = true
+        scrollerRef.value.scroll({ left: pos, behavior: "auto"})
+    }
+}
 </script>
 
 <template>
-    <div :class="mainClass">
-        <div :class="asideClass">
-            <template v-for="additionalImage in allImages">
-                <div
-                    @click="selectedImage = additionalImage"
-                    @mouseenter="mouseenter(additionalImage)"
-                    @mouseleave="mouseleave"
-                >
-                    <slot name="aside-image" :alt="props.alt" :src="additionalImage" :active="additionalImage === activeImage">
+    <div :class="props.class">
+        <div :class="props.asideClass">
+            <template v-for="(additionalImage, index) in allImages">
+                <div @click="selectImage(index)" @mouseenter="mouseenter(index)"
+                    @mouseleave="mouseleave">
+                    <slot name="aside-image" :alt="props.alt" :src="additionalImage"
+                        :active="additionalImage === selectedImage">
                         <!-- default content for slot additional-image -->
-                        <Image :src="additionalImage" :alt="props.alt" height="80" width="80" class="cursor-pointer"/>
+                        <Image :src="additionalImage" :alt="props.alt" height="80" width="80" class="cursor-pointer" />
                     </slot>
                 </div>
             </template>
         </div>
 
-        <div class="flex-1">
-            <div>
-                <slot name="main-image" :src="activeImage" :alt="props.alt">
-                    <!-- default content for slot additional-image -->
-                    <Image height="400" width="400" :src="activeImage" :alt="props.alt"/>
-                </slot>
+        <div class="flex-1 relative">
+            <div class="flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory scrollbar-hide" @scroll="onScroll" ref="scrollerRef">
+                <div v-for="additionalImage in allImages" class="flex-none snap-center" ref="mainImagesRef">
+                    <slot name="main-image"  :src="additionalImage" :alt="props.alt">
+                        <!-- default content for slot for main image -->
+                        <Image height="400" width="400" :src="additionalImage" :alt="props.alt"/>
+                    </slot>
+                </div>
+            </div>
+
+            <div class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
+                <div class="pointer-events-auto cursor-pointer" @click="clickPrevious">
+                    <slot name="previous-btn"></slot>
+                </div>
+            </div>
+
+            <div class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
+                <div class="pointer-events-auto cursor-pointer" @click="clickNext">
+                    <slot name="next-btn"></slot>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
+
+<style lang="scss" scoped>
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+</style>
