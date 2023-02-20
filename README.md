@@ -156,3 +156,26 @@ Buttons and items can be configured using slots and class props
     <template #next-btn="scope"> next </template>
 </Slider>
 ```
+
+### Pagination
+Display pagination for `Filter` system. Style can be customized using class props on top level element or props for buttons.
+```
+<FiltersPagination :filter="filter" :max-visible-buttons="3" class="flex items-center justify-center gap-2">
+  <template #previous-button>
+    <div class="flex items-center justify-center w-[39px] h-[39px] rounded-full border border-grey3 hover:bg-third hover:border-third hover:text-white">
+      <img class="pr-0.5" src="~/assets/icons/chevron-l.svg" width="10" height="" loading="lazy" alt=""/>
+    </div>
+  </template>
+
+  <template #page-button="{ active, number }">
+    <div v-if="active" class="flex items-center justify-center w-[39px] h-[39px] rounded-full border border-transparent text-white bg-secondary hover:bg-secondary hover:cursor-default">{{ number }}</div>
+    <div v-else class="flex items-center justify-center w-[39px] h-[39px] rounded-full border border-grey3 hover:bg-third hover:border-third hover:text-white">{{ number }}</div>
+  </template>
+
+  <template #next-button>
+    <div class="flex items-center justify-center w-[39px] h-[39px] rounded-full border border-grey3 hover:bg-third hover:border-third hover:text-white">
+      <img class="pr-0.5" src="~/assets/icons/chevron-r.svg" width="10" height="" loading="lazy" alt=""/>
+    </div>
+  </template>
+</FiltersPagination>
+```
