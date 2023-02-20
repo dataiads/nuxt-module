@@ -29,7 +29,7 @@ export default defineNuxtPlugin(() => {
                 return url.toString()
             },
             isSafeLink(url: string): boolean {
-                return url.startsWith(`${config.public.mirroredDomain}/`) || url === config.public.mirroredDomain
+                return url.startsWith("/") || url.startsWith(`${config.public.mirroredDomain}/`) || url === config.public.mirroredDomain
             },
             addToCartUrl(searchParams?: Record<string, string>): string {
                 const product = useState<Product>("product")
