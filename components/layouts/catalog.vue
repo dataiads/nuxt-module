@@ -57,6 +57,9 @@ const s = config.public.layoutStyle
                         :item="item"
                     ></slot>
                 </div>
+                <div id="filters-pagination" :class="s.filters.paginationClass">
+                    <slot name="filters-pagination"></slot>
+                </div>
             </div>
         </div>
     </div>
