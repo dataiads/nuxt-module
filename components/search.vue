@@ -1,6 +1,5 @@
 
 <script setup lang="ts">
-const { $isSafeLink } = useNuxtApp()
 
 interface Props {
     value: string,
