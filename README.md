@@ -179,3 +179,11 @@ Display pagination for `Filter` system. Style can be customized using class prop
   </template>
 </FiltersPagination>
 ```
+
+### Search
+A search input that redirects to the mirrored website search page with the value as a parameter. A custom input can be provided as a slot
+```
+<Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q" v-slot="{ value, input }">
+  <input :value="value" @input="input" placeholder="rechercher...">
+</Search>
+```
