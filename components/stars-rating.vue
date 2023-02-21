@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Arrayable } from '@unhead/vue';
 
 interface Props {
      value: number

@@ -216,3 +216,22 @@ Display a a product review as starts. Use slots to customize displayed stars
   </template>
 </StarsRating>
 ```
+
+### Price display
+Display product price. Handles sale prices and collected data.
+```
+<PriceDisplay :product="product">
+  <template #price="{ price }">
+    <div class="text-tint-price text-[22px]">{{ price }} €</div>
+    <div class="text-secondary mr-6">
+      <span class="mx-2">&#x2022;</span> Non remisable
+    </div>
+  </template>
+
+  <template #sale-price="{ price, salePrice, currency, priceDifference }">
+    <div class="text-tint-price text-[22px]">{{ salePrice }} €</div>
+    <div class="line-through text-subtitle ml-2">{{ price }} €</div>
+    <div class="badge"> -{{priceDifference}}% </div>
+  </template>
+</PriceDisplay>
+```
