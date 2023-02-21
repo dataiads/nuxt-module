@@ -47,6 +47,9 @@ export default defineNuxtConfig({
                 header: {
                     class: ["col-span-full", "w-full", "z-[2]"],
                 },
+                breadcrumb: {
+                    class: ["w-full", "lg:container", "mx-auto"],
+                },
                 mainProduct: {
                     class: ["w-full", "lg:container", "mx-auto"],
                 },

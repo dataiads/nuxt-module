@@ -21,6 +21,10 @@ const s = config.public.layoutStyle
             <slot name="header"></slot>
         </header>
 
+        <div id="breadcrumb" :class="s.breadcrumb.class">
+            <slot name="breadcrumb"></slot>
+        </div>
+
         <div id="main-product" :class="s.mainProduct.class">
             <slot name="main-product"></slot>
         </div>
