@@ -65,6 +65,7 @@ export default defineNuxtConfig({
                     contentClass: ["grow"],
                     contentHeaderClass: [],
                     contentGridClass: ["grid", "grid-cols-2", "gap-4", "md:gap-8", "lg:grid-cols-3", "xl:grid-cols-4"],
+                    paginationClass: ["w-full", "flex", "flex-row", "justify-center"],
                 },
                 crossSell: {
                     class: ["lg:container", "mx-auto"]
