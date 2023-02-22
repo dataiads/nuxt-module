@@ -40,14 +40,26 @@ if (price.value != null && salePrice.value != null && price.value > salePrice.va
     displaySalePrice.value = true
     priceDifference.value = Math.round(100 * (price.value - salePrice.value) / price.value)
 }
+
+const priceIntegerPart = computed(() => itemPart(props.product.data.price.value, '.', 0));
+const priceDecimalPart = computed(() => itemPart(props.product.data.price.value, '.', 1));
+
+const salePriceIntegerPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 0));
+const salePriceDecimalPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 1));
+
 </script>
 
 <template>
-    <slot name="sale-price"  v-if="displaySalePrice" :price="price" :currency="currency" :sale-price="salePrice" :sale-currency="saleCurrency" :price-difference="priceDifference">
-        {{ salePrice }} {{ saleCurrency }} <span class="line-through"> {{ price }} {{ currency }}</span>-{{ priceDifference }}%
+    <slot name="sale-price" v-if="displaySalePrice" :price="price" :currency="currency" :sale-price="salePrice"
+        :sale-currency="saleCurrency" :price-difference="priceDifference" :sale-price-integer-part="salePriceIntegerPart"
+        :sale-price-decimal-part="salePriceDecimalPart" :price-integer-part="priceIntegerPart"
+        :price-decimal-part="priceDecimalPart">
+        {{ salePrice }} {{ saleCurrency }} <span class="line-through"> {{ price }} {{ currency }}</span>-{{ priceDifference
+        }}%
     </slot>
 
-    <slot name="price" v-else :price="price" :currency="currency">
+    <slot name="price" v-else :price="price" :currency="currency" :price-integer-part="priceIntegerPart"
+        :price-decimal-part="priceDecimalPart">
         {{ price }} {{ currency }}
     </slot>
 </template>
