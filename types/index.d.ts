@@ -133,3 +133,21 @@ interface Breadcrumb {
   text: string,
   href: string,
 }
+
+interface LPOConfig {
+  name: string,
+  isDefault: string,
+  PublishUp: Date | null,
+  PublishDown: Date | null,
+  fields: LPOConfigField[],
+  has: function(string): boolean
+  get: function(string, any): any
+}
+
+interface LPOConfigField {
+  name: string,
+  type: string,
+  value: string,
+  active: boolean,
+  updatedAt: Date
+}
