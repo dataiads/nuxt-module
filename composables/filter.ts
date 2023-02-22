@@ -1,5 +1,6 @@
+import { ComputedRef, Ref } from "vue"
 
-export const useFilter = (productId: string, baseRules: FilterRule[][], defaultLimit: number = 12) => {
+export const useFilter = (productId: string, baseRules: FilterRule[][], defaultLimit: number = 12, query?: Record<string, string | number>) => {
     // main rules state. do not edit directly use functions below instead
     const state = ref<Record<string, FilterRule[]>>({})
 
@@ -18,16 +19,22 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
     const currentFilters = computed(() => JSON.stringify(Object.values(state.value).concat(baseRules).filter(group => group.length > 0)))
 
     // main fetcher that returns an auto updating list of products to display
-    const fetcher = useFetch(() => "/api/recommendations/default/filtered", {
-        params: {
-            productId,
-            limit,
-            page,
-            sort: computed(() => sort.value.startsWith('-') ? sort.value.substring(1) : sort.value),
-            sortDesc: computed(() => sort.value.startsWith('-')),
-            filters: currentFilters,
-        },
-    });
+    let params: Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>> = {
+        productId,
+        limit,
+        page,
+        sort: computed(() => sort.value.startsWith('-') ? sort.value.substring(1) : sort.value),
+        sortDesc: computed(() => sort.value.startsWith('-')),
+        filters: currentFilters,
+    }
+
+    if (query) {
+        for (const [key, value] of Object.entries(query)) {
+            params[key] = value
+        }
+    }
+
+    const fetcher = useFetch(() => "/api/recommendations/default/filtered", { params: params });
 
     // issue side request to get total items count
     const countFetcher = useFetch(() => "/api/recommendations/default/count-filtered", {

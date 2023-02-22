@@ -1,6 +1,7 @@
 
 // @ts-ignore
 import { defineNuxtPlugin, useRuntimeConfig, useHead, useState, useFetch, useLazyFetch } from "#app";
+import { UseFetchOptions } from '#app'
 
 /* fetch main product data for this page
   handles compatibility with url based product match
@@ -117,12 +118,17 @@ export function reportError(err: string) {
   });
 }
 
-function fetchProductRecommendations(recommender: string, algo: string, params?: Record<string, any>) {
+function fetchProductRecommendations(recommender: string, algo: string, params?: Record<string, any>, key?: string) {
   const runtimeConfig = useRuntimeConfig()
 
-  const fetcher = useLazyFetch<Product[]>(`/api/recommendations/${recommender}/${algo}`, {
-      params: params,
-  })
+  const fetchOptions: UseFetchOptions<Product[]> = {
+    params: params
+  }
+  if (key) {
+    fetchOptions.key = key
+  }
+
+  const fetcher = useLazyFetch<Product[]>(`/api/recommendations/${recommender}/${algo}`, fetchOptions)
   setTimeout(() => {
       if (fetcher.pending.value) {
           errorRedirect("product recommendations timeout")
