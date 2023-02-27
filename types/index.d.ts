@@ -59,6 +59,8 @@ interface Product {
   status: string,
   syncId: number,
   updatedAt: string
+  uri: string,
+  fragment: string,
 }
 
 interface ServerConfig {

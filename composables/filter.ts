@@ -1,6 +1,6 @@
 import { ComputedRef, Ref } from "vue"
 
-export const useFilter = (productId: string, baseRules: FilterRule[][], defaultLimit: number = 12, query?: Record<string, string | number>) => {
+export const useFilter = (productId: string, baseRules: FilterRule[][], defaultLimit: number = 12, query?: Record<string, string | number>, fetchOptions?: Record<string, any>) => {
     // main rules state. do not edit directly use functions below instead
     const state = ref<Record<string, FilterRule[]>>({})
 
@@ -34,7 +34,12 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
         }
     }
 
-    const fetcher = useFetch(() => "/api/recommendations/default/filtered", { params: params });
+    if (!fetchOptions) {
+        fetchOptions = {}
+    }
+
+    const fetcher = useFetch(() => "/api/recommendations/default/filtered", { params: params, ...fetchOptions });
+
 
     // issue side request to get total items count
     const countFetcher = useFetch(() => "/api/recommendations/default/count-filtered", {
