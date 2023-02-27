@@ -1,18 +1,36 @@
 import { devConfig } from "../dev.config"
 
 export default defineNuxtPlugin(() => {
-    const lpoConfig: LPOConfig = window.__LPO_CONFIG__ ?? {
+    /**
+     * LPOConfig is user modified configuration that can be set in the backoffice.
+     * A dev.config.ts file is available in this repo for use in dev env.
+     * 
+     */
 
-    }
+    const lpoConfig: LPOConfig = window.__LPO_CONFIG__ ?? {}
 
+    /**
+     * 
+     * Checks that the lpoConfig contains the key.
+     * If running on a dev env, this will read the dev.config.ts file.
+     * 
+     * @param key The key of the configuration to retrieve
+     */
     lpoConfig.has = (key: string) => {
         if (process.env.NODE_ENV === "development") {
             return devConfig.hasOwnProperty(key)
         }
 
-        return lpoConfig.fields.some(f => f.name === key)
+        return lpoConfig.fields?.some(f => f.name === key) ?? false
     }
 
+    /**
+     * Retrieves the value of the key from the lpoConfig defined in the backoffice.
+     * If running on a dev env, this will read the dev.config.ts file.
+     * 
+     * @param key The key of the configuration to retrieve
+     * @param def The default value to return if the key does not exist
+     */
     lpoConfig.get = (key: string, def: any) => {
         if (process.env.NODE_ENV === "development") {
             return devConfig[key] ?? def
@@ -35,7 +53,7 @@ export default defineNuxtPlugin(() => {
         if (process.env.NODE_ENV === "development") {
             warn += `
             
-              USING DEFAULT DEV VALUE: ${c} -> "${devConfig[c]}"`
+              USING DEV VALUE: ${c} -> "${devConfig[c]}"`
         }
         console.warn(warn)
     })

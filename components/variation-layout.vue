@@ -1,7 +1,10 @@
 <script setup lang="ts">
 // @ts-ignore
 const { $lpoConfig } = useNuxtApp()
-const variation = $lpoConfig.get('variation')
+
+// Variation is changed in the backoffice.
+// OR by editing dev.config.ts in dev env.
+const variation = $lpoConfig.get('variation', 'catalog')
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
