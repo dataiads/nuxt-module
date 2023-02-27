@@ -131,8 +131,8 @@ const scrollIntoView = (index: number) => {
         </div>
 
         <div class="flex-1 relative">
-            <div class="flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory scrollbar-hide" @scroll="onScroll" ref="scrollerRef">
-                <div v-for="additionalImage in allImages" class="flex-none snap-center max-w-fit" ref="mainImagesRef">
+            <div class="flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory scrollbar-hide md:overflow-hidden" @scroll="onScroll" ref="scrollerRef">
+                <div v-for="additionalImage in allImages" class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
                     <slot name="main-image"  :src="additionalImage" :alt="props.alt">
                         <!-- default content for slot for main image -->
                         <Image height="400" width="400" :src="additionalImage" :alt="props.alt"/>
