@@ -21,14 +21,14 @@ const props = defineProps<{
         </template>
     </LayoutsCatalog>
 
-    <LayoutsExample
-        v-else-if="config.public.variation === 'example'"
+    <LayoutsCatalogNoFilter
+        v-else-if="config.public.variation === 'catalog-no-filter'"
         v-bind="props"
     >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
-    </LayoutsExample>
+    </LayoutsCatalogNoFilter>
 
     <span v-else>error: unknown variation</span>
 </template>
