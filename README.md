@@ -34,6 +34,7 @@ export default defineNuxtConfig({
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
 * `salePriceDifference` to get a products regular/sale price difference as a percentage
 * `mask` a utility function to extract parts of a string using a regular expression
+* `itemPart` a utility that splits a string and returns the requested part based on an index
 
 
 ## Plugins
@@ -221,14 +222,14 @@ Display a a product review as starts. Use slots to customize displayed stars
 Display product price. Handles sale prices and collected data.
 ```
 <PriceDisplay :product="product">
-  <template #price="{ price }">
+  <template #price="{ price, priceIntegerPart, priceDecimalPart }">
     <div class="text-tint-price text-[22px]">{{ price }} €</div>
     <div class="text-secondary mr-6">
       <span class="mx-2">&#x2022;</span> Non remisable
     </div>
   </template>
 
-  <template #sale-price="{ price, salePrice, currency, priceDifference }">
+  <template #sale-price="{ price, salePrice, currency, priceDifference, priceIntegerPart, priceDecimalPart, salePriceIntegerPart, salePriceDecimalPart }">
     <div class="text-tint-price text-[22px]">{{ salePrice }} €</div>
     <div class="line-through text-subtitle ml-2">{{ price }} €</div>
     <div class="badge"> -{{priceDifference}}% </div>

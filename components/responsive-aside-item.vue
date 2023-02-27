@@ -43,8 +43,8 @@ const toggleDisplayMobile = () => {
     <div @click="toggleDisplayMobile" class="block md:hidden" :class="props.headerClass">
         <slot name="header" :displayed="displayMobile"></slot>
     </div>
-    <div v-if="displayMobile" class="absolute w-screen inset-x-0 md:hidden" :class="props.contentClass">
-        <slot name="content"></slot>
+    <div v-if="displayMobile" class="fixed inset-0 md:hidden" :class="props.contentClass">
+        <slot name="content" :close="toggleDisplayMobile"></slot>
     </div>
 </div>
 </template>

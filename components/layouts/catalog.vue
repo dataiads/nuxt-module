@@ -8,8 +8,7 @@ const props = defineProps<{
     filter: Filter
 }>()
 
-const { data: filterProducts } = await props.filter.results;
-
+let { data: filterProducts } = await props.filter.results;
 
 const config = useRuntimeConfig()
 const s = config.public.layoutStyle
@@ -57,7 +56,7 @@ const s = config.public.layoutStyle
                 <div :class="s.filters.contentGridClass">
                     <slot name="filters-content-grid-item"
                         v-for="item in filterProducts"
-                        :key="item.id"
+                        :key="item.id ? item.id : JSON.stringify(item)"
                         :item="item"
                     ></slot>
                 </div>
