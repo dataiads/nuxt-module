@@ -1,9 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
-import { useRuntimeConfig } from "#app"
-
-
-const config = useRuntimeConfig()
+const { $lpoConfig } = useNuxtApp()
+const variation = $lpoConfig.get('variation')
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
@@ -13,7 +11,7 @@ const props = defineProps<{
 
 <template>
     <LayoutsCatalog
-        v-if="config.public.variation === 'catalog'"
+        v-if="variation === 'catalog'"
         v-bind="props"
     >
         <template v-for="(_, name) in $slots" #[name]="scope">
@@ -22,7 +20,7 @@ const props = defineProps<{
     </LayoutsCatalog>
 
     <LayoutsExample
-        v-else-if="config.public.variation === 'example'"
+        v-else-if="variation === 'example'"
         v-bind="props"
     >
         <template v-for="(_, name) in $slots" #[name]="scope">
