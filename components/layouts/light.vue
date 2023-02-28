@@ -8,7 +8,7 @@ const props = defineProps<{
     filter: Filter
 }>()
 
-let { data: filterProducts } = await props.filter.results;
+let { data: filterProducts } = props.filter.results;
 
 const config = useRuntimeConfig()
 const s = config.public.layoutStyle
