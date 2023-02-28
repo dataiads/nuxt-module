@@ -93,6 +93,7 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
     const pushRule = (group: string, criteria: string, operator: string, value: string): void => {
         if (!hasRule(group, criteria, operator, value)) {
             if (state.value[group]) {
+                state.value[group].push({criteria, operator, value})
             } else {
                 state.value[group] = [{criteria, operator, value}]
             }
