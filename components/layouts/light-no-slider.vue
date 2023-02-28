@@ -34,11 +34,8 @@ const s = config.public.layoutStyle
                     <slot name="filters-content-header"></slot>
                 </div>
                 <div :class="s.filters.contentGridClass">
-                    <slot name="filters-content-grid-item"
-                        v-for="item in filterProducts"
-                        :key="item.id ? item.id : JSON.stringify(item)"
-                        :item="item"
-                    ></slot>
+                    <slot name="filters-content-grid-item" v-for="item in filterProducts"
+                        :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
                 </div>
                 <div id="filters-pagination" :class="s.filters.paginationClass">
                     <slot name="filters-pagination"></slot>
@@ -54,4 +51,11 @@ const s = config.public.layoutStyle
     <footer id="footer" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>
+
+
+    <div id="sticky-add-to-cart">
+        <StickyFooter>
+            <slot name="sticky-add-to-cart"></slot>
+        </StickyFooter>
+    </div>
 </template>
