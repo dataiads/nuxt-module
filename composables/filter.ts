@@ -16,7 +16,9 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
     const page = ref<number>(1)
 
     // current filters computed property
-    const currentFilters = computed(() => JSON.stringify(Object.values(state.value).concat(baseRules).filter(group => group.length > 0)))
+    const currentFilters = computed(() => {
+        return JSON.stringify(Object.values(state.value).concat(baseRules).filter(group => group.length > 0))
+    })
 
     // main fetcher that returns an auto updating list of products to display
     let params: Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>> = {
@@ -69,16 +71,11 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
         return criteriaValuesCache[criteria]
     }
 
-    // internal. initialize group rules.
-    const initializeGroup = (group: string): void => {
-        if (!state.value[group]) {
-            state.value[group] = [];
-        }
-    }
-
     // all functions below allow state manipulation
     const hasRule = (group: string, criteria: string, operator: string, value: string): boolean => {
-        initializeGroup(group)
+        if (!state.value[group]) {
+            return false
+        }
         return !!state.value[group].find(rule => (
             rule.criteria === criteria &&
             rule.operator === operator &&
@@ -87,28 +84,30 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
     }
 
     const getFirstRuleValue = (group: string): string|null => {
-        initializeGroup(group)
-        if (state.value[group].length > 0) {
+        if (state.value[group]?.length > 0) {
             return state.value[group][0].value
         }
         return null
     }
 
     const pushRule = (group: string, criteria: string, operator: string, value: string): void => {
-        initializeGroup(group)
         if (!hasRule(group, criteria, operator, value)) {
-            state.value[group].push({criteria, operator, value})
+            if (state.value[group]) {
+                state.value[group].push({criteria, operator, value})
+            } else {
+                state.value[group] = [{criteria, operator, value}]
+            }
         }
     }
 
     const setOnlyRule = (group: string, criteria: string, operator: string, value: string): void => {
-        initializeGroup(group)
-        removeAllRules(group)
-        pushRule(group, criteria, operator, value.toString())
+        state.value[group] = [{criteria, operator, value}]
     }
 
     const removeRule = (group: string, criteria: string, operator: string, value: string): void => {
-        initializeGroup(group)
+        if (!hasRule(group, criteria, operator, value)) {
+            return
+        }
         const index = state.value[group].findIndex(rule => (
             rule.criteria === criteria &&
             rule.operator === operator &&
@@ -120,8 +119,7 @@ export const useFilter = (productId: string, baseRules: FilterRule[][], defaultL
     }
 
     const removeAllRules = (group: string): void => {
-        initializeGroup(group)
-        state.value[group].splice(0, state.value[group].length)
+        state.value[group] = []
     }
 
     return {

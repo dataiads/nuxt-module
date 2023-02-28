@@ -29,7 +29,7 @@ const props = defineProps<{
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
-    </LayoutsExample>
+    </LayoutsCatalogNoFilter>
 
     <span v-else>error: unknown variation</span>
 </template>
