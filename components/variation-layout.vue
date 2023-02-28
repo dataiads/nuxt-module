@@ -1,10 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
-const { $lpoConfig } = useNuxtApp()
-
-// Variation is changed in the backoffice.
-// OR by editing dev.config.ts in dev env.
-const variation = $lpoConfig.get('variation', 'catalog')
+const lpoConfig = useLPOConfig()
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
@@ -12,26 +8,30 @@ const props = defineProps<{
 }>()
 </script>
 
+<script lang="ts">
+export type Variations = "catalog" | "catalog-no-slider" | "light" | "light-no-slider";
+</script>
+
 <template>
-    <LayoutsCatalog v-if="variation === 'catalog'" v-bind="props" >
+    <LayoutsCatalog v-if="lpoConfig.variation === 'catalog'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalog>
 
-    <LayoutsCatalogNoSlider v-else-if="variation === 'catalog-no-slider'" v-bind="props" >
+    <LayoutsCatalogNoSlider v-else-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalogNoSlider>
 
-    <LayoutsLight v-else-if="variation === 'light'" v-bind="props" >
+    <LayoutsLight v-else-if="lpoConfig.variation === 'light'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsLight>
 
-    <LayoutsLightNoSlider v-else-if="variation === 'light-no-slider'" v-bind="props" >
+    <LayoutsLightNoSlider v-else-if="lpoConfig.variation === 'light-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>

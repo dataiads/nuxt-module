@@ -1,3 +1,4 @@
+import { Variations } from "~~/components/variation-layout.vue";
 
 interface ProductDataPrice {
   currency: string,
@@ -136,20 +137,15 @@ interface Breadcrumb {
   href: string,
 }
 
+// Add available LPO Config fields here.
 interface LPOConfig {
-  name: string,
-  isDefault: string,
-  PublishUp: Date | null,
-  PublishDown: Date | null,
-  fields: LPOConfigField[],
-  has: function(string): boolean
-  get: function(string, any): any
+  locale: string,
+  variation?: Variations
 }
 
-interface LPOConfigField {
-  name: string,
-  type: string,
-  value: string,
-  active: boolean,
-  updatedAt: Date
+
+declare module '@nuxt/types/config/runtime/public' {
+  interface NuxtRuntimeConfig {
+    devLPOConfig: LPOConfig
+  }
 }
