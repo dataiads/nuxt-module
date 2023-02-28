@@ -12,23 +12,29 @@ const props = defineProps<{
 </script>
 
 <template>
-    <LayoutsCatalog
-        v-if="config.public.variation === 'catalog'"
-        v-bind="props"
-    >
+    <LayoutsCatalog v-if="config.public.variation === 'catalog'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalog>
 
-    <LayoutsCatalogNoFilter
-        v-else-if="config.public.variation === 'catalog-no-filter'"
-        v-bind="props"
-    >
+    <LayoutsCatalogNoSlider v-else-if="config.public.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
-    </LayoutsCatalogNoFilter>
+    </LayoutsCatalogNoSlider>
+
+    <LayoutsLight v-else-if="config.public.variation === 'light'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLight>
+
+    <LayoutsLightNoSlider v-else-if="config.public.variation === 'light-no-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightNoSlider>
 
     <span v-else>error: unknown variation</span>
 </template>
