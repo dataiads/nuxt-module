@@ -17,8 +17,14 @@ const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteri
 <FiltersCheckbox
   v-for="(count, value) in availableValues"
   operator="EQUAL"
-  :value="value"
+  :value="value.toString()"
   :label="`${value} (${count})`"
   v-bind="props"
-/>
+>
+    <template #label="scope">
+      <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
+      </slot>
+    </template> 
+</FiltersCheckbox>
+
 </template>
