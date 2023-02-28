@@ -8,21 +8,17 @@ const props = withDefaults(defineProps<{
   filter: Filter
   criteria: string
   operator?: string
-  value?: string
   group: string
   class?: string
-  inputClass?: string
-  labelClass?: string
+  value?: string
 }>(), {
   label: "",
   operator: "EQUAL",
   value: "",
   class: "flex items-center gap-1 my-1",
-  inputClass: "hover:cursor-pointer",
-  labelClass: "",
 })
 
-let binder = computed({
+let binderGenerator = () => computed({
   get: () =>
     props.filter.hasRule(props.group, props.criteria, props.operator, props.value),
   set: (val) => {
@@ -37,9 +33,6 @@ let binder = computed({
 
 <template>
   <div :class="props.class">
-    <input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder">
-    <slot name="label" :label="props.label" :uid="uid">
-      <label :class="props.labelClass" :for="uid">{{ props.label }}</label>
-    </slot>
+    <slot name="customCheckbox" :id="uid" :binder-generator="binderGenerator"></slot>
   </div>
 </template>

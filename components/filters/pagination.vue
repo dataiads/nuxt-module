@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
     class: "flex items-center",
 })
 
-let { data: totalResults } = await props.filter.count
+let { data: totalResults } = props.filter.count
 
 const pageCount = computed(() => Math.ceil(totalResults.value / props.filter.limit.value))
 
@@ -31,7 +31,7 @@ const range = (min: number, max: number): number[] => {
 
 <template>
     <nav :class="props.class">
-        <div v-if="filter.page.value > 1" @click="filter.page.value =  1" alt="go to previous page">
+        <div v-if="filter.page.value > 1" @click="filter.page.value--" alt="go to previous page">
             <slot name="previous-button">
                 <button type="button">&lt;</button>
             </slot>
@@ -45,7 +45,7 @@ const range = (min: number, max: number): number[] => {
             </div>
         </template>
 
-        <div v-if="filter.page.value < pageCount" @click="filter.page.value = pageCount" alt="go to next page">
+        <div v-if="filter.page.value < pageCount" @click="filter.page.value++" alt="go to next page">
             <slot name="next-button">
                 <button type="button">&gt;</button>
             </slot>
