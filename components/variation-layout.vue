@@ -13,23 +13,29 @@ const props = defineProps<{
 </script>
 
 <template>
-    <LayoutsCatalog
-        v-if="variation === 'catalog'"
-        v-bind="props"
-    >
+    <LayoutsCatalog v-if="variation === 'catalog'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalog>
 
-    <LayoutsExample
-        v-else-if="variation === 'example'"
-        v-bind="props"
-    >
+    <LayoutsCatalogNoSlider v-else-if="variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
-    </LayoutsCatalogNoFilter>
+    </LayoutsCatalogNoSlider>
+
+    <LayoutsLight v-else-if="variation === 'light'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLight>
+
+    <LayoutsLightNoSlider v-else-if="variation === 'light-no-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightNoSlider>
 
     <span v-else>error: unknown variation</span>
 </template>
