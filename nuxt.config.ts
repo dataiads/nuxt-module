@@ -76,6 +76,9 @@ export default defineNuxtConfig({
                 footer: {
                     class: ["col-span-full", "w-full"],
                 },
+                stickyAddToCart: {
+                    class: ["fixed", "inset-x-0", "bottom-0", "bg-white"],
+                },
             },
         }
     },

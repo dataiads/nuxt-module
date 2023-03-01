@@ -74,4 +74,8 @@ const s = config.public.layoutStyle
     <footer id="footer" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>
+
+    <div id="sticky-add-to-cart" :class="s.stickyAddToCart.class">
+        <slot name="sticky-add-to-cart"></slot>
+    </div>
 </template>
