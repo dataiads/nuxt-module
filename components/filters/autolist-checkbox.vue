@@ -14,11 +14,10 @@ const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteri
 </script>
 
 <template>
-  <FiltersCheckbox v-for="(count, value) in availableValues" operator="EQUAL" :value="value" v-bind="props"
-    :label="`${value} (${count})`">
-    <template #label="{ uid, label }">
-      <slot name="label" :value="value" :count="count" :uid="uid" :labelClass="labelClass">
-        <label :class="props.labelClass" :for="uid">{{ label }}</label>
+  <FiltersCheckbox v-for="(count, value) in availableValues" operator="EQUAL" :value="value.toString()"
+    :label="`${value} (${count})`" v-bind="props">
+    <template #label="scope">
+      <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
       </slot>
     </template>
   </FiltersCheckbox>

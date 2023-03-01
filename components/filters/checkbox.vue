@@ -36,10 +36,10 @@ let binder = computed({
 </script>
 
 <template>
-  <div :class="props.class">
-    <input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder">
-    <slot name="label" :label="props.label" :uid="uid">
-      <label :class="props.labelClass" :for="uid">{{ props.label }}</label>
-    </slot>
-  </div>
+<div :class="props.class">
+	<input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder" >
+	<label :class="props.labelClass" :for="uid" >
+    <slot name="label" :label="props.label">{{ props.label }}</slot>
+  </label>
+</div>
 </template>
