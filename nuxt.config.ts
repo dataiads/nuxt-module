@@ -46,6 +46,10 @@ export default defineNuxtConfig({
                 id: [],
             },
 
+            onetrust: {
+                dataDomainScript: null,
+            },
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {
