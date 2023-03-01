@@ -42,6 +42,14 @@ export default defineNuxtConfig({
             // disable i18n by default
             locale: "",
 
+            gtm: {
+                id: [],
+            },
+
+            onetrust: {
+                dataDomainScript: null,
+            },
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {
