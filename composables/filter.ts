@@ -92,7 +92,6 @@ export const useFilter = (options: UseFilterOptions) => {
     }
 
     // issue side request to get total items count
-    //let count: ComputedRef<number> | Ref<number> = ref<number>(0)
     let count = ref(0)
 
     if (!options.localPagination) {
