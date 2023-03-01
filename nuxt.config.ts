@@ -42,6 +42,10 @@ export default defineNuxtConfig({
             // disable i18n by default
             locale: "",
 
+            gtm: {
+                id: [],
+            },
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {
