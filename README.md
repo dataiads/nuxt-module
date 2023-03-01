@@ -29,6 +29,7 @@ export default defineNuxtConfig({
 ```
 
 ## Available composables
+* `useLPOConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLPOConfig`.
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
 * `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
@@ -38,6 +39,12 @@ export default defineNuxtConfig({
 
 
 ## Plugins
+### LPO Config
+Handles loading the LPOConfig available for use in the composable `useLPOConfig`.
+This currently allows you to modify only the `locale` and `variation` for the time being, but will soon be open to any field, allowing you to make your app configurable via the backoffice.
+
+Other plugins may rely on this for execution, it should therefore never be disabled.
+
 ### Core
 Handles page initialization, error handling configuration and initial page data load.
 Provides the following functions:
@@ -45,7 +52,7 @@ Provides the following functions:
 * `$errorRedirect` to fallback on mirrored domain product page when a critical error occurs
 * `$reportError` to report an error to Dataïads api
 
-This plugin cannot be disabled.
+These plugins cannot be disabled.
 
 ### Urls
 Exposes URL related functions
@@ -72,11 +79,19 @@ Enable internationalization using vue-i18n package.
 Translation data must be available inside `locales/` directory. When adding a new locale data file, dont forget to import it inside `locales/index.ts`.
 
 Set a locale value to enable this plugin:
+
+**In production:**
+Toggle the locale by changing its value in the backoffice.
+This can be found on the Temlpates page, by editing the config of the concerend template.
+
+**In dev env:**
 ```
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      locale: "fr-fr"
+      devLPOConfig: {
+        locale: "fr-fr"
+      }
     }
   }
 })
