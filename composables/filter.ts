@@ -1,5 +1,8 @@
-import { UseFetchOptions } from "nuxt/dist/app/composables"
+import { UseFetchOptions, AsyncData } from "nuxt/dist/app/composables"
 import { ComputedRef, Ref } from "vue"
+import { FetchError } from "ofetch"
+
+
 
 export interface UseFilterOptions {
     // product to get recommendations for
@@ -7,6 +10,9 @@ export interface UseFilterOptions {
 
     // base recommendation rules for all queries
     baseRules?: FilterRule[][]
+
+    // initial rules to add to the state
+    initialRules?: InitialFilterRule[]
 
     // optional extra query parameters for recommendation endpoint
     fetchQuery?: Record<string, string | number>
@@ -27,6 +33,16 @@ export interface UseFilterOptions {
 export const useFilter = (options: UseFilterOptions) => {
     // main rules state. do not edit directly use functions below instead
     const state = ref<Record<string, FilterRule[]>>({})
+
+    // handle initial rules before setting up fetcher
+    if (options.initialRules) {
+        for (let r of options.initialRules) {
+            if (!state.value[r.group]) {
+                state.value[r.group] = []
+            }
+            state.value[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value })
+        }
+    }
 
     // watchable configuration for recommendation request.
     // can be manipulated directly and fetcher will update automatically
@@ -63,7 +79,7 @@ export const useFilter = (options: UseFilterOptions) => {
     });
 
     // fetcher post processing (grouping, local pagination...)
-    let fetcher = {
+    let fetcher: FilterResults = {
         data: computed(() => {
             let rawData = _fetcher.data.value
             if (!rawData) {
@@ -203,5 +219,37 @@ function execGrouper(data: Product[], grouper: (p: Product) => string): Product[
       }
     }
     return Object.values(groups)
-
 }
+
+export interface FilterResults {
+    data: ComputedRef<any|null>
+    pending: Ref<boolean>
+    refresh: (opts?: any) => Promise<void>
+    execute: (opts?: any) => Promise<void>
+    error: Ref<FetchError<any> | null>
+}
+
+export interface Filter {
+    results: FilterResults;
+    count: Ref<number>;
+    limit: Ref<number>;
+    page: Ref<number>;
+    sort: Ref<string>;
+    hasRule: (group: string, criteria: string, operator: string, value: string) => boolean;
+    getFirstRuleValue: (group: string) => string | null;
+    pushRule: (group: string, criteria: string, operator: string, value: string) => void;
+    setOnlyRule: (group: string, criteria: string, operator: string, value: string) => void;
+    removeRule: (group: string, criteria: string, operator: string, value: string) => void;
+    removeAllRules: (group: string) => void;
+    fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
+  }
+
+  export interface InitialFilterRule extends FilterRule {
+    group: string,
+  }
+  
+ export interface FilterRule {
+    criteria: string,
+    operator: string,
+    value: string,
+  }
