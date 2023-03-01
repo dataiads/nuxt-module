@@ -20,7 +20,6 @@ let hideTimer: ReturnType<typeof setTimeout>|null = null
 onMounted(() => {
   window.addEventListener('scroll', () => {
     if (window.scrollY > props.yThreshold) {
-        console.log("show")
         if (hideTimer) {
             clearTimeout(hideTimer)
             hideTimer = null
@@ -29,7 +28,6 @@ onMounted(() => {
             displayTimer = setTimeout(() => (display.value = true), props.delay)
         }
     } else {
-        console.log("clear")
         if (displayTimer) {
             clearTimeout(displayTimer)
             displayTimer = null
