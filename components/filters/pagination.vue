@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
     class: "flex items-center",
 })
 
-let totalResults = await props.filter.count
+let totalResults = props.filter.count
 
 const pageCount = computed(() => Math.ceil(totalResults.value / props.filter.limit.value))
 
