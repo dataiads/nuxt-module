@@ -1,11 +1,3 @@
-<script lang="ts">
-export interface Banner {
-    text: string
-    class?: string
-    href?: string
-}
-</script>
-
 <script setup lang="ts">
 interface Props {
     banners: Banner[]
@@ -39,7 +31,14 @@ onBeforeMount(() => {
 })
 
 const repeatedBanners = ref(props.banners.length ? [...props.banners, props.banners[0]] : [])
+</script>
 
+<script lang="ts">
+export interface Banner {
+    text: string
+    class?: string
+    href?: string
+}
 </script>
 
 <template>
