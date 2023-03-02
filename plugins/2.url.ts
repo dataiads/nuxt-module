@@ -20,8 +20,8 @@ export default defineNuxtPlugin(() => {
         let url = new URL(product.data.link)
         url.protocol = protocol
         url.hostname = mirroredHost
-        url.searchParams.set("lpo-basket", actionType) 
-        url.searchParams.set("lpo-transaction", transactionId.toString()) 
+        url.searchParams.set("lpo-basket", actionType)
+        url.searchParams.set("lpo-transaction", transactionId.toString())
 
         if (quantity.value != 1) {
             url.searchParams.set('lpo-qty', quantity.value.toString())
@@ -36,10 +36,10 @@ export default defineNuxtPlugin(() => {
                 url.searchParams.set(key, value)
             }
         }
-        
+
         return url.toString()
     }
-    
+
     return {
         provide: {
             oriUrl(link: string, query?: Record<string, string>): string {
