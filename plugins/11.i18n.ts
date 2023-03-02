@@ -5,7 +5,7 @@ import messages from "~/locales"
 export default defineNuxtPlugin(async ({ vueApp }) => {
   // Locale is changed in the backoffice.
   // OR by editing lpoConfig part of the nuxt.config.ts file of the LP.
-  const lpoConfig = useLPOConfig()
+  const lpoConfig = useLpoConfig()
 
   if (lpoConfig.locale) {
     const i18n = createI18n({

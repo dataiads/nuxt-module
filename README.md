@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 ```
 
 ## Available composables
-* `useLPOConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLpoConfig`.
+* `useLpoConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLpoConfig`.
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
 * `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
@@ -40,7 +40,7 @@ export default defineNuxtConfig({
 
 ## Plugins
 ### LPO Config
-Handles loading the LPOConfig available for use in the composable `useLPOConfig`.
+Handles loading the LPOConfig available for use in the composable `useLpoConfig`.
 This currently allows you to modify only the `locale` and `variation` for the time being, but will soon be open to any field, allowing you to make your app configurable via the backoffice.
 
 Other plugins may rely on this for execution, it should therefore never be disabled.

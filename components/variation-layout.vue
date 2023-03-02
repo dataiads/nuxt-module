@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const lpoConfig = useLPOConfig()
+const lpoConfig = useLpoConfig()
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
