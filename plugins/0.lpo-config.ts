@@ -41,6 +41,10 @@ export default defineNuxtPlugin(() => {
                     lpoConfig.variation = field.value
                 } else if (field.name === "locale") {
                     lpoConfig.locale = field.value
+                } else if (field.name === 'banners') {
+                    try {
+                        lpoConfig.banners = JSON.parse(field.value)
+                    } catch(e) {}
                 }
             }
         } catch (e) {
