@@ -48,15 +48,3 @@ export interface Banner {
     </div>
 </div>
 </template>
-
-
-<style lang="scss" scoped>
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-</style>
