@@ -1,9 +1,5 @@
 <script setup lang="ts">
-// @ts-ignore
-import { useRuntimeConfig } from "#app"
-
-
-const config = useRuntimeConfig()
+const lpoConfig = useLPOConfig()
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null;
@@ -11,30 +7,33 @@ const props = defineProps<{
 }>()
 </script>
 
-<template>
-    <LayoutsCatalog v-if="config.public.variation === 'catalog'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalog>
+<script lang="ts">
+export type Variations = "catalog" | "catalog-no-slider" | "light" | "light-no-slider";
+</script>
 
-    <LayoutsCatalogNoSlider v-else-if="config.public.variation === 'catalog-no-slider'" v-bind="props" >
+<template>
+    <LayoutsCatalogNoSlider v-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalogNoSlider>
 
-    <LayoutsLight v-else-if="config.public.variation === 'light'" v-bind="props" >
+    <LayoutsLight v-else-if="lpoConfig.variation === 'light'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsLight>
 
-    <LayoutsLightNoSlider v-else-if="config.public.variation === 'light-no-slider'" v-bind="props" >
+    <LayoutsLightNoSlider v-else-if="lpoConfig.variation === 'light-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsLightNoSlider>
 
-    <span v-else>error: unknown variation</span>
+    <!-- "catalog" is the default layout. -->
+    <LayoutsCatalog v-else v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalog>
 </template>
