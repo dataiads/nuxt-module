@@ -10,14 +10,16 @@ interface Props {
     // display additional images on the side
     maxAdditionalImages?: number
 
-    // custom layout instead of using "aside" parameter
+    // customize element classes
     class?: string | string[]
+    mainClass?: string | string[]
     asideClass?: string | string[]
 
 }
 const props = withDefaults(defineProps<Props>(), {
     class: () => ["flex", "flex-row"],
     asideClass: () => ["flex", "flex-col", "flex-nowrap", "overflow-y-scroll", "scrollbar-hide"],
+    mainClass: () => ["flex", "flex-row", "flex-nowrap", "overflow-x-scroll", "snap-x", "snap-mandatory", "scrollbar-hide", "md:overflow-hidden"],
     alt: ({ product }) => product.data?.title || "product image",
     maxAdditionalImages: Infinity,
 })
@@ -131,7 +133,7 @@ const scrollIntoView = (index: number) => {
         </div>
 
         <div class="flex-1 relative">
-            <div class="flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory scrollbar-hide md:overflow-hidden" @scroll="onScroll" ref="scrollerRef">
+            <div :class="mainClass" @scroll="onScroll" ref="scrollerRef">
                 <div v-for="additionalImage in allImages" class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
                     <slot name="main-image"  :src="additionalImage" :alt="props.alt">
                         <!-- default content for slot for main image -->

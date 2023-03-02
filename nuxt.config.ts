@@ -46,6 +46,14 @@ export default defineNuxtConfig({
             // toggle optimized images component
             optimizeImageLoad: true,
 
+            gtm: {
+                id: [],
+            },
+
+            onetrust: {
+                dataDomainScript: null,
+            },
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {

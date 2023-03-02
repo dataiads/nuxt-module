@@ -82,28 +82,6 @@ interface Order {
   d?: string // The direction to dfilter in (default asc)
 }
 
-interface Filter {
-  results: AsyncData<Product[], FetchError<any> | null>;
-  count: AsyncData<number, FetchError<any> | null>;
-  limit: Ref<number>;
-  page: Ref<number>;
-  sort: Ref<string>;
-  hasRule: (group: string, criteria: string, operator: string, value: string) => boolean;
-  getFirstRuleValue: (group: string) => string | null;
-  pushRule: (group: string, criteria: string, operator: string, value: string) => void;
-  setOnlyRule: (group: string, criteria: string, operator: string, value: string) => void;
-  removeRule: (group: string, criteria: string, operator: string, value: string) => void;
-  removeAllRules: (group: string) => void;
-  fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
-}
-
-interface FilterRule {
-  criteria: string,
-  operator: string,
-  value: string,
-}
-
-
 interface Store {
   id: string,
   city: string,
