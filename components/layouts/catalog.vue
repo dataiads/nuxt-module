@@ -73,9 +73,7 @@ const s = config.public.layoutStyle
         <slot name="footer"></slot>
     </footer>
 
-    <div id="sticky-add-to-cart">
-        <StickyFooter>
-            <slot name="sticky-add-to-cart"></slot>
-        </StickyFooter>
-    </div>
+    <StickyFooter>
+        <slot name="sticky-add-to-cart"></slot>
+    </StickyFooter>
 </template>

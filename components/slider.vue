@@ -124,6 +124,7 @@ const mainClass = [
 const scrollerClass = [
     "flex",
     "flex-nowrap",
+    "scrollbar-hide",
     props.direction === "horizontal" ? "flex-row" : "flex-col",
     props.direction === "horizontal" ? "overflow-x-scroll" : "overflow-y-scroll",
     ...props.scrollerClass,

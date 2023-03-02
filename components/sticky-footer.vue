@@ -1,8 +1,7 @@
 
 <script setup lang="ts">
 interface Props {
-    class?: string | string[]
-    delay?: number
+    class?: string[]
     yThreshold?: number
 }
 
@@ -38,10 +37,17 @@ onMounted(() => {
     }
   });
 })
+
+const class_ = computed(()=> [
+    {'translate-y-full': !display.value},
+    {'opacity-0': !display.value},
+    ...props.class,
+])
+
 </script>
 
 <template>
-    <div class="fixed bottom-0 left-0 right-0" :class="props.class" v-if="display">
+    <div class="sticky bottom-0 z-20 transition duration-700" :class="class_">
         <slot></slot>
     </div>
 </template>
