@@ -1,3 +1,5 @@
 title: Dataiads Nuxt layer
 description: Quickly build powerful landing pages using Dataids.
-remote_theme: just-the-docs
+theme: just-the-docs
+
+url: https://dataiads.github.io/nuxt-module
