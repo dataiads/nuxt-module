@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRuntimeConfig } from "#app"
+import { Filter } from "~~/composables/filter";
 
 
 const props = defineProps<{
@@ -78,4 +79,6 @@ const s = config.public.layoutStyle
             <slot name="sticky-add-to-cart"></slot>
         </StickyFooter>
     </div>
+
+    <slot id="filters-drawer" name="filters-drawer"></slot>
 </template>
