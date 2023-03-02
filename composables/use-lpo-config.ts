@@ -1,4 +1,4 @@
 export default () => {
-    const nuxtApp = useNuxtApp()
-    return nuxtApp.$lpoConfig
+    const {$lpoConfig} = useNuxtApp()
+    return $lpoConfig
 }

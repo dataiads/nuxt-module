@@ -1,7 +1,10 @@
 <script setup lang="ts">
 interface Props {
-    banners: Banner[]
+    // banners can also be injected using the lpo config
+    banners?: Banner[]
+
     interval?: number
+
     class?: string
 }
 
@@ -10,9 +13,13 @@ const props = withDefaults(defineProps<Props>(), {
     class: "",
 })
 
+const lpoConfig = useLpoConfig()
 const container = ref<HTMLElement | null>(null)
 
+const banners = props.banners || lpoConfig.banners || []
+
 onBeforeMount(() => {
+    if (banners.length > 1) {
     window.setInterval(() => {
         if (container.value) {
             if (Math.round(container.value.scrollTop) >= container.value.scrollHeight - container.value.clientHeight) {
@@ -28,21 +35,16 @@ onBeforeMount(() => {
                 
         }
     }, props.interval)
+    }
 })
 
-const repeatedBanners = ref(props.banners.length ? [...props.banners, props.banners[0]] : [])
+const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners)
+
 </script>
 
-<script lang="ts">
-export interface Banner {
-    text: string
-    class?: string
-    href?: string
-}
-</script>
 
 <template>
-<div :class="props.class" class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide" ref="container" v-if="props.banners.length">
+<div :class="props.class" class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide" ref="container" v-if="repeatedBanners.length">
     <div class="min-h-full max-h-full w-full flex justify-center items-center snap-center" v-for="banner in repeatedBanners">
         <slot v-bind="banner"></slot>
     </div>

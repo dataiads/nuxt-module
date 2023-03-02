@@ -115,10 +115,17 @@ interface Breadcrumb {
   href: string,
 }
 
+export interface Banner {
+  text: string
+  class?: string
+  href?: string
+}
+
 // Add available LPO Config fields here.
 interface LPOConfig {
   locale: string,
   variation?: Variations
+  banners?: Banner[]
 }
 
 
