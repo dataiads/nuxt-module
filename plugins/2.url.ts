@@ -13,6 +13,32 @@ export default defineNuxtPlugin(() => {
     // unique transaction id for every visitor to avoid adding to cart twice
     // add to cart script handles session wide persistence
     const transactionId = Math.floor(Math.random() * 100000)
+
+
+    const urlGen = (product: Product, actionType: string, searchParams?: Record<string, string>): string => {
+        //const product = useState<Product>("product")
+        let url = new URL(product.data.link)
+        url.protocol = protocol
+        url.hostname = mirroredHost
+        url.searchParams.set("lpo-basket", actionType) 
+        url.searchParams.set("lpo-transaction", transactionId.toString()) 
+
+        if (quantity.value != 1) {
+            url.searchParams.set('lpo-qty', quantity.value.toString())
+        }
+
+        if (size.value) {
+            url.searchParams.set('lpo-size', size.value)
+        }
+
+        if (typeof searchParams !== 'undefined') {
+            for (const [key, value] of Object.entries(searchParams)) {
+                url.searchParams.set(key, value)
+            }
+        }
+        
+        return url.toString()
+    }
     
     return {
         provide: {
@@ -33,45 +59,14 @@ export default defineNuxtPlugin(() => {
             },
             addToCartUrl(searchParams?: Record<string, string>): string {
                 const product = useState<Product>("product")
-
-                let url = new URL(product.value.data.link)
-                url.protocol = protocol
-                url.hostname = mirroredHost
-
-                url.searchParams.set("lpo-basket", "add") 
-                url.searchParams.set("lpo-transaction", transactionId.toString()) 
-
-                if (quantity.value != 1) {
-                    url.searchParams.set('lpo-qty', quantity.value.toString())
-                }
-
-                if (size.value) {
-                    url.searchParams.set('lpo-size', size.value)
-                }
-
-                if (typeof searchParams !== 'undefined') {
-                    for (const [key, value] of Object.entries(searchParams)) {
-                        url.searchParams.set(key, value)
-                    }
-                }
-                
-                return url.toString()
+                return urlGen(product.value, "add", searchParams)
             },
             recoAddToCartUrl(product: Product, searchParams?: Record<string, string>): string {
-                let url = new URL(product.data.link)
-                url.protocol = protocol
-                url.hostname = mirroredHost
-
-                url.searchParams.set("lpo-basket", "add") 
-                url.searchParams.set("lpo-transaction", transactionId.toString()) 
-
-                if (typeof searchParams !== 'undefined') {
-                    for (const [key, value] of Object.entries(searchParams)) {
-                        url.searchParams.set(key, value)
-                    }
-                }
-
-                return url.toString()
+                return urlGen(product, "add", searchParams)
+            },
+            customActionUrl(actionType: string, searchParams?: Record<string, string>): string {
+                const product = useState<Product>("product")
+                return urlGen(product.value, actionType, searchParams)
             },
         }
     }
