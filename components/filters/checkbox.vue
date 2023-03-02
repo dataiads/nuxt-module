@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Filter } from '~~/composables/filter';
+
 
 // random id to link label to the input
 const uid = Math.floor(Math.random() * 10 ** 16).toString();
@@ -33,6 +35,11 @@ let binder = computed({
     }
   },
 });
+
+if (props.filter.hasRule(props.group, props.criteria, props.operator, props.value)) {
+  props.class += " order-first"
+}
+
 </script>
 
 <template>

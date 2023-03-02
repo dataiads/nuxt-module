@@ -56,7 +56,7 @@ const s = config.public.layoutStyle
     </footer>
 
 
-    <div id="sticky-add-to-cart">
+    <div id="sticky-add-to-cart" :class="s.stickyAddToCart.class">
         <StickyFooter>
             <slot name="sticky-add-to-cart"></slot>
         </StickyFooter>
