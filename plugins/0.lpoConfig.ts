@@ -26,24 +26,27 @@ export default defineNuxtPlugin(() => {
     
     // Dev env reads config from local nuxt.config.
     if (process.env.NODE_ENV === "development") {
-        lpoConfig = config.public.devLPOConfig
-    } else {
+        lpoConfig = config.public.devLpoConfig
+    } else if (window.__LPO_CONFIG__) {
         // Prod env reads config from the data injected into the window object when LP is served.
-        const injectedConfig: InlineLPOConfig = window.__LPO_CONFIG__ ?? {}
-        for (let field of injectedConfig.fields) {
-            if (!field.active) {
-                continue
+
+        try {
+            for (let field of (window.__LPO_CONFIG__ as InlineLPOConfig).fields) {
+                if (!field.active) {
+                    continue
+                }
+    
+                // TODO: Update here when adding a config field to this template.
+                if (field.name === "variation") {
+                    lpoConfig.variation = field.value
+                } else if (field.name === "locale") {
+                    lpoConfig.locale = field.value
+                }
             }
- 
-            // TODO: Update here when adding a config field to this template.
-            if (field.name === "variation") {
-                lpoConfig.variation = field.value
-            } else if (field.name === "locale") {
-                lpoConfig.locale = field.value
-            }
+        } catch (e) {
+            console.error("Invalid LPO config");
         }
     }
-    
 
     // Pop a decpreciation warning is the nuxt config has a field also in the LPO config.
     if (process.env.NODE_ENV === "development") {

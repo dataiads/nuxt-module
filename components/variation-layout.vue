@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// @ts-ignore
 const lpoConfig = useLPOConfig()
 
 const props = defineProps<{
@@ -13,13 +12,7 @@ export type Variations = "catalog" | "catalog-no-slider" | "light" | "light-no-s
 </script>
 
 <template>
-    <LayoutsCatalog v-if="lpoConfig.variation === 'catalog'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalog>
-
-    <LayoutsCatalogNoSlider v-else-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
+    <LayoutsCatalogNoSlider v-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
@@ -37,5 +30,10 @@ export type Variations = "catalog" | "catalog-no-slider" | "light" | "light-no-s
         </template>
     </LayoutsLightNoSlider>
 
-    <span v-else>error: unknown variation</span>
+    <!-- "catalog" is the default layout. -->
+    <LayoutsCatalog v-else v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalog>
 </template>

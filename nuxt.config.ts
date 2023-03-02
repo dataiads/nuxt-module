@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         public: {
 
             // Add default values for the LPOConfig here.
-            devLPOConfig: {
+            devLpoConfig: {
                 // disable i18n by default
                 locale: "",
                 variation: "catalog",

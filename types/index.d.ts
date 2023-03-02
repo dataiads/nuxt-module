@@ -124,6 +124,6 @@ interface LPOConfig {
 
 declare module '@nuxt/types/config/runtime/public' {
   interface NuxtRuntimeConfig {
-    devLPOConfig: LPOConfig
+    devLpoConfig: LPOConfig
   }
 }

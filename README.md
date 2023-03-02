@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 ```
 
 ## Available composables
-* `useLPOConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLPOConfig`.
+* `useLPOConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLpoConfig`.
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
 * `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
 * `getCustomAttr`, `getCustomAttrInt`, `getCustomAttrFloat`, `getCustomAttrJSON` to access product custom attributes
@@ -89,7 +89,7 @@ This can be found on the Temlpates page, by editing the config of the concerend 
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      devLPOConfig: {
+      devLpoConfig: {
         locale: "fr-fr"
       }
     }
