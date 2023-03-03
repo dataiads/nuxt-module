@@ -1,4 +1,4 @@
-## Available composables
+## Composables
 * `useLpoConfig` in production: loads the config provided by the backend. In dev: loads the config found in `runtimeConfig.public.devLPOConfig`.
 * `useProduct` a shortcut to access the main product data stored inside a global state. data is automatically fetched on application startup.
 * `useCollectorData` a shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
