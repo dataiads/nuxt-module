@@ -81,4 +81,6 @@ const s = config.public.layoutStyle
     </div>
 
     <slot id="filters-drawer" name="filters-drawer"></slot>
+
+    <slot id="menus-drawer" name="menus-drawer"></slot>
 </template>
