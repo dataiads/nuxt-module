@@ -18,15 +18,15 @@ To connect your app to the Dataiads system, you can configure the LPO domain as 
 
 ## Required
 | Param | Description |
-| --- | --- |
+| ------- | ------- |
 | `lpoDomain` | The dataiads domain for the product pages. |
 | `mirroredDomain` | The original domain for the product pages. |
 
 ## Optional
-| Param | Description | Default
-| --- | --- | ---
-| `enableImageLoad` | Enables image compression, use this if images are not already compressed by the original site. | `false`
-| `layoutStyle` | Allows you to quickly modify the styling of different core elements on the page. Styling will be detailed in its own page. | 
+| Param | Description | Default |
+| ------- | ------- | ------- |
+| `enableImageLoad` | Enables image compression, use this if images are not already compressed by the original site. | `false` |
+| `layoutStyle` | Allows you to quickly modify the styling of different core elements on the page. Styling will be detailed in its own page. |
 
 
 ## A basic example config.
