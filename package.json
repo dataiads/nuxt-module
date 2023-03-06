@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
