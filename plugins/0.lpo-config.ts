@@ -45,6 +45,14 @@ export default defineNuxtPlugin(() => {
                     try {
                         lpoConfig.banners = JSON.parse(field.value)
                     } catch(e) {}
+                } else if (field.name === 'gtm') {
+                    try {
+                        lpoConfig.gtm = JSON.parse(field.value)
+                    } catch(e) {}
+                } else if (field.name === 'onetrust') {
+                    try {
+                        lpoConfig.onetrust = JSON.parse(field.value)
+                    } catch(e) {}
                 }
             }
         } catch (e) {
