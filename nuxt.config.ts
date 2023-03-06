@@ -35,9 +35,9 @@ export default defineNuxtConfig({
 
             // default timeouts for server interaction
             timeout: {
-                pageDataLoad: 1000,
-                initialPageLoad: 5000,
-                recommendationsLoad: 10000,
+                pageDataLoad: 8000,
+                initialPageLoad: 10000,
+                recommendationsLoad: 1000000,
             },
 
             // expose cdn url inside config
