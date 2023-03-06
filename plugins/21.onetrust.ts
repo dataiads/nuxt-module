@@ -8,7 +8,7 @@ import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
 export default defineNuxtPlugin(({ vueApp }) => {
   const config = useLpoConfig()?.onetrust;
 
-  if (config.dataDomainScript) {
+  if (config?.dataDomainScript) {
     useHead({
       script: [
         { defer: "", src: "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js", "data-domain-script": config.dataDomainScript},
