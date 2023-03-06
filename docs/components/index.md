@@ -11,7 +11,7 @@ Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt opti
 ### Product Image
 Main product image display. Shows the product primary image and any other additional images on the side.
 Style can be customized using the two image slots or using class props
-``` Vue
+``` vue
 <template>
   <ProductImage :product="product" :max-additional-images="4"
     class="flex flex-row"
@@ -40,7 +40,7 @@ Style can be customized using the two image slots or using class props
 ### Slider
 Horizontal or vertical slider with next / previous buttons on large screens. Can be toggled to autoscroll.
 Buttons and items can be configured using slots and class props
-``` Vue
+``` vue
 <template>
   <Slider :items="items" autoscroll>
       <template #item="{item}">{{ item.name }}</template>
@@ -52,7 +52,7 @@ Buttons and items can be configured using slots and class props
 
 ### Pagination
 Display pagination for `Filter` system. Style can be customized using class props on top level element or props for buttons.
-``` Vue
+``` vue
 <template>
   <FiltersPagination :filter="filter" :max-visible-buttons="3" class="flex items-center justify-center gap-2">
     <template #previous-button>
@@ -77,15 +77,17 @@ Display pagination for `Filter` system. Style can be customized using class prop
 
 ### Search
 A search input that redirects to the mirrored website search page with the value as a parameter. A custom input can be provided as a slot
-``` html
-<Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q" v-slot="{ value, input }">
-  <input :value="value" @input="input" placeholder="rechercher...">
-</Search>
+``` vue
+<template>
+  <Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q" v-slot="{ value, input }">
+    <input :value="value" @input="input" placeholder="rechercher...">
+  </Search>
+</template>
 ```
 
 ### Reviews star
 Display a a product review as starts. Use slots to customize displayed stars
-``` Vue
+``` vue
 <template>
   <StarsRating
     :value="getCustomAttrFloat(product, 'review-value')"
@@ -116,7 +118,7 @@ Display a a product review as starts. Use slots to customize displayed stars
 
 ### Price display
 Display product price. Handles sale prices and collected data.
-``` Vue
+``` vue
 <template>
   <PriceDisplay :product="product">
     <template #price="{ price, priceIntegerPart, priceDecimalPart }">
