@@ -2,7 +2,7 @@
 
 ### Image
 Display images from remote sources using Dataïads caching proxy servers and CDN.
-```
+``` html
 <Image src="https://shop.dataiads.io/assets/product.png" height="300" width="400"/>
 ```
 Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt options.
@@ -11,7 +11,7 @@ Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt opti
 ### Product Image
 Main product image display. Shows the product primary image and any other additional images on the side.
 Style can be customized using the two image slots or using class props
-```
+``` html
 <ProductImage :product="product" :max-additional-images="4"
   class="flex flex-row"
   aside-class="hidden md:flex flex-col flex-nowrap overflow-y-scroll scrollbar-hide"
@@ -38,7 +38,7 @@ Style can be customized using the two image slots or using class props
 ### Slider
 Horizontal or vertical slider with next / previous buttons on large screens. Can be toggled to autoscroll.
 Buttons and items can be configured using slots and class props
-```
+``` html
 <Slider :items="items" autoscroll>
     <template #item="{item}">{{ item.name }}</template>
     <template #previous-btn="scope"> prev </template>
@@ -48,7 +48,7 @@ Buttons and items can be configured using slots and class props
 
 ### Pagination
 Display pagination for `Filter` system. Style can be customized using class props on top level element or props for buttons.
-```
+``` html
 <FiltersPagination :filter="filter" :max-visible-buttons="3" class="flex items-center justify-center gap-2">
   <template #previous-button>
     <div class="flex items-center justify-center w-[39px] h-[39px] rounded-full border border-grey3 hover:bg-third hover:border-third hover:text-white">
@@ -71,7 +71,7 @@ Display pagination for `Filter` system. Style can be customized using class prop
 
 ### Search
 A search input that redirects to the mirrored website search page with the value as a parameter. A custom input can be provided as a slot
-```
+``` html
 <Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q" v-slot="{ value, input }">
   <input :value="value" @input="input" placeholder="rechercher...">
 </Search>
@@ -79,7 +79,7 @@ A search input that redirects to the mirrored website search page with the value
 
 ### Reviews star
 Display a a product review as starts. Use slots to customize displayed stars
-```
+``` html
 <StarsRating
   :value="getCustomAttrFloat(product, 'review-value')"
   :max-value="10"
@@ -108,7 +108,7 @@ Display a a product review as starts. Use slots to customize displayed stars
 
 ### Price display
 Display product price. Handles sale prices and collected data.
-```
+``` html
 <PriceDisplay :product="product">
   <template #price="{ price, priceIntegerPart, priceDecimalPart }">
     <div class="text-tint-price text-[22px]">{{ price }} €</div>

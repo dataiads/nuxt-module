@@ -32,7 +32,7 @@ To connect your app to the Dataiads system, you can configure the LPO domain as 
 
 
 ## A basic example config.
-```
+``` TS
 export default defineNuxtConfig({
   ssr: false,
 
