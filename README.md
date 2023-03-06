@@ -77,39 +77,25 @@ export default defineNuxtConfig({
 ### I18n
 Enable internationalization using vue-i18n package. 
 Translation data must be available inside `locales/` directory. When adding a new locale data file, dont forget to import it inside `locales/index.ts`.
-
-Set a locale value to enable this plugin:
-
-**In production:**
-Toggle the locale by changing its value in the backoffice.
-This can be found on the Temlpates page, by editing the config of the concerend template.
-
-**In dev env:**
-```
-export default defineNuxtConfig({
-  runtimeConfig: {
-    public: {
-      devLpoConfig: {
-        locale: "fr-fr"
-      }
-    }
-  }
-})
-```
+Set a locale value to enable this plugin, using the `locale` key in LPO Config
 
 Provides `$t()` helper in templates
 
 
 ### GTM
-Inject GTM snippet in the page.
+Inject GTM snippet in the page. Configure using `gtm` key in LPO config.
 ```
-export default defineNuxtConfig({
-  runtimeConfig: {
-    public: {
-        gtm: { id: "FOOBAR" }
-    }
-  }
-})
+{ "id": "FOOBAR" }
+```
+Multiple GTM instances are supported by providing an array instead of a string.
+```
+{ "id": ["GTM-1", "GTM-2"] }
+```
+
+### OneTrust
+Inject Onetrust snippet in the page. Configure using `onetyrust` key in LPO config.
+```
+{"dataDomainScript": "123456-1234-1234-4321-654321"}
 ```
 
 ### Axeptio
