@@ -22,7 +22,7 @@ Exposes URL related functions
 
 ## Google Fonts
 Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
-``` JS
+``` JavaScript
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
@@ -45,7 +45,7 @@ Toggle the locale by changing its value in the backoffice.
 This can be found on the Temlpates page, by editing the config of the concerend template.
 
 **In dev env:**
-``` JS
+``` JavaScript
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
@@ -62,7 +62,7 @@ Provides `$t()` helper in templates
 
 ## GTM
 Inject GTM snippet in the page.
-``` JS
+``` JavaScript
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
@@ -75,7 +75,7 @@ export default defineNuxtConfig({
 ## Axeptio
 Inject Axeptio snippet in the page. `clientId` is mandatory. All other attributes are also injected in the configuration object.
 
-``` JS
+``` JavaScript
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {

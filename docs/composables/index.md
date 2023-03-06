@@ -16,7 +16,7 @@ This is reactive in both ways, meaning you can change the main product by settin
 This can be useful for things like selecting variants and not having to worry about updating the price of the "in stock" info.
 
 Usage:
-``` TS
+``` TypeScript
 const product = useProduct()
 
 // This function can for example be called when toggling between sizes.
@@ -38,7 +38,7 @@ There are 4 variants of this function which return different types.
 - `getCustomAttrJSON`: reuturns the parsed JSON of the value.
 
 Usage:
-``` TS
+``` TypeScript
 const product = useProduct()
 
 const collectedPromoCode = getCustomAttr(product.value, 'promoCode')
