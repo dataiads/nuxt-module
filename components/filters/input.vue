@@ -5,7 +5,7 @@ const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
 
 interface Props {
-  label: string
+  label?: string
   filter: Filter
   criteria: string
   operator: string
