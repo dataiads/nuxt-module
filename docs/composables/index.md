@@ -1,11 +1,13 @@
+# Composables
+
 Composables are functions or variables that can be accessed from anywhere in the application.
 
 
-# `useLpoConfig`
+## `useLpoConfig`
 In production: loads the config provided by the backend.
 In dev: loads the config found in `runtimeConfig.public.devLPOConfig`.
 
-# `useProduct`
+## `useProduct`
 A shortcut to access the main product data stored inside a global state.
 Data is automatically fetched on application startup.
 
@@ -23,10 +25,10 @@ const changeVariant((variant: Product) => product.value = variant)
 Note: Variant is a product object.
 
 
-# `useCollectorData`
+## `useCollectorData`
 A shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
 
-# `getCustomAttr`
+## `getCustomAttr`
 Access product custom attributes.
 
 There are 4 variants of this function which return different types.
@@ -49,12 +51,12 @@ const defaultMenu = [{
 const collectedMenu = getCustomAttrJSON(product.value, 'menu', defaultMenu)
 ```
 
-# `salePriceDifference` 
+## `salePriceDifference` 
 Get a products regular/sale price difference as a percentage.
 
-# `mask`
+## `mask`
 A utility function to extract parts of a string using a regular expression.
 
 
-# `itemPart` 
+## `itemPart` 
 A utility that splits a string and returns the requested part based on an index
