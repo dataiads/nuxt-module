@@ -6,7 +6,7 @@ import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
  * Injects GTM in the page
  */
 export default defineNuxtPlugin((options) => {
-  let gtmId = useRuntimeConfig()?.public.gtm?.id;
+  let gtmId = useLpoConfig()?.gtm?.id;
 
   if (!gtmId) {
     return

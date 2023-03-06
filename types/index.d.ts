@@ -115,10 +115,18 @@ interface Breadcrumb {
   href: string,
 }
 
-export interface Banner {
+interface Banner {
   text: string
   class?: string
   href?: string
+}
+
+interface GtmConfig {
+  ids: string | string[]
+}
+
+interface OnetrustConfig {
+  dataDomainScript: string | null
 }
 
 // Add available LPO Config fields here.
@@ -126,6 +134,8 @@ interface LPOConfig {
   locale: string,
   variation?: Variations
   banners?: Banner[]
+  gtm?: GtmConfig
+  onetrust?: OnetrustConfig
 }
 
 

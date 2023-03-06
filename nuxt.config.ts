@@ -22,13 +22,20 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-
             // Add default values for the LPOConfig here.
             devLpoConfig: {
                 // disable i18n by default
                 locale: "",
                 variation: "catalog",
+                banners: [],
+                gtm: {
+                    id: [],
+                },
+                onetrust: {
+                    dataDomainScript: null,
+                },
             },
+
             // mandatory configuration
             lpoDomain: "",
             mirroredDomain: "",
@@ -45,14 +52,6 @@ export default defineNuxtConfig({
 
             // toggle optimized images component
             optimizeImageLoad: true,
-
-            gtm: {
-                id: [],
-            },
-
-            onetrust: {
-                dataDomainScript: null,
-            },
 
             // customize layouts behaviour
             layoutStyle: {
