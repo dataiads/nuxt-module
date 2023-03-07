@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 // random id to link label to the input
 const uid = Math.floor(Math.random() * 10 ** 16).toString();
 
@@ -7,21 +8,17 @@ const props = withDefaults(defineProps<{
   filter: Filter
   criteria: string
   operator?: string
-  value?: string
   group: string
   class?: string
-  inputClass?: string
-  labelClass?: string
+  value?: string
 }>(), {
   label: "",
   operator: "EQUAL",
   value: "",
   class: "flex items-center gap-1 my-1",
-  inputClass: "hover:cursor-pointer",
-  labelClass: "",
 })
 
-let binder = computed({
+let binderGenerator = () => computed({
   get: () =>
     props.filter.hasRule(props.group, props.criteria, props.operator, props.value),
   set: (val) => {
@@ -32,14 +29,10 @@ let binder = computed({
     }
   },
 });
-
 </script>
 
 <template>
-<div :class="props.class">
-	<input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder" >
-	<label :class="props.labelClass" :for="uid" >
-    <slot name="label" :label="props.label">{{ props.label }}</slot>
-  </label>
-</div>
+  <div :class="props.class">
+    <slot name="customCheckbox" :id="uid" :binder-generator="binderGenerator"></slot>
+  </div>
 </template>

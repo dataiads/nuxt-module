@@ -237,3 +237,19 @@ Display product price. Handles sale prices and collected data.
   </template>
 </PriceDisplay>
 ```
+
+### Drawer filters
+This enables the opening of filters or any other component in a drawer.
+When opened, the scroll on the document body is disabled.
+```vue
+<template #filters-drawer>
+  <Drawer class="z-[1001]" outsideClass="z-[1000]" @clickOutside="() => openFiltersDrawer = false" :open="openFiltersDrawer">
+    <template #drawer-content>
+      <div class="w-full">
+        <!-- Your custom filters component -->
+        <Filters :close-drawer="() => openFiltersDrawer = false" variant="drawer" :filter="filter" />
+      </div>
+    </template>
+  </Drawer>
+</template>
+```

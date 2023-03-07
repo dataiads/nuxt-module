@@ -142,13 +142,13 @@ const scrollIntoView = (index: number) => {
                 </div>
             </div>
 
-            <div class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
+            <div v-if="allImages.length > 1" class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickPrevious">
                     <slot name="previous-btn"></slot>
                 </div>
             </div>
 
-            <div class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
+            <div v-if="allImages.length > 1" class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickNext">
                     <slot name="next-btn"></slot>
                 </div>

@@ -41,8 +41,8 @@ if (price.value != null && salePrice.value != null && price.value > salePrice.va
     priceDifference.value = Math.round(100 * (price.value - salePrice.value) / price.value)
 }
 
-const priceIntegerPart = computed(() => itemPart(props.product.data.price.value, '.', 0));
-const priceDecimalPart = computed(() => itemPart(props.product.data.price.value, '.', 1));
+const priceIntegerPart = computed(() => itemPart(props.product.data.price?.value, '.', 0));
+const priceDecimalPart = computed(() => itemPart(props.product.data.price?.value, '.', 1));
 
 const salePriceIntegerPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 0));
 const salePriceDecimalPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 1));

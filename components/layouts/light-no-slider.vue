@@ -56,4 +56,8 @@ const s = config.public.layoutStyle
     <StickyFooter>
         <slot name="sticky-add-to-cart"></slot>
     </StickyFooter>
+
+    <slot id="filters-drawer" name="filters-drawer"></slot>
+
+    <slot id="menus-drawer" name="menus-drawer"></slot>
 </template>
