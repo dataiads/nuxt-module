@@ -1,14 +1,11 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   open: boolean;
   class?: string;
   outsideClass?: string;
   contentClass?: string;
-  onClickOutside: () => void;
   transition: 'slide-left' | 'slide-right';
-}>(), {
-  transition: 'slide-left',
-});
+}>();
 
 const openRef = toRef(props, "open");
 
@@ -22,9 +19,9 @@ const updateBodyScroll = () => {
 
 watch(openRef, () => {
   updateBodyScroll();
+}, {
+  immediate: true,
 });
-
-updateBodyScroll();
 </script>
 
 <template>
@@ -33,7 +30,7 @@ updateBodyScroll();
       <slot name="drawer-content"></slot>
       <div
         class="bg-black opacity-50 fixed bottom-0 left-0 right-unset h-full w-[20%] max-w-[48rem] overflow-auto cursor-pointer"
-        :class="outsideClass" @click="() => onClickOutside()">
+        :class="outsideClass" @click="$emit('clickOutside')">
       </div>
     </nav>
   </transition>

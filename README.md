@@ -257,7 +257,7 @@ This enables the opening of filters or any other component in a drawer.
 When opened, the scroll on the document body is disabled.
 ```vue
 <template #filters-drawer>
-  <Drawer class="z-[1001]" outsideClass="z-[1000]" :onClickOutside="() => openFiltersDrawer = false" :open="openFiltersDrawer">
+  <Drawer class="z-[1001]" outsideClass="z-[1000]" @clickOutside="() => openFiltersDrawer = false" :open="openFiltersDrawer">
     <template #drawer-content>
       <div class="w-full">
         <!-- Your custom filters component -->

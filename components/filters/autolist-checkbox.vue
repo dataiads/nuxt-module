@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Filter } from '~~/composables/filter';
-
 const uuid = Math.floor(Math.random() * 10 ** 16);
 
 const props = withDefaults(defineProps<{

@@ -56,11 +56,9 @@ const s = config.public.layoutStyle
     </footer>
 
 
-    <div id="sticky-add-to-cart" :class="s.stickyAddToCart.class">
-        <StickyFooter>
-            <slot name="sticky-add-to-cart"></slot>
-        </StickyFooter>
-    </div>
+    <StickyFooter>
+        <slot name="sticky-add-to-cart"></slot>
+    </StickyFooter>
 
     <slot id="filters-drawer" name="filters-drawer"></slot>
 </template>

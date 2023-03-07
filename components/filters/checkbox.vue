@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Filter } from '~~/composables/filter';
-
-
 // random id to link label to the input
 const uid = Math.floor(Math.random() * 10 ** 16).toString();
 
