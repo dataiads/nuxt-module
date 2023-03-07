@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRuntimeConfig } from "#app"
-import { Filter } from "~~/composables/filter";
 
 
 const props = defineProps<{
