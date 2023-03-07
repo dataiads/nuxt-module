@@ -33,10 +33,6 @@ let binder = computed({
   },
 });
 
-if (props.filter.hasRule(props.group, props.criteria, props.operator, props.value)) {
-  props.class += " order-first"
-}
-
 </script>
 
 <template>
