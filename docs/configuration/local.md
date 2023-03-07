@@ -1,4 +1,4 @@
-# Local environment
+## Local environment
 
 Running the app in a local developer environment is simple.
 
