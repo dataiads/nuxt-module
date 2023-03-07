@@ -1,16 +1,16 @@
 import { Variations } from "~~/components/variation-layout.vue";
 
-interface ProductDataPrice {
+export interface ProductDataPrice {
   currency: string,
   value: string,
 }
 
-interface CustomAttribute {
+export interface CustomAttribute {
   name: string,
   value: string,
 }
 
-interface ProductData {
+export interface ProductData {
   title: string,
   additionalImageLinks: string[],
   ageGroup: string,
@@ -46,12 +46,12 @@ interface ProductData {
   shipping: Shipping[],
 }
 
-interface Shipping {
+export interface Shipping {
   country: string,
   price: ProductDataPrice,
 }
 
-interface Product {
+export interface Product {
   createdAt: string,
   data: ProductData,
   extraData: ProductData,
@@ -64,32 +64,32 @@ interface Product {
   fragment: string,
 }
 
-interface ServerConfig {
+export interface ServerConfig {
   domain: string,
   mirroredDomain: string,
 }
 
-interface AssocString { [key: string]: string }
+export interface AssocString { [key: string]: string }
 
-interface PageData {
+export interface PageData {
   product: Product,
   config: ServerConfig,
   collectorData: AssocString
 }
 
-interface Order {
+export interface Order {
   by: string, // the column to order by
   d?: string // The direction to dfilter in (default asc)
 }
 
-interface Store {
+export interface Store {
   id: string,
   city: string,
 }
 
 type StoreData = Map<string, Store>
 
-interface LocalInventory {
+export interface LocalInventory {
   data: LocalInventoryData,
   createdAt: string,
   id: string,
@@ -97,7 +97,7 @@ interface LocalInventory {
   updatedAt: string,
 }
 
-interface LocalInventoryData {
+export interface LocalInventoryData {
   storeCode: string,
   price: ProductDataPrice,
   salePrice: ProductDataPrice,
@@ -110,27 +110,27 @@ interface LocalInventoryData {
   customAttributes: CustomAttribute[],
 }
 
-interface Breadcrumb {
+export interface Breadcrumb {
   text: string,
   href: string,
 }
 
-interface Banner {
+export interface Banner {
   text: string
   class?: string
   href?: string
 }
 
-interface GtmConfig {
+export interface GtmConfig {
   ids: string | string[]
 }
 
-interface OnetrustConfig {
+export interface OnetrustConfig {
   dataDomainScript: string | null
 }
 
 // Add available LPO Config fields here.
-interface LPOConfig {
+export interface LPOConfig {
   locale: string,
   variation?: Variations
   banners?: Banner[]
