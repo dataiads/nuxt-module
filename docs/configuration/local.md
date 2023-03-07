@@ -13,4 +13,4 @@ This means that the development environment will not be available if the backend
 In order to view a product page, you simply need to navigate to 
 `http://localhost:[your desired port]/[product url path]`.
 
-Product URLs are foudn in the product GMC feed or in the Dataiads backoffice.
+Product URLs are found in the product GMC feed or in the Dataiads backoffice.
