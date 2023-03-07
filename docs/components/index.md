@@ -1,6 +1,6 @@
-## Components
+# 2.Components
 
-### Image
+## Image
 Display images from remote sources using Dataïads caching proxy servers and CDN.
 ``` html
 <Image src="https://shop.dataiads.io/assets/product.png" height="300" width="400"/>
@@ -8,7 +8,7 @@ Display images from remote sources using Dataïads caching proxy servers and CDN
 Can be disabled using `runtimeConfig.public.optimizeImageLoad` flag in nuxt options.
 
 
-### Product Image
+## Product Image
 Main product image display. Shows the product primary image and any other additional images on the side.
 Style can be customized using the two image slots or using class props
 ``` vue
@@ -37,7 +37,7 @@ Style can be customized using the two image slots or using class props
 </template>
 ```
 
-### Slider
+## Slider
 Horizontal or vertical slider with next / previous buttons on large screens. Can be toggled to autoscroll.
 Buttons and items can be configured using slots and class props
 ``` vue
@@ -50,7 +50,7 @@ Buttons and items can be configured using slots and class props
 </template>
 ```
 
-### Pagination
+## Pagination
 Display pagination for `Filter` system. Style can be customized using class props on top level element or props for buttons.
 ``` vue
 <template>
@@ -75,7 +75,7 @@ Display pagination for `Filter` system. Style can be customized using class prop
 </template>
 ```
 
-### Search
+## Search
 A search input that redirects to the mirrored website search page with the value as a parameter. A custom input can be provided as a slot
 ``` vue
 <template>
@@ -85,7 +85,7 @@ A search input that redirects to the mirrored website search page with the value
 </template>
 ```
 
-### Reviews star
+## Reviews star
 Display a a product review as starts. Use slots to customize displayed stars
 ``` vue
 <template>
@@ -116,7 +116,7 @@ Display a a product review as starts. Use slots to customize displayed stars
 </template>
 ```
 
-### Price display
+## Price display
 Display product price. Handles sale prices and collected data.
 ``` vue
 <template>

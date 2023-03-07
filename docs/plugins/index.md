@@ -1,4 +1,4 @@
-# Plugins
+# 3.Plugins
 ## LPO Config
 Handles loading the LPOConfig available for use in the composable `useLpoConfig`.
 This currently allows you to modify only the `locale` and `variation` for the time being, but will soon be open to any field, allowing you to make your app configurable via the backoffice.
