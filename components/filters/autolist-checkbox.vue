@@ -15,21 +15,6 @@ const props = withDefaults(defineProps<{
 });
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
-
-// const computedAvailableValues = computed(() => {
-//   if (props.checkedFirst && availableValues.value) {
-//     for (const [count, value] in Object.entries(availableValues.value)) {
-//       props.filter.hasRule(props.group, props.criteria, props.operator)
-//     }
-//   }
-
-//   return availableValues;
-// })
-
-// const a = availableValues?.value
-// if (a) {
-//   a.test
-// }
 </script>
 
 <template>
