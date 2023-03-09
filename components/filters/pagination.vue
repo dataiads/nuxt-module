@@ -5,13 +5,13 @@ interface Props {
   filter: Filter
   maxVisibleButtons?: number
   class?: string | string[]
-  action?: 'one-by-one' | 'first-last'
+  paginationNavigationAction?: 'one-by-one' | 'first-last'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   maxVisibleButtons: 4,
   class: "flex items-center",
-  action: 'first-last',
+  paginationNavigationAction: 'first-last',
 })
 
 let totalResults = props.filter.count
@@ -32,7 +32,7 @@ const range = (min: number, max: number): number[] => {
 let actionHandlerLeft = () => {};
 let actionHandlerRight = () => {};
 
-if (props.action === 'one-by-one') {
+if (props.paginationNavigationAction === 'one-by-one') {
   actionHandlerLeft = () => {
     if (props.filter.page.value > 1) {
       props.filter.page.value -= 1;
@@ -45,7 +45,7 @@ if (props.action === 'one-by-one') {
   }
 }
 
-if (props.action === 'first-last') {
+if (props.paginationNavigationAction === 'first-last') {
   actionHandlerLeft = () => {
     props.filter.page.value = 1;
   }
