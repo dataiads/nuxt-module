@@ -6,14 +6,6 @@ const { resolve } = createResolver(import.meta.url);
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@nuxt/image-edge"],
 
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        typeRoots: ["../types/*"],
-      },
-    },
-  },
-
   app: {
     // use cdn url from environment
     cdnURL: process.env.CDN_URL || "",
@@ -35,6 +27,9 @@ export default defineNuxtConfig({
         onetrust: {
           dataDomainScript: null,
         },
+        didomi: {
+          id: null,
+        }
       },
 
       // mandatory configuration

@@ -135,6 +135,10 @@ declare global {
     dataDomainScript: string | null;
   }
 
+  export interface DidomiConfig {
+    id: string;
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     locale: string;
@@ -142,6 +146,7 @@ declare global {
     banners?: Banner[];
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
+    didomi?: DidomiConfig;
   }
 
   export interface UseFilterOptions {
