@@ -1,6 +1,5 @@
 // @ts-ignore
 import { useState } from "#app";
-import { Filter } from "rollup-plugin-visualizer/dist/shared/create-filter";
 
 /* provide a shortcut to access the main product */
 export const useProduct = () => useState<Product>("product");
