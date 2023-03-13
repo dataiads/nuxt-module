@@ -53,6 +53,10 @@ export default defineNuxtPlugin(() => {
                     try {
                         lpoConfig.onetrust = JSON.parse(field.value)
                     } catch(e) {}
+                } else if (field.name === 'didomi') {
+                    try {
+                        lpoConfig.didomi = JSON.parse(field.value)
+                    } catch(e) {}
                 }
             }
         } catch (e) {
