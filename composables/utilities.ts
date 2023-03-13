@@ -1,5 +1,6 @@
 // @ts-ignore
 import { useState } from "#app";
+import { Filter } from "rollup-plugin-visualizer/dist/shared/create-filter";
 
 /* provide a shortcut to access the main product */
 export const useProduct = () => useState<Product>("product");
@@ -99,4 +100,28 @@ export const itemPart = (str: string | undefined, splitAt: string, index: number
 // redirects to the targeted url
 export function redirect(url: string) {
   window.location.replace(url);
+}
+
+// For pagination, decrement current page index
+export function previousPaginationHandler(filter: Filter, _pageCount: number) {
+  if (filter.page.value > 1) {
+    filter.page.value -= 1;
+  }
+}
+
+// For pagination, increment page index
+export function nextPaginationHandler(filter: Filter, pageCount: number) {
+  if (filter.page.value < pageCount) {
+    filter.page.value += 1;
+  }
+}
+
+// For pagination, go to first page
+export function firstPaginationHandler(filter: Filter, _pageCount: number) {
+  filter.page.value = 1;
+}
+
+// For pagination, increment page index
+export function lastPaginationHandler(filter: Filter, pageCount: number) {
+  filter.page.value = pageCount
 }
