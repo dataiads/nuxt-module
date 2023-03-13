@@ -4,7 +4,6 @@ interface Props {
   filter: Filter
   maxVisibleButtons?: number
   class?: string | string[]
-  paginationNavigationAction?: 'one-by-one' | 'first-last'
   previousHandler?: (filter: Filter, pageCount: number) => void
   nextHandler?: (filter: Filter, pageCount: number) => void
 }
@@ -12,7 +11,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   maxVisibleButtons: 4,
   class: "flex items-center",
-  paginationNavigationAction: 'first-last',
   previousHandler: previousPaginationHandler,
   nextHandler: nextPaginationHandler,
 })
