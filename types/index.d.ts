@@ -128,7 +128,7 @@ declare global {
   }
 
   export interface GtmConfig {
-    ids: string | string[];
+    id: string | string[];
   }
 
   export interface OnetrustConfig {
