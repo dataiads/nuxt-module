@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { debounce } from "lodash";
-
 interface Props {
     // mirrored site search url
     redirectUrl: string,
@@ -40,52 +38,39 @@ const submit = () => {
 }
 
 // -- Search suggestions --
-const searchValue: Ref<string> = ref("")
-const debouncedInput = debounce(() => {
-    searchValue.value = value.value
-}, 500)
-const searchRecoProducts: Ref<Product[]> = ref([])
-
-if (props.lpoSearchReccomendations) {
-    const { $fetchProductRecommendations } = useNuxtApp()
-    const product = useProduct()
-
-    const searchFilter = computed(() => {
-        return JSON.stringify([
-            [
-                {
-                    criteria: "title",
-                    operator: "CONTAINS_ALL_CI",
-                    value: searchValue.value.split(" ").join(","),
-                }
-            ]
-        ])
-    })
-
-    const { data: searchRecoProductsFetch } = $fetchProductRecommendations("default", "filtered", {
-        productId: product.value.id,
-        limit: props.limit,
-        filters: searchFilter,
-    })
-    watch(searchRecoProductsFetch, () => {
-        if (searchValue.value === "") {
-            // Do not show recommendations if search value is empty.
-            searchRecoProducts.value = []
-            return
+const fetchSearchProducts = () => {
+    const { data: searchRecoProductsFetch } = useFetch("/api/recommendations/default/filtered", {
+        params: {
+            productId: product.value.id,
+            limit: props.limit,
+            filters: JSON.stringify([
+                [
+                    {
+                        criteria: "title",
+                        operator: "CONTAINS_ALL_CI",
+                        value: searchValue.value.split(" ").join(","),
+                    }
+                ]
+            ]),
         }
-        searchRecoProducts.value = searchRecoProductsFetch.value
     })
+    return searchRecoProductsFetch.value
 }
 
+
+const product = useProduct()
+const searchValue: Ref<string> = refDebounced(value, 500) // https://vueuse.org/shared/refDebounced/#refdebounced
+const searchRecoProducts = computed(() => {
+    if (!props.lpoSearchReccomendations || !searchValue.value) {
+        return []
+    }
+
+    return fetchSearchProducts()
+})
 
 // input event handler for slot input
 const input = (event: Event) => {
     value.value = (event.target as HTMLInputElement).value
-
-    // Debouncing here allows us to debounce the reco query being sent, without debouncing user input and creating some lag-like effect.
-    if (props.lpoSearchReccomendations) {
-        debouncedInput()
-    }
 }
 </script>
 
