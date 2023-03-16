@@ -53,6 +53,8 @@ export default defineNuxtConfig({
             // toggle optimized images component
             optimizeImageLoad: true,
 
+            dataiadsGreeting: true,
+
             // customize layouts behaviour
             layoutStyle: {
                 header: {
