@@ -1,4 +1,7 @@
-# 1.Composables
+---
+nav_order: 2
+---
+# Composables
 
 Composables are functions or variables that can be accessed from anywhere in the application.
 

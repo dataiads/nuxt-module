@@ -1,4 +1,8 @@
-# 0.1.Local environment
+---
+nav_order: 1
+parent: Configuration
+---
+# Local environment
 
 Running the app in a local developer environment is simple.
 

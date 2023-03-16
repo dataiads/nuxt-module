@@ -1,7 +1,10 @@
-# 3.Plugins
+---
+nav_order: 4
+---
+# Plugins
 ## LPO Config
 Handles loading the LPOConfig available for use in the composable `useLpoConfig`.
-This currently allows you to modify only the `locale` and `variation` for the time being, but will soon be open to any field, allowing you to make your app configurable via the backoffice.
+This currently allows you to modify only a few fields for the time being, but will soon be open to any field, allowing you to make your custom configurations be set via the backoffice.
 
 Other plugins may rely on this for execution, it should therefore never be disabled.
 
@@ -18,7 +21,7 @@ These plugins cannot be disabled.
 Exposes URL related functions
 * `oriUrl(link: string, query?: Record<string, string>): string` forces mirrored domain from runtime configuration on a link, with optional extra query paramaeters.
 * `isSafeLink(link: string): boolean` a utility function to check that a links redirects to the mirrored domain
-*  `addToCartUrl(searchParams?: Record<string, string>): string` 
+* `addToCartUrl(searchParams?: Record<string, string>): string` 
 
 ## Google Fonts
 Loads Google Fonts on the page. The requested fonts must be listed in the runtime configuration using `googleFonts` attribute.
