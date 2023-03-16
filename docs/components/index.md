@@ -1,4 +1,7 @@
-# 2.Components
+---
+nav_order: 3
+---
+# Components
 
 ## Image
 Display images from remote sources using Dataïads caching proxy servers and CDN.

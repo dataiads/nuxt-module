@@ -1,4 +1,9 @@
-# 0.Configuration
+---
+nav_order: 0
+title: Configuration
+has_chidren: true
+---
+# Configuration
 
 To connect your app to the Dataiads system, you can configure the LPO domain as well as the original page domain in the Nuxt public runtime config.
 
