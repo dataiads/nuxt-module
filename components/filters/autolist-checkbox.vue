@@ -10,15 +10,28 @@ const props = withDefaults(defineProps<{
   labelClass?: string
   operator?: string
   checkedFirst?: boolean
+  sort?: (values: string[]) => string[]
 }>(), {
   operator: "EQUAL"
 });
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
+
+const sortedValues = computed(() => {
+  if (availableValues.value == null) {
+    return null
+  }
+  let keys = Object.keys(availableValues.value)
+  if (props.sort) {
+    keys = props.sort(keys)
+  }
+  return keys.map(k => [k, availableValues.value[k]])
+})
+
 </script>
 
 <template>
-  <FiltersCheckbox v-for="(count, value) in availableValues" :value="value.toString()" v-bind="props">
+  <FiltersCheckbox v-for="[value, count] in sortedValues" :value="value.toString()" v-bind="props">
     <template #label="scope">
       <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
       </slot>

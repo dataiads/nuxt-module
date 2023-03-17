@@ -92,7 +92,6 @@ export const useFilter = (options: UseFilterOptions) => {
       },
     });
     watch(countFetcher.data, (val) => (count.value = val || 0));
-    //count = computed(() => (countFetcher?.data?.value || 0))
   }
 
   // secondary fetchers for criteria values (used in AutoListingCheckbox)
