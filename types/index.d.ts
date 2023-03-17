@@ -162,6 +162,9 @@ declare global {
     // optional extra query parameters for recommendation endpoint
     fetchQuery?: Record<string, string | number>;
 
+    // optional extra query parameters for recommendation count endpoint
+    fetchQueryCount?: Record<string, string | number>;
+
     // optional options for useFetch composable
     fetchOptions?: UseFetchOptions<Product[]>;
 
