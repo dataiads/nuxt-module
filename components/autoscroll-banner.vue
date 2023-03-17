@@ -46,7 +46,10 @@ const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : bann
 <template>
 <div :class="props.class" class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide" ref="container" v-if="repeatedBanners.length">
     <div class="min-h-full max-h-full w-full flex justify-center items-center snap-center" v-for="banner in repeatedBanners">
-        <slot v-bind="banner"></slot>
+        <a :href="banner.href" v-if="banner.href && $isSafeLink(banner.href)">
+            <slot v-bind="banner"></slot>
+        </a>
+        <slot v-else v-bind="banner"></slot>
     </div>
 </div>
 </template>
