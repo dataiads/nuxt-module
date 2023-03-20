@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<{
   group: string
   class?: string
   inputClass?: string
+  inputStyle?: string|Record<string,any>
   labelClass?: string
 }>(), {
   label: "",
@@ -37,9 +38,9 @@ let binder = computed({
 
 <template>
 <div :class="props.class">
-	<input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder" >
+	<input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder" :style="props.inputStyle" >
 	<label :class="props.labelClass" :for="uid" >
-    <slot name="label" :label="props.label">{{ props.label }}</slot>
+    <slot name="label" :label="props.label" :checked="binder">{{ props.label }}</slot>
   </label>
 </div>
 </template>

@@ -2,17 +2,31 @@
 const uuid = Math.floor(Math.random() * 10 ** 16);
 
 const props = withDefaults(defineProps<{
+  // filter values listing settings
   filter: Filter
   criteria: string
   group: string
+
+  // wrap list items in a global element 
+  wrapperDiv?: boolean
+
+  // customize wrapper element
+  wrapperClass?: string
+
+  // optional sorting function for value items
+  sort?: (values: string[]) => string[]
+
+  // optionnal filter function for value items
+  valuesFilter?: RegExp | ((value: string) => boolean)
+
+  // filter-checkbox properties are passed to child components
   class?: string
   inputClass?: string
   labelClass?: string
   operator?: string
-  checkedFirst?: boolean
-  sort?: (values: string[]) => string[]
 }>(), {
-  operator: "EQUAL"
+  operator: "EQUAL",
+  wrapperDiv: false,
 });
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
@@ -22,19 +36,60 @@ const sortedValues = computed(() => {
     return null
   }
   let keys = Object.keys(availableValues.value)
+
+  if (props.valuesFilter) {
+    if (props.valuesFilter instanceof RegExp) {
+      keys = keys.filter(v => !!props.valuesFilter.exec(v))
+    } else if (props.valuesFilter instanceof Function) {
+      keys = keys.filter(props.valuesFilter)
+    }
+  }
+
   if (props.sort) {
     keys = props.sort(keys)
   }
+
   return keys.map(k => [k, availableValues.value[k]])
 })
 
 </script>
 
 <template>
-  <FiltersCheckbox v-for="[value, count] in sortedValues" :value="value.toString()" v-bind="props">
-    <template #label="scope">
-      <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
-      </slot>
+  <template v-if="sortedValues?.length">
+    <slot name="autolist-label"></slot>
+
+    <!-- wrapper-div enabled: wrap it all inside a div -->
+    <div v-if="props.wrapperDiv" :class="props.wrapperClass">
+      <template v-for="[value, count] in sortedValues" :key="value">
+        <slot name="input" :value="value" :count="count">
+          <FiltersCheckbox
+            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
+            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+          >
+            <template #label="scope">
+              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})</slot>
+            </template>
+          </FiltersCheckbox>
+        </slot>
+      </template>
+    </div>
+
+    <!-- default behavior: raw checkboxes without wrapper -->
+    <template v-else>
+      <template v-for="[value, count] in sortedValues" :key="value">
+        <slot name="input" :value="value" :count="count">
+          <FiltersCheckbox
+            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
+            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+          >
+            <template #label="scope">
+              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
+              </slot>
+            </template>
+          </FiltersCheckbox>
+        </slot>
+      </template>
     </template>
-  </FiltersCheckbox>
+
+  </template>
 </template>
