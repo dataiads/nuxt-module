@@ -61,6 +61,10 @@ export default defineNuxtPlugin(() => {
                 const product = useState<Product>("product")
                 return urlGen(product.value, "add", searchParams)
             },
+            faddToCartUrl(searchParams?: Record<string, string>): string {
+                const product = useState<Product>("product")
+                return urlGen(product.value, "fadd", searchParams)
+            },
             recoAddToCartUrl(product: Product, searchParams?: Record<string, string>): string {
                 return urlGen(product, "add", searchParams)
             },
