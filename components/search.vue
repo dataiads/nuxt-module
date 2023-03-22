@@ -10,7 +10,7 @@ interface Props {
     lpoSearchReccomendations?: boolean,
 
     // Display search results in either vertical or horizontal
-    direction: "horizontal" | "vertical",
+    direction?: "horizontal" | "vertical",
 
     // Number of products to display
     limit: number

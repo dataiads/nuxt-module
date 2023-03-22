@@ -57,6 +57,26 @@ export default defineNuxtPlugin(() => {
                     try {
                         lpoConfig.didomi = JSON.parse(field.value)
                     } catch(e) {}
+                } else if (field.name === 'messages') {
+                    try {
+                        lpoConfig.messages = JSON.parse(field.value)
+                    } catch(e) {}
+                } else if (field.name === 'menu') {
+                    try {
+                        lpoConfig.menu = JSON.parse(field.value)
+                    } catch(e) {}
+                } else if (field.name === 'subMenu') {
+                    try {
+                        lpoConfig.subMenu = JSON.parse(field.value)
+                    } catch(e) {}
+                } else if (field.name === 'footerColumns') {
+                    try {
+                        lpoConfig.footerColumns = JSON.parse(field.value)
+                    } catch(e) {}
+                } else if (field.name === 'footerItems') {
+                    try {
+                        lpoConfig.footerColumns = JSON.parse(field.value)
+                    } catch(e) {}
                 }
             }
         } catch (e) {

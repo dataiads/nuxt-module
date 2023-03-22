@@ -139,6 +139,22 @@ declare global {
     id: string;
   }
 
+  export interface MenuItem {
+    text: string
+    href?: string
+    color?: string
+  }
+
+  export interface FooterColumn {
+    title: string
+    items: FooterColumnItem[]
+  }
+
+  export interface FooterColumnItem {
+    text: string
+    href?: string
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     locale: string;
@@ -147,6 +163,11 @@ declare global {
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
+    messages: Record<string, Record<string, any>>
+    menu?: MenuItem[];
+    subMenu?: MenuItem[];
+    footerColumns?: FooterColumn[];
+    footerItems?: MenuItem[];
   }
 
   export interface UseFilterOptions {

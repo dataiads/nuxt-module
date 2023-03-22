@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n';
 
-import messages from "~/locales"
+import bundleMessages from "~/locales"
 
 export default defineNuxtPlugin(async ({ vueApp }) => {
   // Locale is changed in the backoffice.
@@ -8,13 +8,14 @@ export default defineNuxtPlugin(async ({ vueApp }) => {
   const lpoConfig = useLpoConfig()
 
   if (lpoConfig.locale) {
+    const messages = lpoConfig.messages ? lpoConfig.messages : bundleMessages
+    console.log("messages", messages)
     const i18n = createI18n({
       legacy: false,
       globalInjection: true,
       locale: lpoConfig.locale,
-      messages: messages
+      messages: messages,
     })
     vueApp.use(i18n)
   }
-
 })
