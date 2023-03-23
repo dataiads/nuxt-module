@@ -155,6 +155,13 @@ declare global {
     href?: string
   }
 
+export type CrossSellData = Record<string, CrossSellItem[]>
+
+export interface CrossSellItem {
+    text: string
+    link: string
+}
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     locale: string;
@@ -168,6 +175,7 @@ declare global {
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
+    crossSellData?: CrossSellData;
   }
 
   export interface UseFilterOptions {

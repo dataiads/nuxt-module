@@ -77,6 +77,10 @@ export default defineNuxtPlugin(() => {
                     try {
                         lpoConfig.footerColumns = JSON.parse(field.value)
                     } catch(e) {}
+                } else if (field.name === 'crossSellData') {
+                    try {
+                        lpoConfig.crossSellData = JSON.parse(field.value)
+                    } catch(e) {}
                 }
             }
         } catch (e) {
