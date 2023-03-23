@@ -155,19 +155,27 @@ declare global {
     href?: string
   }
 
+export type CrossSellData = Record<string, CrossSellItem[]>
+
+export interface CrossSellItem {
+    text: string
+    link: string
+}
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
-    locale: string;
+    locale?: string;
     variation?: Variations;
     banners?: Banner[];
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
-    messages: Record<string, Record<string, any>>
+    messages?: Record<string, Record<string, any>>
     menu?: MenuItem[];
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
+    crossSellData?: CrossSellData;
   }
 
   export interface UseFilterOptions {

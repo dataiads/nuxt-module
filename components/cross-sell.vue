@@ -1,25 +1,44 @@
-<script lang="ts">
-export type CrossSellData = Record<string, CrossSellItem[]>
-
-export interface CrossSellItem {
-    text: string
-    link: string
-}
-</script>
-
 <script setup lang="ts">
+
 interface Props {
-    data: CrossSellData
+    // tags data key
     dataKey: string
+
+    // override tags data from lpo config
+    data?: CrossSellData
+
+    // override key matching algorithm
+    keyMatcher?: (productKey: string, dataKey: string) => boolean
+
     class?: string|string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
     class: () => [],
+
+    // default key matcher: match by prefix
+    keyMatcher: (productKey: string, dataKey: string) => productKey.indexOf(dataKey) == 0
 })
 
-const items = props.data[props.dataKey]
+const lpoConfig = useLpoConfig()
 
+let data: CrossSellData = {}
+let items: CrossSellItem[] = []
+
+if (props.data) {
+    data = props.data
+} else if (lpoConfig.crossSellData) {
+    data = lpoConfig.crossSellData
+}
+
+if (data) {
+    for (const [dataKey, value] of Object.entries(data)) {
+        if (props.keyMatcher(props.dataKey, dataKey)) {
+            items = value
+            break
+        }
+    }
+}
 </script>
 
 <template>

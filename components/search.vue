@@ -25,9 +25,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const value = useState('search.value', () => "")
 
-// parse url at load time to make sure its valid
-new URL(props.redirectUrl)
-
 // on submit, redirect to mirrored domain search url
 const submit = () => {
     if (value.value) {

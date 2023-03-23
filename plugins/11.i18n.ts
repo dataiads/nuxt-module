@@ -9,7 +9,6 @@ export default defineNuxtPlugin(async ({ vueApp }) => {
 
   if (lpoConfig.locale) {
     const messages = lpoConfig.messages ? lpoConfig.messages : bundleMessages
-    console.log("messages", messages)
     const i18n = createI18n({
       legacy: false,
       globalInjection: true,
