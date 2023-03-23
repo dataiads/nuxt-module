@@ -164,13 +164,13 @@ export interface CrossSellItem {
 
   // Add available LPO Config fields here.
   export interface LPOConfig {
-    locale: string;
+    locale?: string;
     variation?: Variations;
     banners?: Banner[];
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
-    messages: Record<string, Record<string, any>>
+    messages?: Record<string, Record<string, any>>
     menu?: MenuItem[];
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];

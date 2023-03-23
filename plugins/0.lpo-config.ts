@@ -14,6 +14,18 @@ interface InlineLPOConfigField {
     updatedAt: Date
 } 
 
+function StringLoader(v: string): string {
+    return v
+}
+
+function JSONLoader(v: string): any {
+    try {
+        return JSON.parse(v)
+    } catch(err) {
+        console.debug(err)
+    }
+}
+
 export default defineNuxtPlugin(() => {
     /**
      * LPOConfig is user modified configuration that can be set in the backoffice.
@@ -29,62 +41,37 @@ export default defineNuxtPlugin(() => {
         lpoConfig = config.public.devLpoConfig
     } else if (window.__LPO_CONFIG__) {
         // Prod env reads config from the data injected into the window object when LP is served.
+        const fieldLoaders: Record<keyof LPOConfig, (v: string)=> any > = {
+            variation: StringLoader,
+            locale: StringLoader,
+            banners: JSONLoader,
+            gtm: JSONLoader,
+            onetrust: JSONLoader,
+            didomi: JSONLoader,
+            messages: JSONLoader,
+            menu: JSONLoader,
+            subMenu: JSONLoader,
+            footerColumns: JSONLoader,
+            footerItems: JSONLoader,
+            crossSellData: JSONLoader,
+        }
+
 
         try {
             for (let field of (window.__LPO_CONFIG__ as InlineLPOConfig).fields) {
                 if (!field.active) {
                     continue
                 }
-    
-                // TODO: Update here when adding a config field to this template.
-                if (field.name === "variation") {
-                    lpoConfig.variation = field.value
-                } else if (field.name === "locale") {
-                    lpoConfig.locale = field.value
-                } else if (field.name === 'banners') {
-                    try {
-                        lpoConfig.banners = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'gtm') {
-                    try {
-                        lpoConfig.gtm = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'onetrust') {
-                    try {
-                        lpoConfig.onetrust = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'didomi') {
-                    try {
-                        lpoConfig.didomi = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'messages') {
-                    try {
-                        lpoConfig.messages = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'menu') {
-                    try {
-                        lpoConfig.menu = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'subMenu') {
-                    try {
-                        lpoConfig.subMenu = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'footerColumns') {
-                    try {
-                        lpoConfig.footerColumns = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'footerItems') {
-                    try {
-                        lpoConfig.footerColumns = JSON.parse(field.value)
-                    } catch(e) {}
-                } else if (field.name === 'crossSellData') {
-                    try {
-                        lpoConfig.crossSellData = JSON.parse(field.value)
-                    } catch(e) {}
+
+                let fieldLoader = fieldLoaders[field.name]
+                if (fieldLoader) {
+                    lpoConfig[field.name] = fieldLoader(field.value)
+                } else {
+                    console.debug("skipping undefined lpo config field", field.name)
                 }
             }
         } catch (e) {
-            console.error("Invalid LPO config");
+            console.error("invalid lpo config");
         }
     }
 
