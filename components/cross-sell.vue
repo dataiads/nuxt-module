@@ -47,8 +47,8 @@ if (data) {
 
     <div :class="props.class">
         <template v-for="item in items">
-            <a :href="item.link" v-if="$isSafeLink(item.link)">
-                <slot name="item" :text="item.text"></slot>
+            <a :href="item.link">
+                <slot name="item" :text="item.text" :image="item.image"></slot>
             </a>
         </template>
    </div> 

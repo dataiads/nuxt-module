@@ -160,6 +160,7 @@ export type CrossSellData = Record<string, CrossSellItem[]>
 export interface CrossSellItem {
     text: string
     link: string
+    image?: string
 }
 
   // Add available LPO Config fields here.
