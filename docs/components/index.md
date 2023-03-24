@@ -1,5 +1,7 @@
 ---
 nav_order: 3
+title: Components
+has_children: true
 ---
 # Components
 
@@ -78,15 +80,6 @@ Display pagination for `Filter` system. Style can be customized using class prop
 </template>
 ```
 
-## Search
-A search input that redirects to the mirrored website search page with the value as a parameter. A custom input can be provided as a slot
-``` vue
-<template>
-  <Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q" v-slot="{ value, input }">
-    <input :value="value" @input="input" placeholder="rechercher...">
-  </Search>
-</template>
-```
 
 ## Reviews star
 Display a a product review as starts. Use slots to customize displayed stars
