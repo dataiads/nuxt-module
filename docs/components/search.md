@@ -129,6 +129,7 @@ You may use other components in conjunction with this, for exmaple `<PriceDispla
 
 #### Properties
 | Prop | type | Usage |
+| --- | --- | --- |
 | `item` | `Product` | The product being returned as a suggestion. You can use it just like you would use any other product, accessing it's price, images, collected data, etc. |
 
 ### Previous button `#search-slider-previous-btn`
