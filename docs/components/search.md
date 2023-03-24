@@ -4,7 +4,10 @@ parent: Components
 
 ## Search
 
-The Search component allows you to implement a search bar with search suggestions that will redirect the user to the mirrored site's search page with the searched value in the URL.
+This component allows you to implement a search bar with suggestions that will redirect the user to the mirrored site's search page with the typed value in the URL.
+
+> NOTE: The suggested products are looked up by title.
+
 
 ## Example
 ``` vue
