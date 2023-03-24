@@ -61,7 +61,7 @@ The Search component allows you to implement a search bar with search suggestion
 
 ## Slots
 
-### Search input `#default`
+### `#default` (search input bar)
 
 The default slot is the search bar, this is where you can style and shape the `<input>` and corresponding button if you wish.
 
@@ -78,14 +78,14 @@ The default slot is the search bar, this is where you can style and shape the `<
 | `value` | `string` | The search value being entered by the user, used for setting the `:value` in the `<input>` element of the search bar. |
 | `input` | `function` | The input event handler for the `<input>` element of the search bar |
 
-### Search slider header `#search-slider-header`
+### `#search-slider-header`
 
 This is a small slot for inserting a header to the search suggestions.
 For example a bit of text saying `Products matching your search:`
 
 This slot has no props or default value.
 
-### Search slider item `#search-slider-item`
+### `#search-slider-item`
 
 This is where you can style and shape the product suggestions that pop up as the user is typing.
 You may use other components in conjunction with this, for exmaple `<PriceDisplay>` to display the products price.
@@ -133,14 +133,14 @@ You may use other components in conjunction with this, for exmaple `<PriceDispla
 | --- | --- | --- |
 | `item` | `Product` | The product being returned as a suggestion. You can use it just like you would use any other product, accessing it's price, images, collected data, etc. |
 
-### Previous button `#search-slider-previous-btn`
+### `#search-slider-previous-btn`
 
 This optionnal button can be used to scroll the search reccomendations.
 This works best when the `Search` component is set to `horizontal` mode.
 
 This slot has no props or default value.
 
-### Next button `#search-slider-next-btn`
+### `#search-slider-next-btn`
 
 This optionnal button can be used to scroll the search reccomendations.
 This works best when the `Search` component is set to `horizontal` mode.
