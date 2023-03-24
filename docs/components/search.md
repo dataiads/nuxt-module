@@ -10,6 +10,8 @@ This component allows you to implement a search bar with suggestions that will r
 
 
 ## Example
+![](https://i.imgur.com/nxXKjd9.png)
+
 ``` vue
 <template>
   <Search redirect-url="https://shop.dataiads.io/search?lang=fr_FR" redirect-search-param="q">
