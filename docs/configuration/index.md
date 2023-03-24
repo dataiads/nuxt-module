@@ -1,7 +1,7 @@
 ---
 nav_order: 0
 title: Configuration
-has_chidren: true
+has_children: true
 ---
 # Configuration
 
