@@ -13,11 +13,11 @@ interface Props {
     direction?: "horizontal" | "vertical",
 
     // Number of products to display
-    limit: number
+    limit?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    redirectSearchParam: "q",
+    redirectSearchParam: "",
     lpoSearchReccomendations: true,
     direction: "vertical",
     limit: 4
@@ -29,7 +29,13 @@ const value = useState('search.value', () => "")
 const submit = () => {
     if (value.value) {
         let url = new URL(props.redirectUrl)
-        url.searchParams.set(props.redirectSearchParam, value.value)
+
+        // If no search param is specified, search by appending to the URL path.
+        if (props.redirectSearchParam === "") {
+            url.pathname = url.pathname + encodeURIComponent(value.value)
+        } else {
+            url.searchParams.set(props.redirectSearchParam, value.value)
+        }
         window.location.href = url.toString()
     }
 }
@@ -78,7 +84,7 @@ const input = (event: Event) => {
         </slot>
     </form>
     <div id="search-slider" v-if="lpoSearchReccomendations && searchRecoProducts?.length">
-        <div class="absolute">
+        <div class="absolute z-10">
             <slot name="search-slider-header"></slot>
             <Slider :items="searchRecoProducts" :autoscroll="false" :direction="direction">
                 <template #item="{ item }">
