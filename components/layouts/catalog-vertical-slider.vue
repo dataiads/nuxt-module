@@ -1,0 +1,102 @@
+<script setup lang="ts">
+// @ts-ignore
+import { useRuntimeConfig } from "#app"
+
+
+const props = defineProps<{
+    recoSliderProducts: Product[] | null
+    filter: Filter
+}>()
+
+let { data: filterProducts } = props.filter.results;
+
+const config = useRuntimeConfig()
+const s = config.public.layoutStyle
+</script>
+
+<template>
+    <div class="lg:mx-auto">
+        <header id="header" :class="s.header.class">
+            <slot name="header"></slot>
+        </header>
+
+        <div id="breadcrumb" :class="s.breadcrumb.class">
+            <slot name="breadcrumb"></slot>
+        </div>
+
+        <div class="flex md:flex-row flex-column">
+            <div class="grow">
+                <div id="main-product" :class="s.mainProduct.class">
+                    <slot name="main-product"></slot>
+                </div>
+            </div>
+
+            <div class="flex flex-col overflow-scroll max-h-[600px]  mx-auto mr-4" v-if="filterProducts?.length">
+                <div class="">
+                    <slot name="reco-slider-header"></slot>
+                </div>
+                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
+                    :autoscroll="s.recoSlider.autoscroll" direction="vertical">
+                    <template #item="{ item }">
+                        <slot name="filters-content-grid-item" :key="item.id" :item="item"></slot>
+                    </template>
+                </Slider>
+                <!--
+                <slot name="filters-content-grid-item" v-for="item in recoSliderProducts" :key="item.id" :item="item"></slot>
+                -->
+            </div>
+        </div>
+
+        <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length" class="md:hidden">
+            <div :class="s.recoSlider.containerClass">
+                <slot name="reco-slider-header"></slot>
+                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
+                    :autoscroll="s.recoSlider.autoscroll">
+                    <template #item="{ item }">
+                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
+                    </template>
+                    <template #previous-btn="scope">
+                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
+                    </template>
+                    <template #next-btn="scope">
+                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
+                    </template>
+                </Slider>
+            </div>
+        </div>
+
+        <div id="filters" :class="s.filters.class">
+            <div id="filters-aside" :class="s.filters.asideClass">
+                <slot name="filters-aside"></slot>
+            </div>
+            <div id="filters-content" :class="s.filters.contentClass">
+                <div id="filters-content-header" :class="s.filters.contentHeaderClass">
+                    <slot name="filters-content-header"></slot>
+                </div>
+                <div :class="s.filters.contentGridClass">
+                    <slot name="filters-content-grid-item" v-for="item in filterProducts"
+                        :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+                </div>
+                <div id="filters-pagination" :class="s.filters.paginationClass">
+                    <slot name="filters-pagination"></slot>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cross-sell" :class="s.crossSell.class">
+        <slot name="cross-sell"></slot>
+    </div>
+
+    <footer id="footer" :class="s.footer.class">
+        <slot name="footer"></slot>
+    </footer>
+
+    <StickyFooter>
+        <slot name="sticky-add-to-cart"></slot>
+    </StickyFooter>
+
+    <slot id="filters-drawer" name="filters-drawer"></slot>
+
+    <slot id="menus-drawer" name="menus-drawer"></slot>
+</template>
