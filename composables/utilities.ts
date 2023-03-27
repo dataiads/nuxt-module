@@ -124,3 +124,8 @@ export function firstPaginationHandler(filter: Filter, _pageCount: number) {
 export function lastPaginationHandler(filter: Filter, pageCount: number) {
   filter.page.value = pageCount
 }
+
+// Used for "one page" pagination (a "load more" button)
+export function loadMorePaginationHandler(filter: Filter, nb: number) {
+  filter.limit.value += nb;
+}

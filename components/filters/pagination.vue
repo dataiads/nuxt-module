@@ -6,6 +6,7 @@ interface Props {
   class?: string | string[]
   previousHandler?: (filter: Filter, pageCount: number) => void
   nextHandler?: (filter: Filter, pageCount: number) => void
+  loadMoreHandler?: (filter: Filter, nb: number) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,9 +14,11 @@ const props = withDefaults(defineProps<Props>(), {
   class: "flex items-center",
   previousHandler: previousPaginationHandler,
   nextHandler: nextPaginationHandler,
+  loadMoreHandler: loadMorePaginationHandler,
 })
 
 let totalResults = props.filter.count
+const staticLimit = props.filter.limit.value
 const pageCount = computed(() => Math.ceil(totalResults.value / props.filter.limit.value))
 
 const minVisiblePage = computed(() => Math.max(1, Math.ceil(props.filter.page.value - (props.maxVisibleButtons / 2))))
@@ -49,6 +52,11 @@ const range = (min: number, max: number): number[] => {
     <div v-if="props.filter.page.value < pageCount" @click="() => nextHandler(filter, pageCount)" alt="go to next page">
       <slot name="next-button">
         <button type="button">&gt;</button>
+      </slot>
+    </div>
+
+    <div v-if="props.filter.page.value < pageCount" @click="() => loadMoreHandler(filter, staticLimit)" alt="load more results">
+      <slot name="load-more-button">
       </slot>
     </div>
   </nav>
