@@ -27,21 +27,31 @@ const s = config.public.layoutStyle
         <div id="main-product" :class="s.mainProduct.class" class="flex-nowrap xl-:grow">
             <slot name="main-product"></slot>
 
-            <div class="w-[180px] relative" v-if="filterProducts?.length">
-                <div class="">
-                    <slot name="reco-slider-header"></slot>
-                </div>
-                <div class="">
-                    <div class="overflow-y-scroll">
-                        <template v-for="item in recoSliderProducts" :key="item.id">
-                            <slot name="filters-content-grid-item" :item="item"></slot>
-                        </template>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
+        <div id="main-product" :class="s.mainProduct.class">
+            <slot name="main-product">
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-description"></slot>
+                </div>
+
+                <div :class="s.mainProduct.verticalSliderClass" v-if="filterProducts?.length">
+                    <div class="">
+                        <slot name="reco-slider-header"></slot>
+                    </div>
+                    <div class="">
+                        <div class="overflow-y-scroll">
+                            <template v-for="item in recoSliderProducts" :key="item.id">
+                                <slot name="filters-content-grid-item" :item="item"></slot>
+                            </template>
+                    </div>
+                </div>
+            </div>
+            </slot>
+        </div>
 
         <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length" class="lg:hidden">
             <div :class="s.recoSlider.containerClass">
