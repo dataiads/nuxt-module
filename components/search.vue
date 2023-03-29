@@ -14,16 +14,41 @@ interface Props {
 
     // Number of products to display
     limit?: number
+
+    // Fields to search in
+    searchFields?: string[]
+
+    // Search sort order
+    sort?: string
+
+    // deduplicate search results
+    deduplicate?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     redirectSearchParam: "",
     lpoSearchReccomendations: true,
     direction: "vertical",
-    limit: 4
+    limit: 4,
+    searchFields: ["title"],
+    sort: "random",
+    deduplicate: "itemGroupId"
 })
 
 const value = useState('search.value', () => "")
+
+const searchFilters = computed(() => {
+    return JSON.stringify([
+        props.searchFields.map(field => (
+            {
+                criteria: field,
+                operator: "CONTAINS_ALL_CI",
+                value: value.value.split(" ").join(",")
+            }
+        ))
+    ])
+})
+
 
 // on submit, redirect to mirrored domain search url
 const submit = () => {
@@ -41,34 +66,31 @@ const submit = () => {
 }
 
 // -- Search suggestions --
-const fetchSearchProducts = () => {
-    const { data: searchRecoProductsFetch } = useFetch("/api/recommendations/default/filtered", {
+const fetchSearchProducts = async () => {
+    const { data: searchRecoProductsFetch } = await useFetch("/api/recommendations/default/filtered", {
         params: {
             productId: product.value.id,
             limit: props.limit,
-            filters: JSON.stringify([
-                [
-                    {
-                        criteria: "title",
-                        operator: "CONTAINS_ALL_CI",
-                        value: searchValue.value.split(" ").join(","),
-                    }
-                ]
-            ]),
+            sort: props.sort?.startsWith("-") ? props.sort.substring(1) : props.sort,
+            sortDesc: props.sort?.startsWith("-") ?? false,
+            filters: searchFilters.value,
+            deduplicate: props.deduplicate
         }
     })
     return searchRecoProductsFetch.value
 }
 
+const searchRecoProducts: Ref<Product[]> = ref([])
+
 
 const product = useProduct()
 const searchValue: Ref<string> = refDebounced(value, 500) // https://vueuse.org/shared/refDebounced/#refdebounced
-const searchRecoProducts = computed(() => {
-    if (!props.lpoSearchReccomendations || !searchValue.value) {
-        return []
+watch(searchValue, async () => {
+    if (searchValue.value) {
+        searchRecoProducts.value = await fetchSearchProducts()
+    } else {
+        searchRecoProducts.value = []
     }
-
-    return fetchSearchProducts()
 })
 
 // input event handler for slot input
