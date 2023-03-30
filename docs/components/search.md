@@ -63,6 +63,10 @@ This component allows you to implement a search bar with suggestions that will r
 | `lpoSearchReccomendations` | ❌ | `true` | Set this to false if you want to disable search suggestions. |
 | `direction` | ❌ | `vertical` | Set this to `horizontal` if you want to display search suggestions as a left to right slider. |
 | `limit` | ❌ | `4` | The number of search suggestions to get. |
+| `searchFields` | ❌ | `['title']` | An array of all the fields you would like to use for your search suggestions. Currently only supports OR search. |
+| `sort` | ❌ | `random` | The order to show search results in. |
+| `deduplicate` | ❌ | `itemGroupId` | Deduplicates search results based on the field provided. |
+
 
 ## Slots
 
