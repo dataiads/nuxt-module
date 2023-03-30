@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-no-slider" | "catalog-vertical-slider" | "light" | "light-no-slider";
+export type Variations = "catalog" | "catalog-no-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-vertical-slider";
 </script>
 
 <template>
