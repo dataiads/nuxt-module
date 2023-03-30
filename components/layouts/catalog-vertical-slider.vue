@@ -24,6 +24,11 @@ const s = config.public.layoutStyle
             <slot name="breadcrumb"></slot>
         </div>
 
+        <div id="main-product" :class="s.mainProduct.class" class="flex-nowrap xl-:grow">
+            <slot name="main-product"></slot>
+
+        </div>
+
         <div id="main-product" :class="s.mainProduct.class">
             <slot name="main-product">
                 <div :class="s.mainProduct.imageClass">
@@ -31,6 +36,17 @@ const s = config.public.layoutStyle
                 </div>
                 <div :class="s.mainProduct.descriptionClass">
                     <slot name="main-product-description"></slot>
+                </div>
+
+                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
+                    <div class="">
+                        <slot name="vertical-reco-slider-header"></slot>
+                    </div>
+                    <div :class="s.mainProduct.verticalSlider.sliderClass">
+                        <template v-for="item in recoSliderProducts" :key="item.id">
+                            <slot name="vertical-reco-slider-item" :product="item"></slot>
+                        </template>
+                    </div>
                 </div>
             </slot>
         </div>
@@ -61,7 +77,6 @@ const s = config.public.layoutStyle
     <footer id="footer" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>
-
 
     <StickyFooter>
         <slot name="sticky-add-to-cart"></slot>

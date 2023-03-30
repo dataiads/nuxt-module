@@ -62,7 +62,13 @@ export default defineNuxtConfig({
           class: ["w-full", "lg:container", "mx-auto"],
         },
         mainProduct: {
-          class: ["w-full", "lg:container", "mx-auto"],
+          class: "w-full lg:container mx-auto flex flex-wrap lg:flex-nowrap lg:max-h-[80vh]",
+          imageClass: "w-full lg:w-[400px] xl:w-[540px] flex-nowrap",
+          descriptionClass: "w-full lg:grow flex items-start md:my-auto",
+          verticalSlider: {
+            class: "",
+            sliderClass: ""
+          }
         },
         recoSlider: {
           class: ["w-full"],

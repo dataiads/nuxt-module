@@ -45,6 +45,8 @@ export default defineNuxtPlugin(() => {
             variation: StringLoader,
             locale: StringLoader,
             banners: JSONLoader,
+            bannerBackground: StringLoader,
+            bannerColor: StringLoader,
             gtm: JSONLoader,
             onetrust: JSONLoader,
             didomi: JSONLoader,

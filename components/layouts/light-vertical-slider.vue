@@ -32,13 +32,21 @@ const s = config.public.layoutStyle
                 <div :class="s.mainProduct.descriptionClass">
                     <slot name="main-product-description"></slot>
                 </div>
+
+                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
+                    <div class="">
+                        <slot name="vertical-reco-slider-header"></slot>
+                    </div>
+                    <div :class="s.mainProduct.verticalSlider.sliderClass">
+                        <template v-for="item in recoSliderProducts" :key="item.id">
+                            <slot name="vertical-reco-slider-item" :product="item"></slot>
+                        </template>
+                    </div>
+                </div>
             </slot>
         </div>
 
         <div id="filters" :class="s.filters.class">
-            <div id="filters-aside" :class="s.filters.asideClass">
-                <slot name="filters-aside"></slot>
-            </div>
             <div id="filters-content" :class="s.filters.contentClass">
                 <div id="filters-content-header" :class="s.filters.contentHeaderClass">
                     <slot name="filters-content-header"></slot>
