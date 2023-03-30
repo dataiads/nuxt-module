@@ -8,7 +8,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     class: () => [],
     delay: 100,
-    yThreshold: 500,
+    yThreshold: 100,
 })
 
 const display = ref(false)

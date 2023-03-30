@@ -21,7 +21,7 @@ function fetchPageData(loc: Location) {
     })
   }
 
-  return useFetch<PageData>(`/api/page-data/${lpoid}`)
+  return useFetch<PageData>(`/api/page-data/${encodeURI(lpoid)}`)
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
