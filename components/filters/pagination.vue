@@ -56,7 +56,7 @@ const range = (min: number, max: number): number[] => {
     </div>
 
     <div v-if="props.filter.page.value < pageCount" @click="() => loadMoreHandler(filter, staticLimit)" alt="load more results">
-      <slot name="load-more-button">
+      <slot name="load-more-button" :current="props.filter.limit" :total="totalResults">
       </slot>
     </div>
   </nav>
