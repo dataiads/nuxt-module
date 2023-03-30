@@ -54,6 +54,14 @@ export default defineNuxtPlugin(() => {
                 }
                 return url.toString()
             },
+            oriUrlWithHash(link: string, hash: string): string {
+                // force original domain on a link, add query parameters
+                let url = new URL(link)
+                url.protocol = protocol
+                url.hostname = mirroredHost
+                url.hash = hash
+                return url.toString()
+            },
             isSafeLink(url: string): boolean {
                 return url.startsWith("/") || url.startsWith(`${config.public.mirroredDomain}/`) || url === config.public.mirroredDomain
             },

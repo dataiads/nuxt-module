@@ -38,37 +38,17 @@ const s = config.public.layoutStyle
                     <slot name="main-product-description"></slot>
                 </div>
 
-                <div :class="s.mainProduct.verticalSliderClass" v-if="filterProducts?.length">
+                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
                     <div class="">
-                        <slot name="reco-slider-header"></slot>
+                        <slot name="vertical-reco-slider-header"></slot>
                     </div>
-                    <div class="">
-                        <div class="overflow-y-scroll">
-                            <template v-for="item in recoSliderProducts" :key="item.id">
-                                <slot name="filters-content-grid-item" :item="item"></slot>
-                            </template>
+                    <div :class="s.mainProduct.verticalSlider.sliderClass">
+                        <template v-for="item in recoSliderProducts" :key="item.id">
+                            <slot name="vertical-reco-slider-item" :product="item"></slot>
+                        </template>
                     </div>
                 </div>
-            </div>
             </slot>
-        </div>
-
-        <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length" class="lg:hidden">
-            <div :class="s.recoSlider.containerClass">
-                <slot name="reco-slider-header"></slot>
-                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
-                    :autoscroll="s.recoSlider.autoscroll">
-                    <template #item="{ item }">
-                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
-                    </template>
-                    <template #previous-btn="scope">
-                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
-                    </template>
-                    <template #next-btn="scope">
-                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
-                    </template>
-                </Slider>
-            </div>
         </div>
 
         <div id="filters" :class="s.filters.class">
