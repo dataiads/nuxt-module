@@ -36,6 +36,12 @@ export type Variations = "catalog" | "catalog-no-slider" | "catalog-vertical-sli
         </template>
     </LayoutsLightNoSlider>
 
+    <LayoutsLightVerticalSlider v-else-if="lpoConfig.variation === 'light-vertical-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightVerticalSlider>
+
     <!-- "catalog" is the default layout. -->
     <LayoutsCatalog v-else v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">

@@ -167,7 +167,11 @@ export interface CrossSellItem {
   export interface LPOConfig {
     locale?: string;
     variation?: Variations;
+
     banners?: Banner[];
+    bannerBackground?: string;
+    bannerColor?: string;
+
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;

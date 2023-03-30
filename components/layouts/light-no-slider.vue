@@ -25,7 +25,14 @@ const s = config.public.layoutStyle
         </div>
 
         <div id="main-product" :class="s.mainProduct.class">
-            <slot name="main-product"></slot>
+            <slot name="main-product">
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-description"></slot>
+                </div>
+            </slot>
         </div>
 
         <div id="filters" :class="s.filters.class">
