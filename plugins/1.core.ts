@@ -31,12 +31,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     throw new Error("mirroredDomain is expected in public runtime config")
   }
 
-  if (!runtimeConfig.public.lpoDomain) {
-    throw new Error("lpoDomain is expected in public runtime config")
-  }
-
-
-
   // force robots noindex meta tag
   // the associated canonical link is provided by the server using a header
   useHead({

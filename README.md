@@ -21,7 +21,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      lpoDomain: "https://lpo-demo.dataiads.io",
       mirroredDomain: "https://shop.dataiads.io",
     }
   }

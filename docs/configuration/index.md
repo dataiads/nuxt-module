@@ -11,7 +11,6 @@ To connect your app to the Dataiads system, you can configure the LPO domain as 
 
 | Param | Description | 
 | ------- | ------- | 
-| `lpoDomain` | The dataiads domain for the product pages. | 
 | `mirroredDomain` | The original domain for the product pages. | 
 
 ## Optional
@@ -37,7 +36,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      lpoDomain: "https://lpo-demo.dataiads.io",
       mirroredDomain: "https://shop.dataiads.io",
     }
   }
