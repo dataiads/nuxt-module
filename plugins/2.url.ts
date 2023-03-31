@@ -4,7 +4,7 @@ import { defineNuxtPlugin, useRuntimeConfig, useState } from "#app";
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-    const [protocol, mirroredHost] = config.public.mirroredDomain.split("//")
+    const [protocol, mirroredHost] = useMirroredDomain().split("//")
 
     // global add to cart state
     const quantity = useState<number>("cart.quantity", () => 1)
@@ -63,7 +63,8 @@ export default defineNuxtPlugin(() => {
                 return url.toString()
             },
             isSafeLink(url: string): boolean {
-                return url.startsWith("/") || url.startsWith(`${config.public.mirroredDomain}/`) || url === config.public.mirroredDomain
+                const mirroredDomain = useMirroredDomain()
+                return url.startsWith("/") || url.startsWith(`${mirroredDomain}/`) || url === mirroredDomain
             },
             addToCartUrl(searchParams?: Record<string, string>): string {
                 const product = useState<Product>("product")

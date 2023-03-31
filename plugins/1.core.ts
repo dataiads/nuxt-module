@@ -31,11 +31,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     throw new Error("mirroredDomain is expected in public runtime config")
   }
 
-  if (!runtimeConfig.public.lpoDomain) {
-    throw new Error("mirroredDomain is expected in public runtime config")
-  }
-
-
   // force robots noindex meta tag
   // the associated canonical link is provided by the server using a header
   useHead({
@@ -93,11 +88,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 })
 
-
 function errorRedirect(reason: unknown): void {
   /* Redirect to same URI on mirroredDomain */
-  const runtimeConfig = useRuntimeConfig();
-  let errorUri = runtimeConfig.public.mirroredDomain + window.location.pathname + window.location.search
+  const mirroredDomain = useMirroredDomain()
+
+  let errorUri = mirroredDomain + window.location.pathname + window.location.search
   console.debug(reason);
   if (process.env.NODE_ENV === 'development') {
       console.error(`Production app would have redirected to ${errorUri}: ${reason}`)

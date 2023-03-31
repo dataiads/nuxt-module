@@ -165,6 +165,7 @@ export interface CrossSellItem {
 
   // Add available LPO Config fields here.
   export interface LPOConfig {
+    mirroredDomainOverride?: string;
     locale?: string;
     variation?: Variations;
 
