@@ -38,6 +38,9 @@ export default defineNuxtConfig({
 
       // mandatory configuration
       lpoDomain: "",
+
+      // mirroredDomain should not be used directly, as it can be overriden by lpoConfig.mirroredDomainOverride
+      // useMirroredDomain() composable should be used instead
       mirroredDomain: "",
 
       // default timeouts for server interaction
