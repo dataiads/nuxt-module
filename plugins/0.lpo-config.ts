@@ -57,6 +57,8 @@ export default defineNuxtPlugin(() => {
             footerItems: JSONLoader,
             crossSellData: JSONLoader,
             mirroredDomainOverride: StringLoader,
+            breadcrumbs: JSONLoader,
+            carousel: JSONLoader,
         }
 
 

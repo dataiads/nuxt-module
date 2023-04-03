@@ -173,6 +173,9 @@ export interface CrossSellItem {
     bannerBackground?: string;
     bannerColor?: string;
 
+    breadcrumbs: Record<string, Array<Record<string, string>>>;
+    carousel: Record<string, Array<Record<string, string>>>;
+
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
