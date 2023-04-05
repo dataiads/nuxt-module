@@ -89,6 +89,7 @@ export const useFilter = (options: UseFilterOptions) => {
       params: {
         productId: options.productId,
         filters: currentFilters,
+        ...(options.fetchQuery || {}),
       },
     });
     watch(countFetcher.data, (val) => (count.value = val || 0));
@@ -105,6 +106,7 @@ export const useFilter = (options: UseFilterOptions) => {
         params: {
           property: criteria,
           filters: JSON.stringify(options.baseRules || []),
+          ...(options.fetchQuery || {}),
         },
       });
     }
