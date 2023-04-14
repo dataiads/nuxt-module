@@ -3,7 +3,7 @@ nav_order: 0
 parent: Reco
 ---
 
-### Criteria
+# Criteria
 
 Crtieria are the different fields you can use for searching the products.
 
@@ -11,7 +11,7 @@ They are split into two groups, numeric or not, with different operators availab
 
 Not all of the fields that can be found in a field are available, this list is the entirity of what you can use with out filter system in its current state.
 
-#### Numeric
+## Numeric
 
 - `price`: the product price
 - `salePrice`: the product salePrice
@@ -28,7 +28,7 @@ In order to sort or filter by products that are on sale, you can do :
 > NOTE: Some product feeds always have a `salePrice` even when there is not a sale.
 
 
-#### Non-numeric
+## Non-numeric
 
 - `id`: The product id
 - `title`
@@ -62,7 +62,7 @@ In order to sort or filter by products that are on sale, you can do :
 - `uri`
 - `random`: Allows targeting a random product.
 
-#### customAttributes
+## customAttributes
 
 To target a customAttribute, for example named `attributeName`, you can use the following criterias :
 `dataCustomAttribute.attributeName`
@@ -71,7 +71,7 @@ If this attribute is numeric, you can use `dataCustomAttributeNumeric`.
 
 > WARNING: These fields are not indexed and their usage may impact performance negatively.
 
-#### collected data
+## collected data
 
 To target collectedData, for example named `attributeName`, you can use the following criterias :
 `extraDataCustomAttribute.attributeName`
