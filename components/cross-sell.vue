@@ -10,6 +10,9 @@ interface Props {
     // override key matching algorithm
     keyMatcher?: (productKey: string, dataKey: string) => boolean
 
+    // Maps this function to the items array to modify it if necessary (for example if you need to have dynamic data related to the main product)
+    dataTransformer?: (data: CrossSellItem) => CrossSellItem;
+
     class?: string|string[]
 }
 
@@ -38,6 +41,10 @@ if (data) {
             break
         }
     }
+}
+
+if (props.dataTransformer) {
+    items = items.map(props.dataTransformer)
 }
 </script>
 
