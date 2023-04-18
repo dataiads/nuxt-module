@@ -26,6 +26,7 @@ const s = config.public.layoutStyle
 
         <div id="main-product" :class="s.mainProduct.class">
             <slot name="main-product">
+                <div id="debug">debug</div>
                 <slot name="main-product-aside"></slot>
                 
                 <div :class="s.mainProduct.imageClass">
