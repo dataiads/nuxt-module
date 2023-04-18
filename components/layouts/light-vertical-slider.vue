@@ -26,6 +26,10 @@ const s = config.public.layoutStyle
 
         <div id="main-product" :class="s.mainProduct.class">
             <slot name="main-product">
+                <slot name="main-product-header"></slot>
+
+                <slot name="main-product-aside"></slot>
+                
                 <div :class="s.mainProduct.imageClass">
                     <slot name="main-product-image"></slot>
                 </div>
@@ -43,6 +47,8 @@ const s = config.public.layoutStyle
                         </template>
                     </div>
                 </div>
+
+                <slot name="main-product-footer"></slot>
             </slot>
         </div>
 
