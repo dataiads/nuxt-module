@@ -15,6 +15,8 @@ interface Props {
     mainClass?: string | string[]
     asideClass?: string | string[]
 
+    // Add a lightbox on main image click
+    withLightbox: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
     class: () => ["flex", "flex-row"],
@@ -112,17 +114,39 @@ const scrollIntoView = (index: number) => {
     if (scrollerRef.value && index > -1 && index < mainImagesRef.value.length) {
         const pos = mainImagesRef.value[index].offsetLeft
         ignoreNextScrollEvent = true
-        scrollerRef.value.scroll({ left: pos, behavior: "auto"})
+        scrollerRef.value.scroll({ left: pos, behavior: "auto" })
+    }
+}
+
+const openLightbox = ref(false);
+const lightboxImageIndex = ref(0);
+
+const onImageClick = (index: number) => {
+    lightboxImageIndex.value = index;
+    openLightbox.value = true;
+};
+
+
+const lightboxIncrIndex = () => {
+    if (lightboxImageIndex.value < allImages.length - 1) {
+        lightboxImageIndex.value += 1;
+    }
+}
+
+const lightboxDecrIndex = () => {
+    if (lightboxImageIndex.value > 0) {
+        lightboxImageIndex.value -= 1;
     }
 }
 </script>
 
 <template>
     <div :class="props.class">
+        <slot name="lightbox" :close="() => openLightbox = false" :images="allImages" :incrIndex="lightboxIncrIndex" :decrIndex="lightboxDecrIndex" :open="openLightbox" :selected-index="lightboxImageIndex"></slot>
+
         <div :class="props.asideClass">
             <template v-for="(additionalImage, index) in allImages">
-                <div @click="selectImage(index)" @mouseenter="mouseenter(index)"
-                    @mouseleave="mouseleave">
+                <div @click="selectImage(index)" @mouseenter="mouseenter(index)" @mouseleave="mouseleave">
                     <slot name="aside-image" :alt="props.alt" :src="additionalImage"
                         :active="additionalImage === selectedImage">
                         <!-- default content for slot additional-image -->
@@ -134,26 +158,28 @@ const scrollIntoView = (index: number) => {
 
         <div class="flex-1 relative">
             <div :class="mainClass" @scroll="onScroll" ref="scrollerRef">
-                <div v-for="additionalImage in allImages" class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
-                    <slot name="main-image"  :src="additionalImage" :alt="props.alt">
+                <div v-for="(additionalImage, index) in allImages" @click="() => onImageClick(index)"
+                    class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
+                    <slot name="main-image" :src="additionalImage" :alt="props.alt">
                         <!-- default content for slot for main image -->
-                        <Image height="400" width="400" :src="additionalImage" :alt="props.alt"/>
+                        <Image height="400" width="400" :src="additionalImage" :alt="props.alt" />
                     </slot>
                 </div>
             </div>
 
-            <div v-if="allImages.length > 1" class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
+            <div v-if="allImages.length > 1"
+                class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickPrevious">
                     <slot name="previous-btn"></slot>
                 </div>
             </div>
 
-            <div v-if="allImages.length > 1" class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
+            <div v-if="allImages.length > 1"
+                class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickNext">
                     <slot name="next-btn"></slot>
                 </div>
             </div>
         </div>
 
-    </div>
-</template>
+</div></template>
