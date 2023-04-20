@@ -55,6 +55,8 @@ export class ScrollController {
 </script>
 
 <script setup lang="ts">
+import { WritableComputedRef } from 'vue';
+
 interface Props<T> {
     items: T[] | null
     scrollBehavior?: ScrollBehavior
@@ -157,6 +159,17 @@ const previousContentClass = [
 
 const nextContentClass = previousContentClass.concat()
 
+const largeEnoughToScroll = ref(false)
+let x: WritableComputedRef<number>
+onMounted(() => {
+    if (!scrollerEl.value) {
+        return
+    }
+
+    largeEnoughToScroll.value = scrollerEl.value.scrollWidth > scrollerEl.value.clientWidth;
+    ({ x } = useScroll(scrollerEl.value)) // https://vueuse.org/core/useScroll/#usescroll
+})
+
 </script>
 
 <template>
@@ -166,7 +179,7 @@ const nextContentClass = previousContentClass.concat()
         </div>
         <div :class="previousClass">
             <div :class="previousContentClass">
-                <slot name="previous-btn" :click="previous">
+                <slot name="previous-btn" :click="previous" v-if="x > 0">
                     <div @click="previous" class="hover:bg-slate-500/10 cursor-pointer rounded-full px-4 text-3xl">&lt;
                     </div>
                 </slot>
@@ -174,7 +187,7 @@ const nextContentClass = previousContentClass.concat()
         </div>
         <div :class="nextClass">
             <div :class="nextContentClass">
-                <slot name="next-btn" :click="next">
+                <slot name="next-btn" :click="next" v-if="largeEnoughToScroll">
                     <div @click="next" class="hover:bg-slate-500/10 cursor-pointer rounded-full px-4 text-3xl">&gt;
                     </div>
                 </slot>
