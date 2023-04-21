@@ -14,19 +14,6 @@ const config = useRuntimeConfig()
 const s = config.public.layoutStyle
 
 const overlayOpen = useState('recoSlider.overlay.open', () => false)
-const recoOverlay: Ref<HTMLDivElement> = ref(null)
-const showBackground = ref(true)
-
-watch(overlayOpen, () => {
-    const overlayBackgroundClass = [...s.recoSlider.overlayBackgroundClass, (overlayOpen.value ? 'open' : 'closed')]
-    if (overlayOpen.value) {
-        showBackground.value = true
-        setTimeout(() => recoOverlay.value.classList.value = overlayBackgroundClass.join(' ') , 20)
-    } else {
-        setTimeout(() => recoOverlay.value.style.opacity = 0, 20)
-        setTimeout(() => showBackground.value = false, 500)
-    }
-})
 
 // Hide when user scrolls.
 const { y } = useWindowScroll()
@@ -37,7 +24,7 @@ watch(y, () => {
 })
 
 const overlayClass = computed(() => {
-    let classList = structuredClone(toRaw(s.recoSlider.class));
+    const classList = ["fixed", "bottom-0", "left-0", "z-[12]", ...structuredClone(toRaw(s.recoSlider.class))]
 
     if (overlayOpen.value) {
         // open
@@ -49,16 +36,28 @@ const overlayClass = computed(() => {
     } else {
         // close
         if (s.recoSlider.openFrom === 'top') {
-            classList.push('-translate-y-full');
+            classList.push('-translate-y-full')
         } else if (s.recoSlider.openFrom === 'bottom') {
-            classList.push('translate-y-full');
+            classList.push('translate-y-full')
         } else if (s.recoSlider.openFrom === 'left') {
-            classList.push('-translate-x-full');
+            classList.push('-translate-x-full')
         } else if (s.recoSlider.openFrom === 'right') {
-            classList.push('translate-x-full');
+            classList.push('translate-x-full')
         }
     }
-    return classList;
+    return classList
+})
+
+const backgroundClass = computed(() => {
+    const classList = ["transition-opacity", ...s.recoSlider.overlayBackgroundClass]
+
+    if (overlayOpen.value) {
+        classList.push('open')
+    } else {
+        classList.push('closed')
+    }
+
+    return classList
 })
 
 // Auto-open after delay
@@ -94,8 +93,8 @@ if (s.recoSlider.openDelay > 0) {
             </slot>
         </div>
 
-        <div id="overlay-background" v-if="showBackground" ref="recoOverlay" @click="overlayOpen = false" class="transition-opacity"></div>
-        <div id="reco-slider" class="fixed bottom-0 left-0 z-[12]" @click.stop="() => null" :class="overlayClass" v-if="recoSliderProducts?.length">
+        <div id="overlay-background" @click="overlayOpen = false" :class="backgroundClass"></div>
+        <div id="reco-slider" :class="overlayClass" v-if="recoSliderProducts?.length">
             <div :class="s.recoSlider.containerClass">
                 <slot name="reco-slider-header"></slot>
                 <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll">
@@ -130,7 +129,6 @@ if (s.recoSlider.openDelay > 0) {
             </div>
         </div>
     </div>
-
     <div id="cross-sell" :class="s.crossSell.class">
         <slot name="cross-sell"></slot>
     </div>
@@ -147,3 +145,14 @@ if (s.recoSlider.openDelay > 0) {
 
     <slot id="menus-drawer" name="menus-drawer"></slot>
 </template>
+
+<style lang="scss" scoped>
+#overlay-background.open {
+    opacity: 0.6;
+}
+
+#overlay-background.closed {
+    pointer-events: none;
+    opacity: 0;
+}
+</style>
