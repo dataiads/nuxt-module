@@ -1,5 +1,7 @@
 import { joinURL } from "ufo";
 
+
+
 interface GetImageParameters {
   modifiers: {
     width: number;
@@ -15,7 +17,7 @@ interface NuxtImageConfiguration {
 
 export function getImage(src: string, { modifiers, providerURL }: GetImageParameters, { options }: NuxtImageConfiguration) {
   const { width, height } = modifiers;
-  const url =	`/static/image/unsafe/fit-in/${width}x${height}/${encodeURIComponent(src)}`
+  const url =	`${providerURL}/static/image/unsafe/fit-in/${width}x${height}/${encodeURIComponent(src)}`
   return {
     url,
   };

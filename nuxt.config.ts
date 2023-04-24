@@ -136,7 +136,7 @@ export default defineNuxtConfig({
         name: "imageProvider",
         provider: resolve("./utils/image-provider"),
         options: {
-          providerURL: "/api/images/resize",
+          providerURL: "",
         },
       },
     },
