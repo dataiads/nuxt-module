@@ -14,10 +14,8 @@ interface NuxtImageConfiguration {
 }
 
 export function getImage(src: string, { modifiers, providerURL }: GetImageParameters, { options }: NuxtImageConfiguration) {
-  const { width, height, format } = modifiers;
-  const b64Src = btoa(src);
-  const url = joinURL(providerURL, `${b64Src}?w=${width}&h=${height}&f=${format}`);
-
+  const { width, height } = modifiers;
+  const url =	`/static/image/unsafe/fit-in/${width}x${height}/${encodeURIComponent(src)}`
   return {
     url,
   };
