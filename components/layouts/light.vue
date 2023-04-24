@@ -11,6 +11,7 @@ const props = defineProps<{
 let { data: filterProducts } = props.filter.results;
 
 const config = useRuntimeConfig()
+const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
 </script>
 
@@ -19,6 +20,43 @@ const s = config.public.layoutStyle
         <header id="header" :class="s.header.class">
             <slot name="header"></slot>
         </header>
+
+        <div id="breadcrumb" :class="s.breadcrumb.class">
+            <slot name="breadcrumb"></slot>
+        </div>
+
+        <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
+            <slot name="main-product-light">
+                <slot name="main-product-light-header"></slot>
+
+                <slot name="main-product-light-aside"></slot>
+
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-light-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-light-description"></slot>
+                </div>
+
+                <slot name="main-product-light-footer"></slot>
+            </slot>
+        </div>
+        <div id="main-product" v-else :class="s.mainProduct.class">
+            <slot name="main-product">
+                <slot name="main-product-header"></slot>
+
+                <slot name="main-product-aside"></slot>
+                
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-description"></slot>
+                </div>
+
+                <slot name="main-product-footer"></slot>
+            </slot>
+        </div>
 
         <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
             <div :class="s.recoSlider.containerClass">
@@ -36,43 +74,6 @@ const s = config.public.layoutStyle
                     </template>
                 </Slider>
             </div>
-        </div>
-
-        <div id="breadcrumb" :class="s.breadcrumb.class">
-            <slot name="breadcrumb"></slot>
-        </div>
-
-        <div id="main-product" v-if="s.mainProduct.useLightMainProduct" :class="s.mainProduct.class">
-            <slot name="main-product">
-                <slot name="main-product-header"></slot>
-
-                <slot name="main-product-aside"></slot>
-                
-                <div :class="s.mainProduct.imageClass">
-                    <slot name="main-product-image"></slot>
-                </div>
-                <div :class="s.mainProduct.descriptionClass">
-                    <slot name="main-product-description"></slot>
-                </div>
-
-                <slot name="main-product-footer"></slot>
-            </slot>
-        </div>
-        <div id="main-product" v-else :class="s.mainProduct.class">
-            <slot name="main-product-light">
-                <slot name="main-product-light-header"></slot>
-
-                <slot name="main-product-light-aside"></slot>
-
-                <div :class="s.mainProduct.imageClass">
-                    <slot name="main-product-light-image"></slot>
-                </div>
-                <div :class="s.mainProduct.descriptionClass">
-                    <slot name="main-product-light-description"></slot>
-                </div>
-
-                <slot name="main-product-light-footer"></slot>
-            </slot>
         </div>
 
         <div id="filters" :class="s.filters.class">

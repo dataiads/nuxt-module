@@ -11,6 +11,7 @@ const props = defineProps<{
 let { data: filterProducts } = props.filter.results;
 
 const config = useRuntimeConfig()
+const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
 
 const overlayOpen = useState('recoSlider.overlay.open', () => false)
@@ -66,23 +67,7 @@ if (s.recoSlider.openDelay > 0) {
             <slot name="breadcrumb"></slot>
         </div>
 
-        <div id="main-product" v-if="s.mainProduct.useLightMainProduct" :class="s.mainProduct.class">
-            <slot name="main-product">
-                <slot name="main-product-header"></slot>
-
-                <slot name="main-product-aside"></slot>
-                
-                <div :class="s.mainProduct.imageClass">
-                    <slot name="main-product-image"></slot>
-                </div>
-                <div :class="s.mainProduct.descriptionClass">
-                    <slot name="main-product-description"></slot>
-                </div>
-
-                <slot name="main-product-footer"></slot>
-            </slot>
-        </div>
-        <div id="main-product" v-else :class="s.mainProduct.class">
+        <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
             <slot name="main-product-light">
                 <slot name="main-product-light-header"></slot>
 
@@ -96,6 +81,22 @@ if (s.recoSlider.openDelay > 0) {
                 </div>
 
                 <slot name="main-product-light-footer"></slot>
+            </slot>
+        </div>
+        <div id="main-product" v-else :class="s.mainProduct.class">
+            <slot name="main-product">
+                <slot name="main-product-header"></slot>
+
+                <slot name="main-product-aside"></slot>
+                
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-description"></slot>
+                </div>
+
+                <slot name="main-product-footer"></slot>
             </slot>
         </div>
 

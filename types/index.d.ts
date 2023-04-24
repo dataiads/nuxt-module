@@ -185,6 +185,8 @@ export interface CrossSellItem {
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
     crossSellData?: CrossSellData;
+
+    useLightMainProduct?: boolean;
   }
 
   export interface UseFilterOptions {

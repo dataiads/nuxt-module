@@ -11,6 +11,7 @@ const props = defineProps<{
 let { data: filterProducts } = props.filter.results;
 
 const config = useRuntimeConfig()
+const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
 </script>
 
@@ -28,23 +29,7 @@ const s = config.public.layoutStyle
             <slot name="cross-sell"></slot>
         </div>
 
-        <div id="main-product" v-if="!s.mainProduct.useLightMainProduct" :class="s.mainProduct.class">
-            <slot name="main-product">
-                <slot name="main-product-header"></slot>
-
-                <slot name="main-product-aside"></slot>
-
-                <div :class="s.mainProduct.imageClass">
-                    <slot name="main-product-image"></slot>
-                </div>
-                <div :class="s.mainProduct.descriptionClass">
-                    <slot name="main-product-description"></slot>
-                </div>
-
-                <slot name="main-product-footer"></slot>
-            </slot>
-        </div>
-        <div id="main-product" v-else :class="s.mainProduct.class">
+        <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
             <slot name="main-product-light">
                 <slot name="main-product-light-header"></slot>
 
@@ -60,7 +45,22 @@ const s = config.public.layoutStyle
                 <slot name="main-product-light-footer"></slot>
             </slot>
         </div>
+        <div id="main-product" v-else :class="s.mainProduct.class">
+            <slot name="main-product">
+                <slot name="main-product-header"></slot>
 
+                <slot name="main-product-aside"></slot>
+
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-description"></slot>
+                </div>
+
+                <slot name="main-product-footer"></slot>
+            </slot>
+        </div>
 
         <div id="filters" :class="s.filters.class">
             <div id="filters-aside" :class="s.filters.asideClass">
