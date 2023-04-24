@@ -24,7 +24,7 @@ export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider
         </template>
     </LayoutsCatalogNoSlider>
 
-    <LayoutsCatalogNoSliderXsellTop v-if="lpoConfig.variation === 'catalog-no-slider-xsell-top'" v-bind="props" >
+    <LayoutsCatalogNoSliderXsellTop v-else-if="lpoConfig.variation === 'catalog-no-slider-xsell-top'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>

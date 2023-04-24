@@ -36,6 +36,6 @@ export function sourceTcVars(product: Product) {
   const tcVarsAttr = getCustomAttrJSON<Record<string, string>>(product, "tcVars", {});
   window.tc_vars = {
     ...window.tc_vars,
-    ...tcVars
+    ...tcVarsAttr
   }
 }
