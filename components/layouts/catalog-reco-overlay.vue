@@ -26,7 +26,7 @@ watch(y, () => {
 
 
 // Class for the overlay congtaining the slider.
-let overlayClass = ["fixed", "bottom-0", "left-0", "z-[12]", s.recoSlider.class]
+let overlayClass = reactive(["fixed", "bottom-0", "left-0", "z-[12]", s.recoSlider.class])
 switch (s.recoSlider.openFrom) {
     case 'top':
          overlayClass.push({"translate-y-0": overlayOpen}, {"-translate-y-full": overlayClosed})
@@ -41,14 +41,18 @@ switch (s.recoSlider.openFrom) {
          overlayClass.push({"translate-x-0": overlayOpen}, {"translate-x-full": overlayClosed})
         break
 }
-overlayClass = reactive(overlayClass)
 
 // Class for the backgound which occupies the entire page.
 const backgroundClass = reactive(["transition-opacity", ...s.recoSlider.overlayBackgroundClass, {"open": overlayOpen, "closed": overlayClosed}])
 
 // Auto-open after delay
 if (s.recoSlider.openDelay > 0) {
-    setTimeout(() => overlayOpen.value = true, s.recoSlider.openDelay)
+    setTimeout(() => {
+        console.log(y.value)
+        if (y.value < 10) {
+            overlayOpen.value = true
+        }
+    }, s.recoSlider.openDelay)
 }
 </script>
 
