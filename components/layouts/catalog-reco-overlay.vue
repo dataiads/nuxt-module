@@ -14,6 +14,7 @@ const config = useRuntimeConfig()
 const s = config.public.layoutStyle
 
 const overlayOpen = useState('recoSlider.overlay.open', () => false)
+const overlayClosed = computed(() => !overlayOpen.value)
 
 // Hide when user scrolls.
 const { y } = useWindowScroll()
@@ -23,42 +24,27 @@ watch(y, () => {
     }
 })
 
-const overlayClass = computed(() => {
-    const classList = ["fixed", "bottom-0", "left-0", "z-[12]", ...structuredClone(toRaw(s.recoSlider.class))]
 
-    if (overlayOpen.value) {
-        // open
-        if (s.recoSlider.openFrom === 'top' || s.recoSlider.openFrom === 'bottom') {
-            classList.push('translate-y-0')
-        } else if (s.recoSlider.openFrom === 'left' || s.recoSlider.openFrom === 'right') {
-            classList.push('translate-x-0')
-        }
-    } else {
-        // close
-        if (s.recoSlider.openFrom === 'top') {
-            classList.push('-translate-y-full')
-        } else if (s.recoSlider.openFrom === 'bottom') {
-            classList.push('translate-y-full')
-        } else if (s.recoSlider.openFrom === 'left') {
-            classList.push('-translate-x-full')
-        } else if (s.recoSlider.openFrom === 'right') {
-            classList.push('translate-x-full')
-        }
-    }
-    return classList
-})
+// Class for the overlay congtaining the slider.
+let overlayClass = ["fixed", "bottom-0", "left-0", "z-[12]", s.recoSlider.class]
+switch (s.recoSlider.openFrom) {
+    case 'top':
+         overlayClass.push({"translate-y-0": overlayOpen}, {"-translate-y-full": overlayClosed})
+        break
+    case 'bottom':
+         overlayClass.push({"translate-y-0": overlayOpen}, {"translate-y-full": overlayClosed})
+        break
+    case 'left':
+         overlayClass.push({"translate-x-0": overlayOpen}, {"-translate-x-full": overlayClosed})
+        break
+    case 'right':
+         overlayClass.push({"translate-x-0": overlayOpen}, {"translate-x-full": overlayClosed})
+        break
+}
+overlayClass = reactive(overlayClass)
 
-const backgroundClass = computed(() => {
-    const classList = ["transition-opacity", ...s.recoSlider.overlayBackgroundClass]
-
-    if (overlayOpen.value) {
-        classList.push('open')
-    } else {
-        classList.push('closed')
-    }
-
-    return classList
-})
+// Class for the backgound which occupies the entire page.
+const backgroundClass = reactive(["transition-opacity", ...s.recoSlider.overlayBackgroundClass, {"open": overlayOpen, "closed": overlayClosed}])
 
 // Auto-open after delay
 if (s.recoSlider.openDelay > 0) {
