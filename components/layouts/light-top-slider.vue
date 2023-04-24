@@ -21,6 +21,24 @@ const s = config.public.layoutStyle
             <slot name="header"></slot>
         </header>
 
+        <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
+            <div :class="s.recoSlider.containerClass">
+                <slot name="reco-slider-header"></slot>
+                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
+                    :autoscroll="s.recoSlider.autoscroll">
+                    <template #item="{ item }">
+                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
+                    </template>
+                    <template #previous-btn="scope">
+                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
+                    </template>
+                    <template #next-btn="scope">
+                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
+                    </template>
+                </Slider>
+            </div>
+        </div>
+
         <div id="breadcrumb" :class="s.breadcrumb.class">
             <slot name="breadcrumb"></slot>
         </div>
@@ -38,17 +56,6 @@ const s = config.public.layoutStyle
                     <slot name="main-product-light-description"></slot>
                 </div>
 
-                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
-                    <div class="">
-                        <slot name="vertical-reco-slider-header"></slot>
-                    </div>
-                    <div :class="s.mainProduct.verticalSlider.sliderClass">
-                        <template v-for="item in recoSliderProducts" :key="item.id">
-                            <slot name="vertical-reco-slider-item" :product="item"></slot>
-                        </template>
-                    </div>
-                </div>
-
                 <slot name="main-product-light-footer"></slot>
             </slot>
         </div>
@@ -57,7 +64,7 @@ const s = config.public.layoutStyle
                 <slot name="main-product-header"></slot>
 
                 <slot name="main-product-aside"></slot>
-
+                
                 <div :class="s.mainProduct.imageClass">
                     <slot name="main-product-image"></slot>
                 </div>
@@ -65,25 +72,11 @@ const s = config.public.layoutStyle
                     <slot name="main-product-description"></slot>
                 </div>
 
-                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
-                    <div class="">
-                        <slot name="vertical-reco-slider-header"></slot>
-                    </div>
-                    <div :class="s.mainProduct.verticalSlider.sliderClass">
-                        <template v-for="item in recoSliderProducts" :key="item.id">
-                            <slot name="vertical-reco-slider-item" :product="item"></slot>
-                        </template>
-                    </div>
-                </div>
-
                 <slot name="main-product-footer"></slot>
             </slot>
         </div>
 
         <div id="filters" :class="s.filters.class">
-            <div id="filters-aside" :class="s.filters.asideClass">
-                <slot name="filters-aside"></slot>
-            </div>
             <div id="filters-content" :class="s.filters.contentClass">
                 <div id="filters-content-header" :class="s.filters.contentHeaderClass">
                     <slot name="filters-content-header"></slot>
@@ -106,6 +99,7 @@ const s = config.public.layoutStyle
     <footer id="footer" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>
+
 
     <StickyFooter>
         <slot name="sticky-add-to-cart"></slot>

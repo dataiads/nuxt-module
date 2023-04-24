@@ -11,6 +11,7 @@ const props = defineProps<{
 let { data: filterProducts } = props.filter.results;
 
 const config = useRuntimeConfig()
+const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
 </script>
 
@@ -24,7 +25,23 @@ const s = config.public.layoutStyle
             <slot name="breadcrumb"></slot>
         </div>
 
-        <div id="main-product" :class="s.mainProduct.class">
+        <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
+            <slot name="main-product-light">
+                <slot name="main-product-light-header"></slot>
+
+                <slot name="main-product-light-aside"></slot>
+
+                <div :class="s.mainProduct.imageClass">
+                    <slot name="main-product-light-image"></slot>
+                </div>
+                <div :class="s.mainProduct.descriptionClass">
+                    <slot name="main-product-light-description"></slot>
+                </div>
+
+                <slot name="main-product-light-footer"></slot>
+            </slot>
+        </div>
+        <div id="main-product" v-else :class="s.mainProduct.class">
             <slot name="main-product">
                 <slot name="main-product-header"></slot>
 

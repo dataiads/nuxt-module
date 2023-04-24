@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-vertical-slider";
+export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
 </script>
 
 <template>
@@ -23,6 +23,18 @@ export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalogNoSlider>
+
+    <LayoutsCatalogNoSliderXsellTop v-if="lpoConfig.variation === 'catalog-no-slider-xsell-top'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogNoSliderXsellTop>
+
+    <LayoutsCatalogTopSlider v-else-if="lpoConfig.variation === 'catalog-top-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogTopSlider>
 
     <LayoutsCatalogVerticalSlider v-else-if="lpoConfig.variation === 'catalog-vertical-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
@@ -41,6 +53,18 @@ export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsLightNoSlider>
+
+    <LayoutsLightNoSliderXsellTop v-else-if="lpoConfig.variation === 'light-no-slider-xsell-top'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightNoSliderXsellTop>
+
+    <LayoutsLightTopSlider v-else-if="lpoConfig.variation === 'light-top-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightTopSlider>
 
     <LayoutsLightVerticalSlider v-else-if="lpoConfig.variation === 'light-vertical-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">

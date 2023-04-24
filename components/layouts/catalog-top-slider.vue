@@ -25,6 +25,24 @@ const s = config.public.layoutStyle
             <slot name="breadcrumb"></slot>
         </div>
 
+        <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
+            <div :class="s.recoSlider.containerClass">
+                <slot name="reco-slider-header"></slot>
+                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
+                    :autoscroll="s.recoSlider.autoscroll">
+                    <template #item="{ item }">
+                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
+                    </template>
+                    <template #previous-btn="scope">
+                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
+                    </template>
+                    <template #next-btn="scope">
+                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
+                    </template>
+                </Slider>
+            </div>
+        </div>
+
         <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
             <slot name="main-product-light">
                 <slot name="main-product-light-header"></slot>
@@ -38,17 +56,6 @@ const s = config.public.layoutStyle
                     <slot name="main-product-light-description"></slot>
                 </div>
 
-                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
-                    <div class="">
-                        <slot name="vertical-reco-slider-header"></slot>
-                    </div>
-                    <div :class="s.mainProduct.verticalSlider.sliderClass">
-                        <template v-for="item in recoSliderProducts" :key="item.id">
-                            <slot name="vertical-reco-slider-item" :product="item"></slot>
-                        </template>
-                    </div>
-                </div>
-
                 <slot name="main-product-light-footer"></slot>
             </slot>
         </div>
@@ -57,23 +64,12 @@ const s = config.public.layoutStyle
                 <slot name="main-product-header"></slot>
 
                 <slot name="main-product-aside"></slot>
-
+                
                 <div :class="s.mainProduct.imageClass">
                     <slot name="main-product-image"></slot>
                 </div>
                 <div :class="s.mainProduct.descriptionClass">
                     <slot name="main-product-description"></slot>
-                </div>
-
-                <div :class="s.mainProduct.verticalSlider.class" v-if="filterProducts?.length">
-                    <div class="">
-                        <slot name="vertical-reco-slider-header"></slot>
-                    </div>
-                    <div :class="s.mainProduct.verticalSlider.sliderClass">
-                        <template v-for="item in recoSliderProducts" :key="item.id">
-                            <slot name="vertical-reco-slider-item" :product="item"></slot>
-                        </template>
-                    </div>
                 </div>
 
                 <slot name="main-product-footer"></slot>

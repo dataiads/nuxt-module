@@ -68,7 +68,8 @@ export default defineNuxtConfig({
           verticalSlider: {
             class: "",
             sliderClass: ""
-          }
+          },
+          useLightMainProduct: false,
         },
         recoSlider: {
           class: ["w-full"],

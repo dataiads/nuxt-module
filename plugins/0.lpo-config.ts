@@ -59,6 +59,7 @@ export default defineNuxtPlugin(() => {
             mirroredDomainOverride: StringLoader,
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,
+            useLightMainProduct: StringLoader,
         }
 
 
