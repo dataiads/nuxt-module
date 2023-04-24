@@ -31,3 +31,22 @@ export function sourceGTMDataLayerArray(product: Product, options = sourceGTMDat
     console.error("can't source dataLayer");
   }
 }
+
+export function sourceTcVars(product: Product) {
+  const tcVarsAttr = getCustomAttr(product, "tcVars");
+
+  if (!tcVarsAttr) {
+    return;
+  }
+
+  try {
+    const tcVars = JSON.parse(tcVarsAttr);
+
+    window.tc_vars = {
+      ...window.tc_vars,
+      ...tcVars,
+    }
+  } catch(error) {
+    console.error("can't source tcVars");
+  }
+}
