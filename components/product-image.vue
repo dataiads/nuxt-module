@@ -76,6 +76,12 @@ const clickNext = () => {
     }
 }
 
+const clickIndex = (index: number) => {
+    if (index > -1 && index < allImages.length) {
+        selectImage(index)
+    }
+}
+
 const mouseenter = (imageIndex: number) => {
     scrollIntoView(imageIndex)
 }
@@ -167,19 +173,23 @@ const lightboxDecrIndex = () => {
                 </div>
             </div>
 
-            <div v-if="allImages.length > 1"
+            <div v-if="allImages.length > 1 && selectedIndex > 0"
                 class="absolute bottom-0 top-0 left-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickPrevious">
                     <slot name="previous-btn"></slot>
                 </div>
             </div>
 
-            <div v-if="allImages.length > 1"
+            <div v-if="allImages.length > 1 && selectedIndex < (allImages.length - 1)"
                 class="absolute bottom-0 top-0 right-0 pointer-events-none flex-col justify-center h-full flex">
                 <div class="pointer-events-auto cursor-pointer" @click="clickNext">
                     <slot name="next-btn"></slot>
                 </div>
             </div>
-        </div>
 
-</div></template>
+            <div v-if="allImages.length > 1">
+                <slot name="navigation" :allImages="allImages" :clickIndex="clickIndex" :selectedIndex="selectedIndex"></slot> 
+            </div>
+        </div>
+    </div>
+</template>
