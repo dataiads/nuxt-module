@@ -14,9 +14,6 @@ interface Props {
     class?: string | string[]
     mainClass?: string | string[]
     asideClass?: string | string[]
-
-    // Add a lightbox on main image click
-    withLightbox: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
     class: () => ["flex", "flex-row"],
