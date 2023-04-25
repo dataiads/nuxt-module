@@ -1,35 +1,43 @@
 <script setup lang="ts">
+
+type ProductDataPriceProperty = "price" | "salePrice" | "costOfGoodsSold"
+
 interface Props {
-    product: Product
+    product: Product,
+    priceProperty: ProductDataPriceProperty,
+    salePriceProperty: ProductDataPriceProperty,
 }
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+    priceProperty: "price",
+    salePriceProperty: "salePrice",
+})
 
 
 const price = ref<number | null>()
 const currency = ref("")
-if (props.product?.extraData?.price?.value) {
+if (props.product?.extraData?.[props.priceProperty]?.value) {
     try {
-        price.value = parseFloat(props.product.extraData.price.value)
-        currency.value = props.product.extraData.price.currency
+        price.value = parseFloat(props.product.extraData[props.priceProperty].value)
+        currency.value = props.product.extraData[props.priceProperty].currency
     } catch { }
-} else if (props.product.data?.price) {
+} else if (props.product.data?.[props.priceProperty]) {
     try {
-        price.value = parseFloat(props.product.data.price.value)
-        currency.value = props.product.data.price.currency
+        price.value = parseFloat(props.product.data[props.priceProperty].value)
+        currency.value = props.product.data[props.priceProperty].currency
     } catch { }
 }
 
 const salePrice = ref<number | null>()
 const saleCurrency = ref("")
-if (props.product?.extraData?.salePrice) {
+if (props.product?.extraData?.[props.salePriceProperty]) {
     try {
-        salePrice.value = parseFloat(props.product.extraData.salePrice.value)
-        saleCurrency.value = props.product.extraData.salePrice.currency
+        salePrice.value = parseFloat(props.product.extraData[props.salePriceProperty].value)
+        saleCurrency.value = props.product.extraData[props.salePriceProperty].currency
     } catch { }
-} else if (props.product?.data?.salePrice) {
+} else if (props.product?.data?.[props.salePriceProperty]) {
     try {
-        salePrice.value = parseFloat(props.product.data.salePrice.value)
-        saleCurrency.value = props.product.data.salePrice.currency
+        salePrice.value = parseFloat(props.product.data[props.salePriceProperty].value)
+        saleCurrency.value = props.product.data[props.salePriceProperty].currency
     } catch { }
 }
 
