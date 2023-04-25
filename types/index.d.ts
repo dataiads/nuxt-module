@@ -36,6 +36,7 @@ declare global {
     offerId: string;
     price: ProductDataPrice;
     salePrice: ProductDataPrice;
+    costOfGoodsSold: ProductDataPrice;
     productTypes: string[];
     sizeSystem: string;
     sizes: string[];
