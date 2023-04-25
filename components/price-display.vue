@@ -4,8 +4,8 @@ type ProductDataPriceProperty = "price" | "salePrice" | "costOfGoodsSold"
 
 interface Props {
     product: Product,
-    priceProperty: ProductDataPriceProperty,
-    salePriceProperty: ProductDataPriceProperty,
+    priceProperty?: ProductDataPriceProperty,
+    salePriceProperty?: ProductDataPriceProperty,
 }
 const props = withDefaults(defineProps<Props>(), {
     priceProperty: "price",
