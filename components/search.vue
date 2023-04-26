@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
     lpoSearchReccomendations: true,
     direction: "vertical",
     limit: 4,
-    searchFields: ["title"],
+    searchFields: () => ["title"],
     sort: "random",
     deduplicate: "itemGroupId"
 })
@@ -52,7 +52,7 @@ const searchFilters = computed(() => {
 
 // on submit, redirect to mirrored domain search url
 const submit = () => {
-    if (value.value) {
+    if (value.value && props.redirectUrl) {
         let url = new URL(props.redirectUrl)
 
         // If no search param is specified, search by appending to the URL path.
