@@ -93,7 +93,7 @@ export const salePriceDifference = (product: Product): number => {
  * returns the item part after splitting the string at `splitAt`
  * */
 export const itemPart = (str: string | undefined, splitAt: string, index: number) => {
-  return str?.split(splitAt).at(index);
+  return str?.split(splitAt)[index];
 };
 
 // redirects to the targeted url
