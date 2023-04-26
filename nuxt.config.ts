@@ -72,12 +72,12 @@ export default defineNuxtConfig({
           useLightMainProduct: false,
         },
         recoSlider: {
-          class: ["w-full"],
-          overlayBackgroundClass: ["fixed", "h-screen", "bottom-0", "w-full", "z-[11]"],
+          class: ["w-full", "transition-translate", "duration-1000"],
+          overlayBackgroundClass: ["fixed", "h-screen", "bottom-0", "w-full", "z-[11]", "bg-black"],
           containerClass: ["lg:container", "mx-auto"],
           sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
           autoscroll: false,
-          openDelay: 0,
+          openDelay: 1000,
           openFrom: "bottom",
         },
         filters: {

@@ -49,7 +49,6 @@ const backgroundClass = reactive(["transition-opacity", ...s.recoSlider.overlayB
 // Auto-open after delay
 if (s.recoSlider.openDelay > 0) {
     setTimeout(() => {
-        console.log(y.value)
         if (y.value < 10) {
             overlayOpen.value = true
         }
