@@ -34,6 +34,7 @@ declare global {
     link: string;
     mpn: string;
     offerId: string;
+    pattern: string;
     price: ProductDataPrice;
     salePrice: ProductDataPrice;
     costOfGoodsSold: ProductDataPrice;
