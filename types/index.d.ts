@@ -58,6 +58,7 @@ declare global {
   }
 
   export interface Product {
+    accountId: string;
     createdAt: string;
     data: ProductData;
     extraData: ProductData;
