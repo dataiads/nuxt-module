@@ -96,6 +96,21 @@ export const itemPart = (str: string | undefined, splitAt: string, index: number
   return str?.split(splitAt)[index];
 };
 
+
+// returns a unified list removing duplicates based on a keygen function
+export const uniqBy = <T, K>(it: T[], keyFunc: (_: T)=> K): T[] => {
+  let uniq = new Set<K>()
+  return it.filter(item => {
+    const key = keyFunc(item)
+    if (uniq.has(key)) {
+      return false
+    }
+    uniq.add(key)
+    return true
+  })
+}
+
+
 // redirects to the targeted url
 export function redirect(url: string) {
   window.location.replace(url);
