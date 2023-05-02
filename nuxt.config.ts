@@ -24,6 +24,7 @@ export default defineNuxtConfig({
         // disable i18n by default
         locale: "",
         variation: "catalog",
+        useLightMainProduct: false,
         banners: [],
         gtm: {
           id: [],
@@ -68,8 +69,7 @@ export default defineNuxtConfig({
           verticalSlider: {
             class: "",
             sliderClass: ""
-          },
-          useLightMainProduct: false,
+          }
         },
         recoSlider: {
           class: ["w-full", "transition-translate", "duration-1000"],
