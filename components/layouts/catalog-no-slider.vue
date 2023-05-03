@@ -5,7 +5,8 @@ import { useRuntimeConfig } from "#app"
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null
-    filter: Filter
+    filter: Filter,
+    extraProducts?: Product[]
 }>()
 
 let { data: filterProducts } = props.filter.results;
@@ -79,6 +80,18 @@ const s = config.public.layoutStyle
 
     <div id="cross-sell" :class="s.crossSell.class">
         <slot name="cross-sell"></slot>
+    </div>
+
+    <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
+        <div id="extra-reco-content" :class="s.extraReco.contentClass">
+            <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
+                <slot name="extra-reco-content-header"></slot>
+            </div>
+            <div :class="s.extraReco.contentGridClass">
+                <slot name="extra-reco-content-grid-item" v-for="item in extraProducts"
+                    :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+            </div>
+        </div>
     </div>
 
     <footer id="footer" :class="s.footer.class">
