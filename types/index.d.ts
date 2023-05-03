@@ -158,13 +158,13 @@ declare global {
     href?: string
   }
 
-export type CrossSellData = Record<string, CrossSellItem[]>
+  export type CrossSellData = Record<string, CrossSellItem[]>
 
-export interface CrossSellItem {
+  export interface CrossSellItem {
     text: string
     link: string
     image?: string
-}
+  }
 
   // Add available LPO Config fields here.
   export interface LPOConfig {
@@ -190,6 +190,7 @@ export interface CrossSellItem {
     crossSellData?: CrossSellData;
 
     useLightMainProduct?: boolean;
+    customerSpecific?: Record<string, JSONValue>
   }
 
   export interface UseFilterOptions {
@@ -251,3 +252,11 @@ export interface CrossSellItem {
     value: string;
   }
 }
+
+// a json serializable type
+type JSONValue =
+    | string
+    | number
+    | boolean
+    | { [x: string]: JSONValue }
+    | Array<JSONValue>;
