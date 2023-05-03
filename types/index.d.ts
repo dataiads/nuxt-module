@@ -190,6 +190,7 @@ export interface CrossSellItem {
     crossSellData?: CrossSellData;
 
     useLightMainProduct?: boolean;
+    extraReco?: boolean;
   }
 
   export interface UseFilterOptions {
