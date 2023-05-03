@@ -5,7 +5,7 @@ import { useRuntimeConfig } from "#app"
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null
-    filter: Filter,
+    filter: Filter
     extraProducts?: Product[]
 }>()
 
