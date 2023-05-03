@@ -1,4 +1,4 @@
-export const useLpoConfig = () => {
+export const useLpoConfig = (): LPOConfig => {
     const {$lpoConfig} = useNuxtApp()
     return $lpoConfig
 }

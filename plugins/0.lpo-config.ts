@@ -60,6 +60,8 @@ export default defineNuxtPlugin(() => {
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,
             useLightMainProduct: StringLoader,
+            customerSpecific: JSONLoader,
+            cssVariables: JSONLoader,
         }
 
 

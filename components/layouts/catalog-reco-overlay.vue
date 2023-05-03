@@ -15,46 +15,23 @@ const config = useRuntimeConfig()
 const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
 
-const overlayOpen = useState('recoSlider.overlay.open', () => false)
-const overlayClosed = computed(() => !overlayOpen.value)
+const overlayState = useState<"initial" | "closed" | "open">("recoSlider.overlay.state", () => "closed")
 
-// Hide when user scrolls.
-const { y } = useWindowScroll()
-watch(y, () => {
-    if (overlayOpen.value) {
-        overlayOpen.value = false
+setTimeout(() => { overlayState.value = "initial" }, 1000)
+
+const { y: yScroll } = useWindowScroll()
+watch(yScroll, () => {
+    if (overlayState.value === 'initial') {
+        overlayState.value = 'closed'
     }
 })
 
-
-// Class for the overlay congtaining the slider.
-let overlayClass = reactive(["fixed", "bottom-0", "left-0", "z-[12]", s.recoSlider.class])
-switch (s.recoSlider.openFrom) {
-    case 'top':
-         overlayClass.push({"translate-y-0": overlayOpen}, {"-translate-y-full": overlayClosed})
-        break
-    case 'bottom':
-         overlayClass.push({"translate-y-0": overlayOpen}, {"translate-y-full": overlayClosed})
-        break
-    case 'left':
-         overlayClass.push({"translate-x-0": overlayOpen}, {"-translate-x-full": overlayClosed})
-        break
-    case 'right':
-         overlayClass.push({"translate-x-0": overlayOpen}, {"translate-x-full": overlayClosed})
-        break
+const onOverlayScroll = () => {
+    if (overlayState.value === 'initial') {
+        overlayState.value = 'open'
+    }
 }
 
-// Class for the backgound which occupies the entire page.
-const backgroundClass = reactive(["transition-opacity", ...s.recoSlider.overlayBackgroundClass, {"open": overlayOpen, "closed": overlayClosed}])
-
-// Auto-open after delay
-if (s.recoSlider.openDelay > 0) {
-    setTimeout(() => {
-        if (y.value < 10) {
-            overlayOpen.value = true
-        }
-    }, s.recoSlider.openDelay)
-}
 </script>
 
 <template>
@@ -88,7 +65,7 @@ if (s.recoSlider.openDelay > 0) {
                 <slot name="main-product-header"></slot>
 
                 <slot name="main-product-aside"></slot>
-                
+
                 <div :class="s.mainProduct.imageClass">
                     <slot name="main-product-image"></slot>
                 </div>
@@ -100,21 +77,23 @@ if (s.recoSlider.openDelay > 0) {
             </slot>
         </div>
 
-        <div id="overlay-background" @click="overlayOpen = false" :class="backgroundClass"></div>
-        <div id="reco-slider" :class="overlayClass" v-if="recoSliderProducts?.length">
-            <div :class="s.recoSlider.containerClass">
+
+        <!-- NEW STYLE OVERLAY -->
+        <div class="fixed bottom-0 w-full bg-black/50 z-20"
+            :class="{ 'pointer-events-none': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }"
+            @click="overlayState = 'closed'">
+            <div ref="overlayElement"
+                class="fixed w-full bottom-0 h-full md:h-auto transition duration-500 ease-in-out z-21 bg-white p-2"
+                :class="[{ 'translate-y-[80vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
                 <slot name="reco-slider-header"></slot>
-                <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll">
-                    <template #item="{ item }">
-                        <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
-                    </template>
-                    <template #previous-btn="scope">
-                        <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
-                    </template>
-                    <template #next-btn="scope">
-                        <slot name="reco-slider-next-btn" v-bind="scope"></slot>
-                    </template>
-                </Slider>
+                <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide">
+                    <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0">
+                        <div v-for="item in props.recoSliderProducts" :key="item.id"
+                            class="w-1/2 md:w-auto md:min-w-[160px] p-2">
+                            <slot name="reco-slider-item" :item="item"></slot>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -127,8 +106,8 @@ if (s.recoSlider.openDelay > 0) {
                     <slot name="filters-content-header"></slot>
                 </div>
                 <div :class="s.filters.contentGridClass">
-                    <slot name="filters-content-grid-item" v-for="item in filterProducts"
-                        :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+                    <slot name="filters-content-grid-item" v-for="(item, index) in filterProducts"
+                        :key="item.id ? item.id : JSON.stringify(item)" :item="item" :index="index"></slot>
                 </div>
                 <div id="filters-pagination" :class="s.filters.paginationClass">
                     <slot name="filters-pagination"></slot>
@@ -164,14 +143,3 @@ if (s.recoSlider.openDelay > 0) {
 
     <slot id="menus-drawer" name="menus-drawer"></slot>
 </template>
-
-<style lang="scss" scoped>
-#overlay-background.open {
-    opacity: 0.6;
-}
-
-#overlay-background.closed {
-    pointer-events: none;
-    opacity: 0;
-}
-</style>
