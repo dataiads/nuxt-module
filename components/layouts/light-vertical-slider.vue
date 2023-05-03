@@ -96,7 +96,11 @@ const s = config.public.layoutStyle
             </div>
         </div>
     </div>
-
+    
+    <div id="cross-sell" :class="s.crossSell.class">
+        <slot name="cross-sell"></slot>
+    </div>
+    
     <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
         <div id="extra-reco-content" :class="s.extraReco.contentClass">
             <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
@@ -107,10 +111,6 @@ const s = config.public.layoutStyle
                     :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
             </div>
         </div>
-    </div>
-
-    <div id="cross-sell" :class="s.crossSell.class">
-        <slot name="cross-sell"></slot>
     </div>
 
     <footer id="footer" :class="s.footer.class">
