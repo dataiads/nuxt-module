@@ -191,6 +191,8 @@ declare global {
 
     useLightMainProduct?: boolean;
     customerSpecific?: Record<string, JSONValue>
+    cssVariables?: Record<string, string>;
+
   }
 
   export interface UseFilterOptions {

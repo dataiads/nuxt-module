@@ -61,6 +61,7 @@ export default defineNuxtPlugin(() => {
             carousel: JSONLoader,
             useLightMainProduct: StringLoader,
             customerSpecific: JSONLoader,
+            cssVariables: JSONLoader,
         }
 
 
