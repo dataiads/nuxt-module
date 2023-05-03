@@ -193,6 +193,7 @@ declare global {
     customerSpecific?: Record<string, JSONValue>
     cssVariables?: Record<string, string>;
 
+    extraReco?: boolean;
   }
 
   export interface UseFilterOptions {

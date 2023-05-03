@@ -24,6 +24,8 @@ export default defineNuxtConfig({
         // disable i18n by default
         locale: "",
         variation: "catalog",
+        useLightMainProduct: false,
+        extraReco: false,
         banners: [],
         gtm: {
           id: [],
@@ -68,8 +70,7 @@ export default defineNuxtConfig({
           verticalSlider: {
             class: "",
             sliderClass: ""
-          },
-          useLightMainProduct: false,
+          }
         },
         recoSlider: {
           class: ["w-full", "transition-translate", "duration-1000"],
@@ -113,6 +114,12 @@ export default defineNuxtConfig({
             "3xl:gap-[var(--3xl-catalog-grid-gap)]",
           ],
           paginationClass: ["w-full", "flex", "flex-row", "justify-center"],
+        },
+        extraReco: {
+          class: ["h-full", "flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
+          contentClass: ["grow"],
+          contentHeaderClass: [],
+          contentGridClass: ["grid", "grid-cols-2", "gap-4", "md:gap-8", "lg:grid-cols-3", "xl:grid-cols-4"],
         },
         crossSell: {
           class: ["lg:container", "mx-auto"],
