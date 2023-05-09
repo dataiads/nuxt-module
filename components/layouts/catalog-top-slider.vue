@@ -22,10 +22,6 @@ const s = config.public.layoutStyle
             <slot name="header"></slot>
         </header>
 
-        <div id="breadcrumb" :class="s.breadcrumb.class">
-            <slot name="breadcrumb"></slot>
-        </div>
-
         <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
             <div :class="s.recoSlider.containerClass">
                 <slot name="reco-slider-header"></slot>
@@ -42,6 +38,10 @@ const s = config.public.layoutStyle
                     </template>
                 </Slider>
             </div>
+        </div>
+
+        <div id="breadcrumb" :class="s.breadcrumb.class">
+            <slot name="breadcrumb"></slot>
         </div>
 
         <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
