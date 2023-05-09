@@ -62,6 +62,7 @@ export default defineNuxtPlugin(() => {
             useLightMainProduct: StringLoader,
             customerSpecific: JSONLoader,
             cssVariables: JSONLoader,
+            extraReco: StringLoader,
         }
 
 
