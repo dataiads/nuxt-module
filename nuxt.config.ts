@@ -74,12 +74,12 @@ export default defineNuxtConfig({
         },
         recoSlider: {
           class: ["w-full", "transition-translate", "duration-1000"],
-          containerClass: ["lg:container", "mx-auto"],
+          containerClass: ["mx-auto"],
           sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
           autoscroll: false,
         },
         filters: {
-          class: ["h-full", "flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
+          class: ["flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
           asideClass: [
             "flex-none",
             "w-auto",
