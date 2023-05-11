@@ -8,15 +8,33 @@ const props = defineProps<{
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-reco-overlay" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
+export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
 </script>
 
 <template>
-    <LayoutsCatalogRecoOverlay v-if="lpoConfig.variation === 'catalog-reco-overlay'" v-bind="props" >
+    <LayoutsCatalogHighFilters v-if="lpoConfig.variation === 'catalog-high-filters'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
         </template>
-    </LayoutsCatalogRecoOverlay>    
+    </LayoutsCatalogHighFilters>
+
+    <LayoutsCatalogHighFiltersNoSlider v-else-if="lpoConfig.variation === 'catalog-high-filters-no-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogHighFiltersNoSlider>
+
+    <LayoutsCatalogHighFiltersTopSlider v-else-if="lpoConfig.variation === 'catalog-high-filters-top-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogHighFiltersTopSlider>
+
+    <LayoutsCatalogRecoOverlay v-else-if="lpoConfig.variation === 'catalog-reco-overlay'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogRecoOverlay>
 
     <LayoutsCatalogNoSlider v-else-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
