@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
+export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
 </script>
 
 <template>
@@ -35,6 +35,12 @@ export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filt
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalogRecoOverlay>
+
+    <LayoutsCatalogRecoOverlayRight v-else-if="lpoConfig.variation === 'catalog-reco-overlay-right'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCatalogRecoOverlayRight>
 
     <LayoutsCatalogNoSlider v-else-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
         <template v-for="(_, name) in $slots" #[name]="scope">
