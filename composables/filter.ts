@@ -1,18 +1,24 @@
 import { ComputedRef, Ref } from "vue";
 
 export const useFilter = (options: UseFilterOptions) => {
-  // main rules state. do not edit directly use functions below instead
-  const state = ref<Record<string, FilterRule[]>>({});
 
-  // handle initial rules before setting up fetcher
-  if (options.initialRules) {
-    for (let r of options.initialRules) {
-      if (!state.value[r.group]) {
-        state.value[r.group] = [];
+  const initState = () => {
+    const init: Record<string, FilterRule[]> = {}
+
+    // handle initial rules before setting up fetcher
+    if (options.initialRules) {
+      for (let r of options.initialRules) {
+        if (!init[r.group]) {
+          init[r.group] = [];
+        }
+        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value });
       }
-      state.value[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value });
     }
+    return init;
   }
+
+  // main rules state. do not edit directly use functions below instead
+  const state = ref<Record<string, FilterRule[]>>(initState());
 
   // watchable configuration for recommendation request.
   // can be manipulated directly and fetcher will update automatically
@@ -156,6 +162,10 @@ export const useFilter = (options: UseFilterOptions) => {
     state.value[group] = [];
   };
 
+  const reset = () => {
+    state.value = initState();
+  }
+
   return {
     results: fetcher,
     count: count,
@@ -169,6 +179,7 @@ export const useFilter = (options: UseFilterOptions) => {
     removeRule,
     setOnlyRule,
     removeAllRules,
+    reset,
   } as Filter;
 };
 

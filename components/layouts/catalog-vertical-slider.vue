@@ -90,8 +90,9 @@ const s = config.public.layoutStyle
                     <slot name="filters-content-header"></slot>
                 </div>
                 <div :class="s.filters.contentGridClass">
-                    <slot name="filters-content-grid-item" v-for="(item, index) in filterProducts"
+                    <slot v-if="filterProducts?.length" name="filters-content-grid-item" v-for="(item, index) in filterProducts"
                         :key="item.id ? item.id : JSON.stringify(item)" :item="item" :index="index"></slot>
+                    <slot v-else name="filters-no-results"></slot>
                 </div>
                 <div id="filters-pagination" :class="s.filters.paginationClass">
                     <slot name="filters-pagination"></slot>
