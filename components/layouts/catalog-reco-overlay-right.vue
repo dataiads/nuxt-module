@@ -3,6 +3,7 @@
 import { useRuntimeConfig } from "#app"
 import { useScrollLock } from '@vueuse/core'
 
+
 const props = defineProps<{
     recoSliderProducts: Product[] | null
     filter: Filter
@@ -36,16 +37,28 @@ const openIfClosed=()=> {
         overlayState.value='open'
     }
 }
+
 const isLocked = useScrollLock(document.body)
 watch(overlayState, ()=> {
         isLocked.value = overlayState.value=='open'
     },
     { immediate: true }
 )
+
+
 </script>
 
 <template>
     <div class="lg:mx-auto">
+
+        <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
+        <div class="fixed left-0 lg:left-[280px] transition duration-70 xl:left-[320px] 2xl:left-[360px] right-0 z-[11] bottom-0 lg:top-0 hover:cursor-pointer" @click="openIfClosed">
+            <div class="flex justify-between sticky px-[20px] lg:pl-0 pt-[10px] lg:pt-[15px] h-[40px] lg:h-[50px] md:self-start"
+            :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
+                <slot name="sticky-reco-overlay"></slot>
+            </div>
+        </div>
+
         <header id="header" :class="s.header.class">
             <slot name="header"></slot>
         </header>
@@ -89,17 +102,17 @@ watch(overlayState, ()=> {
 
 
         <!-- NEW STYLE OVERLAY -->
-        <div class="fixed bottom-0 w-full bg-black/50 z-20"
-            :class="{ 'pointer-events-none': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }"
+        <div class="fixed bottom-0 w-full bg-black/50 z-20 bg-overlay"
+            :class="{ '': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }"
             @click="overlayState = 'closed'">
             <div ref="overlayElement"
-                class="fixed w-full bottom-0 h-full md:h-auto transition duration-500 ease-in-out z-21 bg-white p-2"
-                :class="[{ 'translate-y-[80vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
+                class="fixed right-0 top-0 bottom-0 h-full transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
+                :class="[{ '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }]">
                 <slot name="reco-slider-header"></slot>
                 <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide">
-                    <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
                         <div v-for="item in props.recoSliderProducts" :key="item.id"
-                            class="w-1/2 md:w-auto md:min-w-[160px] p-2">
+                            class="w-auto md:min-w-[160px] p-2">
                             <slot name="reco-slider-item" :item="item"></slot>
                         </div>
                     </div>
@@ -116,9 +129,8 @@ watch(overlayState, ()=> {
                     <slot name="filters-content-header"></slot>
                 </div>
                 <div :class="s.filters.contentGridClass">
-                    <slot v-if="filterProducts?.length" name="filters-content-grid-item" v-for="(item, index) in filterProducts"
+                    <slot name="filters-content-grid-item" v-for="(item, index) in filterProducts"
                         :key="item.id ? item.id : JSON.stringify(item)" :item="item" :index="index"></slot>
-                    <slot v-else name="filters-no-results"></slot>
                 </div>
                 <div id="filters-pagination" :class="s.filters.paginationClass">
                     <slot name="filters-pagination"></slot>
@@ -150,17 +162,6 @@ watch(overlayState, ()=> {
         <slot name="sticky-add-to-cart"></slot>
     </StickyFooter>
 
-    <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
-    <div class="sticky bottom-0 transition duration-70 z-[11] hover:cursor-pointer" @click="openIfClosed">
-        <div class="flex sticky px-[20px] lg:pl-0 pt-[10px] lg:pt-[15px] h-[40px] lg:h-[50px] md:self-start"
-        :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
-            <div class="hidden md:flex lg:w-[280px] xl:w-[320px] 2xl:w-[360px]"></div>
-            <div class="flex grow justify-between">
-                <slot name="sticky-reco-overlay"></slot>
-            </div>
-        </div>
-    </div>
-    
     <slot id="filters-drawer" name="filters-drawer"></slot>
 
     <slot id="menus-drawer" name="menus-drawer"></slot>
