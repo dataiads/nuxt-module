@@ -139,6 +139,18 @@ const onOverlayScroll = () => {
         <slot name="sticky-add-to-cart"></slot>
     </StickyFooter>
 
+    <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
+    <div class="sticky bottom-0 transition duration-70 z-[11]">
+        <div class="flex sticky px-[20px] lg:pl-0 pt-[10px] lg:pt-[15px] h-[40px] lg:h-[50px] md:self-start"
+        :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
+            <div class="hidden md:flex lg:w-[280px] xl:w-[320px] 2xl:w-[360px]"></div>
+            <div class="flex grow justify-between">
+                <div class="font-bold">View more products +</div>
+                <div class="font-bold">+ more</div>
+            </div>
+        </div>
+    </div>
+    
     <slot id="filters-drawer" name="filters-drawer"></slot>
 
     <slot id="menus-drawer" name="menus-drawer"></slot>

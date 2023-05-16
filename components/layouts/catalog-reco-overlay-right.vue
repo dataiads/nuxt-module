@@ -38,7 +38,7 @@ const onOverlayScroll = () => {
     <div class="lg:mx-auto">
 
         <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
-        <div class="fixed left-0 lg:left-[280px] xl:left-[320px] 2xl:left-[360px] right-0 z-[11] bottom-0 lg:top-0">
+        <div class="fixed left-0 lg:left-[280px] transition duration-70 xl:left-[320px] 2xl:left-[360px] right-0 z-[11] bottom-0 lg:top-0">
             <div class="flex justify-between sticky px-[20px] lg:pl-0 pt-[10px] lg:pt-[15px] h-[40px] lg:h-[50px] md:self-start"
             :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
                 <div class="font-bold">View more products +</div>
