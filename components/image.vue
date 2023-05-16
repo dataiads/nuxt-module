@@ -7,7 +7,9 @@ const props = defineProps<{
 	loading?: string,
 	format?: string,
 	alt?: string,
-	picture?: boolean
+	picture?: boolean,
+	// optional: remove elements from the DOM when link is broken
+	removeOnError?: boolean,
 }>()
 
 const format = props.format ?? "webp"
@@ -17,6 +19,8 @@ const picture = props.picture ?? false;
 const fallbackToUncompressed = (event: Event) => {
 	if (event.target.src != props.src) {
 		event.target.src = props.src
+	} else if (props.removeOnError) {
+		event.target.remove()
 	}
 }
 
