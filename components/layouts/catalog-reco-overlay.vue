@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRuntimeConfig } from "#app"
-
+import { useScrollLock } from '@vueuse/core'
 
 const props = defineProps<{
     recoSliderProducts: Product[] | null
@@ -31,7 +31,17 @@ const onOverlayScroll = () => {
         overlayState.value = 'open'
     }
 }
-
+const openIfClosed=()=> {
+    if(overlayState.value =='closed'){
+        overlayState.value='open'
+    }
+}
+const isLocked = useScrollLock(document.body)
+watch(overlayState, ()=> {
+        isLocked.value = overlayState.value=='open'
+    },
+    { immediate: true }
+)
 </script>
 
 <template>
@@ -140,13 +150,12 @@ const onOverlayScroll = () => {
     </StickyFooter>
 
     <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
-    <div class="sticky bottom-0 transition duration-70 z-[11]">
+    <div class="sticky bottom-0 transition duration-70 z-[11] hover:cursor-pointer" @click="openIfClosed">
         <div class="flex sticky px-[20px] lg:pl-0 pt-[10px] lg:pt-[15px] h-[40px] lg:h-[50px] md:self-start"
         :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
             <div class="hidden md:flex lg:w-[280px] xl:w-[320px] 2xl:w-[360px]"></div>
             <div class="flex grow justify-between">
-                <div class="font-bold">View more products +</div>
-                <div class="font-bold">+ more</div>
+                <slot name="sticky-reco-overlay"></slot>
             </div>
         </div>
     </div>
