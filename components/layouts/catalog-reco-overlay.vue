@@ -94,7 +94,7 @@ watch(overlayState, ()=> {
             @click="overlayState = 'closed'">
             <div ref="overlayElement"
                 class="fixed w-full bottom-0 h-full md:h-auto transition duration-500 ease-in-out z-21 bg-white p-2"
-                :class="[{ 'translate-y-[80vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
+                :class="[{ 'translate-y-[50vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
                 <slot name="reco-slider-header"></slot>
                 <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide">
                     <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0">
