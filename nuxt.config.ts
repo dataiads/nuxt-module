@@ -55,6 +55,9 @@ export default defineNuxtConfig({
       // toggle optimized images component
       optimizeImageLoad: true,
 
+      // activate region fetching
+      fetchRegion: false,
+
       // customize layouts behaviour
       layoutStyle: {
         header: {

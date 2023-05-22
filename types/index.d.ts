@@ -258,8 +258,26 @@ declare global {
 
 // a json serializable type
 type JSONValue =
-    | string
-    | number
-    | boolean
-    | { [x: string]: JSONValue }
-    | Array<JSONValue>;
+  | string
+  | number
+  | boolean
+  | { [x: string]: JSONValue }
+  | Array<JSONValue>;
+
+export interface Region {
+  displayName: string
+  merchantId: string
+  postalCodeArea: PostalCodeArea
+  regionId: string
+  regionalInventoryEligible: boolean
+  shippingEligible: boolean
+}
+
+export interface PostalCodeArea {
+  postalCodes: PostalCode[]
+  regionCode: string
+}
+
+export interface PostalCode {
+  begin: string
+}

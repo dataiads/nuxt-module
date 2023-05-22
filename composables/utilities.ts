@@ -7,6 +7,9 @@ export const useProduct = () => useState<Product>("product");
 /* access global collector data */
 export const useCollectorData = () => useState<AssocString>("collectorData");
 
+/* provide a shortcut to access the region */
+export const useRegion = () => useState<Region | null>("region");
+
 /* extract part of a string using a regex with at least one capturing group
  * if multiple capturing groups are present, they will be concatenated
  * returns the whole string if match fails
