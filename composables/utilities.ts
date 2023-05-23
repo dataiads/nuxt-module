@@ -7,7 +7,10 @@ export const useProduct = () => useState<Product>("product");
 /* access global collector data */
 export const useCollectorData = () => useState<AssocString>("collectorData");
 
-/* provide a shortcut to access the region */
+/**
+ * provide a shortcut to access the region
+ * the region is available when a valid query param "store" is in the url
+ * */
 export const useRegion = () => useState<Region | null>("region");
 
 /* extract part of a string using a regex with at least one capturing group
