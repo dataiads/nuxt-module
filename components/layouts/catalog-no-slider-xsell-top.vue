@@ -14,6 +14,9 @@ let { data: filterProducts } = props.filter.results;
 const config = useRuntimeConfig()
 const lpoConfig = useLpoConfig()
 const s = config.public.layoutStyle
+
+// global singleton to ensure only a single dropdown is open on mobile
+const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingleton", () => null)
 </script>
 
 <template>
@@ -64,7 +67,7 @@ const s = config.public.layoutStyle
         </div>
 
         <div id="filters" :class="s.filters.class">
-            <div id="filters-aside" :class="s.filters.asideClass">
+            <div id="filters-aside" :class="[...s.filters.asideClass, (mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll')]">
                 <slot name="filters-aside"></slot>
             </div>
             <div id="filters-content" :class="s.filters.contentClass">

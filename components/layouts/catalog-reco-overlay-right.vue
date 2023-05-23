@@ -45,7 +45,8 @@ watch(overlayState, ()=> {
     { immediate: true }
 )
 
-
+// global singleton to ensure only a single dropdown is open on mobile
+const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingleton", () => null)
 </script>
 
 <template>
@@ -121,7 +122,7 @@ watch(overlayState, ()=> {
         </div>
 
         <div id="filters" :class="s.filters.class">
-            <div id="filters-aside" :class="s.filters.asideClass">
+            <div id="filters-aside" :class="[...s.filters.asideClass, (mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll')]">
                 <slot name="filters-aside"></slot>
             </div>
             <div id="filters-content" :class="s.filters.contentClass">

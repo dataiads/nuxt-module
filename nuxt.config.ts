@@ -94,7 +94,6 @@ export default defineNuxtConfig({
             "flex",
             "flex-row",
             "md:flex-col",
-            "overflow-x-scroll",
             "md:overflow-x-none",
             "overflow-y-none",
             "md:overflow-y-scroll",
