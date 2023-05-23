@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.99](https://github.com/dataiads/nuxt-module/compare/v0.2.98...v0.2.99) (2023-05-23)
+
+
+### Bug Fixes
+
+* Image hover-src on safari ([fb6d1a8](https://github.com/dataiads/nuxt-module/commit/fb6d1a8aecb8a1c1e7c50fc7322fb0bd474051af))
+
 ### [0.2.98](https://github.com/dataiads/nuxt-module/compare/v0.2.97...v0.2.98) (2023-05-22)
 
 ### [0.2.97](https://github.com/dataiads/nuxt-module/compare/v0.2.96...v0.2.97) (2023-05-22)
