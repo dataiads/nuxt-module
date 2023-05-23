@@ -6,10 +6,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('app:created', () => {
     const runtimeConfig = useRuntimeConfig();
     const storeCode = new URLSearchParams(window.location.search).get("store");
-    const merchantId = useProduct().value.accountId;
+    const productId = useProduct().value.id;
 
-    if (runtimeConfig.public.fetchRegion && storeCode && merchantId) {
-      $fetch<Region>(`/api/regions/${storeCode.padStart(6, "0")}/merchants/${merchantId}`).then((res) => {
+    if (runtimeConfig.public.fetchRegion && storeCode && productId) {
+      $fetch<Region>(`/api/products/${productId}/regions/${storeCode.padStart(6, "0")}`).then((res) => {
         useState<Region | null>('region', () => res)
       })
     }
