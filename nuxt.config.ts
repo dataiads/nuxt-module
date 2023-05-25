@@ -80,6 +80,7 @@ export default defineNuxtConfig({
           containerClass: ["mx-auto"],
           sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
           autoscroll: false,
+          scrollSpeed: 5,
         },
         filters: {
           class: ["flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],

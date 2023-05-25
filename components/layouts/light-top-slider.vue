@@ -26,7 +26,7 @@ const s = config.public.layoutStyle
             <div :class="s.recoSlider.containerClass">
                 <slot name="reco-slider-header"></slot>
                 <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass"
-                    :autoscroll="s.recoSlider.autoscroll">
+                    :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
                     <template #item="{ item }">
                         <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
                     </template>

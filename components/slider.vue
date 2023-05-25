@@ -63,7 +63,8 @@ interface Props<T> {
     direction?: ScrollDirection
     class?: string[]
     scrollerClass?: string[]
-    autoscroll?: boolean
+    autoscroll?: boolean,
+    scrollSpeed?: number
 }
 
 const props = withDefaults(defineProps<Props<any>>(), {
@@ -72,6 +73,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
     class: () => [],
     scrollerClass: () => [],
     autoscroll: false,
+    scrollSpeed: 5
 })
 
 let scrollController: ScrollController
@@ -107,7 +109,7 @@ if (props.autoscroll) {
                 scrollController.scrollBy(1, "auto")
             }
         }
-    }, 10)
+    }, 50 / props.scrollSpeed)
 }
 
 onMounted(() => {
