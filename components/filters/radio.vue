@@ -39,7 +39,7 @@ let binder = computed({
 
 <template>
 <div :class="props.class">
-	<input type="radio" :id="uid" :class="props.inputClass" v-model="binder" :style="props.inputStyle" >
+	<input type="checkbox" :id="uid" :class="props.inputClass" v-model="binder" :style="props.inputStyle" >
 	<label :class="props.labelClass" :for="uid" >
     <slot name="label" :label="props.label" :checked="binder">{{ props.label }}</slot>
   </label>
