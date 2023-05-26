@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.2.103",
+  "version": "0.2.104",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
@@ -20,7 +20,6 @@
     "@nuxt/types": "^2.16.0",
     "@nuxtjs/tailwindcss": "^6.3.0",
     "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
     "@vueuse/core": "^9.13.0",
     "@vueuse/nuxt": "^9.13.0",
