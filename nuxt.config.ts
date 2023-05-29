@@ -140,7 +140,7 @@ export default defineNuxtConfig({
         resolve("./nuxt.config.ts"), // scan layer nuxt.config.ts for tailwind classes
         "./nuxt.config.ts", // scan client nuxt.config.ts for tailwind classes
       ],
-      plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("@tailwindcss/line-clamp")],
+      plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
       theme: {
         extend: {
           transitionProperty: {
