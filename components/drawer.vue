@@ -12,8 +12,10 @@ const openRef = toRef(props, "open");
 const updateBodyScroll = () => {
   if (openRef.value) {
     document.body.style.overflow = 'hidden';
+    document.querySelector('html').style.overflow = 'hidden';
   } else {
     document.body.style.overflow = 'unset';
+    document.querySelector('html').style.overflow = 'unset';
   }
 }
 
