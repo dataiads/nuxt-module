@@ -1,14 +1,18 @@
 
 <script setup lang="ts">
 
-const props = defineProps({
-    class: String,
-    headerClass: String,
-    contentClass: String,
-})
+interface Props {
+  class: String,
+  headerClass: String,
+  contentClass: String,
+  displayDesktop?: Boolean,
+  displayMobile?: Boolean
+}
 
-const displayDesktop = ref(true)
-const displayMobile = ref(false)
+const props = defineProps<Props>()
+
+const displayDesktop = ref(props.displayDesktop ?? true)
+const displayMobile = ref(props.displayMobile ?? false)
 
 // global singleton to ensure only a single dropdown is open on mobile
 const singleton = useState<(() => void) | null>("responsiveAsideItemSingleton", () => null)

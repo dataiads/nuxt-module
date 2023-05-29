@@ -1,12 +1,15 @@
 
 <script setup lang="ts">
-const props = defineProps({
+interface Props {
   class: String,
   headerClass: String,
   contentClass: String,
-})
+  display?: Boolean,
+}
 
-const display = ref(true);
+const props = defineProps<Props>()
+
+const display = ref(props.display ?? true);
 const toggleDisplay = () => display.value = !display.value;
 
 </script>
