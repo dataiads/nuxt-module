@@ -41,6 +41,7 @@ onMounted(() => {
 const class_ = computed(()=> [
     {'translate-y-full': !display.value},
     {'opacity-0': !display.value},
+    {'pointer-events-none': !display.value},
     ...props.class,
 ])
 
