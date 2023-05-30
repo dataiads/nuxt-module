@@ -9,19 +9,19 @@ const props = withDefaults(defineProps<Props>(), {
     configKey: "menu"
 })
 
-let entries = lpoConfig[props.configKey] || []
+let entries: MenuItem[] = lpoConfig[props.configKey] || []
 </script>
 
 <template>
     <template v-for="(item, index) in entries" :key="index">
         <a v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit'}">
-            <slot :text="item.text">
+            <slot :text="item.text" :image-link="item.imageLink">
                 <li>{{ item.text }}</li>
             </slot>
         </a>
         <span v-else :style="{ color: item.color || 'inherit'}">
 
-            <slot :text="item.text">
+            <slot :text="item.text" :image-link="item.imageLink">
                 <li>{{ item.text }}</li>
             </slot>
         </span>

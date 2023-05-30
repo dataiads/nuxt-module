@@ -146,6 +146,7 @@ declare global {
     text: string
     href?: string
     color?: string
+    imageLink: string
   }
 
   export interface FooterColumn {
