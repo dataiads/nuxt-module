@@ -219,6 +219,9 @@ declare global {
     // an optional grouping function to return groups of products instead of individual items
     grouper?: (d: Product) => string;
 
+    // an optional local sorting function
+    groupSorter?: (groupA: Product[], groupB: Product[]) => number;
+
     // paginate locally instead of server side. pagination is still controlled using Filter.limit and Filter.page
     localPagination?: boolean;
   }

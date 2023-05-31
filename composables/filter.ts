@@ -73,6 +73,10 @@ export const useFilter = (options: UseFilterOptions) => {
         data = execGrouper(data, options.grouper);
       }
 
+      if (options.groupSorter) {
+        data = execGroupSorter(data, options.groupSorter);
+      }
+
       // local pagination is applied on transformed data
       if (options.localPagination) {
         count.value = data.length;
@@ -194,4 +198,8 @@ function execGrouper(data: Product[], grouper: (p: Product) => string): Product[
     }
   }
   return Object.values(groups);
+}
+
+function execGroupSorter(groups: Product[][], groupSorter: (groupA: Product[], groupB: Product[]) => number): Product[][] {
+  return groups.sort((groupA, groupB) => groupSorter(groupA, groupB));
 }
