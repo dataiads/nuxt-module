@@ -12,25 +12,25 @@ Multiple variations of this template exist, most of them dealing with the positi
 The basic version of the catalog looks as follows :
 
 ## catalog 
-![](https://i.imgur.com/e7SRRlf.jpeg)
+<!-- ![](https://i.imgur.com/e7SRRlf.jpeg) -->
 
 Variants include :
 
 ## catalog-no-slider
-![](https://i.imgur.com/nF4sCVC.jpeg)
+<!-- ![](https://i.imgur.com/nF4sCVC.jpeg) -->
 
 ## catalog-no-slider-xsell-top
-![](https://i.imgur.com/77qHOcR.jpeg)
+<!-- ![](https://i.imgur.com/77qHOcR.jpeg) -->
 
 ## catalog-top-slider
-![](https://i.imgur.com/0Ztkn4J.jpeg)
+<!-- ![](https://i.imgur.com/0Ztkn4J.jpeg) -->
 
 ## catalog-high-filters
 This can be combined with the [light version of the main product](https://dataiads.github.io/nuxt-module/layouts/light-main-product.html) to make a more "catalog-centric" page.
-![](https://i.imgur.com/5vxrhgf.jpeg)
+<!-- ![](https://i.imgur.com/5vxrhgf.jpeg) -->
 
 ## catalog-high-filters-no-slider
-![](https://i.imgur.com/fQoyY8X.jpeg)
+<!-- ![](https://i.imgur.com/fQoyY8X.jpeg) -->
 
 ## catalog-high-filters-top-slider
-![](https://i.imgur.com/Wx7lWgS.jpeg)
+<!-- ![](https://i.imgur.com/Wx7lWgS.jpeg) -->
