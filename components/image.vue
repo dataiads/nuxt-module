@@ -6,6 +6,7 @@ const props = defineProps<{
 	hoverSrc?: string,
 	width: string,
 	height: string,
+	class?: string,
 	loading?: string,
 	format?: string,
 	alt?: string,
@@ -42,18 +43,18 @@ const src = computed(() => {
 	>
 		<nuxt-img
 			v-if="config.public.optimizeImageLoad && !picture"
-			:src="src" :alt="props.alt" :width="props.width" :height="props.height" :format="format" :loading="loading"
+			:src="src" :alt="props.alt" :width="props.width" :height="props.height" :class="props.class" :format="format" :loading="loading"
 			@error="fallbackToUncompressed"
 		/>
 		<picture
 			v-else-if="config.public.optimizeImageLoad && picture">
 			<slot></slot>
-			<nuxt-img :src="src" :alt="props.alt" :width="props.width" :height="props.height" :format="format" :loading="loading"
+			<nuxt-img :src="src" :alt="props.alt" :width="props.width" :height="props.height" :class="props.class" :format="format" :loading="loading"
 				@error="fallbackToUncompressed"
 			/>
 		</picture>
 		<img v-else
-			:src="src" :alt="props.alt" :width="props.width" :height="props.height" :loading="loading"
+			:src="src" :alt="props.alt" :width="props.width" :height="props.height" :class="props.class" :loading="loading"
 		>
 	</div>
 </template>
