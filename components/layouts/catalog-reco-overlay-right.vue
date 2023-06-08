@@ -53,7 +53,7 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
     <div class="lg:mx-auto">
 
         <!-- STICKY BUTTON OPEN OVERLAY (catalog-reco-overlay-right) -->
-        <div class="fixed left-0 lg:left-[280px] transition duration-70 xl:left-[320px] 2xl:left-[360px] right-0 z-[11] bottom-0 lg:top-0 hover:cursor-pointer h-[50px]" @click="openIfClosed">
+        <div v-if="s.recoSlider.openOverlayButton" class="fixed left-0 lg:left-[280px] transition duration-70 xl:left-[320px] 2xl:left-[360px] right-0 z-[11] bottom-0 lg:top-0 hover:cursor-pointer h-[50px]" @click="openIfClosed">
             <div class="flex justify-between sticky px-[20px] lg:pl-0 pt-[15px] h-[50px] lg:h-[50px] md:self-start"
             :class="{ '': overlayState === 'closed', 'bg-white': overlayState === 'closed', 'hidden': overlayState !== 'closed' }">
                 <slot name="sticky-reco-overlay"></slot>
@@ -104,20 +104,21 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
 
         <!-- NEW STYLE OVERLAY -->
         <div class="fixed bottom-0 w-full bg-black/50 z-20 bg-overlay"
-            :class="{ '': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }"
+            :class="[...s.recoSlider.overlayClass, {'': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }]"
             @click="overlayState = 'closed'">
             <div ref="overlayElement"
-                class="fixed right-0 top-0 bottom-0 h-full transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
-                :class="[{ '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }]">
+                class="fixed right-0 top-0 bottom-0 transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
+                :class="{...s.recoSlider.containerClass, '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }">
                 <slot name="reco-slider-header"></slot>
-                <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
+                <div @scroll.prevent.stop="onOverlayScroll" :class="s.recoSlider.class" class="overflow-scroll w-full h-full scrollbar-hide">
+                    <div class="grid grid-cols-1 md:grid-cols-2" :class="s.recoSlider.sliderClass">
                         <div v-for="item in props.recoSliderProducts" :key="item.id"
                             class="w-auto md:min-w-[160px] p-2">
                             <slot name="reco-slider-item" :item="item"></slot>
                         </div>
                     </div>
                 </div>
+                <slot name="reco-slider-footer"></slot>
             </div>
         </div>
 
