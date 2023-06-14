@@ -18,6 +18,9 @@ interface Props {
     // Fields to search in
     searchFields?: string[]
 
+    // Search prefilters
+    baseRules?: FilterRule[][] 
+
     // Search sort order
     sort?: string
 
@@ -38,7 +41,8 @@ const props = withDefaults(defineProps<Props>(), {
 const value = useState('search.value', () => "")
 
 const searchFilters = computed(() => {
-    return JSON.stringify([
+    const filter = props.baseRules ?? [];
+    filter.push(...[
         props.searchFields.map(field => (
             {
                 criteria: field,
@@ -47,6 +51,8 @@ const searchFilters = computed(() => {
             }
         ))
     ])
+
+    return JSON.stringify(filter)
 })
 
 
@@ -153,6 +159,7 @@ const input = (event: Event) => {
                     </slot>
                 </template>
             </Slider>
+            <slot name="search-slider-footer"></slot>
         </div>
     </div>
 </template>
