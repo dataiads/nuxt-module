@@ -50,7 +50,7 @@ const value = useState("search.value", () => "");
 const overlayOpen = ref(false);
 
 const searchFilters = computed(() => {
-  const filter = props.baseRules ?? [];
+  const filter = props.baseRules?.length ? structuredClone(props.baseRules) : [];
   if (props.allowEmptySearch && value.value === "") {
     return JSON.stringify(filter);
   }
