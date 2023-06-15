@@ -84,6 +84,15 @@ export default defineNuxtConfig({
           scrollSpeed: 5,
           openOverlayButton: true,
         },
+        customOverlay: {
+          class: ["w-full", "transition-translate", "duration-1000"],
+          containerClass: ["mx-auto"],
+          overlayClass: [],
+          sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
+          autoscroll: false,
+          scrollSpeed: 5,
+          openOverlayButton: true,
+        },
         filters: {
           class: ["flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
           asideClass: [
