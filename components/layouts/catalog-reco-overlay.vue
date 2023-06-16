@@ -95,20 +95,22 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
         <div class="fixed bottom-0 w-full bg-black/50 z-20"
             :class="[...s.recoSlider.overlayClass, { 'pointer-events-none': overlayState === 'closed', 'h-0': overlayState === 'closed', 'h-full': overlayState !== 'closed' }]"
             @click="overlayState = 'closed'">
-            <div ref="overlayElement"
-                class="fixed w-full bottom-0 h-full md:h-auto transition duration-500 ease-in-out z-21 bg-white p-2"
-                :class="[...s.recoSlider.containerClass, { 'translate-y-[50vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
-                <slot name="reco-slider-header"></slot>
-                <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide" :class="s.recoSlider.class">
-                    <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0" :class="s.recoSlider.sliderClass">
-                        <div v-for="item in props.recoSliderProducts" :key="item.id"
-                            :class="s.recoSlider.itemClass">
-                            <slot name="reco-slider-item" :item="item"></slot>
+            <slot name="reco-slider" :items="props.recoSliderProducts" :onOverlayScroll="onOverlayScroll">
+                <div ref="overlayElement"
+                    class="fixed w-full bottom-0 h-full md:h-auto transition duration-500 ease-in-out z-21 bg-white p-2"
+                    :class="[...s.recoSlider.containerClass, { 'translate-y-[50vh]': overlayState === 'initial', 'md:translate-y-0': overlayState === 'initial', 'translate-y-0': overlayState === 'open', 'translate-y-full': overlayState === 'closed' }]">
+                    <slot name="reco-slider-header"></slot>
+                    <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide" :class="s.recoSlider.class">
+                        <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0" :class="s.recoSlider.sliderClass">
+                            <div v-for="item in props.recoSliderProducts" :key="item.id"
+                                :class="s.recoSlider.itemClass">
+                                <slot name="reco-slider-item" :item="item"></slot>
+                            </div>
                         </div>
                     </div>
+                    <slot name="reco-slider-footer"></slot>
                 </div>
-                <slot name="reco-slider-footer"></slot>
-            </div>
+            </slot>
         </div>
 
         <div id="filters" :class="s.filters.class">
