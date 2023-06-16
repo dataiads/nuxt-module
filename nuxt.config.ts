@@ -80,6 +80,7 @@ export default defineNuxtConfig({
           containerClass: ["mx-auto"],
           overlayClass: [],
           sliderClass: ["flex", "flex-nowrap", "overflow-x-scroll"],
+          itemClass: ["w-1/2 md:w-auto md:min-w-[160px] p-2"],
           autoscroll: false,
           scrollSpeed: 5,
           openOverlayButton: true,

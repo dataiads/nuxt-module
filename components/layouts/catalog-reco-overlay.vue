@@ -102,7 +102,7 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
                 <div @scroll.prevent.stop="onOverlayScroll" class="overflow-scroll w-full h-full scrollbar-hide" :class="s.recoSlider.class">
                     <div class="flex flex-wrap md:flex-nowrap flex-row mb-6 md:mb-0" :class="s.recoSlider.sliderClass">
                         <div v-for="item in props.recoSliderProducts" :key="item.id"
-                            class="w-1/2 md:w-auto md:min-w-[160px] p-2">
+                            :class="s.recoSlider.itemClass">
                             <slot name="reco-slider-item" :item="item"></slot>
                         </div>
                     </div>
