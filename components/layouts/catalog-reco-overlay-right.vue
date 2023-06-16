@@ -108,7 +108,7 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
             @click="overlayState = 'closed'">
             <div ref="overlayElement"
                 class="fixed right-0 top-0 bottom-0 transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
-                :class="{...s.recoSlider.containerClass, '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }">
+                :class="[...s.recoSlider.containerClass, { '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }]">
                 <slot name="reco-slider-header"></slot>
                 <div @scroll.prevent.stop="onOverlayScroll" :class="s.recoSlider.class" class="overflow-scroll w-full h-full scrollbar-hide">
                     <div class="grid grid-cols-1 md:grid-cols-2" :class="s.recoSlider.sliderClass">
