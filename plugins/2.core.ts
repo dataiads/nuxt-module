@@ -26,6 +26,7 @@ function fetchPageData(loc: Location) {
 
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
+  const lpoConfig = useLpoConfig()
 
   if (!runtimeConfig.public.mirroredDomain) {
     throw new Error("mirroredDomain is expected in public runtime config")
@@ -37,7 +38,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     charset: "utf-8",
     viewport: "width=device-width, initial-scale=1",
     htmlAttrs: {
-      lang: runtimeConfig.public.lang,
+      lang: lpoConfig.locale ?? runtimeConfig.public.lang,
     },
     meta: [
       { name: "robots", content: "noindex" },
