@@ -5,10 +5,11 @@ const props = defineProps<{
     recoSliderProducts: Product[] | null;
     filter: Filter;
 }>()
+
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider";
+export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider" | "custom";
 </script>
 
 <template>
@@ -95,6 +96,13 @@ export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filt
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsLightVerticalSlider>
+
+    <LayoutsCustom v-else-if="lpoConfig.variation === 'custom'" v-bind="props">
+        variation-layout.vue slots: {{ Object.keys($slots) }}
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsCustom>
 
     <!-- "catalog" is the default layout. -->
     <LayoutsCatalog v-else v-bind="props" >

@@ -195,6 +195,8 @@ declare global {
     cssVariables?: Record<string, string>;
 
     extraReco?: boolean;
+
+    customLayout?: CustomLayout;
   }
 
   export interface UseFilterOptions {
@@ -284,4 +286,12 @@ export interface PostalCodeArea {
 
 export interface PostalCode {
   begin: string
+}
+
+export interface CustomLayout {
+  el: string,
+  name: string,
+  class: string[],
+  style: string[],
+  children: CustomLayout[]
 }
