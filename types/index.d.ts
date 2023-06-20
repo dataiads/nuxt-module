@@ -195,6 +195,8 @@ declare global {
     cssVariables?: Record<string, string>;
 
     extraReco?: boolean;
+
+    colorData?: Record<string, string>;
   }
 
   export interface UseFilterOptions {

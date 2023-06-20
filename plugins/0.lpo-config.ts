@@ -63,6 +63,7 @@ export default defineNuxtPlugin(() => {
             customerSpecific: JSONLoader,
             cssVariables: JSONLoader,
             extraReco: StringLoader,
+            colorData: JSONLoader,
         }
 
 
