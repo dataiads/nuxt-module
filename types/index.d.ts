@@ -172,14 +172,9 @@ declare global {
     mirroredDomainOverride?: string;
     locale?: string;
     variation?: Variations;
-
     banners?: Banner[];
     bannerBackground?: string;
     bannerColor?: string;
-
-    breadcrumbs: Record<string, Array<Record<string, string>>>;
-    carousel: Record<string, Array<Record<string, string>>>;
-
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
@@ -189,14 +184,15 @@ declare global {
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
     crossSellData?: CrossSellData;
-
     useLightMainProduct?: boolean;
     customerSpecific?: Record<string, JSONValue>
     cssVariables?: Record<string, string>;
-
     extraReco?: boolean;
-
     colorData?: Record<string, string>;
+
+    // Non-standard fields, do not use !
+    breadcrumbs: Record<string, Array<Record<string, string>>>;
+    carousel: Record<string, Array<Record<string, string>>>;
   }
 
   export interface UseFilterOptions {

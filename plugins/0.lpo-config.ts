@@ -57,13 +57,14 @@ export default defineNuxtPlugin(() => {
             footerItems: JSONLoader,
             crossSellData: JSONLoader,
             mirroredDomainOverride: StringLoader,
-            breadcrumbs: JSONLoader,
-            carousel: JSONLoader,
             useLightMainProduct: StringLoader,
             customerSpecific: JSONLoader,
             cssVariables: JSONLoader,
             extraReco: StringLoader,
             colorData: JSONLoader,
+
+            breadcrumbs: JSONLoader,
+            carousel: JSONLoader,
         }
 
 
