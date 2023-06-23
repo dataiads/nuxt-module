@@ -106,14 +106,17 @@ const fetchSearchProducts = async () => {
 
 const searchRecoProducts: Ref<Product[]> = ref([]);
 
+const loading = ref(false);
 const product = useProduct();
 const searchValue: Ref<string> = refDebounced(value, 500); // https://vueuse.org/shared/refDebounced/#refdebounced
 watch(searchValue, async () => {
   if (props.lpoSearchReccomendations && (searchValue.value !== "" || props.allowEmptySearch)) {
+    loading.value = true;
     searchRecoProducts.value = await fetchSearchProducts();
   } else {
     searchRecoProducts.value = [];
   }
+  loading.value = false;
 });
 
 // input event handler for slot input
@@ -125,7 +128,9 @@ const toggleOverlay = () => (overlayOpen.value = !overlayOpen.value);
 
 // Run filtering once if we allow empty search
 if (props.allowEmptySearch) {
+  loading.value = true;
   searchRecoProducts.value = await fetchSearchProducts();
+  loading.value = false;
 }
 </script>
 
@@ -136,6 +141,7 @@ if (props.allowEmptySearch) {
       :input="input"
       :toggle-overlay="toggleOverlay"
       :overlay-open="overlayOpen"
+      :loading="loading"
     >
       <input :value="value" @input="input" placeholder="search..." />
     </slot>
@@ -201,6 +207,7 @@ if (props.allowEmptySearch) {
         </template>
       </Slider>
       <slot v-if="!searchRecoProducts.length" name="search-slider-empty"></slot>
+      <slot v-if="loading" name="search-slider-loading"></slot>
       <slot name="search-slider-footer"></slot>
     </div>
   </div>
@@ -215,8 +222,8 @@ if (props.allowEmptySearch) {
       leave-to-class="opacity-0 scale-70"
       appear
     >
-    <div v-if="overlayOpen" aria-modal="true" tabindex="0" class="fixed inset-0 w-full h-full z-50 overflow-hidden bg-white">
-        <slot name="full-screen-overlay" :close="() => overlayOpen = false" :items="searchRecoProducts" :value="value" :input="input"></slot>
+    <div v-if="overlayOpen" aria-modal="true" tabindex="0" class="fixed inset-0 w-full h-full z-[101] overflow-hidden bg-white">
+        <slot name="full-screen-overlay" :close="() => overlayOpen = false" :items="searchRecoProducts" :value="value" :input="input" :loading="loading"></slot>
       </div>
     </Transition>
   </Teleport>
