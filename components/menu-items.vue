@@ -14,7 +14,7 @@ let entries: MenuItem[] = lpoConfig[props.configKey] || []
 
 <template>
     <li v-for="(item, index) in entries" :key="index">
-        <a tabindex="0" v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit' }">
+        <a v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit' }">
             <slot :text="item.text" :image-link="item.imageLink">
                 <span>{{ item.text }}</span>
             </slot>
