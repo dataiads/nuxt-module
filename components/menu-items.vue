@@ -13,18 +13,16 @@ let entries: MenuItem[] = lpoConfig[props.configKey] || []
 </script>
 
 <template>
-    <template v-for="(item, index) in entries" :key="index">
-        <a v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit'}">
+    <li v-for="(item, index) in entries" :key="index">
+        <a tabindex="0" v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit' }">
             <slot :text="item.text" :image-link="item.imageLink">
-                <li>{{ item.text }}</li>
+                <span>{{ item.text }}</span>
             </slot>
         </a>
-        <span v-else :style="{ color: item.color || 'inherit'}">
-
+        <span v-else :style="{ color: item.color || 'inherit' }">
             <slot :text="item.text" :image-link="item.imageLink">
-                <li>{{ item.text }}</li>
+                <span>{{ item.text }}</span>
             </slot>
         </span>
-    </template>
-
+    </li>
 </template>
