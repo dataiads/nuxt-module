@@ -108,7 +108,7 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
             @click="overlayState = 'closed'">
             <div ref="overlayElement"
                 class="fixed right-0 top-0 bottom-0 transition duration-500 ease-in-out z-21 bg-white p-2 h-full"
-                :class="{...s.customOverlay.containerClass, '': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }">
+                :class="[...s.customOverlay.containerClass, {'': overlayState === 'initial', 'translate-x-0': overlayState === 'open', 'translate-x-full': overlayState === 'closed' }]">
                 <slot name="custom-overlay-header"></slot>
                 <div @scroll.prevent.stop="onOverlayScroll" :class="s.customOverlay.class" class="overflow-scroll w-full h-full scrollbar-hide">
                     <slot name="custom-overlay-content"></slot>
