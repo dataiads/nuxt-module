@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
+
 const props = defineProps<{
   open: boolean;
   class?: string;
@@ -8,14 +10,20 @@ const props = defineProps<{
 }>();
 
 const openRef = toRef(props, "open");
+const nav = ref<HTMLElement | null>(null);
+const { activate, deactivate } = useFocusTrap(nav, { allowOutsideClick: true, immediate: false });
 
-const updateBodyScroll = () => {
+const updateBodyScroll = async () => {
   if (openRef.value) {
     document.body.style.overflow = 'hidden';
     document.querySelector('html').style.overflow = 'hidden';
+    await nextTick();
+    activate();
   } else {
     document.body.style.overflow = 'unset';
     document.querySelector('html').style.overflow = 'unset';
+    await nextTick();
+    deactivate();
   }
 }
 
@@ -28,7 +36,8 @@ watch(openRef, () => {
 
 <template>
   <transition :name="transition">
-    <nav v-show="openRef" class="bg-grey1 self-start overflow-x-scroll fixed h-full w-[80%] top-0 right-0" :class="class">
+    <nav @keydown.esc="$emit('clickOutside')" v-show="openRef" ref="nav"
+      class="bg-grey1 self-start overflow-x-scroll fixed h-full w-[80%] top-0 right-0" :class="class">
       <slot name="drawer-content"></slot>
       <div
         class="bg-black opacity-50 fixed bottom-0 left-0 right-unset h-full w-[20%] max-w-[48rem] overflow-auto cursor-pointer"
@@ -58,8 +67,8 @@ watch(openRef, () => {
 .slide-right-enter-from {
   transform: translateX(-100%);
 }
+
 .slide-right-leave-to {
   transform: translateX(-100%);
 }
-
 </style>
