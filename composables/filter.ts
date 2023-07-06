@@ -1,7 +1,8 @@
 import { ComputedRef, Ref } from "vue";
-const lpoConfig = useLpoConfig();
 
 export const useFilter = (options: UseFilterOptions) => {
+
+  const lpoConfig = useLpoConfig();
 
   if (!options.fetchQuery) {
     options.fetchQuery = {};
@@ -132,6 +133,7 @@ export const useFilter = (options: UseFilterOptions) => {
     if (!criteriaValuesCache[criteria]) {
       criteriaValuesCache[criteria] = useFetch<Record<string, number>>("/api/recommendations/default/count-property", {
         params: {
+          productId: options.productId,
           property: criteria,
           filters: JSON.stringify(options.baseRules || []),
           ...(options.fetchQuery || {}),
