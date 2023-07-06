@@ -46,11 +46,16 @@ const props = withDefaults(defineProps<Props>(), {
   deduplicate: "itemGroupId",
 });
 
+const lpoConfig = useLpoConfig();
 const value = useState("search.value", () => "");
 const overlayOpen = ref(false);
+const baseRules = lpoConfig.searchRecoParams?.filterRules ?? props.baseRules;
+
+const sort = lpoConfig.searchRecoParams?.sort ?? props.sort;
+const limit = lpoConfig.searchRecoParams?.limit ?? props.limit;
 
 const searchFilters = computed(() => {
-  const filter = props.baseRules?.length ? structuredClone(props.baseRules) : [];
+  const filter: FilterRule[][] = baseRules?.length ? structuredClone(baseRules) : [];
   if (props.allowEmptySearch && value.value === "") {
     return JSON.stringify(filter);
   }
@@ -91,28 +96,29 @@ const fetchSearchProducts = async () => {
     {
       params: {
         productId: product.value.id,
-        limit: props.limit,
-        sort: props.sort?.startsWith("-")
-          ? props.sort.substring(1)
-          : props.sort,
-        sortDesc: props.sort?.startsWith("-") ?? false,
+        limit: limit,
+        sort: sort?.startsWith("-")
+          ? sort.substring(1)
+          : sort,
+        sortDesc: sort?.startsWith("-") ?? false,
         filters: searchFilters.value,
-        deduplicate: props.deduplicate,
+        deduplicate: lpoConfig.searchRecoParams?.deduplicate ?? props.deduplicate,
+        sortFilters: lpoConfig.searchRecoParams?.sortRules,
       },
     }
   );
   return searchRecoProductsFetch.value;
 };
 
-const searchRecoProducts: Ref<Product[]> = ref([]);
+const searchRecoProducts = ref<Product[]>([]);
 
 const loading = ref(false);
 const product = useProduct();
-const searchValue: Ref<string> = refDebounced(value, 500); // https://vueuse.org/shared/refDebounced/#refdebounced
+const searchValue = refDebounced<string>(value, 500); // https://vueuse.org/shared/refDebounced/#refdebounced
 watch(searchValue, async () => {
   if (props.lpoSearchReccomendations && (searchValue.value !== "" || props.allowEmptySearch)) {
     loading.value = true;
-    searchRecoProducts.value = await fetchSearchProducts();
+    searchRecoProducts.value = await fetchSearchProducts() as Product[];
   } else {
     searchRecoProducts.value = [];
   }
@@ -129,7 +135,7 @@ const toggleOverlay = () => (overlayOpen.value = !overlayOpen.value);
 // Run filtering once if we allow empty search
 if (props.allowEmptySearch) {
   loading.value = true;
-  searchRecoProducts.value = await fetchSearchProducts();
+  searchRecoProducts.value = await fetchSearchProducts() as Product[];
   loading.value = false;
 }
 </script>

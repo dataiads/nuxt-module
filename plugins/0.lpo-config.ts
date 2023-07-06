@@ -62,6 +62,9 @@ export default defineNuxtPlugin(() => {
             cssVariables: JSONLoader,
             extraReco: StringLoader,
             colorData: JSONLoader,
+            mainRecoParams: JSONLoader,
+            sliderRecoParams: JSONLoader,
+            searchRecoParams: JSONLoader,
 
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,

@@ -1,6 +1,24 @@
 import { ComputedRef, Ref } from "vue";
+const lpoConfig = useLpoConfig();
 
 export const useFilter = (options: UseFilterOptions) => {
+
+  if (!options.fetchQuery) {
+    options.fetchQuery = {};
+  }
+  if (lpoConfig.mainRecoParams?.filterRules) {
+    options.baseRules = lpoConfig.mainRecoParams?.filterRules;
+  }
+  if (lpoConfig.mainRecoParams?.sortRules) {
+    options.fetchQuery.sortRules = JSON.stringify(lpoConfig.mainRecoParams.sortRules);
+  }
+  if (lpoConfig.mainRecoParams?.deduplicate) {
+    options.fetchQuery.deduplicate = lpoConfig.mainRecoParams.deduplicate;
+  }
+  if (lpoConfig.mainRecoParams?.limit) {
+    options.defaultLimit = lpoConfig.mainRecoParams.limit;
+  }
+
 
   const initState = () => {
     const init: Record<string, FilterRule[]> = {}
@@ -22,8 +40,8 @@ export const useFilter = (options: UseFilterOptions) => {
 
   // watchable configuration for recommendation request.
   // can be manipulated directly and fetcher will update automatically
-  const sort = ref<string>("");
-  const limit = ref<number>(options.defaultLimit || 12);
+  const sort = ref<string>(lpoConfig.mainRecoParams?.sort ?? "");
+  const limit = ref<number>(options.defaultLimit ?? 12);
   const page = ref<number>(1);
 
   // current filters computed property

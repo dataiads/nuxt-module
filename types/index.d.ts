@@ -189,10 +189,21 @@ declare global {
     cssVariables?: Record<string, string>;
     extraReco?: boolean;
     colorData?: Record<string, string>;
+    mainRecoParams: FilterParams;
+    sliderRecoParams: FilterParams;
+    searchRecoParams: FilterParams;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
     carousel: Record<string, Array<Record<string, string>>>;
+  }
+
+  export interface FilterParams {
+    filterRules?: FilterRule[][]
+    sortRules?: FilterRule[][]
+    sort?: string
+    limit?: number
+    deduplicate?: string
   }
 
   export interface UseFilterOptions {
@@ -255,6 +266,8 @@ declare global {
     criteria: string;
     operator: string;
     value: string;
+    valueCriteria: string;
+    baseProductValue: string;
   }
 }
 
