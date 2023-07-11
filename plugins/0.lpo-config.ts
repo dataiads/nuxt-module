@@ -51,6 +51,7 @@ export default defineNuxtPlugin(() => {
             onetrust: JSONLoader,
             didomi: JSONLoader,
             messages: JSONLoader,
+            numberFormats: JSONLoader,
             menu: JSONLoader,
             subMenu: JSONLoader,
             footerColumns: JSONLoader,
