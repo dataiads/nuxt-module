@@ -30,7 +30,7 @@ export const useFilter = (options: UseFilterOptions) => {
         if (!init[r.group]) {
           init[r.group] = [];
         }
-        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value });
+        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value, valueCriteria: r.valueCriteria, baseProductValue: r.baseProductValue });
       }
     }
     return init;
@@ -144,11 +144,11 @@ export const useFilter = (options: UseFilterOptions) => {
   };
 
   // all functions below allow state manipulation
-  const hasRule = (group: string, criteria: string, operator: string, value: string): boolean => {
+  const hasRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): boolean => {
     if (!state.value[group]) {
       return false;
     }
-    return !!state.value[group].find((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value);
+    return !!state.value[group].find((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue);
   };
 
   const getFirstRuleValue = (group: string): string | null => {
@@ -158,25 +158,25 @@ export const useFilter = (options: UseFilterOptions) => {
     return null;
   };
 
-  const pushRule = (group: string, criteria: string, operator: string, value: string): void => {
-    if (!hasRule(group, criteria, operator, value)) {
+  const pushRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string="", baseProductValue: string = ""): void => {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue)) {
       if (state.value[group]) {
-        state.value[group].push({ criteria, operator, value });
+        state.value[group].push({ criteria, operator, value, valueCriteria, baseProductValue });
       } else {
-        state.value[group] = [{ criteria, operator, value }];
+        state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue }];
       }
     }
   };
 
-  const setOnlyRule = (group: string, criteria: string, operator: string, value: string): void => {
-    state.value[group] = [{ criteria, operator, value }];
+  const setOnlyRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): void => {
+    state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue }];
   };
 
-  const removeRule = (group: string, criteria: string, operator: string, value: string): void => {
-    if (!hasRule(group, criteria, operator, value)) {
+  const removeRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): void => {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue)) {
       return;
     }
-    const index = state.value[group].findIndex((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value);
+    const index = state.value[group].findIndex((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue);
     if (index > -1) {
       state.value[group].splice(index, 1);
     }

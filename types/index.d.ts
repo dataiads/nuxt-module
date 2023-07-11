@@ -250,11 +250,11 @@ declare global {
     limit: Ref<number>;
     page: Ref<number>;
     sort: Ref<string>;
-    hasRule: (group: string, criteria: string, operator: string, value: string) => boolean;
+    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => boolean;
     getFirstRuleValue: (group: string) => string | null;
-    pushRule: (group: string, criteria: string, operator: string, value: string) => void;
-    setOnlyRule: (group: string, criteria: string, operator: string, value: string) => void;
-    removeRule: (group: string, criteria: string, operator: string, value: string) => void;
+    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
+    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
+    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
   }

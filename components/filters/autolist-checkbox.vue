@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { pictureProps } from '@nuxt/image-edge/dist/runtime/components/nuxt-picture';
+
 const uuid = Math.floor(Math.random() * 10 ** 16);
 
 const props = withDefaults(defineProps<{
@@ -38,8 +40,8 @@ const sortedValues = computed(() => {
   let keys = Object.keys(availableValues.value)
 
   if (props.valuesFilter) {
-    if (props.valuesFilter instanceof RegExp) {
-      keys = keys.filter(v => !!props.valuesFilter.exec(v))
+    if (props.valuesFilter && props.valuesFilter instanceof RegExp) {
+      keys = keys.filter(v => !!props.valuesFilter?.exec(v))
     } else if (props.valuesFilter instanceof Function) {
       keys = keys.filter(props.valuesFilter)
     }

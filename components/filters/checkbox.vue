@@ -8,6 +8,8 @@ const props = withDefaults(defineProps<{
   criteria: string
   operator?: string
   value?: string
+  valueCriteria?: string
+  baseProductCriteria?: string
   group: string
   class?: string
   inputClass?: string
@@ -17,6 +19,8 @@ const props = withDefaults(defineProps<{
   label: "",
   operator: "EQUAL",
   value: "",
+  valueCriteria: "",
+  baseProductCriteria: "",
   class: "flex items-center gap-1 my-1",
   inputClass: "hover:cursor-pointer",
   labelClass: "",
@@ -24,12 +28,12 @@ const props = withDefaults(defineProps<{
 
 let binder = computed({
   get: () =>
-    props.filter.hasRule(props.group, props.criteria, props.operator, props.value),
+    props.filter.hasRule(props.group, props.criteria, props.operator, props.value, props.valueCriteria, props.baseProductCriteria),
   set: (val) => {
     if (val) {
-      props.filter.pushRule(props.group, props.criteria, props.operator, props.value);
+      props.filter.pushRule(props.group, props.criteria, props.operator, props.value, props.valueCriteria, props.baseProductCriteria);
     } else {
-      props.filter.removeRule(props.group, props.criteria, props.operator, props.value);
+      props.filter.removeRule(props.group, props.criteria, props.operator, props.value, props.valueCriteria, props.baseProductCriteria);
     }
   },
 });
