@@ -14,6 +14,7 @@ export default defineNuxtPlugin(async ({ vueApp }) => {
       globalInjection: true,
       locale: lpoConfig.locale,
       messages: messages,
+      numberFormats: lpoConfig.numberFormats,
     })
     vueApp.use(i18n)
   }

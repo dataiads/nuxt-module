@@ -179,6 +179,7 @@ declare global {
     onetrust?: OnetrustConfig;
     didomi?: DidomiConfig;
     messages?: Record<string, Record<string, any>>
+    numberFormats?: Record<string, Record<string, any>>
     menu?: MenuItem[];
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];
