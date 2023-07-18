@@ -257,6 +257,7 @@ declare global {
     removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
+    reset: () => void;
   }
 
   export interface InitialFilterRule extends FilterRule {
