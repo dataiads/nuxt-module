@@ -13,8 +13,8 @@ export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filt
 </script>
 
 <template>
-    <a v-if="lpoConfig.useAccessibilityVariant" :href="$oriUrl(product.data.link)" class="sr-only focus:not-sr-only">
-        {{ $t('viewAccessibilityVariant') }}
+    <a v-if="lpoConfig.accessibilityVariant?.text" :href="$oriUrl(product.data.link)" class="sr-only focus:not-sr-only">
+        {{ lpoConfig.accessibilityVariant?.text }}
     </a>
 
     <LayoutsCatalogHighFilters v-if="lpoConfig.variation === 'catalog-high-filters'" v-bind="props" >

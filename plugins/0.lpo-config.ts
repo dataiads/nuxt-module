@@ -2,18 +2,6 @@ function StringLoader(v: string): string {
     return v
 }
 
-function BooleanLoader(v: string): boolean | undefined {
-    if (v === 'false') {
-        return false;
-    }
-
-    if (v === 'true') {
-        return true;
-    }
-
-    return undefined
-}
-
 function JSONLoader(v: string): any {
     try {
         return JSON.parse(v)
@@ -63,7 +51,7 @@ export default defineNuxtPlugin(() => {
 
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,
-            useAccessibilityVariant: BooleanLoader,
+            accessibilityVariant: JSONLoader,
         }
 
         try {
