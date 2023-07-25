@@ -20,10 +20,21 @@ const loading = props.loading ?? "eager"
 const picture = props.picture ?? false;
 
 const fallbackToUncompressed = (event: Event) => {
-	if (event.target.src != props.src) {
-		event.target.src = props.src
+	if (!event.target) {
+		return
+	}
+
+	const target = event.target as HTMLImageElement;
+
+	// User defined type guard
+	if (!target.src) {
+		return
+	}
+
+	if (target.src != props.src) {
+		target.src = props.src
 	} else if (props.removeOnError) {
-		event.target.remove()
+		target.remove()
 	}
 }
 

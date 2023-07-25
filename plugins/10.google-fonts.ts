@@ -1,5 +1,3 @@
-
-// @ts-ignore
 import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
 
 /*

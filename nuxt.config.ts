@@ -19,25 +19,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // Add default values for the LPOConfig here.
-      devLpoConfig: {
-        // disable i18n by default
-        locale: "",
-        variation: "catalog",
-        useLightMainProduct: false,
-        extraReco: false,
-        banners: [],
-        gtm: {
-          id: [],
-        },
-        onetrust: {
-          dataDomainScript: null,
-        },
-        didomi: {
-          id: null,
-        }
-      },
-
       // mirroredDomain should not be used directly, as it can be overriden by lpoConfig.mirroredDomainOverride
       // useMirroredDomain() composable should be used instead
       mirroredDomain: "",
@@ -51,6 +32,8 @@ export default defineNuxtConfig({
 
       // expose cdn url inside config
       cdnURL: process.env.CDN_URL || "",
+
+      googleFonts: ([] as GoogleFont[]),
 
       // toggle optimized images component
       optimizeImageLoad: true,

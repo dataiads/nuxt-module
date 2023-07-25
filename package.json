@@ -12,7 +12,7 @@
   "license": "MIT",
   "types": "./types",
   "scripts": {
-    "release": "standard-version && git push --follow-tags && yarn publish"
+    "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish"
   },
   "dependencies": {
     "@nuxt/image-edge": "^1.0.0-27913696.5d122a3",

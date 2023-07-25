@@ -35,13 +35,14 @@ const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteri
 
 const sortedValues = computed(() => {
   if (availableValues.value == null) {
-    return null
+    return null;
   }
+
   let keys = Object.keys(availableValues.value)
 
   if (props.valuesFilter) {
     if (props.valuesFilter && props.valuesFilter instanceof RegExp) {
-      keys = keys.filter(v => !!props.valuesFilter?.exec(v))
+      keys = keys.filter(v => !!(props.valuesFilter as RegExp).exec(v))
     } else if (props.valuesFilter instanceof Function) {
       keys = keys.filter(props.valuesFilter)
     }
@@ -51,7 +52,7 @@ const sortedValues = computed(() => {
     keys = props.sort(keys)
   }
 
-  return keys.map(k => [k, availableValues.value[k]])
+  return keys.map(k => [k, availableValues.value ? availableValues.value[k] : null])
 })
 
 </script>
@@ -65,7 +66,7 @@ const sortedValues = computed(() => {
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
+            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value?.toString()"
             :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
           >
             <template #label="scope">
@@ -81,7 +82,7 @@ const sortedValues = computed(() => {
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
+            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value?.toString()"
             :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
           >
             <template #label="scope">

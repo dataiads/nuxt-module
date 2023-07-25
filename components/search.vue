@@ -66,6 +66,8 @@ const searchFilters = computed(() => {
         criteria: field,
         operator: "CONTAINS_ALL_CI",
         value: value.value.split(" ").join(","),
+        valueCriteria: "",
+        baseProductValue: "",
       })),
     ]
   );

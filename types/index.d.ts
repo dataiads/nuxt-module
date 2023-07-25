@@ -4,6 +4,23 @@ import { FetchError } from "ofetch";
 import { Variations } from "~~/components/variation-layout.vue";
 
 declare global {
+  export interface InlineLPOConfig {
+    name: string,
+    isDefault: string,
+    PublishUp: Date | null,
+    PublishDown: Date | null,
+    fields: InlineLPOConfigField[],
+  }
+
+  export interface InlineLPOConfigField {
+    name: keyof LPOConfig,
+    type: string,
+    value: string,
+    active: boolean,
+    updatedAt: Date
+  }
+
+  export interface Window { __LPO_CONFIG__: Partial<InlineLPOConfig> | undefined; }
   export interface ProductDataPrice {
     currency: string;
     value: string;
@@ -139,7 +156,7 @@ declare global {
   }
 
   export interface DidomiConfig {
-    id: string;
+    id: string | null;
   }
 
   export interface MenuItem {
@@ -165,6 +182,11 @@ declare global {
     text: string
     link: string
     image?: string
+  }
+
+  export interface GoogleFont {
+    family: string;
+    weights: string[];
   }
 
   // Add available LPO Config fields here.
@@ -250,11 +272,11 @@ declare global {
     limit: Ref<number>;
     page: Ref<number>;
     sort: Ref<string>;
-    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => boolean;
+    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
     getFirstRuleValue: (group: string) => string | null;
-    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
-    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
-    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria: string, baseProductValue: string) => void;
+    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
     reset: () => void;
@@ -271,6 +293,25 @@ declare global {
     valueCriteria: string;
     baseProductValue: string;
   }
+
+  export interface Region {
+    displayName: string
+    merchantId: string
+    postalCodeArea: PostalCodeArea
+    regionId: string
+    regionalInventoryEligible: boolean
+    shippingEligible: boolean
+  }
+
+  export interface PostalCodeArea {
+    postalCodes: PostalCode[]
+    regionCode: string
+  }
+
+  export interface PostalCode {
+    begin: string
+  }
+
 }
 
 // a json serializable type
@@ -280,21 +321,3 @@ type JSONValue =
   | boolean
   | { [x: string]: JSONValue }
   | Array<JSONValue>;
-
-export interface Region {
-  displayName: string
-  merchantId: string
-  postalCodeArea: PostalCodeArea
-  regionId: string
-  regionalInventoryEligible: boolean
-  shippingEligible: boolean
-}
-
-export interface PostalCodeArea {
-  postalCodes: PostalCode[]
-  regionCode: string
-}
-
-export interface PostalCode {
-  begin: string
-}

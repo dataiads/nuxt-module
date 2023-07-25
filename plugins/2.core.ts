@@ -35,12 +35,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   // force robots noindex meta tag
   // the associated canonical link is provided by the server using a header
   useHead({
-    charset: "utf-8",
-    viewport: "width=device-width, initial-scale=1",
     htmlAttrs: {
       lang: lpoConfig.locale ?? runtimeConfig.public.lang,
     },
     meta: [
+      { charset: 'utf-8' },
       { name: "robots", content: "noindex" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
     ]
@@ -72,11 +71,17 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (error.value) {
       errorRedirect(error.value);
     }
-    useState<Product>("product", () => pageData.value.product)
-    useState<AssocString>("collectorData", () => pageData.value.collectorData)
+
+    if (pageData.value === null) {
+      errorRedirect("Failed to fetch page data")
+    }
+
+    const data = pageData.value;
+    useState<Product | undefined>("product", () => data?.product)
+    useState<AssocString | undefined>("collectorData", () => data?.collectorData)
 
     useHead({
-      title: pageData.value.product.extraData?.title ?? pageData.value.product.data.title
+      title: data?.product.extraData?.title ?? data?.product.data.title
     })
 
   })
@@ -102,7 +107,7 @@ function errorRedirect(reason: unknown): void {
   }
 }
 
-export function reportError(err: string) {
+export function reportError(err: unknown) {
   const data = {
     error: `${err} on ${location.toString()}`,
     service: "landing-page",

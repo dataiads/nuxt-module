@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n';
 
+// @ts-ignore
 import bundleMessages from "~/locales"
 
 export default defineNuxtPlugin(async ({ vueApp }) => {
