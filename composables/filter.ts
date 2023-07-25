@@ -30,7 +30,7 @@ export const useFilter = (options: UseFilterOptions) => {
         if (!init[r.group]) {
           init[r.group] = [];
         }
-        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value, valueCriteria: r.valueCriteria, baseProductValue: r.baseProductValue });
+        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value, valueCriteria: r.valueCriteria || "", baseProductValue: r.baseProductValue || "" });
       }
     }
     return init;
