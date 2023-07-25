@@ -215,6 +215,7 @@ declare global {
     mainRecoParams: FilterParams;
     sliderRecoParams: FilterParams;
     searchRecoParams: FilterParams;
+    useAccessibilityVariant?: boolean;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;

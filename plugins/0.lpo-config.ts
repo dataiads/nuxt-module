@@ -19,7 +19,9 @@ export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
     let lpoConfig: Partial<LPOConfig> = {}
 
-    if (process.env.NODE_ENV !== "development" && window.__LPO_CONFIG__ !== undefined) {
+    if (process.env.NODE_ENV === "development") {
+        lpoConfig = config.public.devLpoConfig
+    } else if (window.__LPO_CONFIG__ !== undefined) {
         // Prod env reads config from the data injected into the window object when LP is served.
         const fieldLoaders: Record<keyof LPOConfig, (v: string) => any> = {
             variation: StringLoader,
@@ -69,6 +71,7 @@ export default defineNuxtPlugin(() => {
         }
     }
 
+    console.log(lpoConfig)
     // Pop a decpreciation warning is the nuxt config has a field also in the LPO config.
     if (process.env.NODE_ENV === "development") {
         class DepreciationError extends Error {
