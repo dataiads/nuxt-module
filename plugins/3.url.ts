@@ -44,15 +44,23 @@ export default defineNuxtPlugin(() => {
         provide: {
             oriUrl(link: string, query?: Record<string, string>): string {
                 // force original domain on a link, add query parameters
-                let url = new URL(link)
-                url.protocol = protocol
-                url.hostname = mirroredHost
-                if (query) {
-                    for (const key in query) {
-                        url.searchParams.set(key, query[key])
-                    }
+                if (!link) {
+                    return "#"
                 }
-                return url.toString()
+                try {
+                    let url = new URL(link)
+                    url.protocol = protocol
+                    url.hostname = mirroredHost
+                    if (query) {
+                        for (const key in query) {
+                            url.searchParams.set(key, query[key])
+                        }
+                    }
+                    return url.toString()
+                } catch (e) {
+                    console.log("broken link", link)
+                    return "#"
+                }
             },
             oriUrlWithHash(link: string, hash: string): string {
                 // force original domain on a link, add query parameters
