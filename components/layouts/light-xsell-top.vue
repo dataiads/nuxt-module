@@ -25,6 +25,23 @@ const s = config.public.layoutStyle;
       <slot name="cross-sell"></slot>
     </div>
 
+    <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
+      <div :class="s.recoSlider.containerClass">
+        <slot name="reco-slider-header"></slot>
+        <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
+          <template #item="{ item }">
+            <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
+          </template>
+          <template #previous-btn="scope">
+            <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
+          </template>
+          <template #next-btn="scope">
+            <slot name="reco-slider-next-btn" v-bind="scope"></slot>
+          </template>
+        </Slider>
+      </div>
+    </div>
+
     <div id="breadcrumb" :class="s.breadcrumb.class">
       <slot name="breadcrumb"></slot>
     </div>
@@ -60,23 +77,6 @@ const s = config.public.layoutStyle;
 
         <slot name="main-product-footer"></slot>
       </slot>
-    </div>
-
-    <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
-      <div :class="s.recoSlider.containerClass">
-        <slot name="reco-slider-header"></slot>
-        <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
-          <template #item="{ item }">
-            <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
-          </template>
-          <template #previous-btn="scope">
-            <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
-          </template>
-          <template #next-btn="scope">
-            <slot name="reco-slider-next-btn" v-bind="scope"></slot>
-          </template>
-        </Slider>
-      </div>
     </div>
 
     <div id="filters" :class="s.filters.class">
