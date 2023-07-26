@@ -65,7 +65,7 @@ const searchFilters = computed(() => {
       props.searchFields.map((field) => ({
         criteria: field,
         operator: "CONTAINS_ALL_CI",
-        value: value.value.split(" ").join(","),
+        value: value.value.replaceAll(" ", ","),
         valueCriteria: "",
         baseProductValue: "",
       })),
@@ -154,7 +154,7 @@ if (props.allowEmptySearch) {
       <input :value="value" @input="input" placeholder="search..." />
     </slot>
   </form>
-  <div id="search-slider" v-if="lpoSearchReccomendations && !fullScreenOverlay">
+  <div id="search-slider" v-if="lpoSearchReccomendations && !fullScreenOverlay && value">
     <div class="absolute z-10">
       <slot name="search-slider-header"></slot>
       <Slider
