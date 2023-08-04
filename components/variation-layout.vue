@@ -9,7 +9,7 @@ const props = defineProps<{
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-custom-overlay-right" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider" | "catalog-xsell-top" | "light-xsell-top" | "catalog-xsell-top-no-slider";
+export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-custom-overlay-right" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider" | "catalog-xsell-top" | "light-xsell-top" | "catalog-xsell-top-no-slider" | "light-xsell-top-no-slider";
 </script>
 
 <template>
@@ -124,6 +124,12 @@ export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filt
             <slot :name="name" v-bind="scope"></slot>
         </template>
     </LayoutsCatalogXsellTopNoSlider>
+
+    <LayoutsLightXsellTopNoSlider v-else-if="lpoConfig.variation === 'light-xsell-top-no-slider'" v-bind="props" >
+        <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+        </template>
+    </LayoutsLightXsellTopNoSlider>
 
     <!-- "catalog" is the default layout. -->
     <LayoutsCatalog v-else v-bind="props" >
