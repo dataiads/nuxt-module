@@ -72,7 +72,6 @@ export default defineNuxtPlugin(() => {
         }
     }
 
-    console.log(lpoConfig)
     // Pop a decpreciation warning is the nuxt config has a field also in the LPO config.
     if (process.env.NODE_ENV === "development") {
         class DepreciationError extends Error {
