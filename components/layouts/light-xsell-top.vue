@@ -29,7 +29,11 @@ const s = config.public.layoutStyle;
       <slot name="breadcrumb"></slot>
     </div>
 
-    <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
+    <div
+      id="main-product"
+      v-if="lpoConfig.useLightMainProduct"
+      :class="s.mainProduct.class"
+    >
       <slot name="main-product-light">
         <slot name="main-product-light-header"></slot>
 
@@ -62,10 +66,19 @@ const s = config.public.layoutStyle;
       </slot>
     </div>
 
-    <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
+    <div
+      id="reco-slider"
+      :class="s.recoSlider.class"
+      v-if="recoSliderProducts?.length"
+    >
       <div :class="s.recoSlider.containerClass">
         <slot name="reco-slider-header"></slot>
-        <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
+        <Slider
+          :items="props.recoSliderProducts"
+          :scroller-class="s.recoSlider.sliderClass"
+          :autoscroll="s.recoSlider.autoscroll"
+          :scroll-speed="s.recoSlider.scrollSpeed"
+        >
           <template #item="{ item }">
             <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
           </template>
@@ -79,14 +92,19 @@ const s = config.public.layoutStyle;
       </div>
     </div>
 
-
     <div id="filters" :class="s.filters.class">
       <div id="filters-content" :class="s.filters.contentClass">
         <div id="filters-content-header" :class="s.filters.contentHeaderClass">
           <slot name="filters-content-header"></slot>
         </div>
         <div :class="s.filters.contentGridClass">
-          <slot name="filters-content-grid-item" v-for="(item, index) in filterProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item" :index="index"></slot>
+          <slot
+            name="filters-content-grid-item"
+            v-for="(item, index) in filterProducts"
+            :key="item.id ? item.id : JSON.stringify(item)"
+            :item="item"
+            :index="index"
+          ></slot>
         </div>
         <div id="filters-pagination" :class="s.filters.paginationClass">
           <slot name="filters-pagination"></slot>
@@ -97,11 +115,19 @@ const s = config.public.layoutStyle;
 
   <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
     <div id="extra-reco-content" :class="s.extraReco.contentClass">
-      <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
+      <div
+        id="extra-reco-content-header"
+        :class="s.extraReco.contentHeaderClass"
+      >
         <slot name="extra-reco-content-header"></slot>
       </div>
       <div :class="s.extraReco.contentGridClass">
-        <slot name="extra-reco-content-grid-item" v-for="item in extraProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+        <slot
+          name="extra-reco-content-grid-item"
+          v-for="item in extraProducts"
+          :key="item.id ? item.id : JSON.stringify(item)"
+          :item="item"
+        ></slot>
       </div>
     </div>
   </div>

@@ -29,7 +29,11 @@ const s = config.public.layoutStyle;
       <slot name="breadcrumb"></slot>
     </div>
 
-    <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
+    <div
+      id="main-product"
+      v-if="lpoConfig.useLightMainProduct"
+      :class="s.mainProduct.class"
+    >
       <slot name="main-product-light">
         <slot name="main-product-light-header"></slot>
 
@@ -68,7 +72,13 @@ const s = config.public.layoutStyle;
           <slot name="filters-content-header"></slot>
         </div>
         <div :class="s.filters.contentGridClass">
-          <slot name="filters-content-grid-item" v-for="(item, index) in filterProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item" :index="index"></slot>
+          <slot
+            name="filters-content-grid-item"
+            v-for="(item, index) in filterProducts"
+            :key="item.id ? item.id : JSON.stringify(item)"
+            :item="item"
+            :index="index"
+          ></slot>
         </div>
         <div id="filters-pagination" :class="s.filters.paginationClass">
           <slot name="filters-pagination"></slot>
@@ -79,11 +89,19 @@ const s = config.public.layoutStyle;
 
   <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
     <div id="extra-reco-content" :class="s.extraReco.contentClass">
-      <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
+      <div
+        id="extra-reco-content-header"
+        :class="s.extraReco.contentHeaderClass"
+      >
         <slot name="extra-reco-content-header"></slot>
       </div>
       <div :class="s.extraReco.contentGridClass">
-        <slot name="extra-reco-content-grid-item" v-for="item in extraProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+        <slot
+          name="extra-reco-content-grid-item"
+          v-for="item in extraProducts"
+          :key="item.id ? item.id : JSON.stringify(item)"
+          :item="item"
+        ></slot>
       </div>
     </div>
   </div>
