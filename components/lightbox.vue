@@ -27,8 +27,8 @@ watch(open, () => {
   <teleport to="body">
 
     <transition enter-active-class="transition-all transition-fast ease-out-quad"
-      leave-active-class="transition-all transition-medium ease-in-quad" enter-class="opacity-0 scale-70"
-      enter-to-class="opacity-100 scale-100" leave-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-70"
+      leave-active-class="transition-all transition-medium ease-in-quad" enter-from-class="opacity-0 scale-70"
+      enter-to-class="opacity-100 scale-100" leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-70"
       appear>
 
       <div v-if="open" aria-modal="true" tabindex="0" class="fixed inset-0 w-full h-full z-50 overflow-hidden bg-white">

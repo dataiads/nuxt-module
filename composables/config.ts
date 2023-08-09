@@ -1,6 +1,6 @@
 export const useLpoConfig = (): LPOConfig => {
     const {$lpoConfig} = useNuxtApp()
-    return $lpoConfig
+    return $lpoConfig as LPOConfig
 }
 
 export const useMirroredDomain = () => {

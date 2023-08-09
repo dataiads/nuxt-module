@@ -20,7 +20,7 @@ export default defineNuxtPlugin(() => {
     let lpoConfig: Partial<LPOConfig> = {}
 
     if (process.env.NODE_ENV === "development") {
-        lpoConfig = config.public.devLpoConfig
+        lpoConfig = config.public.devLpoConfig as typeof lpoConfig
     } else if (window.__LPO_CONFIG__ !== undefined) {
         // Prod env reads config from the data injected into the window object when LP is served.
         const fieldLoaders: Record<keyof LPOConfig, (v: string) => any> = {

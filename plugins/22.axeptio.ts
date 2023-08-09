@@ -13,7 +13,7 @@ function prependBody(tag: string, content: string) {
 export default defineNuxtPlugin(({ vueApp }) => {
   const config = useRuntimeConfig();
 
-  if (config.public?.axeptio?.clientId) {
+  if ((config.public?.axeptio as Record<string, any>)?.clientId) {
     let axeptioSettings = JSON.stringify(config.public.axeptio);
     prependBody("script", `{
       var process = { env: {} };
