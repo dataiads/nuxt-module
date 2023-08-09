@@ -3,9 +3,9 @@ export const useLpoConfig = (): LPOConfig => {
     return $lpoConfig as LPOConfig
 }
 
-export const useMirroredDomain = () => {
+export const useMirroredDomain = (): string => {
     const lpoConfig = useLpoConfig()
     const runtimeConfig = useRuntimeConfig()
 
-    return lpoConfig.mirroredDomainOverride || runtimeConfig.mirroredDomain || runtimeConfig.public.mirroredDomain
+    return lpoConfig.mirroredDomainOverride || (runtimeConfig.mirroredDomain as string) || runtimeConfig.public.mirroredDomain || "";
 }
