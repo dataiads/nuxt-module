@@ -66,6 +66,10 @@ const s = config.public.layoutStyle;
       </slot>
     </div>
 
+    <div id="filters-header" :class="s.filters.headerClass">
+      <slot name="filters-header"></slot>
+    </div>
+
     <div id="filters" :class="s.filters.class">
       <div id="filters-content" :class="s.filters.contentClass">
         <div id="filters-content-header" :class="s.filters.contentHeaderClass">

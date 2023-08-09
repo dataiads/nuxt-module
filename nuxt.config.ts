@@ -79,6 +79,7 @@ export default defineNuxtConfig({
         },
         filters: {
           class: ["flex", "flex-col", "md:flex-row", "flex-nowrap", "items-stretch"],
+          headerClass: [],
           asideClass: [
             "flex-none",
             "w-auto",

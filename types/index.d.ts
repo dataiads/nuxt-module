@@ -293,8 +293,8 @@ declare global {
     criteria: string;
     operator: string;
     value: string;
-    valueCriteria: string;
-    baseProductValue: string;
+    valueCriteria?: string;
+    baseProductValue?: string;
   }
 
   export interface Region {

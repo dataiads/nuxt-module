@@ -14,7 +14,10 @@ const lpoConfig = useLpoConfig();
 const s = config.public.layoutStyle;
 
 // global singleton to ensure only a single dropdown is open on mobile
-const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingleton", () => null);
+const mobileFilterOpen = useState<(() => void) | null>(
+  "responsiveAsideItemSingleton",
+  () => null
+);
 </script>
 
 <template>
@@ -31,7 +34,11 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
       <slot name="breadcrumb"></slot>
     </div>
 
-    <div id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
+    <div
+      id="main-product"
+      v-if="lpoConfig.useLightMainProduct"
+      :class="s.mainProduct.class"
+    >
       <slot name="main-product-light">
         <slot name="main-product-light-header"></slot>
 
@@ -64,8 +71,18 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
       </slot>
     </div>
 
+    <div id="filters-header" :class="s.filters.headerClass">
+      <slot name="filters-header"></slot>
+    </div>
+
     <div id="filters" :class="s.filters.class">
-      <div id="filters-aside" :class="[...s.filters.asideClass, mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll']">
+      <div
+        id="filters-aside"
+        :class="[
+          ...s.filters.asideClass,
+          mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll',
+        ]"
+      >
         <slot name="filters-aside"></slot>
       </div>
       <div id="filters-content" :class="s.filters.contentClass">
@@ -92,11 +109,19 @@ const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingl
 
   <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
     <div id="extra-reco-content" :class="s.extraReco.contentClass">
-      <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
+      <div
+        id="extra-reco-content-header"
+        :class="s.extraReco.contentHeaderClass"
+      >
         <slot name="extra-reco-content-header"></slot>
       </div>
       <div :class="s.extraReco.contentGridClass">
-        <slot name="extra-reco-content-grid-item" v-for="item in extraProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
+        <slot
+          name="extra-reco-content-grid-item"
+          v-for="item in extraProducts"
+          :key="item.id ? item.id : JSON.stringify(item)"
+          :item="item"
+        ></slot>
       </div>
     </div>
   </div>

@@ -72,6 +72,10 @@ const mobileFilterOpen = useState<(() => void) | null>(
       </slot>
     </div>
 
+    <div id="filters-header" :class="s.filters.headerClass">
+      <slot name="filters-header"></slot>
+    </div>
+
     <div id="filters" :class="s.filters.class">
       <div
         id="filters-aside"
