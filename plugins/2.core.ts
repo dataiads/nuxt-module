@@ -65,7 +65,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // fetch the product on init
   nuxtApp.hook('app:created', async () => {
-    const dataTimeout = setTimeout(() => errorRedirect("page data timeout"), runtimeConfig.timeout.pageDataLoad);
+    const dataTimeout = setTimeout(() => errorRedirect("page data timeout"), runtimeConfig.public.timeout.pageDataLoad);
     const { data: pageData, error } = await fetchPageData(window.location)
     clearTimeout(dataTimeout);
     if (error.value) {
