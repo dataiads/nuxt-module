@@ -61,7 +61,7 @@ const mobileFilterOpen = useState<(() => void) | null>(
       <slot name="filters-header"></slot>
     </div>
 
-    <div class="flex flex-col md:flex-row">
+    <div :class="s.filters.highFilters">
       <div
         id="filters-aside"
         :class="[
