@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.150](https://github.com/dataiads/nuxt-module/compare/v0.2.149...v0.2.150) (2023-08-11)
+
 ### [0.2.149](https://github.com/dataiads/nuxt-module/compare/v0.2.148...v0.2.149) (2023-08-10)
 
 ### [0.2.148](https://github.com/dataiads/nuxt-module/compare/v0.2.147...v0.2.148) (2023-08-09)
