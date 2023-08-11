@@ -158,6 +158,7 @@ if (props.allowEmptySearch) {
     <div class="absolute z-10">
       <slot name="search-slider-header"></slot>
       <Slider
+        v-if="searchRecoProducts.length"
         :items="searchRecoProducts"
         :autoscroll="false"
         :direction="direction"
