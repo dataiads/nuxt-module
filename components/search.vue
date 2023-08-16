@@ -32,6 +32,8 @@ interface Props {
 
   // deduplicate search results
   deduplicate?: string;
+
+  manualMode?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -44,6 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   allowEmptySearch: false,
   sort: "random",
   deduplicate: "itemGroupId",
+  manualMode: false,
 });
 
 const lpoConfig = useLpoConfig();
@@ -155,7 +158,7 @@ if (props.allowEmptySearch) {
     </slot>
   </form>
   <div id="search-slider" v-if="lpoSearchReccomendations && !fullScreenOverlay && value">
-    <div class="absolute z-10">
+    <div v-if="!manualMode" class="absolute z-10">
       <slot name="search-slider-header"></slot>
       <Slider
         v-if="searchRecoProducts.length"
@@ -219,6 +222,8 @@ if (props.allowEmptySearch) {
       <slot v-if="loading" name="search-slider-loading"></slot>
       <slot name="search-slider-footer"></slot>
     </div>
+    <slot v-else :items="{searchRecoProducts, loading}">
+    </slot>
   </div>
   <Teleport to="body" v-if="fullScreenOverlay">
     <Transition
