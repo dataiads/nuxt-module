@@ -222,7 +222,7 @@ if (props.allowEmptySearch) {
       <slot v-if="loading" name="search-slider-loading"></slot>
       <slot name="search-slider-footer"></slot>
     </div>
-    <slot v-else :items="{searchRecoProducts, loading}">
+    <slot v-else name="manuel-search-results" :searchRecoProducts="searchRecoProducts" :loading="loading">
     </slot>
   </div>
   <Teleport to="body" v-if="fullScreenOverlay">
