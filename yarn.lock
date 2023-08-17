@@ -841,7 +841,7 @@
     vite-plugin-checker "^0.6.1"
     vue-bundle-renderer "^1.0.3"
 
-"@nuxtjs/tailwindcss@^6.3.0":
+"@nuxtjs/tailwindcss@^6.8.0":
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/@nuxtjs/tailwindcss/-/tailwindcss-6.8.0.tgz#14fd9862b1d41912f851624a18bc6d1b5611d504"
   integrity sha512-jzuvD1nfA2BPnSbHtKK0aiI51ndMa7lNGL1iDEFuEPsltzilZ9ED7zOP6niGTrImg0n5Yt4GEJpixi6yWwp9Hw==

@@ -18,7 +18,7 @@
     "@nuxt/image-edge": "^1.0.0-27913696.5d122a3",
     "@nuxt/schema": "^3.1.1",
     "@nuxt/types": "^2.16.0",
-    "@nuxtjs/tailwindcss": "^6.3.0",
+    "@nuxtjs/tailwindcss": "^6.8.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "@vueuse/core": "^10.2.0",
