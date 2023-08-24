@@ -155,6 +155,10 @@ declare global {
     dataDomainScript: string | null;
   }
 
+  export interface AxeptioConfig {
+    clientId: string | null;
+  }
+
   export interface DidomiConfig {
     id: string | null;
   }
@@ -199,6 +203,7 @@ declare global {
     bannerColor?: string;
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
+    axeptio?: AxeptioConfig;
     didomi?: DidomiConfig;
     messages?: Record<string, Record<string, any>>
     numberFormats?: Record<string, Record<string, Record<string, string>>>

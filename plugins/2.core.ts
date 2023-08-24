@@ -2,12 +2,12 @@
 import {
   defineNuxtPlugin,
   useRuntimeConfig,
+  UseFetchOptions,
   useHead,
   useState,
   useFetch,
   useLazyFetch,
 } from "#app";
-import { UseFetchOptions } from "#app";
 
 /* fetch main product data for this page
   handles compatibility with url based product match

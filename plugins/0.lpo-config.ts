@@ -31,6 +31,7 @@ export default defineNuxtPlugin(() => {
             bannerColor: StringLoader,
             gtm: JSONLoader,
             onetrust: JSONLoader,
+            axeptio: JSONLoader,
             didomi: JSONLoader,
             messages: JSONLoader,
             numberFormats: JSONLoader,
