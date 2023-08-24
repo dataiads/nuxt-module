@@ -193,6 +193,12 @@ declare global {
     weights: string[];
   }
 
+  export interface CustomScripts {
+    location: "appendHead" | "prependHead" | "appendBody" | "prependBody";
+    tag: string;
+    content: string;
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     mirroredDomainOverride?: string;
@@ -223,6 +229,7 @@ declare global {
     accessibilityVariant?: {
       text: string;
     };
+    customScripts?: CustomScripts[];
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;

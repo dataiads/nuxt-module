@@ -49,6 +49,7 @@ export default defineNuxtPlugin(() => {
             mainRecoParams: JSONLoader,
             sliderRecoParams: JSONLoader,
             searchRecoParams: JSONLoader,
+            customScripts: JSONLoader,
 
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,
