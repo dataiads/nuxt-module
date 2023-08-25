@@ -1,44 +1,29 @@
 /* 
- * Allows users to inject custom scripts to the page, wither it's in the body or head.
+ * Allows users to inject custom scripts to the page, weather it's in the body or head.
  */
-
-function prependBody(tag: string, content: string) {
-  let el = document.createElement(tag);
-  el.innerHTML = content;
-  document.querySelector("body")?.prepend(el);
-}
-
-function appendBody(tag: string, content: string) {
-  let el = document.createElement(tag);
-  el.innerHTML = content;
-  document.querySelector("body")?.append(el);
-}
-
-function prependHead(tag: string, content: string) {
-  let el = document.createElement(tag);
-  el.innerHTML = content;
-  document.querySelector("head")?.prepend(el);
-}
-
-function appendHead(tag: string, content: string) {
-  let el = document.createElement(tag);
-  el.innerHTML = content;
-  document.querySelector("head")?.appendChild(el);
-}
-
 export default defineNuxtPlugin(() => {
   const lpoConfig = useLpoConfig();
 
   if (lpoConfig.customScripts?.length) {
     for (const cs of lpoConfig.customScripts) {
+      let el = document.createElement("script");
+      el.defer = cs.defer ?? false;
+      el.async = cs.async ?? false;
+      if (cs.src) {
+        el.src = cs.src;
+      }
+      if (cs.content) {
+        el.innerHTML = cs.content;
+      }
+      
       if (cs.location === 'prependHead') {
-        prependHead(cs.tag, cs.content);
+        document.head?.prepend(el);
       } else if (cs.location === 'appendHead') {
-        appendHead(cs.tag, cs.content);
+        document.head?.append(el);
       } else if (cs.location === 'prependBody') {
-        prependBody(cs.tag, cs.content);
+        document.body?.prepend(el);
       } else if (cs.location === 'appendBody') {
-        appendBody(cs.tag, cs.content);
+        document.body?.append(el);
       }
     }
   }

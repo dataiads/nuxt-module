@@ -195,8 +195,10 @@ declare global {
 
   export interface CustomScripts {
     location: "appendHead" | "prependHead" | "appendBody" | "prependBody";
-    tag: string;
     content: string;
+    defer: boolean;
+    async: boolean;
+    src: string;
   }
 
   // Add available LPO Config fields here.
