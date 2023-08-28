@@ -89,7 +89,7 @@ const s = config.public.layoutStyle;
         </div>
       </div>
     </div>
-  </main>
+  </div>
 
   <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
     <div id="extra-reco-content" :class="s.extraReco.contentClass">
