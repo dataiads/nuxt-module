@@ -11,6 +11,8 @@ interface Props {
   maxOperator?: string;
   inputClass?: string;
   class?: string;
+  labelMin?: string;
+  labelMax?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,9 +34,11 @@ const maxGroup = props.group + "-max";
   <div :class="props.class">
     <FiltersInput type="number" :filter="filter" :group="minGroup" :criteria="props.criteria"
       :operator="props.minOperator" :class="props.inputClass" :min="props.min" :max="props.max"
+      :label="labelMin"
       :placeholder="props.minPlaceholder" />
     <FiltersInput type="number" :filter="filter" :group="maxGroup" :criteria="props.criteria"
       :operator="props.maxOperator" :class="props.inputClass" :min="props.min" :max="props.max"
+      :label="labelMax"
       :placeholder="props.maxPlaceholder" />
   </div>
 </template>
