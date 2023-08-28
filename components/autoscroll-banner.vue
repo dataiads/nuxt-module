@@ -42,14 +42,19 @@ const backgroundColor = lpoConfig.bannerBackground;
 </script>
 
 <template>
-  <div :class="props.class" class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide" :style="{ backgroundColor: backgroundColor }" ref="container" v-if="repeatedBanners.length">
-    <ul role="list" class="min-h-full max-h-full w-full flex justify-center items-center snap-center list-none" v-for="banner in repeatedBanners">
-      <li>
-        <a :href="banner.href" v-if="banner.href && $isSafeLink(banner.href)">
-          <slot v-bind="banner"></slot>
-        </a>
-        <slot v-else v-bind="banner"></slot>
-      </li>
-    </ul>
-  </div>
+  <ul
+    role="list"
+    :class="props.class"
+    class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide list-none"
+    :style="{ backgroundColor: backgroundColor }"
+    ref="container"
+    v-if="repeatedBanners.length"
+  >
+    <li class="min-h-full max-h-full w-full flex justify-center items-center snap-center" v-for="banner in repeatedBanners">
+      <a :href="banner.href" v-if="banner.href && $isSafeLink(banner.href)">
+        <slot v-bind="banner"></slot>
+      </a>
+      <slot v-else v-bind="banner"></slot>
+    </li>
+  </ul>
 </template>
