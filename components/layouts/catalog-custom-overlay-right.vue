@@ -86,7 +86,7 @@ const mobileFilterOpen = useState<(() => void) | null>(
       <slot name="breadcrumb"></slot>
     </div>
 
-    <div
+    <main
       id="main-product"
       v-if="lpoConfig.useLightMainProduct"
       :class="s.mainProduct.class"
@@ -105,8 +105,8 @@ const mobileFilterOpen = useState<(() => void) | null>(
 
         <slot name="main-product-light-footer"></slot>
       </slot>
-    </div>
-    <div id="main-product" v-else :class="s.mainProduct.class">
+    </main>
+    <main id="main-product" v-else :class="s.mainProduct.class">
       <slot name="main-product">
         <slot name="main-product-header"></slot>
 
@@ -121,7 +121,7 @@ const mobileFilterOpen = useState<(() => void) | null>(
 
         <slot name="main-product-footer"></slot>
       </slot>
-    </div>
+    </main>
 
     <!-- NEW STYLE OVERLAY -->
     <div

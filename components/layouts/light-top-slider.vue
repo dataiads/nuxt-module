@@ -51,7 +51,7 @@ const s = config.public.layoutStyle;
       <slot name="breadcrumb"></slot>
     </div>
 
-    <div
+    <main
       id="main-product"
       v-if="lpoConfig.useLightMainProduct"
       :class="s.mainProduct.class"
@@ -70,8 +70,8 @@ const s = config.public.layoutStyle;
 
         <slot name="main-product-light-footer"></slot>
       </slot>
-    </div>
-    <div id="main-product" v-else :class="s.mainProduct.class">
+    </main>
+    <main id="main-product" v-else :class="s.mainProduct.class">
       <slot name="main-product">
         <slot name="main-product-header"></slot>
 
@@ -86,7 +86,7 @@ const s = config.public.layoutStyle;
 
         <slot name="main-product-footer"></slot>
       </slot>
-    </div>
+    </main>
 
     <div id="filters-header" :class="s.filters.headerClass">
       <slot name="filters-header"></slot>

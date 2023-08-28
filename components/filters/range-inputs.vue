@@ -34,11 +34,11 @@ const maxGroup = props.group + "-max";
   <div :class="props.class">
     <FiltersInput type="number" :filter="filter" :group="minGroup" :criteria="props.criteria"
       :operator="props.minOperator" :class="props.inputClass" :min="props.min" :max="props.max"
-      :aria-label="labelMin"
+      :ariaLabel="labelMin"
       :placeholder="props.minPlaceholder" />
     <FiltersInput type="number" :filter="filter" :group="maxGroup" :criteria="props.criteria"
       :operator="props.maxOperator" :class="props.inputClass" :min="props.min" :max="props.max"
-      :aria-label="labelMax"
+      :ariaLabel="labelMax"
       :placeholder="props.maxPlaceholder" />
   </div>
 </template>

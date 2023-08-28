@@ -14,6 +14,7 @@ interface Props {
   type?: string
   min?: string
   max?: string
+  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -57,6 +58,7 @@ let change = debounce((evt: Event) => {
       :type="props.type"
       :min="props.min"
       :max="props.max"
+      :aria-label="ariaLabel"
 	/>
 	<label class="font-normal text-black leading-[15px]" :for="uuid">
 		<span v-if="props.label">{{ props.label }}</span>
