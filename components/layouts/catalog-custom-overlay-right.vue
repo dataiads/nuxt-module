@@ -4,7 +4,7 @@ import { useRuntimeConfig } from "#app";
 import { useScrollLock } from "@vueuse/core";
 
 const props = defineProps<{
-  recoSliderProducts: Product[] | null;
+  recoSliderProducts: Product[] | null
   filter: Filter;
   extraProducts?: Product[];
 }>();

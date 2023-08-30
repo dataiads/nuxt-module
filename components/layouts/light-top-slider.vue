@@ -3,7 +3,7 @@
 import { useRuntimeConfig } from "#app";
 
 const props = defineProps<{
-  recoSliderProducts: Product[] | null;
+  recoSliderProducts: Product[] | null
   filter: Filter;
   extraProducts?: Product[];
 }>();

@@ -276,6 +276,32 @@ declare global {
     localPagination?: boolean;
   }
 
+  export interface UseSliderOptions {
+    // product to get recommendations for
+    productId: string;
+
+    // base recommendation rules for all queries
+    baseRules?: FilterRule[][];
+
+    // optional extra query parameters for recommendation endpoint
+    fetchQuery?: Record<string, string | number>;
+
+    // optional options for useFetch composable
+    fetchOptions?: UseFetchOptions<Product[]>;
+
+    // default page size (can be updated dynamically using Slider.limit property)
+    defaultLimit?: number;
+
+    // an optional grouping function to return groups of products instead of individual items
+    grouper?: (d: Product) => string;
+
+    // an optional local sorting function
+    groupSorter?: (groupA: Product[], groupB: Product[]) => number;
+
+    // paginate locally instead of server side. pagination is still controlled using Slider.limit
+    localPagination?: boolean;
+  }
+
   export interface FilterResults {
     data: ComputedRef<any | null>;
     pending: Ref<boolean>;
@@ -298,6 +324,13 @@ declare global {
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
     reset: () => void;
+  }
+
+  export interface Slider {
+    results: FilterResults;
+    count: Ref<number>;
+    limit: Ref<number>;
+    sort: Ref<string>;
   }
 
   export interface InitialFilterRule extends FilterRule {
