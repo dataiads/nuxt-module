@@ -50,10 +50,11 @@ export default defineNuxtPlugin(() => {
             sliderRecoParams: JSONLoader,
             searchRecoParams: JSONLoader,
             customScripts: JSONLoader,
-
+            accessibilityVariant: JSONLoader,
+            productHook: StringLoader,
+            // unused but kept for compat compatibility
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,
-            accessibilityVariant: JSONLoader,
         }
 
         try {

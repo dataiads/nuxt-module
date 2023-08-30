@@ -232,6 +232,7 @@ declare global {
       text: string;
     };
     customScripts?: CustomScripts[];
+    productHook?: string;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
