@@ -64,7 +64,8 @@ interface Props<T> {
     class?: string[]
     scrollerClass?: string[]
     autoscroll?: boolean,
-    scrollSpeed?: number
+    scrollSpeed?: number,
+    absoluteArrows?: boolean,
 }
 
 const props = withDefaults(defineProps<Props<any>>(), {
@@ -73,7 +74,8 @@ const props = withDefaults(defineProps<Props<any>>(), {
     class: () => [],
     scrollerClass: () => [],
     autoscroll: false,
-    scrollSpeed: 5
+    scrollSpeed: 5,
+    absoluteArrows: true,
 })
 
 let scrollController: ScrollController
@@ -120,7 +122,7 @@ onMounted(() => {
 
 const mainClass = [
     "relative",
-    "block",
+    props.absoluteArrows ? "block": "flex",
     props.direction === "horizontal" ? "w-full" : "h-full",
     ...props.class,
 ]
@@ -135,7 +137,7 @@ const scrollerClass = [
 ]
 
 const previousClass = [
-    "absolute",
+    props.absoluteArrows ? "absolute": "static",
     "hidden",
     "md:block",
     "top-0",
@@ -144,7 +146,7 @@ const previousClass = [
 ]
 
 const nextClass = [
-    "absolute",
+    props.absoluteArrows ? "absolute": "static",
     "hidden",
     "md:block",
     "bottom-0",
@@ -176,9 +178,6 @@ onMounted(() => {
 
 <template>
     <div :class="mainClass" v-if="props.items" @mouseenter="hover = true" @mouseleave="hover = false">
-        <div :class="scrollerClass" ref="scrollerEl">
-            <slot name="item" v-for="item in props.items" :item="item"> </slot>
-        </div>
         <div :class="previousClass">
             <div :class="previousContentClass">
                 <slot name="previous-btn" :click="previous" v-if="x > 0">
@@ -187,6 +186,11 @@ onMounted(() => {
                 </slot>
             </div>
         </div>
+
+        <div :class="scrollerClass" ref="scrollerEl">
+            <slot name="item" v-for="item in props.items" :item="item"> </slot>
+        </div>
+
         <div :class="nextClass">
             <div :class="nextContentClass">
                 <slot name="next-btn" :click="next" v-if="largeEnoughToScroll">
