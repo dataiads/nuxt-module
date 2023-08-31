@@ -93,6 +93,10 @@ export default defineNuxtPlugin((nuxtApp) => {
       () => data?.collectorData
     );
 
+    if (data?.product) {
+      injectProductStructuredData(data.product);
+    }
+
     useHead({
       title: data?.product.extraData?.title ?? data?.product.data.title,
     });
@@ -159,4 +163,29 @@ function fetchProductRecommendations(
   }, runtimeConfig.public.timeout.recommendationsLoad);
 
   return fetcher;
+}
+
+function injectProductStructuredData(product: Product) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.data.title,
+    image: [product.data.imageLink],
+    color: product.data.color,
+    productId: product.data.offerId,
+    brand: {
+      "@type": "Brand",
+      name: product.data.brand,
+    },
+    offers: {
+      "@type": "Offer",
+      url: product.data.link,
+      priceCurrency: product.data.price?.currency,
+      price: product.data.price?.value,
+    }
+  };
+  const script = document.createElement('script');
+  script.setAttribute('type', 'application/ld+json');
+  script.textContent = JSON.stringify(structuredData);
+  document.head.appendChild(script);
 }
