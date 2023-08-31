@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 type ProductDataPriceProperty = "price" | "salePrice" | "costOfGoodsSold"
 
 interface Props {
@@ -12,6 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
     salePriceProperty: "salePrice",
 })
 
+const lpoConfig = useLpoConfig();
 
 const price = ref<number | null>()
 const currency = ref("")
@@ -55,19 +55,35 @@ const priceDecimalPart = computed(() => itemPart(props.product.data.price?.value
 const salePriceIntegerPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 0));
 const salePriceDecimalPart = computed(() => itemPart(props.product.data.salePrice?.value, '.', 1));
 
+const localPrice = computed(() => {
+    const priceProp = props.product.data[props.priceProperty]
+    if (!priceProp || !lpoConfig?.locale) {
+        return priceProp.value;
+    }
+    return new Intl.NumberFormat(lpoConfig.locale, { style: 'currency', currency: priceProp.currency}).format(parseFloat(priceProp.value))
+})
+
+const localSalePrice = computed(() => {
+    const priceProp = props.product.data[props.salePriceProperty]
+    if (!priceProp || !lpoConfig?.locale) {
+        return priceProp.value;
+    }
+    return new Intl.NumberFormat(lpoConfig.locale, { style: 'currency', currency: priceProp.currency}).format(parseFloat(priceProp.value))
+})
+
 </script>
 
 <template>
     <slot name="sale-price" v-if="displaySalePrice" :price="price" :currency="currency" :sale-price="salePrice"
         :sale-currency="saleCurrency" :price-difference="priceDifference" :sale-price-integer-part="salePriceIntegerPart"
         :sale-price-decimal-part="salePriceDecimalPart" :price-integer-part="priceIntegerPart"
-        :price-decimal-part="priceDecimalPart">
+        :price-decimal-part="priceDecimalPart" :local-price="localPrice" :local-sale-price="localSalePrice">
         {{ salePrice }} {{ saleCurrency }} <span class="line-through"> {{ price }} {{ currency }}</span>-{{ priceDifference
         }}%
     </slot>
 
     <slot name="price" v-else :price="price" :currency="currency" :price-integer-part="priceIntegerPart"
-        :price-decimal-part="priceDecimalPart">
+        :price-decimal-part="priceDecimalPart" :local-price="localPrice" :local-sale-price="localSalePrice">
         {{ price }} {{ currency }}
     </slot>
 </template>
