@@ -123,30 +123,36 @@ export function redirect(url: string) {
 }
 
 // For pagination, decrement current page index
-export function previousPaginationHandler(filter: Filter, _pageCount: number) {
+export function previousPaginationHandler(filter: Recommender, _pageCount: number) {
   if (filter.page.value > 1) {
     filter.page.value -= 1;
   }
 }
 
 // For pagination, increment page index
-export function nextPaginationHandler(filter: Filter, pageCount: number) {
+export function nextPaginationHandler(filter: Recommender, pageCount: number) {
   if (filter.page.value < pageCount) {
     filter.page.value += 1;
   }
 }
 
 // For pagination, go to first page
-export function firstPaginationHandler(filter: Filter, _pageCount: number) {
+export function firstPaginationHandler(filter: Recommender, _pageCount: number) {
   filter.page.value = 1;
 }
 
 // For pagination, increment page index
-export function lastPaginationHandler(filter: Filter, pageCount: number) {
+export function lastPaginationHandler(filter: Recommender, pageCount: number) {
   filter.page.value = pageCount
 }
 
 // Used for "one page" pagination (a "load more" button)
-export function loadMorePaginationHandler(filter: Filter, nb: number) {
+export function loadMorePaginationHandler(filter: Recommender, nb: number) {
   filter.limit.value += nb;
+}
+
+export const layoutProps = {
+  recoSliderProducts: { type: Array as PropType<Product[]>, required: false },
+  filter: { type: Object as PropType<Recommender>, required: true },
+  slider: { type: Object as PropType<Recommender>, required: false },
 }

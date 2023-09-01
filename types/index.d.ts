@@ -247,7 +247,10 @@ declare global {
     deduplicate?: string
   }
 
-  export interface UseFilterOptions {
+  export interface UseRecommenderOptions {
+    // Recommender endpoint to use
+    endpoint: string;
+
     // product to get recommendations for
     productId: string;
 
@@ -263,8 +266,11 @@ declare global {
     // optional options for useFetch composable
     fetchOptions?: UseFetchOptions<Product[]>;
 
-    // default page size (can be updated dynamically using Filter.limit property)
+    // default page size (can be updated dynamically using Recommender.limit property)
     defaultLimit?: number;
+
+    // default sort field (can be updated dynamically using Recommender.sort property)
+    defaultSort?: string;
 
     // an optional grouping function to return groups of products instead of individual items
     grouper?: (d: Product) => string;
@@ -276,33 +282,7 @@ declare global {
     localPagination?: boolean;
   }
 
-  export interface UseSliderOptions {
-    // product to get recommendations for
-    productId: string;
-
-    // base recommendation rules for all queries
-    baseRules?: FilterRule[][];
-
-    // optional extra query parameters for recommendation endpoint
-    fetchQuery?: Record<string, string | number>;
-
-    // optional options for useFetch composable
-    fetchOptions?: UseFetchOptions<Product[]>;
-
-    // default page size (can be updated dynamically using Slider.limit property)
-    defaultLimit?: number;
-
-    // an optional grouping function to return groups of products instead of individual items
-    grouper?: (d: Product) => string;
-
-    // an optional local sorting function
-    groupSorter?: (groupA: Product[], groupB: Product[]) => number;
-
-    // paginate locally instead of server side. pagination is still controlled using Slider.limit
-    localPagination?: boolean;
-  }
-
-  export interface FilterResults {
+  export interface RecommenderResults {
     data: ComputedRef<any | null>;
     pending: Ref<boolean>;
     refresh: (opts?: any) => Promise<void>;
@@ -310,12 +290,12 @@ declare global {
     error: Ref<FetchError<any> | null>;
   }
 
-  export interface Filter {
+  export interface Recommender {
     results: FilterResults;
     count: Ref<number>;
     limit: Ref<number>;
-    page: Ref<number>;
     sort: Ref<string>;
+    page: Ref<number>;
     hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
     getFirstRuleValue: (group: string) => string | null;
     pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
@@ -324,13 +304,6 @@ declare global {
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
     reset: () => void;
-  }
-
-  export interface Slider {
-    results: FilterResults;
-    count: Ref<number>;
-    limit: Ref<number>;
-    sort: Ref<string>;
   }
 
   export interface InitialFilterRule extends FilterRule {

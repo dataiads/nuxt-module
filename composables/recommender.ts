@@ -1,9 +1,7 @@
 import { ComputedRef, Ref } from "vue";
 
-export const useFilter = (options: UseFilterOptions) => {
-
+export const useFilter = (options: UseRecommenderOptions) => {
   const lpoConfig = useLpoConfig();
-
   if (!options.fetchQuery) {
     options.fetchQuery = {};
   }
@@ -11,7 +9,7 @@ export const useFilter = (options: UseFilterOptions) => {
     options.baseRules = lpoConfig.mainRecoParams?.filterRules;
   }
   if (lpoConfig.mainRecoParams?.sortRules) {
-    options.fetchQuery.sortRules = JSON.stringify(lpoConfig.mainRecoParams.sortRules);
+    options.fetchQuery.sortFilters = JSON.stringify(lpoConfig.mainRecoParams.sortRules);
   }
   if (lpoConfig.mainRecoParams?.deduplicate) {
     options.fetchQuery.deduplicate = lpoConfig.mainRecoParams.deduplicate;
@@ -19,7 +17,43 @@ export const useFilter = (options: UseFilterOptions) => {
   if (lpoConfig.mainRecoParams?.limit) {
     options.defaultLimit = lpoConfig.mainRecoParams.limit;
   }
+  if (lpoConfig.mainRecoParams?.sort) {
+    options.defaultSort = lpoConfig.mainRecoParams.sort;
+  }
 
+  options.endpoint = 'filtered';
+  return useRecommender(options)
+};
+export const useRandomfillRecommender = (options: UseRecommenderOptions) => {
+  const lpoConfig = useLpoConfig();
+  if (!options.fetchQuery) {
+    options.fetchQuery = {};
+  }
+  if (lpoConfig.sliderRecoParams?.filterRules) {
+    options.baseRules = lpoConfig.sliderRecoParams?.filterRules;
+  }
+  if (lpoConfig.sliderRecoParams?.sortRules) {
+    options.fetchQuery.sortFilters = JSON.stringify(lpoConfig.sliderRecoParams.sortRules);
+  }
+  if (lpoConfig.sliderRecoParams?.deduplicate) {
+    options.fetchQuery.deduplicate = lpoConfig.sliderRecoParams.deduplicate;
+  }
+  if (lpoConfig.sliderRecoParams?.limit) {
+    options.defaultLimit = lpoConfig.sliderRecoParams.limit;
+  }
+  if (lpoConfig.sliderRecoParams?.sort) {
+    options.defaultSort = lpoConfig.sliderRecoParams.sort;
+  }
+
+  options.endpoint = 'randomfill';
+  return useRecommender(options)
+};
+
+export const useRecommender = (options: UseRecommenderOptions) => {
+
+  if (!options.fetchQuery) {
+    options.fetchQuery = {};
+  }
 
   const initState = () => {
     const init: Record<string, FilterRule[]> = {}
@@ -41,7 +75,7 @@ export const useFilter = (options: UseFilterOptions) => {
 
   // watchable configuration for recommendation request.
   // can be manipulated directly and fetcher will update automatically
-  const sort = ref<string>(lpoConfig.mainRecoParams?.sort ?? "");
+  const sort = ref<string>(options.defaultSort ?? "");
   const limit = ref<number>(options.defaultLimit ?? 12);
   const page = ref<number>(1);
 
@@ -72,13 +106,13 @@ export const useFilter = (options: UseFilterOptions) => {
       fetchParams[key] = value;
     }
   }
-  let _fetcher = useFetch(() => "/api/recommendations/default/filtered", {
+  let _fetcher = useFetch(() => "/api/recommendations/default/"+options.endpoint, {
     params: fetchParams,
     ...(options.fetchOptions || {}),
   });
 
   // fetcher post processing (grouping, local pagination...)
-  let fetcher: FilterResults = {
+  let fetcher: RecommenderResults = {
     data: computed(() => {
       let rawData = _fetcher.data.value;
       if (!rawData) {
@@ -204,7 +238,7 @@ export const useFilter = (options: UseFilterOptions) => {
     setOnlyRule,
     removeAllRules,
     reset,
-  } as Filter;
+  } as Recommender;
 };
 
 function execGrouper(data: Product[], grouper: (p: Product) => string): Product[][] {
