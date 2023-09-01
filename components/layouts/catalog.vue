@@ -2,11 +2,7 @@
 // @ts-ignore
 import { useRuntimeConfig } from "#app";
 
-const props = defineProps<{
-  recoSliderProducts: Product[] | null
-  filter: Filter;
-  extraProducts?: Product[];
-}>();
+const props = defineProps(layoutProps);
 
 let { data: filterProducts } = props.filter.results;
 
