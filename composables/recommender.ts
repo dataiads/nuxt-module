@@ -5,7 +5,7 @@ export const useFilter = (options: UseRecommenderOptions) => {
   options.endpoint = 'filtered';
   return useRecommender(options)
 };
-export const useRandomfillRecommender = (options: UseRecommenderOptions) => {
+export const useSlider = (options: UseRecommenderOptions) => {
   options.configRecoParams = 'sliderRecoParams';
   options.endpoint = 'randomfill';
   return useRecommender(options)
