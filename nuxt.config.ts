@@ -160,4 +160,15 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  components: {
+    "dirs": [
+      {
+        "path": `./components/layouts`,
+        "global": true
+      },
+      "./components",
+      "~/components"
+    ]
+  },
 });

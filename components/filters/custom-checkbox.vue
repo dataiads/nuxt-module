@@ -5,7 +5,7 @@ const uid = Math.floor(Math.random() * 10 ** 16).toString();
 
 const props = withDefaults(defineProps<{
   label?: string
-  filter: Filter
+  filter: Recommender
   criteria: string
   operator?: string
   group: string

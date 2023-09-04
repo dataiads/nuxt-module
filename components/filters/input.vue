@@ -1,12 +1,10 @@
 <script setup lang="ts">
-
-
 const uuid = Math.floor(Math.random() * 10 ** 16).toString();
 
 
 interface Props {
   label?: string
-  filter: Filter
+  filter: Recommender
   criteria: string
   operator: string
   group: string
