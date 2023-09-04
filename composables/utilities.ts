@@ -152,7 +152,8 @@ export function loadMorePaginationHandler(filter: Recommender, nb: number) {
 }
 
 export const layoutProps = {
-  recoSliderProducts: { type: Array as PropType<Product[]>, required: false },
-  filter: { type: Object as PropType<Recommender>, required: true },
+  recoSliderProducts: { type: Array as PropType<Product[]>, required: false, default: () => [] },
+  filter: { type: Object as PropType<Recommender>, required: true, default: () => ({}) },
   slider: { type: Object as PropType<Recommender>, required: false },
+  extraProducts: { type: Array as PropType<Product[]>, required: false },
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  filter: Filter;
+  filter: Recommender;
   criteria: string;
   group: string;
   min?: string;
