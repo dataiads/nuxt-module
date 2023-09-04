@@ -7,7 +7,7 @@ interface Props {
   headerClass: String,
   contentClass: String,
   display?: boolean,
-  label: string;
+  label?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), { display: true });
