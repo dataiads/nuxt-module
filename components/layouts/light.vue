@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
 import { useRuntimeConfig } from "#app";
-import { layoutProps } from "@/composables/utilities"
 
 const props = defineProps(layoutProps);
 
