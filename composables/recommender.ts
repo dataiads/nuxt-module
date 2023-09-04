@@ -1,50 +1,12 @@
 import { ComputedRef, Ref } from "vue";
 
 export const useFilter = (options: UseRecommenderOptions) => {
-  const lpoConfig = useLpoConfig();
-  if (!options.fetchQuery) {
-    options.fetchQuery = {};
-  }
-  if (lpoConfig.mainRecoParams?.filterRules) {
-    options.baseRules = lpoConfig.mainRecoParams?.filterRules;
-  }
-  if (lpoConfig.mainRecoParams?.sortRules) {
-    options.fetchQuery.sortFilters = JSON.stringify(lpoConfig.mainRecoParams.sortRules);
-  }
-  if (lpoConfig.mainRecoParams?.deduplicate) {
-    options.fetchQuery.deduplicate = lpoConfig.mainRecoParams.deduplicate;
-  }
-  if (lpoConfig.mainRecoParams?.limit) {
-    options.defaultLimit = lpoConfig.mainRecoParams.limit;
-  }
-  if (lpoConfig.mainRecoParams?.sort) {
-    options.defaultSort = lpoConfig.mainRecoParams.sort;
-  }
-
+  options.configRecoParams = 'mainRecoParams';  
   options.endpoint = 'filtered';
   return useRecommender(options)
 };
 export const useRandomfillRecommender = (options: UseRecommenderOptions) => {
-  const lpoConfig = useLpoConfig();
-  if (!options.fetchQuery) {
-    options.fetchQuery = {};
-  }
-  if (lpoConfig.sliderRecoParams?.filterRules) {
-    options.baseRules = lpoConfig.sliderRecoParams?.filterRules;
-  }
-  if (lpoConfig.sliderRecoParams?.sortRules) {
-    options.fetchQuery.sortFilters = JSON.stringify(lpoConfig.sliderRecoParams.sortRules);
-  }
-  if (lpoConfig.sliderRecoParams?.deduplicate) {
-    options.fetchQuery.deduplicate = lpoConfig.sliderRecoParams.deduplicate;
-  }
-  if (lpoConfig.sliderRecoParams?.limit) {
-    options.defaultLimit = lpoConfig.sliderRecoParams.limit;
-  }
-  if (lpoConfig.sliderRecoParams?.sort) {
-    options.defaultSort = lpoConfig.sliderRecoParams.sort;
-  }
-
+  options.configRecoParams = 'sliderRecoParams';
   options.endpoint = 'randomfill';
   return useRecommender(options)
 };
@@ -53,6 +15,27 @@ export const useRecommender = (options: UseRecommenderOptions) => {
 
   if (!options.fetchQuery) {
     options.fetchQuery = {};
+  }
+
+  const lpoConfig = useLpoConfig();
+
+  if (options.configRecoParams) {
+    const recoParams = lpoConfig[options.configRecoParams] as FilterParams;
+    if (recoParams?.filterRules) {
+      options.baseRules = recoParams?.filterRules;
+    }
+    if (recoParams?.sortRules) {
+      options.fetchQuery.sortFilters = JSON.stringify(recoParams.sortRules);
+    }
+    if (recoParams?.deduplicate) {
+      options.fetchQuery.deduplicate = recoParams.deduplicate;
+    }
+    if (recoParams?.limit) {
+      options.defaultLimit = recoParams.limit;
+    }
+    if (recoParams?.sort) {
+      options.defaultSort = recoParams.sort;
+    }
   }
 
   const initState = () => {
