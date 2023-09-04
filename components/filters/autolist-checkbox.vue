@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { pictureProps } from '@nuxt/image-edge/dist/runtime/components/nuxt-picture';
-
-const uuid = Math.floor(Math.random() * 10 ** 16);
-
 const props = withDefaults(defineProps<{
   // filter values listing settings
-  filter: Filter
+  filter: Recommender
   criteria: string
   group: string
 

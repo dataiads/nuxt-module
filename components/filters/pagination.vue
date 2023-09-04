@@ -1,12 +1,12 @@
 
 <script setup lang="ts">
 interface Props {
-  filter: Filter
+  filter: Recommender
   maxVisibleButtons?: number
   class?: string | string[]
-  previousHandler?: (filter: Filter, pageCount: number) => void
-  nextHandler?: (filter: Filter, pageCount: number) => void
-  loadMoreHandler?: (filter: Filter, nb: number) => void
+  previousHandler?: (filter: Recommender, pageCount: number) => void
+  nextHandler?: (filter: Recommender, pageCount: number) => void
+  loadMoreHandler?: (filter: Recommender, nb: number) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
