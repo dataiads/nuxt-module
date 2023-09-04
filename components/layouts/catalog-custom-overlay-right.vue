@@ -52,6 +52,14 @@ const mobileFilterOpen = useState<(() => void) | null>(
   "responsiveAsideItemSingleton",
   () => null
 );
+
+onMounted(() => {
+  watch(filterProducts, (newData, oldData) => {
+    if (oldData && (newData.length < oldData.length)) {
+      document.querySelector("#filters")?.scrollIntoView();
+    }
+  })
+})
 </script>
 
 <template>

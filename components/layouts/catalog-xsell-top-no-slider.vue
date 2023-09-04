@@ -15,6 +15,15 @@ const mobileFilterOpen = useState<(() => void) | null>(
   "responsiveAsideItemSingleton",
   () => null
 );
+
+// scroll top of the filters when returning less results
+onMounted(() => {
+  watch(filterProducts, (newData, oldData) => {
+    if (oldData && (newData.length < oldData.length)) {
+      document.querySelector("#filters")?.scrollIntoView();
+    }
+  })
+})
 </script>
 
 <template>
