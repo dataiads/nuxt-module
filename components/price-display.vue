@@ -58,7 +58,7 @@ const salePriceDecimalPart = computed(() => itemPart(props.product.data.salePric
 const localPrice = computed(() => {
     const priceProp = props.product.data[props.priceProperty]
     if (!priceProp || !lpoConfig?.locale) {
-        return priceProp.value;
+        return priceProp?.value;
     }
     return new Intl.NumberFormat(lpoConfig.locale, { style: 'currency', currency: priceProp.currency}).format(parseFloat(priceProp.value))
 })
@@ -66,7 +66,7 @@ const localPrice = computed(() => {
 const localSalePrice = computed(() => {
     const priceProp = props.product.data[props.salePriceProperty]
     if (!priceProp || !lpoConfig?.locale) {
-        return priceProp.value;
+        return priceProp?.value;
     }
     return new Intl.NumberFormat(lpoConfig.locale, { style: 'currency', currency: priceProp.currency}).format(parseFloat(priceProp.value))
 })
