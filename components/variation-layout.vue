@@ -33,7 +33,8 @@ export type Variations =
   | "light-xsell-top"
   | "catalog-xsell-top-no-slider"
   | "light-xsell-top-no-slider"
-  | "catalog-high-filters-no-slider-xsell-top";
+  | "catalog-high-filters-no-slider-xsell-top"
+  | "custom";
 </script>
 
 <template>

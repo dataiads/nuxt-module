@@ -20,7 +20,7 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   const lpoConfig = useLpoConfig();
 
   if (options.configRecoParams) {
-    const recoParams = lpoConfig[options.configRecoParams] as FilterParams;
+    const recoParams = lpoConfig[options.configRecoParams];
     if (recoParams?.filterRules) {
       options.baseRules = recoParams?.filterRules;
     }

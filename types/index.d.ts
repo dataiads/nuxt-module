@@ -233,6 +233,7 @@ declare global {
     };
     customScripts?: CustomScripts[];
     productHook?: string;
+    customLayout?: ContainerLayoutElement;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
@@ -339,6 +340,49 @@ declare global {
     begin: string
   }
 
+  export interface LayoutElement {
+    element: string
+    params: Record<string, any>
+    class: string | string[]
+  }
+
+  export interface ContainerLayoutElement extends LayoutElement {
+    element: "container"
+    params: Record<"maxWidth", LayoutElementStyle>
+    children: LayoutElement[]
+  }
+
+  export interface BannerLayoutElement extends LayoutElement {
+    element: "banner"
+    params: BannerLayoutParams
+  }
+
+  export interface SlotLayoutElement extends LayoutElement {
+    element: "slot"
+    params: Record<"name", string>
+  }
+
+  export interface RecoSliderLayoutElement extends LayoutElement {
+    element: "recoSlider",
+    params: RecoSliderLayoutParams
+  }
+}
+
+interface BannerLayoutParams {
+  banners: Banners[]
+  background: string
+  color: string
+}
+
+interface RecoSliderLayoutParams extends FilterParams {
+  showHeader: boolean
+}
+
+interface LayoutElementStyle {
+  default: string | number,
+  md: string | number,
+  lg: string | number,
+  xl: string | number
 }
 
 // a json serializable type
