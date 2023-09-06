@@ -23,9 +23,9 @@ const mobileFilterOpen = useState<(() => void) | null>(
 </script>
 
 <template>
-  <div class="lg:mx-auto"> <!-- TODO: Max width with breakpoints and class ? -->
+  <div v-if="baseLayout" :class="baseLayout.class"> <!-- TODO: Max width with breakpoints and class ? -->
 
-    <template v-for="element in baseLayout?.children">
+    <template v-for="element in baseLayout.children">
 
       <PortableSlot v-if="element.element === 'slot'" :element="element">
         <template #[element.params.name]>
@@ -35,7 +35,16 @@ const mobileFilterOpen = useState<(() => void) | null>(
 
       <!-- Banner -->
       <!-- TODO: Allow configuring banner colors via the AutoscrollBanner component props -->
-      <AutoscrollBanner v-else-if="element.element === 'banner'" :banners="(element as BannerLayoutElement).params?.banners" />
+      <AutoscrollBanner 
+        v-else-if="element.element === 'banner'"
+        :class="element.class ?? ''"
+        :banners="(element as BannerLayoutElement).params?.banners"
+        :background-color="(element as BannerLayoutElement).params?.background"
+        :color="(element as BannerLayoutElement).params?.color" 
+        v-slot="banner"
+      >
+        <div :class="banner.class">{{ banner.text }}</div>
+      </AutoscrollBanner>
       
       <!-- Slider -->
       <PortableSlider v-else-if="element.element === 'recoSlider'" :element="element">

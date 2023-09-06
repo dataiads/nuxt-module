@@ -6,7 +6,12 @@ interface Props {
   interval?: number;
 
   class?: string;
+
+  backgroundColor?: string;
+
+  color?: string;
 }
+
 
 const props = withDefaults(defineProps<Props>(), {
   interval: 4000,
@@ -16,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 const lpoConfig = useLpoConfig();
 const container = ref<HTMLElement | null>(null);
 
-const banners = props.banners || lpoConfig.banners || [];
+const banners = props.banners ?? lpoConfig.banners ?? [];
 
 onBeforeMount(() => {
   if (banners.length > 1) {
@@ -38,7 +43,8 @@ onBeforeMount(() => {
 });
 
 const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners);
-const backgroundColor = lpoConfig.bannerBackground;
+const backgroundColor = props.backgroundColor ?? lpoConfig.bannerBackground;
+const bannerColor = props.color ?? lpoConfig.bannerColor;
 </script>
 
 <template>
@@ -46,7 +52,7 @@ const backgroundColor = lpoConfig.bannerBackground;
     role="list"
     :class="props.class"
     class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide list-none"
-    :style="{ backgroundColor: backgroundColor }"
+    :style="{ backgroundColor: backgroundColor, color: bannerColor }"
     ref="container"
     v-if="repeatedBanners.length"
   >

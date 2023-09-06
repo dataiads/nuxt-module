@@ -44,9 +44,9 @@ const { data: recoSliderProducts } = slider.results;
 </script>
 
 <template>
-    <div v-if="recoSliderProducts?.length" id="reco-slider" :class="[...s.class ?? [], ...element?.class ?? []]">
+    <div v-if="recoSliderProducts?.length" id="reco-slider" :class="element.class ?? s.class">
         <div :class="s.containerClass">
-          <slot v-if="element.params.showHeader" name="reco-slider-header"></slot>
+          <slot v-if="element.params.showHeader ?? true" name="reco-slider-header"></slot>
           <Slider
             :items="recoSliderProducts"
             :scroller-class="s?.sliderClass"

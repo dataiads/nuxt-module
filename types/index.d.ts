@@ -348,7 +348,6 @@ declare global {
 
   export interface ContainerLayoutElement extends LayoutElement {
     element: "container"
-    params: Record<"maxWidth", LayoutElementStyle>
     children: LayoutElement[]
   }
 
@@ -369,7 +368,7 @@ declare global {
 }
 
 interface BannerLayoutParams {
-  banners: Banners[]
+  banners: Banner[]
   background: string
   color: string
 }
