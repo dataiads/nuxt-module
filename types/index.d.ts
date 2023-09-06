@@ -377,13 +377,6 @@ interface RecoSliderLayoutParams extends FilterParams {
   showHeader: boolean
 }
 
-interface LayoutElementStyle {
-  default: string | number,
-  md: string | number,
-  lg: string | number,
-  xl: string | number
-}
-
 // a json serializable type
 type JSONValue =
   | string

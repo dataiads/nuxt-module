@@ -34,7 +34,6 @@ const mobileFilterOpen = useState<(() => void) | null>(
       </PortableSlot>
 
       <!-- Banner -->
-      <!-- TODO: Allow configuring banner colors via the AutoscrollBanner component props -->
       <AutoscrollBanner 
         v-else-if="element.element === 'banner'"
         :class="element.class ?? ''"
