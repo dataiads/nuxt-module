@@ -342,28 +342,9 @@ declare global {
 
   export interface LayoutElement {
     element: string
-    params: Record<string, any>
+    params: Record<string, any> | BannerLayoutParams | RecoSliderLayoutParams
     class: string | string[]
-  }
-
-  export interface ContainerLayoutElement extends LayoutElement {
-    element: "container"
-    children: LayoutElement[]
-  }
-
-  export interface BannerLayoutElement extends LayoutElement {
-    element: "banner"
-    params: BannerLayoutParams
-  }
-
-  export interface SlotLayoutElement extends LayoutElement {
-    element: "slot"
-    params: Record<"name", string>
-  }
-
-  export interface RecoSliderLayoutElement extends LayoutElement {
-    element: "recoSlider",
-    params: RecoSliderLayoutParams
+    children?: LayoutElement[]
   }
 }
 
