@@ -1,14 +1,18 @@
 import { ComputedRef, Ref } from "vue";
 
-export const useFilter = (options: UseRecommenderOptions) => {
-  options.configRecoParams = 'mainRecoParams';  
-  options.endpoint = 'filtered';
-  return useRecommender(options)
+export const useFilter = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint">) => {
+  return useRecommender({
+    configRecoParams: "mainRecoParams",
+    endpoint: "filtered",
+    ...options,
+  })
 };
-export const useSlider = (options: UseRecommenderOptions) => {
-  options.configRecoParams = 'sliderRecoParams';
-  options.endpoint = 'randomfill';
-  return useRecommender(options)
+export const useSlider = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint">) => {
+  return useRecommender({
+    configRecoParams: 'sliderRecoParams',
+    endpoint: 'randomfill',
+    ...options,
+  })
 };
 
 export const useRecommender = (options: UseRecommenderOptions) => {
