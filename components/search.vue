@@ -71,6 +71,8 @@ const searchFilters = computed(() => {
         value: value.value.replaceAll(" ", ","),
         valueCriteria: "",
         baseProductValue: "",
+        baseProductRegexpMatch: "",
+        baseProductRegexpReplace: "",
       })),
     ]
   );
