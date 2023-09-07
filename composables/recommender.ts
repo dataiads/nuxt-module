@@ -24,7 +24,7 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   const lpoConfig = useLpoConfig();
 
   if (options.configRecoParams) {
-    const recoParams = lpoConfig[options.configRecoParams] as FilterParams;
+    const recoParams = lpoConfig[options.configRecoParams];
     if (recoParams?.filterRules) {
       options.baseRules = recoParams?.filterRules;
     }
@@ -51,7 +51,15 @@ export const useRecommender = (options: UseRecommenderOptions) => {
         if (!init[r.group]) {
           init[r.group] = [];
         }
-        init[r.group].push({ criteria: r.criteria, operator: r.operator, value: r.value, valueCriteria: r.valueCriteria || "", baseProductValue: r.baseProductValue || "" });
+        init[r.group].push({
+          criteria: r.criteria,
+          operator: r.operator,
+          value: r.value,
+          valueCriteria: r.valueCriteria ?? "",
+          baseProductValue: r.baseProductValue ?? "",
+          baseProductRegexpMatch: r.baseProductRegexpMatch ?? "",
+          baseProductRegexpReplace: r.baseProductRegexpReplace ?? ""
+        });
       }
     }
     return init;
@@ -95,7 +103,7 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   }
   let _fetcher = useFetch(() => "/api/recommendations/default/"+options.endpoint, {
     params: fetchParams,
-    ...(options.fetchOptions || {}),
+    ...(options.fetchOptions ?? {}),
   });
 
   // fetcher post processing (grouping, local pagination...)
@@ -165,11 +173,11 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   };
 
   // all functions below allow state manipulation
-  const hasRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): boolean => {
+  const hasRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): boolean => {
     if (!state.value[group]) {
       return false;
     }
-    return !!state.value[group].find((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue);
+    return !!state.value[group].find((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue && rule.baseProductRegexpMatch === baseProductRegexpMatch && rule.baseProductRegexpReplace === baseProductRegexpReplace);
   };
 
   const getFirstRuleValue = (group: string): string | null => {
@@ -179,25 +187,25 @@ export const useRecommender = (options: UseRecommenderOptions) => {
     return null;
   };
 
-  const pushRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string="", baseProductValue: string = ""): void => {
-    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue)) {
+  const pushRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
       if (state.value[group]) {
-        state.value[group].push({ criteria, operator, value, valueCriteria, baseProductValue });
+        state.value[group].push({ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace });
       } else {
-        state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue }];
+        state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace }];
       }
     }
   };
 
-  const setOnlyRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): void => {
-    state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue }];
+  const setOnlyRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
+    state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace }];
   };
 
-  const removeRule = (group: string, criteria: string, operator: string, value: string, valueCriteria: string = "", baseProductValue: string = ""): void => {
-    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue)) {
+  const removeRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
       return;
     }
-    const index = state.value[group].findIndex((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue);
+    const index = state.value[group].findIndex((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue && rule.baseProductRegexpMatch === baseProductRegexpMatch && rule.baseProductRegexpReplace === baseProductRegexpReplace);
     if (index > -1) {
       state.value[group].splice(index, 1);
     }
