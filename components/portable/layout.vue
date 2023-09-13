@@ -7,8 +7,8 @@ defineProps<{
 
 <template>
     <PortableSlot v-if="element.element === 'slot'" :element="element">
-        <template #[element.params.name]>
-            <slot :name="element.params.name"></slot>
+        <template v-for="(_, name) of $slots" #[name]="slotProps">
+            <slot :name="name" v-bind="slotProps ?? {}"></slot>
         </template>
     </PortableSlot>
 
