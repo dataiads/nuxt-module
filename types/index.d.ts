@@ -233,7 +233,7 @@ declare global {
     };
     customScripts?: CustomScripts[];
     productHook?: string;
-    customLayout?: LayoutElement;
+    customLayout?: RootLayoutElement;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
@@ -342,9 +342,34 @@ declare global {
 
   export interface LayoutElement {
     element: string
-    params: Record<string, any> | BannerLayoutParams | RecoSliderLayoutParams
-    class: string | string[]
+    params: Record<string, any>
+    class: string
     children?: LayoutElement[]
+  }
+
+  export interface RootLayoutElement extends LayoutElement {
+    element: 'root'
+    params: RootLayoutParams
+  }
+
+  export interface DomLayoutElement extends LayoutElement {
+    element: 'dom'
+    params: Record<'tag', string>
+  }
+
+  export interface SlotLayoutElement extends LayoutElement {
+    element: 'slot'
+    params: Record<'name', string>
+  }
+
+  export interface BannerLayoutElement extends LayoutElement {
+    element: 'banner'
+    params: BannerLayoutParams
+  }
+
+  export interface RecoSliderLayoutElement extends LayoutElement {
+    element: 'reco-slider'
+    params: RecoSliderLayoutParams
   }
 }
 
@@ -352,6 +377,10 @@ interface BannerLayoutParams {
   banners: Banner[]
   background: string
   color: string
+}
+
+interface RootLayoutParams {
+  mainRecoParams: FilterParams
 }
 
 interface RecoSliderLayoutParams extends FilterParams {

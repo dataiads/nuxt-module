@@ -3,7 +3,7 @@
 import { useRuntimeConfig } from "#app";
 
 defineProps<{
-    element: LayoutElement
+    element: SlotLayoutElement
 }>()
 
 const config = useRuntimeConfig();
@@ -12,7 +12,6 @@ const s = config.public.layoutStyle;
 </script>
 
 <template>
-
     <header v-if="element.params.name === 'header'" id="header" :class="s.header.class">
         <slot :name="element.params.name"></slot>
     </header>
@@ -55,6 +54,10 @@ const s = config.public.layoutStyle;
     <footer v-else-if="element.params.name === 'footer'" :id="element.params.name" :class="s.footer.class">
         <slot name="footer"></slot>
     </footer>
+
+    <StickyFooter v-else-if="element.params.name === 'sticky-add-to-cart'">
+        <slot name="sticky-add-to-cart"></slot>
+    </StickyFooter>
     
     <div v-else :id="element.params.name">
       <slot :name="element.params.name"></slot>

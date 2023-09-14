@@ -3,7 +3,7 @@
 import { useRuntimeConfig } from "#app";
 
 const props = defineProps<{
-    element: LayoutElement
+    element: RecoSliderLayoutElement
 }>()
 
 const config = useRuntimeConfig();

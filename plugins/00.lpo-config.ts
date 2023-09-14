@@ -52,6 +52,7 @@ export default defineNuxtPlugin(() => {
             customScripts: JSONLoader,
             accessibilityVariant: JSONLoader,
             productHook: StringLoader,
+            customLayout: JSONLoader,
             // unused but kept for compat compatibility
             breadcrumbs: JSONLoader,
             carousel: JSONLoader,

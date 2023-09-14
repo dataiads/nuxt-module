@@ -1,11 +1,42 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
+const lpoConfig = useLpoConfig();
+const product = useProduct();
+
 const s = config.public.layoutStyle;
 
-const props = defineProps<{
-    filter: Recommender
-}>()
-let { data: filterProducts } = props.filter.results;
+const rootLayout = lpoConfig.customLayout;
+const filterParams = rootLayout?.params.mainRecoParams;
+
+const filterOptions: UseRecommenderOptions = {
+  productId: product.value.id,
+  endpoint: "filtered",
+  baseRules: filterParams?.filterRules
+}
+
+if (!filterOptions.fetchQuery) {
+  filterOptions.fetchQuery = {};
+}
+
+if (filterParams?.limit) {
+  filterOptions.defaultLimit = filterParams.limit;
+}
+
+if (filterParams?.sort) {
+  filterOptions.defaultSort = filterParams.sort;
+}
+
+if (filterParams?.deduplicate) {
+  filterOptions.fetchQuery.deduplicate = filterParams.deduplicate;
+}
+
+if (filterParams?.sortRules) {
+  filterOptions.fetchQuery.sortFilters = JSON.stringify(filterParams.sortRules);
+}
+
+// Setting a global filter state so it can be initiated here for the setttings but acessed elsewhere.
+const filter = useState('filter', () => useRecommender(filterOptions));
+let { data: filterProducts } = filter.value.results;
 
 // global singleton to ensure only a single dropdown is open on mobile
 const mobileFilterOpen = useState<(() => void) | null>(
