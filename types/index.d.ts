@@ -320,6 +320,8 @@ declare global {
     value: string;
     valueCriteria?: string;
     baseProductValue?: string;
+    baseProductRegexpMatch?: string;
+    baseProductRegexpReplace?: string;
   }
 
   export interface Region {

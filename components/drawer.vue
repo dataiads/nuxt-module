@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   open: boolean;
   class?: string;
   outsideClass?: string;
   contentClass?: string;
-  transition: 'slide-left' | 'slide-right';
-}>();
+  transition?: 'slide-left' | 'slide-right';
+}>(), {
+  transition: "slide-left",
+});
 
 const openRef = toRef(props, "open");
 const nav = ref<HTMLElement | null>(null);
