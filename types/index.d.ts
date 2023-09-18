@@ -233,7 +233,7 @@ declare global {
     };
     customScripts?: CustomScripts[];
     productHook?: string;
-    customLayout?: RootLayoutElement;
+    customLayout?: RootLayout;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
@@ -349,14 +349,10 @@ declare global {
     children?: LayoutElement[]
   }
 
-  export interface RootLayoutElement extends LayoutElement {
-    element: 'root'
-    params: RootLayoutParams
-  }
-
-  export interface DomLayoutElement extends LayoutElement {
-    element: 'dom'
-    params: Record<'tag', string>
+  export interface RootLayout {
+    root: LayoutElement[]
+    class: string
+    recommenderParams: Record<string, RecommenderLayoutParams>
   }
 
   export interface SlotLayoutElement extends LayoutElement {
@@ -364,29 +360,46 @@ declare global {
     params: Record<'name', string>
   }
 
-  export interface BannerLayoutElement extends LayoutElement {
-    element: 'banner'
-    params: BannerLayoutParams
-  }
-
   export interface RecoSliderLayoutElement extends LayoutElement {
     element: 'reco-slider'
     params: RecoSliderLayoutParams
   }
+
+  export interface DrawerLayoutElement extends LayoutElement {
+    element: 'drawer'
+    params: DrawerLayoutParams
+  }
+
+  export interface FiltercheckboxLayoutElement extends LayoutElement {
+    element: 'filtercheckbox'
+    params: FiltercheckboxLayoutParams
+  }
+
+  interface RecommenderLayoutParams extends FilterParams {
+    endpoint: "filtered" | "randomfill"
+  }
+
+  interface CustomLayoutContext {
+    recommenders?: Record<string, Recommender>
+  }
 }
 
-interface BannerLayoutParams {
-  banners: Banner[]
-  background: string
-  color: string
+interface DrawerLayoutParams {
+  name: string
+  outsideClass: string | string[]
 }
 
-interface RootLayoutParams {
-  mainRecoParams: FilterParams
-}
-
-interface RecoSliderLayoutParams extends FilterParams {
-  showHeader: boolean
+interface FiltercheckboxLayoutParams {
+  label: string
+  filterKey: string
+  criteria: string
+  operator: string
+  value?: string
+  valueCriteria?: string
+  baseProductCriteria?: string
+  group: string
+  inputClass?: string
+  labelClass?: string
 }
 
 // a json serializable type
