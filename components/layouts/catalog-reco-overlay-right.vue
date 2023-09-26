@@ -11,10 +11,7 @@ const config = useRuntimeConfig();
 const lpoConfig = useLpoConfig();
 const s = config.public.layoutStyle;
 
-const overlayState = useState<"initial" | "closed" | "open">(
-  "recoSlider.overlay.state",
-  () => "closed"
-);
+const overlayState = useState<"initial" | "closed" | "open">("recoSlider.overlay.state", () => "closed");
 
 setTimeout(() => {
   overlayState.value = "initial";
@@ -48,19 +45,16 @@ watch(
 );
 
 // global singleton to ensure only a single dropdown is open on mobile
-const mobileFilterOpen = useState<(() => void) | null>(
-  "responsiveAsideItemSingleton",
-  () => null
-);
+const mobileFilterOpen = useState<(() => void) | null>("responsiveAsideItemSingleton", () => null);
 
 // scroll top of the filters when returning less results
 onMounted(() => {
   watch(filterProducts, (newData, oldData) => {
-    if (oldData && (newData.length < oldData.length)) {
+    if (oldData && newData.length < oldData.length) {
       document.querySelector("#filters")?.scrollIntoView();
     }
-  })
-})
+  });
+});
 </script>
 
 <template>
@@ -91,11 +85,7 @@ onMounted(() => {
       <slot name="breadcrumb"></slot>
     </div>
 
-    <main
-      id="main-product"
-      v-if="lpoConfig.useLightMainProduct"
-      :class="s.mainProduct.class"
-    >
+    <main id="main-product" v-if="lpoConfig.useLightMainProduct" :class="s.mainProduct.class">
       <slot name="main-product-light">
         <slot name="main-product-light-header"></slot>
 
@@ -141,11 +131,7 @@ onMounted(() => {
       ]"
       @click="overlayState = 'closed'"
     >
-      <slot
-        name="reco-slider"
-        :items="props.recoSliderProducts"
-        :onOverlayScroll="onOverlayScroll"
-      >
+      <slot name="reco-slider" :items="props.recoSliderProducts" :onOverlayScroll="onOverlayScroll">
         <div
           ref="overlayElement"
           class="fixed right-0 top-0 bottom-0 transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
@@ -159,20 +145,9 @@ onMounted(() => {
           ]"
         >
           <slot name="reco-slider-header"></slot>
-          <div
-            @scroll.prevent.stop="onOverlayScroll"
-            :class="s.recoSlider.class"
-            class="overflow-scroll w-full h-full scrollbar-hide"
-          >
-            <div
-              class="grid grid-cols-1 md:grid-cols-2"
-              :class="s.recoSlider.sliderClass"
-            >
-              <div
-                v-for="item in props.recoSliderProducts"
-                :key="item.id"
-                :class="s.recoSlider.itemClass"
-              >
+          <div @scroll.prevent.stop="onOverlayScroll" :class="s.recoSlider.class" class="overflow-scroll w-full h-full scrollbar-hide">
+            <div class="grid grid-cols-1 md:grid-cols-2" :class="s.recoSlider.sliderClass">
+              <div v-for="item in props.recoSliderProducts" :key="item.id" :class="s.recoSlider.itemClass">
                 <slot name="reco-slider-item" :item="item"></slot>
               </div>
             </div>
@@ -187,13 +162,7 @@ onMounted(() => {
     </div>
 
     <div id="filters" :class="s.filters.class">
-      <div
-        id="filters-aside"
-        :class="[
-          ...s.filters.asideClass,
-          mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll',
-        ]"
-      >
+      <div id="filters-aside" :class="[...s.filters.asideClass, mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll']">
         <slot name="filters-aside"></slot>
       </div>
       <div id="filters-content" :class="s.filters.contentClass">
@@ -223,19 +192,11 @@ onMounted(() => {
 
   <div id="extra-reco" v-if="lpoConfig.extraReco" :class="s.extraReco.class">
     <div id="extra-reco-content" :class="s.extraReco.contentClass">
-      <div
-        id="extra-reco-content-header"
-        :class="s.extraReco.contentHeaderClass"
-      >
+      <div id="extra-reco-content-header" :class="s.extraReco.contentHeaderClass">
         <slot name="extra-reco-content-header"></slot>
       </div>
       <div :class="s.extraReco.contentGridClass">
-        <slot
-          name="extra-reco-content-grid-item"
-          v-for="item in extraProducts"
-          :key="item.id ? item.id : JSON.stringify(item)"
-          :item="item"
-        ></slot>
+        <slot name="extra-reco-content-grid-item" v-for="item in extraProducts" :key="item.id ? item.id : JSON.stringify(item)" :item="item"></slot>
       </div>
     </div>
   </div>

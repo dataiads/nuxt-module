@@ -18,6 +18,7 @@ export type Variations =
   | "catalog-high-filters-no-slider"
   | "catalog-high-filters-top-slider"
   | "catalog-high-filters-overlay"
+  | "catalog-high-filters-overlay-right"
   | "catalog-reco-overlay"
   | "catalog-custom-overlay-right"
   | "catalog-reco-overlay-right"
