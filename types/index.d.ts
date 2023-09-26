@@ -20,7 +20,11 @@ declare global {
     updatedAt: Date
   }
 
-  export interface Window { __LPO_CONFIG__: Partial<InlineLPOConfig> | undefined; }
+  export interface Window {
+    __LPO_CONFIG__: Partial<InlineLPOConfig> | undefined;
+    __LPO_MIRRORED_DOMAIN__: string | undefined;
+  }
+
   export interface ProductDataPrice {
     currency: string;
     value: string;

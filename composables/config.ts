@@ -5,7 +5,14 @@ export const useLpoConfig = (): LPOConfig => {
 
 export const useMirroredDomain = (): string => {
     const lpoConfig = useLpoConfig()
+    const serverMirroredDomain = window.__LPO_MIRRORED_DOMAIN__;
     const runtimeConfig = useRuntimeConfig()
 
-    return lpoConfig.mirroredDomainOverride || (runtimeConfig.mirroredDomain as string) || runtimeConfig.public.mirroredDomain || "";
+    return (
+        lpoConfig.mirroredDomainOverride ||
+        serverMirroredDomain ||
+        (runtimeConfig.mirroredDomain as string) ||
+        runtimeConfig.public.mirroredDomain ||
+        ""
+    );
 }
