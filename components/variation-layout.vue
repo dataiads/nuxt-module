@@ -17,6 +17,7 @@ export type Variations =
   | "catalog-high-filters"
   | "catalog-high-filters-no-slider"
   | "catalog-high-filters-top-slider"
+  | "catalog-high-filters-overlay"
   | "catalog-reco-overlay"
   | "catalog-custom-overlay-right"
   | "catalog-reco-overlay-right"
@@ -37,21 +38,11 @@ export type Variations =
 </script>
 
 <template>
-  <a
-    v-if="lpoConfig.accessibilityVariant?.text"
-    :href="$oriUrl(product.data.link)"
-    class="sr-only focus:not-sr-only"
-  >
+  <a v-if="lpoConfig.accessibilityVariant?.text" :href="$oriUrl(product.data.link)" class="sr-only focus:not-sr-only">
     {{ lpoConfig.accessibilityVariant?.text }}
   </a>
 
-  <component
-    v-if="lpoConfig.variation"
-    :is="resolveComponent(lpoConfig.variation)"
-    :filter="filter"
-    :reco-slider-products="sliderProducts"
-    :slider="slider"
-  >
+  <component v-if="lpoConfig.variation" :is="resolveComponent(lpoConfig.variation)" :filter="filter" :reco-slider-products="sliderProducts" :slider="slider">
     <template v-for="(_, name) in $slots" #[name]="scope">
       <slot :name="name" v-bind="scope"></slot>
     </template>
