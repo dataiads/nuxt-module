@@ -58,26 +58,32 @@ const sort = lpoConfig.searchRecoParams?.sort ?? props.sort;
 const limit = lpoConfig.searchRecoParams?.limit ?? props.limit;
 
 const searchFilters = computed(() => {
-  const filter: FilterRule[][] = baseRules?.length ? structuredClone(baseRules) : [];
-  if (props.allowEmptySearch && value.value === "") {
+  try {
+    const filter: FilterRule[][] = JSON.parse(JSON.stringify(baseRules?.length ? baseRules : []));
+
+    if (props.allowEmptySearch && value.value === "") {
+      return JSON.stringify(filter);
+    }
+
+    filter.push(
+      ...[
+        props.searchFields.map((field) => ({
+          criteria: field,
+          operator: "CONTAINS_ALL_CI",
+          value: value.value.replaceAll(" ", ","),
+          valueCriteria: "",
+          baseProductValue: "",
+          baseProductRegexpMatch: "",
+          baseProductRegexpReplace: "",
+        })),
+      ]
+    );
+
     return JSON.stringify(filter);
+  } catch (error) {
+    console.error(error);
+    return "[]";
   }
-
-  filter.push(
-    ...[
-      props.searchFields.map((field) => ({
-        criteria: field,
-        operator: "CONTAINS_ALL_CI",
-        value: value.value.replaceAll(" ", ","),
-        valueCriteria: "",
-        baseProductValue: "",
-        baseProductRegexpMatch: "",
-        baseProductRegexpReplace: "",
-      })),
-    ]
-  );
-
-  return JSON.stringify(filter);
 });
 
 // on submit, redirect to mirrored domain search url
