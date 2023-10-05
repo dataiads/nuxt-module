@@ -2,7 +2,7 @@
 
 interface Props {
     // tags data key
-    dataKey: string
+    dataKey?: string
 
     // override tags data from lpo config
     data?: CrossSellData
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const lpoConfig = useLpoConfig()
+const product = useProduct()
 
 let data: CrossSellData = {}
 let items: CrossSellItem[] = []
@@ -34,9 +35,23 @@ if (props.data) {
     data = lpoConfig.crossSellData
 }
 
+let crossSellKey: CrossSellKey = { key: props.dataKey ?? '', caseInsensitive: false }
+if (lpoConfig.crossSellKey) {
+    if (lpoConfig.crossSellKey.key === '') {
+        // Empty key option, in case the xSell is the same for all products.
+        crossSellKey.key = ''        
+    } else {
+        crossSellKey = { key: getAttr(product.value, lpoConfig.crossSellKey.key), caseInsensitive: lpoConfig.crossSellKey.caseInsensitive }
+    }
+}
+
 if (data) {
     for (const [dataKey, value] of Object.entries(data)) {
-        if (props.keyMatcher(props.dataKey, dataKey)) {
+        if (crossSellKey.caseInsensitive && props.keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase())) {
+            items = value
+            break
+        }
+        if (props.keyMatcher(crossSellKey.key, dataKey)) {
             items = value
             break
         }

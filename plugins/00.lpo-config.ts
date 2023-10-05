@@ -40,6 +40,7 @@ export default defineNuxtPlugin(() => {
             footerColumns: JSONLoader,
             footerItems: JSONLoader,
             crossSellData: JSONLoader,
+            crossSellKey: JSONLoader,
             mirroredDomainOverride: StringLoader,
             useLightMainProduct: JSONLoader,
             customerSpecific: JSONLoader,

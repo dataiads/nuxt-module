@@ -186,6 +186,11 @@ declare global {
 
   export type CrossSellData = Record<string, CrossSellItem[]>
 
+  export interface CrossSellKey {
+    key: string
+    caseInsensitive: boolean
+  }
+
   export interface CrossSellItem {
     text: string
     link: string
@@ -224,6 +229,7 @@ declare global {
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
     crossSellData?: CrossSellData;
+    crossSellKey?: CrossSellKey;
     useLightMainProduct?: boolean;
     customerSpecific?: Record<string, JSONValue>
     cssVariables?: Record<string, string>;

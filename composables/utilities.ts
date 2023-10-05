@@ -25,6 +25,39 @@ export const mask = (value: string, regex: RegExp): string => {
   return match.slice(1).join("");
 };
 
+export const getAttr = (product: Product, attr: string): string | null => {
+
+  // If the attribute is one of the keys in product data :
+  if (Object.keys(product.data).includes(attr)) {
+    if (attr === "price" || attr === "salePrice") {
+      return product.data[attr].value.toString();
+    }
+    return product.extraData?.[attr] ?? product.data[attr] ?? null;
+  }
+
+  const extraPtype = product.extraData?.productTypes?.[0]
+  const pType = product.data.productTypes?.[0]
+
+  if (attr === 'productType') {
+    return extraPtype ?? pType ?? null;
+  }
+  if (attr === 'productType1') {
+    // Not a common case, but sometimes products have 2 product types.
+    return product.extraData?.productTypes?.[1] ?? product.data.productTypes?.[1] ?? null;
+  }
+  if (attr === 'productTypePart0') {
+    return extraPtype?.split(' > ')[0] ?? pType?.split(' > ')[0] ?? null;
+  }
+  if (attr === 'productTypePart1') {
+    return extraPtype?.split(' > ')[1] ?? pType?.split(' > ')[1] ?? null;
+  }
+  if (attr === 'productTypePart2') {
+    return extraPtype?.split(' > ')[2] ?? pType?.split(' > ')[2] ?? null;
+  }
+
+  return getCustomAttr(product, attr);
+}
+
 // get a product customAttribute value by its name.
 // extraData will take precedence over regular data
 export const getCustomAttr = (product: Product, attr: string): string | null => {
