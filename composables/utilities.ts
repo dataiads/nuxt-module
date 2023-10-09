@@ -25,7 +25,7 @@ export const mask = (value: string, regex: RegExp): string => {
   return match.slice(1).join("");
 };
 
-export const getAttr = (product: Product, attr: string): ProductData[keyof ProductData] | null => {
+export const getAttr = (product: Product, attr: string): string | null => {
 
   // If the attribute is one of the keys in product data :
   if (Object.keys(product.data).includes(attr)) {
@@ -34,14 +34,18 @@ export const getAttr = (product: Product, attr: string): ProductData[keyof Produ
       if (Object.hasOwn(extVal as Object, 'value')) {
         return (extVal as ProductDataPrice).value
       }
-      return extVal;
+      if (typeof extVal !== 'object') {
+        return ""+extVal;
+      }
     }
     const val = product.data[attr as keyof ProductData];
     if (val) {
       if (Object.hasOwn(val as Object, 'value')) {
         return (val as ProductDataPrice).value
       }
-      return val;
+      if (typeof val !== 'object') {
+        return ""+val;
+      }
     }
   }
 

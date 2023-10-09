@@ -41,7 +41,7 @@ if (lpoConfig.crossSellKey) {
         // Empty key option, in case the xSell is the same for all products.
         crossSellKey.key = ''        
     } else {
-        crossSellKey = { key: getAttr(product.value, lpoConfig.crossSellKey.key), caseInsensitive: lpoConfig.crossSellKey.caseInsensitive }
+        crossSellKey = { key: getAttr(product.value, lpoConfig.crossSellKey.key) ?? '', caseInsensitive: lpoConfig.crossSellKey.caseInsensitive }
     }
 }
 
