@@ -796,7 +796,7 @@
     rc9 "^2.1.1"
     std-env "^3.3.3"
 
-"@nuxt/types@^2.16.0":
+"@nuxt/types@^2.17.1":
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/@nuxt/types/-/types-2.17.1.tgz#64d6eca5975aca2f31e46a3e7021f20a94f2ebca"
   integrity sha512-7xRaSzRHWOrESmzRR2v7aNOd85/NlzdtIesLa7mDF+4Tv18lT9+eNHRuhiH2FKqt4j+/EKVxMl1Gvdzf4lO9Lg==
