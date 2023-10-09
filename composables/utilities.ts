@@ -25,14 +25,14 @@ export const mask = (value: string, regex: RegExp): string => {
   return match.slice(1).join("");
 };
 
-export const getAttr = (product: Product, attr: string): string | null => {
+export const getAttr = (product: Product, attr: string): ProductData[keyof ProductData] | null => {
 
   // If the attribute is one of the keys in product data :
   if (Object.keys(product.data).includes(attr)) {
     if (attr === "price" || attr === "salePrice") {
       return product.data[attr].value.toString();
     }
-    return product.extraData?.[attr] ?? product.data[attr] ?? null;
+    return product.extraData?.[attr as keyof ProductData] ?? product.data[attr as keyof ProductData] ?? null;
   }
 
   const extraPtype = product.extraData?.productTypes?.[0]
