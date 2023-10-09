@@ -151,6 +151,13 @@ declare global {
     href?: string;
   }
 
+  export interface ImageBanner {
+    imageLink: string,
+    mobileImageLink?: string,
+    desktopImageLink?: string,
+    href?: string,
+  }
+
   export interface GtmConfig {
     id: string | string[];
   }
@@ -216,6 +223,7 @@ declare global {
     locale?: string;
     variation?: Variations;
     banners?: Banner[];
+    imageBanner?: ImageBanner;
     bannerBackground?: string;
     bannerColor?: string;
     gtm?: GtmConfig;
