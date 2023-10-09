@@ -29,10 +29,20 @@ export const getAttr = (product: Product, attr: string): ProductData[keyof Produ
 
   // If the attribute is one of the keys in product data :
   if (Object.keys(product.data).includes(attr)) {
-    if (attr === "price" || attr === "salePrice") {
-      return product.data[attr].value.toString();
+    const extVal = product.extraData[attr as keyof ProductData]
+    if (extVal) {
+      if (Object.hasOwn(extVal as Object, 'value')) {
+        return (extVal as ProductDataPrice).value
+      }
+      return extVal;
     }
-    return product.extraData?.[attr as keyof ProductData] ?? product.data[attr as keyof ProductData] ?? null;
+    const val = product.data[attr as keyof ProductData];
+    if (val) {
+      if (Object.hasOwn(val as Object, 'value')) {
+        return (val as ProductDataPrice).value
+      }
+      return val;
+    }
   }
 
   const extraPtype = product.extraData?.productTypes?.[0]
