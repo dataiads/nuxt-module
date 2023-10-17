@@ -267,7 +267,7 @@ declare global {
 
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
-    endpoint: "filtered" | "randomfill";
+    endpoint: "filtered" | "randomfill" | "filtered-grouped";
 
     // where to get recommendation params from
     configRecoParams?: "mainRecoParams" | "sliderRecoParams";
