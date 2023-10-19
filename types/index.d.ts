@@ -267,7 +267,7 @@ declare global {
 
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
-    endpoint: "filtered" | "randomfill" | "filtered-grouped";
+    endpoint: "filtered" | "randomfill" | "filtered-grouped" | "structured-filter";
 
     // where to get recommendation params from
     configRecoParams?: "mainRecoParams" | "sliderRecoParams";
@@ -301,6 +301,10 @@ declare global {
 
     // paginate locally instead of server side. pagination is still controlled using Filter.limit and Filter.page
     localPagination?: boolean;
+
+    structuredResponse?: boolean;
+
+    criteriaValues?: string[];
   }
 
   export interface RecommenderResults {
