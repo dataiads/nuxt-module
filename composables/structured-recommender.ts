@@ -1,18 +1,26 @@
+// @ts-nocheck
 import { ComputedRef, Ref } from "vue";
 
-export const useStructuredFilter = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint" | "grouper" | "localPagination" | "structuredResponse">) => {
-  return useRecommender({
+export const useStructuredFilter = (
+  options: Omit<
+    UseRecommenderOptions,
+    | "configRecoParams"
+    | "endpoint"
+    | "grouper"
+    | "localPagination"
+    | "structuredResponse"
+  >
+) => {
+  return useStructuredRecommender({
     configRecoParams: "mainRecoParams",
     endpoint: "structured-filter",
-    structuredResponse: true,
     grouper: undefined,
     localPagination: false,
     ...options,
-  })
+  });
 };
 
-export const useRecommender = (options: UseRecommenderOptions) => {
-
+export const useStructuredRecommender = (options: UseRecommenderOptions) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {};
   }
@@ -39,7 +47,7 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   }
 
   const initState = () => {
-    const init: Record<string, FilterRule[]> = {}
+    const init: Record<string, FilterRule[]> = {};
 
     // handle initial rules before setting up fetcher
     if (options.initialRules) {
@@ -54,12 +62,12 @@ export const useRecommender = (options: UseRecommenderOptions) => {
           valueCriteria: r.valueCriteria ?? "",
           baseProductValue: r.baseProductValue ?? "",
           baseProductRegexpMatch: r.baseProductRegexpMatch ?? "",
-          baseProductRegexpReplace: r.baseProductRegexpReplace ?? ""
+          baseProductRegexpReplace: r.baseProductRegexpReplace ?? "",
         });
       }
     }
     return init;
-  }
+  };
 
   // main rules state. do not edit directly use functions below instead
   const state = ref<Record<string, FilterRule[]>>(initState());
@@ -85,76 +93,50 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   let criteriaValuesCache: Record<string, any> = {};
 
   // main fetcher that returns an auto updating list of products to display
-  let fetchParams: Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>> = {
+  let fetchParams: Record<
+    string,
+    | string
+    | number
+    | Ref<string>
+    | Ref<number>
+    | Ref<boolean>
+    | ComputedRef<string>
+    | ComputedRef<number>
+    | ComputedRef<boolean>
+  > = {
     productId: options.productId,
-    sort: computed(() => (sort.value.startsWith("-") ? sort.value.substring(1) : sort.value)),
+    sort: computed(() =>
+      sort.value.startsWith("-") ? sort.value.substring(1) : sort.value
+    ),
     sortDesc: computed(() => sort.value.startsWith("-")),
     filters: currentFilters,
   };
   if (options.criteriaValues?.length) {
-    fetchParams.criteriaValues = JSON.stringify(options.criteriaValues)
+    fetchParams.criteriaValues = JSON.stringify(options.criteriaValues);
   }
 
-  if (options.localPagination) {
-    fetchParams.limit = 1000; // arbitrary max limit when using local pagination
-  } else {
-    fetchParams.limit = limit;
-    fetchParams.page = page;
-  }
+  fetchParams.limit = limit;
+  fetchParams.page = page;
+
   if (options.fetchQuery) {
     for (const [key, value] of Object.entries(options.fetchQuery)) {
       fetchParams[key] = value;
     }
   }
-  let _fetcher = useFetch(() => "/api/recommendations/default/"+options.endpoint, {
-    params: fetchParams,
-    ...(options.fetchOptions ?? {}),
-  });
+  let _fetcher = useFetch(
+    () => "/api/recommendations/default/" + options.endpoint,
+    {
+      params: fetchParams,
+      ...(options.fetchOptions ?? {}),
+    }
+  );
 
-  // fetcher post processing (grouping, local pagination...)
-  let fetcher: RecommenderResults = {
+  let fetcher = {
     data: computed(() => {
-      let rawData = _fetcher.data.value;
-      if (!rawData) {
-        return rawData;
+      if (_fetcher.data.value) {
+        return _fetcher.data.value.page;
       }
-
-      // data can be transformed from Product[] to any array type
-      let data: any[] = options.structuredResponse ? rawData.page : rawData;
-
-      if (options.grouper) {
-        data = execGrouper(data, options.grouper);
-      }
-
-      if (options.groupSorter) {
-        data = execGroupSorter(data, options.groupSorter);
-      }
-
-      // local pagination is applied on transformed data
-      if (options.localPagination) {
-        count.value = data.length;
-        data = data.slice((page.value - 1) * limit.value, page.value * limit.value);
-      }
-
-      if (options.structuredResponse) {
-        count.value = rawData.total;
-
-        if (options.criteriaValues) {
-          for (const criteria of options.criteriaValues) {
-            // might need initialization
-            if (!criteriaValuesCache[criteria]) {
-              criteriaValuesCache[criteria] = { data: ref({}) }
-
-            }
-            // only set criteria values on the first response
-            if (!Object.keys(criteriaValuesCache[criteria].data.value).length) {
-              criteriaValuesCache[criteria].data.value = rawData.criteriaValues[criteria] || {}
-            }
-          }
-        }
-      }
-
-      return data;
+      return _fetcher.data.value;
     }),
     pending: _fetcher.pending,
     refresh: _fetcher.refresh,
@@ -163,45 +145,61 @@ export const useRecommender = (options: UseRecommenderOptions) => {
   };
 
   // issue side request to get total items count
-  let count = ref(0);
-
-  if (!options.localPagination && !options.structuredResponse) {
-      // legacy response: issue a separate count request
-    const countFetcher = useFetch<number>(() => "/api/recommendations/default/count-filtered", {
-      params: {
-        productId: options.productId,
-        filters: currentFilters,
-        ...(options.fetchQuery || {}),
-      },
-    });
-    watch(countFetcher.data, (val) => (count.value = val || 0));
-  }
+  let count = computed(() => {
+    if (_fetcher.data.value) {
+      return _fetcher.data.value.total;
+    }
+    return 0;
+  });
 
   const fetchCriteriaValues = (criteria: string) => {
-    if (!options.structuredResponse && !criteriaValuesCache[criteria]) {
-      criteriaValuesCache[criteria] = useFetch<Record<string, number>>("/api/recommendations/default/count-property", {
-        params: {
-          productId: options.productId,
-          property: criteria,
-          filters: JSON.stringify(options.baseRules || []),
-          ...(options.fetchQuery || {}),
-        },
-      });
-    }
-    
-    if (!criteriaValuesCache[criteria]) {
-      criteriaValuesCache[criteria] = {data: ref({})}
-    }
-
-    return criteriaValuesCache[criteria];
+    let cached = {};
+    return {
+      data: computed(() => {
+        if (Object.keys(cached).length) {
+          return cached
+        }
+        if (_fetcher.data.value) {
+          if (_fetcher.data.value.criteriaValues[criteria]) {
+            cached = _fetcher.data.value.criteriaValues[criteria];
+            return cached;
+          }
+          return {};
+        }
+        return _fetcher.data.value;
+      }),
+      pending: _fetcher.pending,
+      refresh: _fetcher.refresh,
+      execute: _fetcher.execute,
+      error: _fetcher.error,
+    };
   };
 
+
   // all functions below allow state manipulation
-  const hasRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): boolean => {
+  const hasRule = (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria = "",
+    baseProductValue = "",
+    baseProductRegexpMatch = "",
+    baseProductRegexpReplace = ""
+  ): boolean => {
     if (!state.value[group]) {
       return false;
     }
-    return !!state.value[group].find((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue && rule.baseProductRegexpMatch === baseProductRegexpMatch && rule.baseProductRegexpReplace === baseProductRegexpReplace);
+    return !!state.value[group].find(
+      (rule) =>
+        rule.criteria === criteria &&
+        rule.operator === operator &&
+        rule.value === value &&
+        rule.valueCriteria === valueCriteria &&
+        rule.baseProductValue === baseProductValue &&
+        rule.baseProductRegexpMatch === baseProductRegexpMatch &&
+        rule.baseProductRegexpReplace === baseProductRegexpReplace
+    );
   };
 
   const getFirstRuleValue = (group: string): string | null => {
@@ -211,25 +209,111 @@ export const useRecommender = (options: UseRecommenderOptions) => {
     return null;
   };
 
-  const pushRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
-    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
+  const pushRule = (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria = "",
+    baseProductValue = "",
+    baseProductRegexpMatch = "",
+    baseProductRegexpReplace = ""
+  ): void => {
+    if (
+      !hasRule(
+        group,
+        criteria,
+        operator,
+        value,
+        valueCriteria,
+        baseProductValue,
+        baseProductRegexpMatch,
+        baseProductRegexpReplace
+      )
+    ) {
       if (state.value[group]) {
-        state.value[group].push({ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace });
+        state.value[group].push({
+          criteria,
+          operator,
+          value,
+          valueCriteria,
+          baseProductValue,
+          baseProductRegexpMatch,
+          baseProductRegexpReplace,
+        });
       } else {
-        state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace }];
+        state.value[group] = [
+          {
+            criteria,
+            operator,
+            value,
+            valueCriteria,
+            baseProductValue,
+            baseProductRegexpMatch,
+            baseProductRegexpReplace,
+          },
+        ];
       }
     }
   };
 
-  const setOnlyRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
-    state.value[group] = [{ criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace }];
+  const setOnlyRule = (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria = "",
+    baseProductValue = "",
+    baseProductRegexpMatch = "",
+    baseProductRegexpReplace = ""
+  ): void => {
+    state.value[group] = [
+      {
+        criteria,
+        operator,
+        value,
+        valueCriteria,
+        baseProductValue,
+        baseProductRegexpMatch,
+        baseProductRegexpReplace,
+      },
+    ];
   };
 
-  const removeRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
-    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
+  const removeRule = (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria = "",
+    baseProductValue = "",
+    baseProductRegexpMatch = "",
+    baseProductRegexpReplace = ""
+  ): void => {
+    if (
+      !hasRule(
+        group,
+        criteria,
+        operator,
+        value,
+        valueCriteria,
+        baseProductValue,
+        baseProductRegexpMatch,
+        baseProductRegexpReplace
+      )
+    ) {
       return;
     }
-    const index = state.value[group].findIndex((rule) => rule.criteria === criteria && rule.operator === operator && rule.value === value && rule.valueCriteria === valueCriteria && rule.baseProductValue === baseProductValue && rule.baseProductRegexpMatch === baseProductRegexpMatch && rule.baseProductRegexpReplace === baseProductRegexpReplace);
+    const index = state.value[group].findIndex(
+      (rule) =>
+        rule.criteria === criteria &&
+        rule.operator === operator &&
+        rule.value === value &&
+        rule.valueCriteria === valueCriteria &&
+        rule.baseProductValue === baseProductValue &&
+        rule.baseProductRegexpMatch === baseProductRegexpMatch &&
+        rule.baseProductRegexpReplace === baseProductRegexpReplace
+    );
     if (index > -1) {
       state.value[group].splice(index, 1);
     }
@@ -241,7 +325,7 @@ export const useRecommender = (options: UseRecommenderOptions) => {
 
   const reset = () => {
     state.value = initState();
-  }
+  };
 
   return {
     results: fetcher,
@@ -259,20 +343,3 @@ export const useRecommender = (options: UseRecommenderOptions) => {
     reset,
   } as Recommender;
 };
-
-function execGrouper(data: Product[], grouper: (p: Product) => string): Product[][] {
-  let groups: Record<string, Product[]> = {};
-  for (let p of data) {
-    const key = grouper(p);
-    if (groups[key]) {
-      groups[key].push(p);
-    } else {
-      groups[key] = [p];
-    }
-  }
-  return Object.values(groups);
-}
-
-function execGroupSorter(groups: Product[][], groupSorter: (groupA: Product[], groupB: Product[]) => number): Product[][] {
-  return groups.sort((groupA, groupB) => groupSorter(groupA, groupB));
-}

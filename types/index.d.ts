@@ -315,9 +315,15 @@ declare global {
     error: Ref<FetchError<any> | null>;
   }
 
+  export interface StructuredFilterResponse {
+    page: Product[][];
+    total: number;
+    criteriaValues: Record<string, Record<string, number>>;
+  }
+
   export interface Recommender {
     results: FilterResults;
-    count: Ref<number>;
+    count: Ref<number> | ComputedRef<number>;
     limit: Ref<number>;
     sort: Ref<string>;
     page: Ref<number>;
