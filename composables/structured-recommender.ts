@@ -1,26 +1,19 @@
-// @ts-nocheck
 import { ComputedRef, Ref } from "vue";
+import { UseStructuredRecommenderOptions, StructuredFilterResponse, StructuredRecommender } from "~/types";
 
 export const useStructuredFilter = (
   options: Omit<
-    UseRecommenderOptions,
+    UseStructuredRecommenderOptions,
     | "configRecoParams"
-    | "endpoint"
-    | "grouper"
-    | "localPagination"
-    | "structuredResponse"
   >
 ) => {
   return useStructuredRecommender({
     configRecoParams: "mainRecoParams",
-    endpoint: "structured-filter",
-    grouper: undefined,
-    localPagination: false,
     ...options,
   });
 };
 
-export const useStructuredRecommender = (options: UseRecommenderOptions) => {
+export const useStructuredRecommender = (options: UseStructuredRecommenderOptions) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {};
   }
@@ -87,11 +80,6 @@ export const useStructuredRecommender = (options: UseRecommenderOptions) => {
     );
   });
 
-  // secondary fetchers for criteria values (used in AutoListingCheckbox)
-  // cached manually to avoid concurrent calls on app startup
-  // (useFetch has set its own cache only after the first response)
-  let criteriaValuesCache: Record<string, any> = {};
-
   // main fetcher that returns an auto updating list of products to display
   let fetchParams: Record<
     string,
@@ -123,8 +111,8 @@ export const useStructuredRecommender = (options: UseRecommenderOptions) => {
       fetchParams[key] = value;
     }
   }
-  let _fetcher = useFetch(
-    () => "/api/recommendations/default/" + options.endpoint,
+  let _fetcher = useFetch<StructuredFilterResponse>(
+    () => "/api/recommendations/default/structured-filter",
     {
       params: fetchParams,
       ...(options.fetchOptions ?? {}),
@@ -341,5 +329,5 @@ export const useStructuredRecommender = (options: UseRecommenderOptions) => {
     setOnlyRule,
     removeAllRules,
     reset,
-  } as Recommender;
+  } as StructuredRecommender;
 };

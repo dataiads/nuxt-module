@@ -315,11 +315,7 @@ declare global {
     error: Ref<FetchError<any> | null>;
   }
 
-  export interface StructuredFilterResponse {
-    page: Product[][];
-    total: number;
-    criteriaValues: Record<string, Record<string, number>>;
-  }
+
 
   export interface Recommender {
     results: FilterResults;
@@ -378,3 +374,59 @@ type JSONValue =
   | boolean
   | { [x: string]: JSONValue }
   | Array<JSONValue>;
+
+
+  export interface UseStructuredRecommenderOptions {
+
+    // where to get recommendation params from
+    configRecoParams?: "mainRecoParams" | "sliderRecoParams";
+
+    // product to get recommendations for
+    productId: string;
+
+    // base recommendation rules for all queries
+    baseRules?: FilterRule[][];
+
+    // initial rules to add to the state
+    initialRules?: InitialFilterRule[];
+
+    // optional extra query parameters for recommendation endpoint
+    fetchQuery?: Record<string, string | number>;
+
+    // optional options for useFetch composable
+    fetchOptions?: UseFetchOptions<StructuredFilterResponse>;
+
+    // default page size (can be updated dynamically using Recommender.limit property)
+    defaultLimit?: number;
+
+    // default sort field (can be updated dynamically using Recommender.sort property)
+    defaultSort?: string;
+
+    criteriaValues?: string[];
+  }
+
+  export interface StructuredFilterResponse {
+    page: Product[][];
+    total: number;
+    criteriaValues: Record<string, Record<string, number>>;
+  }
+
+  export interface FetchCriteriaValuesReturn {
+    data: ComputedRef<Record<string, number>>
+  }
+
+  export interface StructuredRecommender {
+    results: FilterResults;
+    count: ComputedRef<number>;
+    limit: Ref<number>;
+    sort: Ref<string>;
+    page: Ref<number>;
+    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
+    getFirstRuleValue: (group: string) => string | null;
+    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    removeAllRules: (group: string) => void;
+    fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn
+    reset: () => void;
+  }
