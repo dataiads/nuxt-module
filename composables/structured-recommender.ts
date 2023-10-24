@@ -1,11 +1,12 @@
 import { ComputedRef, Ref } from "vue";
-import { UseStructuredRecommenderOptions, StructuredFilterResponse, StructuredRecommender } from "~/types";
+import {
+  UseStructuredRecommenderOptions,
+  StructuredFilterResponse,
+  StructuredRecommender,
+} from "~/types";
 
 export const useStructuredFilter = (
-  options: Omit<
-    UseStructuredRecommenderOptions,
-    | "configRecoParams"
-  >
+  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
 ) => {
   return useStructuredRecommender({
     configRecoParams: "mainRecoParams",
@@ -13,7 +14,9 @@ export const useStructuredFilter = (
   });
 };
 
-export const useStructuredRecommender = (options: UseStructuredRecommenderOptions) => {
+export const useStructuredRecommender = (
+  options: UseStructuredRecommenderOptions
+) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {};
   }
@@ -71,14 +74,24 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
   const limit = ref<number>(options.defaultLimit ?? 12);
   const page = ref<number>(1);
 
-  // current filters computed property
-  const currentFilters = computed(() => {
-    return JSON.stringify(
-      Object.values(state.value)
-        .concat(options.baseRules || [])
-        .filter((group) => group.length > 0)
-    );
-  });
+  // cache criteria values to only request a single time
+  const criteriaValuesCache: Record<string, Record<string, number>> = reactive(
+    {}
+  );
+
+  // initial filters state (always active) computed property
+  const baseFilters = computed(() =>
+    JSON.stringify(
+      (options.baseRules || []).filter((group) => group.length > 0)
+    )
+  );
+
+  // current filters state (checkboxes) computed property
+  const activeFilters = computed(() =>
+    JSON.stringify(
+      Object.values(state.value).filter((group) => group.length > 0)
+    )
+  );
 
   // main fetcher that returns an auto updating list of products to display
   let fetchParams: Record<
@@ -97,25 +110,38 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
       sort.value.startsWith("-") ? sort.value.substring(1) : sort.value
     ),
     sortDesc: computed(() => sort.value.startsWith("-")),
-    filters: currentFilters,
+    filters: baseFilters,
+    activeFilters,
   };
-  if (options.criteriaValues?.length) {
-    fetchParams.criteriaValues = JSON.stringify(options.criteriaValues);
-  }
 
   fetchParams.limit = limit;
   fetchParams.page = page;
+  
 
   if (options.fetchQuery) {
     for (const [key, value] of Object.entries(options.fetchQuery)) {
       fetchParams[key] = value;
     }
   }
+  const options_ = options;
+
   let _fetcher = useFetch<StructuredFilterResponse>(
     () => "/api/recommendations/default/structured-filter",
     {
       params: fetchParams,
       ...(options.fetchOptions ?? {}),
+      onRequest({ options }) {
+        // criteriaValues is injected with hook
+        // as we want to update it before every call
+        // but we cant use a computed property as it would be watched
+        if (options?.params && options_.criteriaValues?.length) {
+          options.params.criteriaValues = JSON.stringify(
+            (options_.criteriaValues || []).filter(
+              (criteria: string) => !criteriaValuesCache[criteria]
+            )
+          );
+        }
+      },
     }
   );
 
@@ -141,16 +167,17 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
   });
 
   const fetchCriteriaValues = (criteria: string) => {
-    let cached = {};
     return {
       data: computed(() => {
-        if (Object.keys(cached).length) {
-          return cached
+        const cached = criteriaValuesCache[criteria];
+        if (cached && Object.keys(cached).length) {
+          return cached;
         }
         if (_fetcher.data.value) {
           if (_fetcher.data.value.criteriaValues[criteria]) {
-            cached = _fetcher.data.value.criteriaValues[criteria];
-            return cached;
+            criteriaValuesCache[criteria] =
+              _fetcher.data.value.criteriaValues[criteria];
+            return criteriaValuesCache[criteria];
           }
           return {};
         }
@@ -162,7 +189,6 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
       error: _fetcher.error,
     };
   };
-
 
   // all functions below allow state manipulation
   const hasRule = (
