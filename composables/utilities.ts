@@ -26,51 +26,50 @@ export const mask = (value: string, regex: RegExp): string => {
 };
 
 export const getAttr = (product: Product, attr: string): string | null => {
-
   // If the attribute is one of the keys in product data :
   if (Object.keys(product.data).includes(attr)) {
-    const extVal = product.extraData[attr as keyof ProductData]
+    const extVal = product.extraData[attr as keyof ProductData];
     if (extVal) {
-      if (Object.hasOwn(extVal as Object, 'value')) {
-        return (extVal as ProductDataPrice).value
+      if (typeof extVal === "object" && "value" in extVal) {
+        return (extVal as ProductDataPrice).value;
       }
-      if (typeof extVal !== 'object') {
-        return ""+extVal;
+      if (typeof extVal !== "object") {
+        return "" + extVal;
       }
     }
     const val = product.data[attr as keyof ProductData];
     if (val) {
-      if (Object.hasOwn(val as Object, 'value')) {
-        return (val as ProductDataPrice).value
+      if (typeof val === "object" && "value" in val) {
+        return (val as ProductDataPrice).value;
       }
-      if (typeof val !== 'object') {
-        return ""+val;
+      if (typeof val !== "object") {
+        return "" + val;
       }
     }
   }
 
-  const extraPtype = product.extraData?.productTypes?.[0]
-  const pType = product.data.productTypes?.[0]
+  const extraPtype = product.extraData?.productTypes?.[0];
+  const pType = product.data.productTypes?.[0];
 
-  if (attr === 'productType') {
+  if (attr === "productType") {
     return extraPtype ?? pType ?? null;
   }
-  if (attr === 'productType1') {
+  if (attr === "productType1") {
     // Not a common case, but sometimes products have 2 product types.
     return product.extraData?.productTypes?.[1] ?? product.data.productTypes?.[1] ?? null;
   }
-  if (attr === 'productTypePart0') {
-    return extraPtype?.split(' > ')[0] ?? pType?.split(' > ')[0] ?? null;
+  if (attr === "productTypePart0") {
+    return extraPtype?.split(" > ")[0] ?? pType?.split(" > ")[0] ?? null;
   }
-  if (attr === 'productTypePart1') {
-    return extraPtype?.split(' > ')[1] ?? pType?.split(' > ')[1] ?? null;
+  if (attr === "productTypePart1") {
+    return extraPtype?.split(" > ")[1] ?? pType?.split(" > ")[1] ?? null;
   }
-  if (attr === 'productTypePart2') {
-    return extraPtype?.split(' > ')[2] ?? pType?.split(' > ')[2] ?? null;
+  if (attr === "productTypePart2") {
+    return extraPtype?.split(" > ")[2] ?? pType?.split(" > ")[2] ?? null;
   }
 
   return getCustomAttr(product, attr);
-}
+};
 
 // get a product customAttribute value by its name.
 // extraData will take precedence over regular data
@@ -149,20 +148,18 @@ export const itemPart = (str: string | undefined, splitAt: string, index: number
   return str?.split(splitAt)[index];
 };
 
-
 // returns a unified list removing duplicates based on a keygen function
-export const uniqBy = <T, K>(it: T[], keyFunc: (_: T)=> K): T[] => {
-  let uniq = new Set<K>()
-  return it.filter(item => {
-    const key = keyFunc(item)
+export const uniqBy = <T, K>(it: T[], keyFunc: (_: T) => K): T[] => {
+  let uniq = new Set<K>();
+  return it.filter((item) => {
+    const key = keyFunc(item);
     if (uniq.has(key)) {
-      return false
+      return false;
     }
-    uniq.add(key)
-    return true
-  })
-}
-
+    uniq.add(key);
+    return true;
+  });
+};
 
 // redirects to the targeted url
 export function redirect(url: string) {
@@ -190,7 +187,7 @@ export function firstPaginationHandler(filter: Recommender, _pageCount: number) 
 
 // For pagination, increment page index
 export function lastPaginationHandler(filter: Recommender, pageCount: number) {
-  filter.page.value = pageCount
+  filter.page.value = pageCount;
 }
 
 // Used for "one page" pagination (a "load more" button)
@@ -203,4 +200,4 @@ export const layoutProps = {
   filter: { type: Object as PropType<Recommender>, required: true, default: () => ({}) },
   slider: { type: Object as PropType<Recommender>, required: false },
   extraProducts: { type: Array as PropType<Product[]>, required: false },
-}
+};
