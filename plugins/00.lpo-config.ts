@@ -1,8 +1,6 @@
-function StringLoader(v: string): string {
-    return v
-}
+const StringLoader = (v: string) => v
 
-function JSONLoader(v: string): any {
+const JSONLoader = (v: string) => {
     try {
         return JSON.parse(v)
     } catch (err) {
@@ -10,18 +8,30 @@ function JSONLoader(v: string): any {
     }
 }
 
+const useUrlConfig = () => {
+    const route = useRoute()
+    const inlineLPOparams = route.params?.['lpo-config'] as Partial<InlineLPOConfig>
+
+    // remove this from URL
+    if (route.params?.['lpo-config']) {
+        delete route.params['lpo-config']
+    }
+    return inlineLPOparams
+}
+
 export default defineNuxtPlugin(() => {
     /**
      * LPOConfig is user modified configuration that can be set in the backoffice.
      * you can also set the lpoConfig locally in the nuxt.config.ts file of the LP.
      */
+    const inlineLPOConfig = process.server ? useUrlConfig() : window.__LPO_CONFIG__
 
     const config = useRuntimeConfig()
     let lpoConfig: Partial<LPOConfig> = {}
 
     if (process.env.NODE_ENV === "development") {
         lpoConfig = config.public.devLpoConfig as typeof lpoConfig
-    } else if (window.__LPO_CONFIG__ !== undefined) {
+    } else if (inlineLPOConfig !== undefined) {
         // Prod env reads config from the data injected into the window object when LP is served.
         const fieldLoaders: Record<keyof LPOConfig, (v: string) => any> = {
             variation: StringLoader,
@@ -60,7 +70,7 @@ export default defineNuxtPlugin(() => {
         }
 
         try {
-            for (let field of ((window.__LPO_CONFIG__).fields ?? [])) {
+            for (let field of ((inlineLPOConfig).fields ?? [])) {
                 if (!field.active) {
                     continue
                 }

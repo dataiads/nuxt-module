@@ -102,7 +102,7 @@ const next = () => {
     }
 }
 
-if (props.autoscroll) {
+if (props.autoscroll && !process.server) {
     window.setInterval(() => {
         if (scrollController && !hover.value) {
             if (scrollController.reachedEnd()) {

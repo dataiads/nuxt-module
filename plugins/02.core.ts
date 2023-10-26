@@ -13,16 +13,15 @@ import {
   handles compatibility with url based product match
   when no lpoid parameter is present
  */
-function fetchPageData(loc: Location) {
-  const u = new URL(loc.href);
+function fetchPageData(u: URL) {
   const lpoid = u.searchParams.get("lpoid");
 
   if (lpoid == null) {
     // backward compatibility: use path matching when no lpoid
     return useFetch<PageData>("/api/page-data", {
       params: {
-        uri: loc.pathname + loc.search,
-        fragment: loc.hash.replace("#", ""),
+        uri: u.pathname + u.search,
+        fragment: u.hash.replace("#", ""),
       },
     });
   }
@@ -33,6 +32,9 @@ function fetchPageData(loc: Location) {
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
   const lpoConfig = useLpoConfig();
+  const product = useState<Product | undefined>('product')
+  const collectorData = useState<AssocString | undefined>("collectorData")
+  const mirroredDomain = useMirroredDomain();
 
   if (!runtimeConfig.public.mirroredDomain) {
     throw new Error("mirroredDomain is expected in public runtime config");
@@ -53,47 +55,59 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   // register error handlers
-  nuxtApp.vueApp.config.errorHandler = (error) => {
-    reportError(error);
-    return errorRedirect(error);
-  };
+  if (!process.server) {
+    // According to https://nuxt.com/docs/getting-started/error-handling#nitro-server-lifecycle
+    // we cannot define a server-side handler for errors.
+    // It kind of helps me out because SSR was NOT enjoying the use of useRoute.
+    nuxtApp.vueApp.config.errorHandler = (error, instance) => {
+      reportError(error);
+      return errorRedirect(error, mirroredDomain, instance?.$route?.fullPath);
+    };
+  }
 
-  // setup global app timeout
-  const pageLoadTimeout = setTimeout(
-    () => errorRedirect("app took too long to respond."),
-    runtimeConfig.public.timeout.initialPageLoad
-  );
-  nuxtApp.hook("app:suspense:resolve", () => {
-    clearTimeout(pageLoadTimeout);
-    if (runtimeConfig.public.dataiadsGreeting) {
-      console.log("Powered by Dataïads");
-    }
-  });
+  // setup global app timeout, not used on server side
+  if (!process.server) {
+    const pageLoadTimeout = setTimeout(
+      () => errorRedirect("app took too long to respond.", mirroredDomain),
+      runtimeConfig.public.timeout.initialPageLoad
+    );
+    nuxtApp.hook("app:suspense:resolve", () => {
+      clearTimeout(pageLoadTimeout);
+      if (runtimeConfig.public.dataiadsGreeting) {
+        console.log("Powered by Dataïads");
+      }
+    });
+  }
 
   // fetch the product on init
   nuxtApp.hook("app:created", async () => {
     const dataTimeout = setTimeout(
-      () => errorRedirect("page data timeout"),
+      () => errorRedirect("page data timeout", mirroredDomain),
       runtimeConfig.public.timeout.pageDataLoad
     );
-    const { data: pageData, error } = await fetchPageData(window.location);
+    
+    const route = useRoute()
+    let pageUrl = runtimeConfig.public.baseURL + route.fullPath
+    if (!process.server) {
+      pageUrl = window.location.href
+    }
+  
+    const u = new URL(pageUrl);
+    const { data: pageData, error } = await fetchPageData(u);
     clearTimeout(dataTimeout);
     if (error.value) {
-      errorRedirect(error.value);
+      errorRedirect(error.value, mirroredDomain);
     }
 
     if (pageData.value === null) {
-      errorRedirect("Failed to fetch page data");
+      errorRedirect("Failed to fetch page data", mirroredDomain);
     }
 
-    const data = pageData.value;
-    useState<Product | undefined>("product", () => data?.product);
-    useState<AssocString | undefined>(
-      "collectorData",
-      () => data?.collectorData
-    );
+    const data = pageData.value
+    product.value = data?.product
+    collectorData.value = data?.collectorData
 
-    if (data?.product) {
+    if (!process.server && data?.product) {
       injectProductStructuredData(data.product);
     }
 
@@ -110,12 +124,17 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
 });
 
-function errorRedirect(reason: unknown): void {
+function errorRedirect(reason: unknown, mirroredDomain: string, path?: string): void {
   /* Redirect to same URI on mirroredDomain */
-  const mirroredDomain = useMirroredDomain();
+  if (!path && process.server) {
+    const route = useRoute();
+    path = route.fullPath;
+  }
+  let errorUri = mirroredDomain + path;
+  if (!process.server) {
+    errorUri = mirroredDomain + window.location.pathname + window.location.search;
+  }
 
-  let errorUri =
-    mirroredDomain + window.location.pathname + window.location.search;
   console.debug(reason);
   if (process.env.NODE_ENV === "development") {
     console.error(
@@ -144,6 +163,7 @@ function fetchProductRecommendations(
   key?: string
 ) {
   const runtimeConfig = useRuntimeConfig();
+  const mirroredDomain = useMirroredDomain();
 
   const fetchOptions: UseFetchOptions<Product[]> = {
     params: params,
@@ -158,7 +178,7 @@ function fetchProductRecommendations(
   );
   setTimeout(() => {
     if (fetcher.pending.value) {
-      errorRedirect("product recommendations timeout");
+      errorRedirect("product recommendations timeout", mirroredDomain);
     }
   }, runtimeConfig.public.timeout.recommendationsLoad);
 

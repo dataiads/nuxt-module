@@ -5,7 +5,7 @@ export const useLpoConfig = (): LPOConfig => {
 
 export const useMirroredDomain = (): string => {
     const lpoConfig = useLpoConfig()
-    const serverMirroredDomain = window.__LPO_MIRRORED_DOMAIN__;
+    const serverMirroredDomain = !process.server ? window.__LPO_MIRRORED_DOMAIN__ : '';
     const runtimeConfig = useRuntimeConfig()
 
     return (
