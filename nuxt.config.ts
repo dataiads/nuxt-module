@@ -23,6 +23,8 @@ export default defineNuxtConfig({
       // useMirroredDomain() composable should be used instead
       mirroredDomain: "",
 
+      baseURL: "",
+
       // default timeouts for server interaction
       timeout: {
         pageDataLoad: 8000,

@@ -1,11 +1,11 @@
 
 // @ts-ignore
-import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
+import { defineNuxtPlugin, useHead } from "#app";
 
 /*
  * Injects GTM in the page
  */
-export default defineNuxtPlugin((options) => {
+export default defineNuxtPlugin(() => {
   let gtmId = useLpoConfig()?.gtm?.id;
 
   if (!gtmId) {

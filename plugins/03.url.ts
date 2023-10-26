@@ -1,9 +1,8 @@
 
 // @ts-ignore
-import { defineNuxtPlugin, useRuntimeConfig, useState } from "#app";
+import { defineNuxtPlugin, useState } from "#app";
 
 export default defineNuxtPlugin(() => {
-    const config = useRuntimeConfig()
     const [protocol, mirroredHost] = useMirroredDomain().split("//")
 
     // global add to cart state

@@ -1,11 +1,11 @@
 // @ts-ignore
-import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
+import { defineNuxtPlugin, useHead } from "#app";
 
 /* Enable Onetrust by providing oneTrust.dataDomainScript id
  * in public runtime config
  */
 
-export default defineNuxtPlugin(({ vueApp }) => {
+export default defineNuxtPlugin(() => {
   const config = useLpoConfig()?.onetrust;
 
   if (config?.dataDomainScript) {

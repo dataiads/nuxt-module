@@ -16,18 +16,20 @@ const nav = ref<HTMLElement | null>(null);
 const { activate, deactivate } = useFocusTrap(nav, { allowOutsideClick: true, immediate: false });
 
 const updateBodyScroll = async () => {
-  const html = document.querySelector('html');
+  if (!process.server) {
+    const html = document.querySelector('html');
 
-  if (openRef.value && html) {
-    document.body.style.overflow = 'hidden';
-    html.style.overflow = 'hidden';
-    await nextTick();
-    activate();
-  } else if (html) {
-    document.body.style.overflow = 'unset';
-    html.style.overflow = 'unset';
-    await nextTick();
-    deactivate();
+    if (openRef.value && html) {
+      document.body.style.overflow = 'hidden';
+      html.style.overflow = 'hidden';
+      await nextTick();
+      activate();
+    } else if (html) {
+      document.body.style.overflow = 'unset';
+      html.style.overflow = 'unset';
+      await nextTick();
+      deactivate();
+    }
   }
 }
 

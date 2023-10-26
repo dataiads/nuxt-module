@@ -12,15 +12,17 @@ const onEscape = (e: KeyboardEvent) => {
   }
 };
 
-watch(open, () => {
-  if (open.value) {
-    document.addEventListener('keydown', onEscape);
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.removeEventListener('keydown', onEscape);
-    document.body.style.overflow = 'unset';
-  }
-}, { immediate: true });
+if (!process.server) {
+  watch(open, () => {
+    if (open.value) {
+      document.addEventListener('keydown', onEscape);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.removeEventListener('keydown', onEscape);
+      document.body.style.overflow = 'unset';
+    }
+  }, { immediate: true });
+}
 </script>
 
 <template>

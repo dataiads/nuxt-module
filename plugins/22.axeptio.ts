@@ -10,7 +10,7 @@ function prependBody(tag: string, content: string) {
   document.querySelector("body")?.prepend(el);
 }
 
-export default defineNuxtPlugin(({ vueApp }) => {
+export default defineNuxtPlugin(() => {
   const lpoConfig = useLpoConfig();
   const config = useRuntimeConfig();
 
