@@ -3,7 +3,7 @@ import { defineNuxtPlugin, useRuntimeConfig, useHead } from "#app";
 /*
  * Load Google Fonts
  */
-export default defineNuxtPlugin((options) => {
+export default defineNuxtPlugin(() => {
   const fontConfigs = useRuntimeConfig()?.public.googleFonts
 
   if (fontConfigs) {

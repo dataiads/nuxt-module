@@ -1,5 +1,5 @@
 // @ts-ignore
-import { defineNuxtPlugin, useRuntimeConfig } from "#app";
+import { defineNuxtPlugin } from "#app";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const lpoConfig = useLpoConfig();
