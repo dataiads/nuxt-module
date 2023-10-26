@@ -1,9 +1,9 @@
 
 <script setup lang="ts">
 interface Props {
-  class: String,
-  headerClass: String,
-  contentClass: String,
+  class?: String,
+  headerClass?: String,
+  contentClass?: String,
   display?: Boolean,
 }
 
