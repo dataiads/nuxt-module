@@ -1,10 +1,10 @@
-const StringLoader = (v: string) => v
+const StringLoader = (v: string, _?: string) => v
 
-const JSONLoader = (v: string) => {
+const JSONLoader = (v: string, debugInfo?: string) => {
     try {
         return JSON.parse(v)
     } catch (err) {
-        console.debug(err)
+        console.debug(debugInfo || '', err)
     }
 }
 
@@ -78,7 +78,7 @@ export default defineNuxtPlugin(() => {
                 let fieldLoader = fieldLoaders[field.name]
                 if (fieldLoader) {
                     // @ts-ignore: ts2590 error due to LPOConfig type being too complex. No true fix has been found yet. see: https://github.com/microsoft/TypeScript/issues/45149
-                    lpoConfig[field.name] = fieldLoader(field.value)
+                    lpoConfig[field.name] = fieldLoader(field.value, `field ${field.name}:`)
                 } else {
                     console.debug("skipping undefined lpo config field", field.name)
                 }
