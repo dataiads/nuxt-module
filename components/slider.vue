@@ -165,13 +165,18 @@ const nextContentClass = previousContentClass.concat()
 
 const largeEnoughToScroll = ref(false)
 let x: WritableComputedRef<number>
+let y: WritableComputedRef<number>
 onMounted(() => {
     if (!scrollerEl.value) {
         return
     }
 
-    largeEnoughToScroll.value = scrollerEl.value.scrollWidth > scrollerEl.value.clientWidth;
-    ({ x } = useScroll(scrollerEl.value)) // https://vueuse.org/core/useScroll/#usescroll
+    if (props.direction === "horizontal") {
+        largeEnoughToScroll.value = scrollerEl.value.scrollWidth > scrollerEl.value.clientWidth;    
+    } else {
+        largeEnoughToScroll.value = scrollerEl.value.scrollHeight > scrollerEl.value.clientHeight;
+    }
+    ({ x, y } = useScroll(scrollerEl.value)) // https://vueuse.org/core/useScroll/#usescroll
 })
 
 </script>
@@ -180,7 +185,7 @@ onMounted(() => {
     <div :class="mainClass" v-if="props.items" @mouseenter="hover = true" @mouseleave="hover = false">
         <div :class="previousClass">
             <div :class="previousContentClass">
-                <slot name="previous-btn" :click="previous" v-if="x > 0">
+                <slot name="previous-btn" :click="previous" v-if="(props.direction === 'horizontal' && x > 0) || (props.direction === 'vertical' && y > 0)">
                     <div @click="previous" class="hover:bg-slate-500/10 cursor-pointer rounded-full px-4 text-3xl">&lt;
                     </div>
                 </slot>
@@ -188,7 +193,7 @@ onMounted(() => {
         </div>
 
         <div :class="scrollerClass" ref="scrollerEl">
-            <slot name="item" v-for="item in props.items" :item="item"> </slot>
+            <slot name="item" v-for="(item, i) in props.items" :item="item" :key="i"></slot>
         </div>
 
         <div :class="nextClass">

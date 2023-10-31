@@ -14,13 +14,21 @@ interface Props {
     class?: string | string[]
     mainClass?: string | string[]
     asideClass?: string | string[]
+
+    scroller?: boolean
+    asideScrollerClass?: string | string[]
+    
+    asideImageDirection?: "horizontal" | "vertical"
 }
 const props = withDefaults(defineProps<Props>(), {
     class: () => ["flex", "flex-row"],
-    asideClass: () => ["flex", "flex-col", "flex-nowrap", "overflow-y-scroll", "scrollbar-hide"],
+    asideClass: () => ["flex", "flex-col", "flex-nowrap"],
+    asideScrollerClass: () => ["flex", "flex-col", "flex-nowrap", "overflow-y-scroll", "scrollbar-hide"],
     mainClass: () => ["flex", "flex-row", "flex-nowrap", "overflow-x-scroll", "snap-x", "snap-mandatory", "scrollbar-hide", "md:overflow-hidden"],
     alt: ({ product }) => product.data?.title || "product image",
     maxAdditionalImages: Infinity,
+    asideImageDirection: "vertical",
+    scroller: false
 })
 
 // use all available images, ordered by priority
@@ -148,7 +156,7 @@ const lightboxDecrIndex = () => {
         <slot name="lightbox" :close="() => openLightbox = false" :images="allImages" :incrIndex="lightboxIncrIndex" :decrIndex="lightboxDecrIndex" :open="openLightbox" :selected-index="lightboxImageIndex"></slot>
 
         <div :class="props.asideClass">
-            <template v-for="(additionalImage, index) in allImages">
+            <template v-if="!scroller" v-for="(additionalImage, index) in allImages">
                 <div @click="selectImage(index)" @mouseenter="mouseenter(index)" @mouseleave="mouseleave">
                     <slot name="aside-image" :alt="props.alt" :src="additionalImage"
                         :active="additionalImage === selectedImage">
@@ -157,6 +165,25 @@ const lightboxDecrIndex = () => {
                     </slot>
                 </div>
             </template>
+            <Slider v-else :items="allImages" :direction="props.asideImageDirection" :scrollerClass="props.asideScrollerClass">
+                <template #item="{ item, key }">
+                    <div @click="selectImage(key)" @mouseenter="mouseenter(key)" @mouseleave="mouseleave">
+                        <slot name="aside-image" :alt="props.alt" :src="item"
+                            :active="item === selectedImage">
+                            <!-- default content for slot additional-image -->
+                            <Image :src="item" :alt="props.alt" height="80" width="80" class="cursor-pointer" />
+                        </slot>
+                    </div>
+                </template>
+
+                <template #previous-btn="scope">
+                    <slot name="aside-previous-btn" v-bind="scope"></slot>
+                </template>
+
+                <template #next-btn="scope">
+                    <slot name="aside-next-btn" v-bind="scope"></slot>
+                </template>
+            </Slider>
         </div>
 
         <div class="flex-1 relative">
