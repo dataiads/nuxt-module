@@ -16,7 +16,7 @@ interface Props {
     asideClass?: string | string[]
 
     scroller?: boolean
-    asideScrollerClass?: string | string[]
+    asideScrollerClass?: string[]
     
     asideImageDirection?: "horizontal" | "vertical"
 }
