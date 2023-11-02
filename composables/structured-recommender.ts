@@ -137,7 +137,7 @@ export const useStructuredRecommender = (
         if (options?.params && options_.criteriaValues?.length) {
           options.params.criteriaValues = JSON.stringify(
             (options_.criteriaValues || []).filter(
-              (criteria: string) => !criteriaValuesCache[criteria]
+              (criteria: string) => !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
             )
           );
         }
@@ -169,9 +169,11 @@ export const useStructuredRecommender = (
   const fetchCriteriaValues = (criteria: string) => {
     return {
       data: computed(() => {
-        const cached = criteriaValuesCache[criteria];
-        if (cached && Object.keys(cached).length) {
-          return cached;
+        if (options.cacheCriteriaValues) {
+          const cached = criteriaValuesCache[criteria];
+          if (cached && Object.keys(cached).length) {
+            return cached;
+          }
         }
         if (_fetcher.data.value) {
           if (_fetcher.data.value.criteriaValues[criteria]) {

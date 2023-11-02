@@ -402,7 +402,11 @@ type JSONValue =
     // default sort field (can be updated dynamically using Recommender.sort property)
     defaultSort?: string;
 
+    // list these criteria values along structured filters response
     criteriaValues?: string[];
+
+    // only request criteria values on initial structured-filters call
+    cacheCriteriaValues?: boolean;
   }
 
   export interface StructuredFilterResponse {
