@@ -379,7 +379,7 @@ type JSONValue =
   export interface UseStructuredRecommenderOptions {
 
     // where to get recommendation params from
-    configRecoParams?: "mainRecoParams" | "sliderRecoParams";
+    //configRecoParams?: "mainRecoParams" | "sliderRecoParams";
 
     // product to get recommendations for
     productId: string;
@@ -389,6 +389,12 @@ type JSONValue =
 
     // initial rules to add to the state
     initialRules?: InitialFilterRule[];
+
+    // sorting rules
+    sortRules?: FilterRule[][];
+
+    // deduplication criteria
+    deduplicate?: string;
 
     // optional extra query parameters for recommendation endpoint
     fetchQuery?: Record<string, string | number>;

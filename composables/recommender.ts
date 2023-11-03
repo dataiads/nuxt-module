@@ -8,16 +8,6 @@ export const useFilter = (options: Omit<UseRecommenderOptions, "configRecoParams
   })
 };
 
-export const useGroupedFilter = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint" | "grouper" | "localPagination">) => {
-  return useRecommender({
-    configRecoParams: "mainRecoParams",
-    endpoint: "filtered-grouped",
-    grouper: undefined,
-    localPagination: false,
-    ...options,
-  })
-};
-
 export const useSlider = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint">) => {
   return useRecommender({
     configRecoParams: 'sliderRecoParams',

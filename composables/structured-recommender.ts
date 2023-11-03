@@ -5,41 +5,23 @@ import {
   StructuredRecommender,
 } from "~/types";
 
-export const useStructuredFilter = (
-  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
-) => {
-  return useStructuredRecommender({
-    configRecoParams: "mainRecoParams",
-    ...options,
-  });
-};
+type FetchParams = Record<
+  string,
+  | string
+  | number
+  | Ref<string>
+  | Ref<number>
+  | Ref<boolean>
+  | ComputedRef<string>
+  | ComputedRef<number>
+  | ComputedRef<boolean>
+>;
 
 export const useStructuredRecommender = (
   options: UseStructuredRecommenderOptions
 ) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {};
-  }
-
-  const lpoConfig = useLpoConfig();
-
-  if (options.configRecoParams) {
-    const recoParams = lpoConfig[options.configRecoParams];
-    if (recoParams?.filterRules) {
-      options.baseRules = recoParams?.filterRules;
-    }
-    if (recoParams?.sortRules) {
-      options.fetchQuery.sortFilters = JSON.stringify(recoParams.sortRules);
-    }
-    if (recoParams?.deduplicate) {
-      options.fetchQuery.deduplicate = recoParams.deduplicate;
-    }
-    if (recoParams?.limit) {
-      options.defaultLimit = recoParams.limit;
-    }
-    if (recoParams?.sort) {
-      options.defaultSort = recoParams.sort;
-    }
   }
 
   const initState = () => {
@@ -94,17 +76,7 @@ export const useStructuredRecommender = (
   );
 
   // main fetcher that returns an auto updating list of products to display
-  let fetchParams: Record<
-    string,
-    | string
-    | number
-    | Ref<string>
-    | Ref<number>
-    | Ref<boolean>
-    | ComputedRef<string>
-    | ComputedRef<number>
-    | ComputedRef<boolean>
-  > = {
+  let fetchParams: FetchParams = {
     productId: options.productId,
     sort: computed(() =>
       sort.value.startsWith("-") ? sort.value.substring(1) : sort.value
@@ -112,12 +84,20 @@ export const useStructuredRecommender = (
     sortDesc: computed(() => sort.value.startsWith("-")),
     filters: baseFilters,
     activeFilters,
+    limit,
+    page,
   };
 
-  fetchParams.limit = limit;
-  fetchParams.page = page;
-  
+  if (options.sortRules?.length) {
+    fetchParams.sortFilters = JSON.stringify(options.sortRules);
+  }
 
+  if (options.deduplicate) {
+    fetchParams.deduplicate = options.deduplicate;
+  }
+
+  // should not be used directly but preserved for compatibility
+  // (deduplicate and sortFilters were not 1st class params before)
   if (options.fetchQuery) {
     for (const [key, value] of Object.entries(options.fetchQuery)) {
       fetchParams[key] = value;
@@ -125,6 +105,7 @@ export const useStructuredRecommender = (
   }
   const options_ = options;
 
+  // Core fetch is not exposed direcly
   let _fetcher = useFetch<StructuredFilterResponse>(
     () => "/api/recommendations/default/structured-filter",
     {
@@ -137,7 +118,8 @@ export const useStructuredRecommender = (
         if (options?.params && options_.criteriaValues?.length) {
           options.params.criteriaValues = JSON.stringify(
             (options_.criteriaValues || []).filter(
-              (criteria: string) => !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
+              (criteria: string) =>
+                !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
             )
           );
         }
@@ -145,6 +127,7 @@ export const useStructuredRecommender = (
     }
   );
 
+  // Expose result products page as an AsyncData style object
   let fetcher = {
     data: computed(() => {
       if (_fetcher.data.value) {
@@ -158,7 +141,7 @@ export const useStructuredRecommender = (
     error: _fetcher.error,
   };
 
-  // issue side request to get total items count
+  // Expose count as a computed
   let count = computed(() => {
     if (_fetcher.data.value) {
       return _fetcher.data.value.total;
@@ -166,6 +149,7 @@ export const useStructuredRecommender = (
     return 0;
   });
 
+  // Expose criteria values as an AsyncData style object
   const fetchCriteriaValues = (criteria: string) => {
     return {
       data: computed(() => {
@@ -358,4 +342,37 @@ export const useStructuredRecommender = (
     removeAllRules,
     reset,
   } as StructuredRecommender;
+};
+
+// Recommender constructors for classic cases
+export const useStructuredFilter = (
+  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
+) => {
+  const config = useLpoConfig()?.mainRecoParams;
+  const opts = { ...options };
+  if (config) {
+    opts.baseRules = config.filterRules;
+    opts.sortRules = config.sortRules;
+    opts.deduplicate = config.deduplicate;
+    opts.defaultLimit = config.limit;
+    opts.defaultSort = config.sort;
+  }
+
+  return useStructuredRecommender(opts);
+};
+
+export const useStructuredSlider = (
+  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
+) => {
+  const config = useLpoConfig()?.sliderRecoParams;
+  const opts = { ...options };
+  if (config) {
+    opts.baseRules = config.filterRules;
+    opts.sortRules = config.sortRules;
+    opts.deduplicate = config.deduplicate;
+    opts.defaultLimit = config.limit;
+    opts.defaultSort = config.sort;
+  }
+
+  return useStructuredRecommender(opts);
 };
