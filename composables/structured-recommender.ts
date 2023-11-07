@@ -75,6 +75,10 @@ export const useStructuredRecommender = (
     )
   );
 
+  const activeFiltersCount = computed(() =>
+    Object.values(state.value).filter((group) => group.length > 0).length
+  );
+
   // main fetcher that returns an auto updating list of products to display
   let fetchParams: FetchParams = {
     productId: options.productId,
@@ -333,6 +337,7 @@ export const useStructuredRecommender = (
     limit,
     sort,
     page,
+    activeFiltersCount,
     fetchCriteriaValues,
     hasRule,
     getFirstRuleValue,
