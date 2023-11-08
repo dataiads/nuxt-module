@@ -116,7 +116,6 @@ export const useStructuredRecommender = (
       criteriaValues: {},
     } as StructuredFilterResponse
   })
-  console.log('aaaaa')
     
   if (options.baseRules?.length) {
     // Core fetch is not exposed direcly
