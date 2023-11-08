@@ -109,27 +109,37 @@ export const useStructuredRecommender = (
   }
   const options_ = options;
 
-  // Core fetch is not exposed direcly
-  let _fetcher = useFetch<StructuredFilterResponse>(
-    () => "/api/recommendations/default/structured-filter",
-    {
-      params: fetchParams,
-      ...(options.fetchOptions ?? {}),
-      onRequest({ options }) {
-        // criteriaValues is injected with hook
-        // as we want to update it before every call
-        // but we cant use a computed property as it would be watched
-        if (options?.params && options_.criteriaValues?.length) {
-          options.params.criteriaValues = JSON.stringify(
-            (options_.criteriaValues || []).filter(
-              (criteria: string) =>
-                !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
-            )
-          );
-        }
-      },
-    }
-  );
+  let _fetcher = useAsyncData(async () => {
+    return {
+      total: 0,
+      page: [],
+      criteriaValues: {},
+    } as StructuredFilterResponse
+  })
+  console.log('aaaaa')
+    
+  if (options.baseRules?.length) {
+    // Core fetch is not exposed direcly
+    _fetcher = useFetch<StructuredFilterResponse>(
+      () => "/api/recommendations/default/structured-filter",
+      {
+        params: fetchParams,
+        ...(options.fetchOptions ?? {}),
+        onRequest({ options }) {
+          // criteriaValues is injected with hook
+          // as we want to update it before every call
+          // but we cant use a computed property as it would be watched
+          if (options?.params && options_.criteriaValues?.length) {
+            options.params.criteriaValues = JSON.stringify(
+              (options_.criteriaValues || []).filter(
+                (criteria: string) => !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
+              )
+            );
+          }
+        },
+      }
+    );
+  }
 
   // Expose result products page as an AsyncData style object
   let fetcher = {
