@@ -87,7 +87,7 @@ let binder = computed({
       />
     </slot>
     <label :class="props.labelClass" :for="uid">
-      <slot name="label" :label="props.label" :checked="binder">{{
+      <slot name="label" :value="props.label" :checked="binder">{{
         props.label
       }}</slot>
     </label>
