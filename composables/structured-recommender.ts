@@ -1,25 +1,9 @@
 import { ComputedRef, Ref } from "vue";
-import {
-  UseStructuredRecommenderOptions,
-  StructuredFilterResponse,
-  StructuredRecommender,
-} from "~/types";
+import { UseStructuredRecommenderOptions, StructuredFilterResponse, StructuredRecommender } from "~/types";
 
-type FetchParams = Record<
-  string,
-  | string
-  | number
-  | Ref<string>
-  | Ref<number>
-  | Ref<boolean>
-  | ComputedRef<string>
-  | ComputedRef<number>
-  | ComputedRef<boolean>
->;
+type FetchParams = Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>>;
 
-export const useStructuredRecommender = (
-  options: UseStructuredRecommenderOptions
-) => {
+export const useStructuredRecommender = (options: UseStructuredRecommenderOptions) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {};
   }
@@ -57,34 +41,20 @@ export const useStructuredRecommender = (
   const page = ref<number>(1);
 
   // cache criteria values to only request a single time
-  const criteriaValuesCache: Record<string, Record<string, number>> = reactive(
-    {}
-  );
+  const criteriaValuesCache: Record<string, Record<string, number>> = reactive({});
 
   // initial filters state (always active) computed property
-  const baseFilters = computed(() =>
-    JSON.stringify(
-      (options.baseRules || []).filter((group) => group.length > 0)
-    )
-  );
+  const baseFilters = computed(() => JSON.stringify((options.baseRules || []).filter((group) => group.length > 0)));
 
   // current filters state (checkboxes) computed property
-  const activeFilters = computed(() =>
-    JSON.stringify(
-      Object.values(state.value).filter((group) => group.length > 0)
-    )
-  );
+  const activeFilters = computed(() => JSON.stringify(Object.values(state.value).filter((group) => group.length > 0)));
 
-  const activeFiltersCount = computed(() =>
-    Object.values(state.value).filter((group) => group.length > 0).length
-  );
+  const activeFiltersCount = computed(() => Object.values(state.value).filter((group) => group.length > 0).length);
 
   // main fetcher that returns an auto updating list of products to display
   let fetchParams: FetchParams = {
     productId: options.productId,
-    sort: computed(() =>
-      sort.value.startsWith("-") ? sort.value.substring(1) : sort.value
-    ),
+    sort: computed(() => (sort.value.startsWith("-") ? sort.value.substring(1) : sort.value)),
     sortDesc: computed(() => sort.value.startsWith("-")),
     filters: baseFilters,
     activeFilters,
@@ -109,10 +79,17 @@ export const useStructuredRecommender = (
   }
   const options_ = options;
 
-  // Core fetch is not exposed direcly
-  let _fetcher = useFetch<StructuredFilterResponse>(
-    () => "/api/recommendations/default/structured-filter",
-    {
+  let _fetcher = useAsyncData(async () => {
+    return {
+      total: 0,
+      page: [],
+      criteriaValues: {},
+    } as StructuredFilterResponse;
+  });
+
+  if (options.baseRules?.length) {
+    // Core fetch is not exposed direcly
+    _fetcher = useFetch<StructuredFilterResponse>(() => "/api/recommendations/default/structured-filter", {
       params: fetchParams,
       ...(options.fetchOptions ?? {}),
       onRequest({ options }) {
@@ -120,16 +97,11 @@ export const useStructuredRecommender = (
         // as we want to update it before every call
         // but we cant use a computed property as it would be watched
         if (options?.params && options_.criteriaValues?.length) {
-          options.params.criteriaValues = JSON.stringify(
-            (options_.criteriaValues || []).filter(
-              (criteria: string) =>
-                !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]
-            )
-          );
+          options.params.criteriaValues = JSON.stringify((options_.criteriaValues || []).filter((criteria: string) => !options_.cacheCriteriaValues || !criteriaValuesCache[criteria]));
         }
       },
-    }
-  );
+    });
+  }
 
   // Expose result products page as an AsyncData style object
   let fetcher = {
@@ -165,12 +137,12 @@ export const useStructuredRecommender = (
         }
         if (_fetcher.data.value) {
           if (_fetcher.data.value.criteriaValues[criteria]) {
-            criteriaValuesCache[criteria] =
-              _fetcher.data.value.criteriaValues[criteria];
+            criteriaValuesCache[criteria] = _fetcher.data.value.criteriaValues[criteria];
             return criteriaValuesCache[criteria];
           }
           return {};
         }
+
         return _fetcher.data.value;
       }),
       pending: _fetcher.pending,
@@ -213,28 +185,8 @@ export const useStructuredRecommender = (
     return null;
   };
 
-  const pushRule = (
-    group: string,
-    criteria: string,
-    operator: string,
-    value: string,
-    valueCriteria = "",
-    baseProductValue = "",
-    baseProductRegexpMatch = "",
-    baseProductRegexpReplace = ""
-  ): void => {
-    if (
-      !hasRule(
-        group,
-        criteria,
-        operator,
-        value,
-        valueCriteria,
-        baseProductValue,
-        baseProductRegexpMatch,
-        baseProductRegexpReplace
-      )
-    ) {
+  const pushRule = (group: string, criteria: string, operator: string, value: string, valueCriteria = "", baseProductValue = "", baseProductRegexpMatch = "", baseProductRegexpReplace = ""): void => {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
       if (state.value[group]) {
         state.value[group].push({
           criteria,
@@ -294,18 +246,7 @@ export const useStructuredRecommender = (
     baseProductRegexpMatch = "",
     baseProductRegexpReplace = ""
   ): void => {
-    if (
-      !hasRule(
-        group,
-        criteria,
-        operator,
-        value,
-        valueCriteria,
-        baseProductValue,
-        baseProductRegexpMatch,
-        baseProductRegexpReplace
-      )
-    ) {
+    if (!hasRule(group, criteria, operator, value, valueCriteria, baseProductValue, baseProductRegexpMatch, baseProductRegexpReplace)) {
       return;
     }
     const index = state.value[group].findIndex(
@@ -350,9 +291,7 @@ export const useStructuredRecommender = (
 };
 
 // Recommender constructors for classic cases
-export const useStructuredFilter = (
-  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
-) => {
+export const useStructuredFilter = (options: Omit<UseStructuredRecommenderOptions, "configRecoParams">) => {
   const config = useLpoConfig()?.mainRecoParams;
   const opts = { ...options };
   if (config) {
@@ -361,14 +300,13 @@ export const useStructuredFilter = (
     opts.deduplicate = config.deduplicate;
     opts.defaultLimit = config.limit;
     opts.defaultSort = config.sort;
+    opts.fetchQuery = { type: "filter" };
   }
 
   return useStructuredRecommender(opts);
 };
 
-export const useStructuredSlider = (
-  options: Omit<UseStructuredRecommenderOptions, "configRecoParams">
-) => {
+export const useStructuredSlider = (options: Omit<UseStructuredRecommenderOptions, "configRecoParams">) => {
   const config = useLpoConfig()?.sliderRecoParams;
   const opts = { ...options };
   if (config) {
@@ -377,6 +315,7 @@ export const useStructuredSlider = (
     opts.deduplicate = config.deduplicate;
     opts.defaultLimit = config.limit;
     opts.defaultSort = config.sort;
+    opts.fetchQuery = { type: "slider" };
   }
 
   return useStructuredRecommender(opts);
