@@ -300,7 +300,7 @@ This component is an accessible component to use accordion behavior it's highly 
 
 ```vue
 <Accordion :columns="columns">
-  <template #append="{ open }"">
+  <template #append="{ open }">
     Some icons ...
   </template>
 </Accordion>
