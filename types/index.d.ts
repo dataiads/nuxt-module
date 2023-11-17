@@ -246,6 +246,7 @@ declare global {
     mainRecoParams: FilterParams;
     sliderRecoParams: FilterParams;
     searchRecoParams: FilterParams;
+    filterParams: FilterElement[];
     accessibilityVariant?: {
       text: string;
     };
@@ -255,6 +256,14 @@ declare global {
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
     carousel: Record<string, Array<Record<string, string>>>;
+  }
+
+  export interface FilterElement {
+    title: string // Titre de la section
+    elements: {
+      component: string // Le nom du composant
+      props: any  // Les props associé à ce composant
+    }[]
   }
 
   export interface FilterParams {

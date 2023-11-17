@@ -55,7 +55,6 @@ export class ScrollController {
 </script>
 
 <script setup lang="ts">
-import { WritableComputedRef } from 'vue';
 
 interface Props<T> {
     items: T[] | null
@@ -164,8 +163,8 @@ const previousContentClass = [
 const nextContentClass = previousContentClass.concat()
 
 const largeEnoughToScroll = ref(false)
-let x: WritableComputedRef<number>
-let y: WritableComputedRef<number>
+let x = computed({ get(){ return 0} , set(x){}});
+let y = computed({ get(){ return 0} , set(x){}});
 onMounted(() => {
     if (!scrollerEl.value) {
         return

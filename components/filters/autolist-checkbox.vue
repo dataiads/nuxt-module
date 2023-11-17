@@ -85,6 +85,9 @@ const sortedValues = computed(() => {
               <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
               </slot>
             </template>
+            <template #checkbox="scope">
+              <slot name="checkbox" :info="{id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
+            </template>
           </FiltersCheckbox>
         </slot>
       </template>
