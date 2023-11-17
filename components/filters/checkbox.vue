@@ -40,7 +40,7 @@ const get = () => {
   );
 };
 
-const set = (v) => {
+const set = (v: any) => {
   if (v) {
     props.filter.pushRule(
       props.group,

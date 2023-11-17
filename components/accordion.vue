@@ -19,27 +19,31 @@ withDefaults(defineProps<Props>(), {
   class: "w-full flex flex-col border-b border-grey3",
 });
 
-const onEnter = (el: HTMLElement, done) => {
-  el.style.height = "0";
-  el.offsetHeight; // Trigger a reflow, flushing the CSS changes
-  el.style.height = el.scrollHeight + "px";
+const onEnter = (el: Element, done: any) => {
+  const hel = el as HTMLElement;
+  hel.style.height = "0";
+  hel.offsetHeight; // Trigger a reflow, flushing the CSS changes
+  hel.style.height = el.scrollHeight + "px";
 
-  el.addEventListener("transitionend", done, { once: true });
+  hel.addEventListener("transitionend", done, { once: true });
 };
 
-const onBeforeLeave = (el: HTMLElement) => {
-  el.style.height = el.scrollHeight + "px";
-  el.offsetHeight; // Trigger a reflow, flushing the CSS changes
+const onBeforeLeave = (el: Element) => {
+  const hel = el as HTMLElement;
+  hel.style.height = el.scrollHeight + "px";
+  hel.offsetHeight; // Trigger a reflow, flushing the CSS changes
 };
 
-const onAfterEnter = (el: HTMLElement) => {
-  el.style.height = "auto";
+const onAfterEnter = (el: Element) => {
+  const hel = el as HTMLElement;
+  hel.style.height = "auto";
 };
 
-const onLeave = (el: HTMLElement, done) => {
-  el.style.height = "0";
+const onLeave = (el: any, done: any) => {
+  const hel = el as HTMLElement;
+  hel.style.height = "0";
 
-  el.addEventListener("transitionend", done, { once: true });
+  hel.addEventListener("transitionend", done, { once: true });
 };
 </script>
 
@@ -60,7 +64,7 @@ const onLeave = (el: HTMLElement, done) => {
       </slot>
       <slot name="append" :open="open" />
     </DisclosureButton>
-    <Transition
+    <transition
       enter-active-class="overflow-hidden transition-all duration-150 ease-out"
       leave-active-class="overflow-hidden transition-all duration-150 ease-out"
       @enter="onEnter"
@@ -80,6 +84,6 @@ const onLeave = (el: HTMLElement, done) => {
           </ul>
         </slot>
       </DisclosurePanel>
-    </Transition>
+    </transition>
   </Disclosure>
 </template>

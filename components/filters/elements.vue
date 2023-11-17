@@ -2,7 +2,7 @@
 const props = withDefaults(
   defineProps<{
     parameters: { title: string };
-    elements: [];
+    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
     filter: Recommender;
     inputClass?: string;
     checkboxClass?: string;
@@ -24,12 +24,12 @@ const props = withDefaults(
 
 const hasCheckboxSlot = computed(() => {
   const instance = getCurrentInstance();
-  return !!instance.slots.checkbox;
+  return !!instance!.slots.checkbox;
 });
 
 const hasLabelSlot = computed(() => {
   const instance = getCurrentInstance();
-  return !!instance.slots.checkbox_label;
+  return !!instance!.slots.checkbox_label;
 });
 </script>
 
@@ -94,9 +94,9 @@ const hasLabelSlot = computed(() => {
           >
           </slot>
         </template>
-        <template #label="{ value, count }">
-          <slot name="checkbox_label" :value="value" :count="count">
-            <template v-if="value">{{ value }} ({{ count }})</template>
+        <template #label="{ value }">
+          <slot name="checkbox_label" :value="value">
+            <template v-if="value">{{ value }}</template>
           </slot>
         </template>
       </FiltersCheckbox>

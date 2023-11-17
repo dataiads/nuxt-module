@@ -28,7 +28,7 @@ filterParams.forEach((f, i) => {
 });
 
 // Return the group from filterParam
-const getGroups = (filterParam) => {
+const getGroups = (filterParam: FilterElement) => {
   return filterParam.elements.map((el) => el.props.group);
 };
 
