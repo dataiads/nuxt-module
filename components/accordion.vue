@@ -4,10 +4,19 @@
  */
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
-const lpoConfig = useLpoConfig();
+interface Props {
+  class: string;
+  columns: {
+    title: string;
+    items: {
+      href: string;
+      text: string;
+    }[];
+  }[];
+}
 
-withDefaults(defineProps<{ class: string }>(), {
-    class: 'w-full flex flex-col border-b border-grey3'
+withDefaults(defineProps<Props>(), {
+  class: "w-full flex flex-col border-b border-grey3",
 });
 
 const onEnter = (el: HTMLElement, done) => {
@@ -37,12 +46,13 @@ const onLeave = (el: HTMLElement, done) => {
 <template>
   <Disclosure
     v-slot="{ open }"
-    v-for="column in lpoConfig.footerColumns"
+    v-for="column in columns"
     as="div"
     :class="class"
   >
-
-    <DisclosureButton class="flex items-center justify-between gap-2 cursor-pointer outline-none p-4">
+    <DisclosureButton
+      class="flex items-center justify-between gap-2 cursor-pointer outline-none p-4"
+    >
       <slot name="title" :value="column.title">
         <span class="font-bold text-lg">
           {{ column.title }}
