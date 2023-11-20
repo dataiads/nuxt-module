@@ -186,26 +186,44 @@ function fetchProductRecommendations(
 }
 
 function injectProductStructuredData(product: Product) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.data.title,
-    image: [product.data.imageLink],
-    color: product.data.color,
-    productId: product.data.offerId,
-    brand: {
-      "@type": "Brand",
-      name: product.data.brand,
-    },
-    offers: {
-      "@type": "Offer",
-      url: product.data.link,
-      priceCurrency: product.data.price?.currency,
-      price: product.data.price?.value,
+  /* Inject structured product data in application/ld+json script from:
+   *   1. scrapped or collected data stored in "structured-data" custom attribute
+   *   2. reconstructed from GMC feed data
+   */
+
+  let structuredData = "";
+
+  if (product?.extraData?.customAttributes.length) {
+    for (const customAttr of product.extraData.customAttributes) {
+      if (customAttr.name === "structured-data" && customAttr.value) {
+        structuredData = customAttr.value;
+      }
     }
-  };
+  }
+
+  if (!structuredData) {
+    structuredData = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.data.title,
+      image: [product.data.imageLink],
+      color: product.data.color,
+      productId: product.data.offerId,
+      brand: {
+        "@type": "Brand",
+        name: product.data.brand,
+      },
+      offers: {
+        "@type": "Offer",
+        url: product.data.link,
+        priceCurrency: product.data.price?.currency,
+        price: product.data.price?.value,
+      }
+    });
+  }
+
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
-  script.textContent = JSON.stringify(structuredData);
+  script.textContent = structuredData;
   document.head.appendChild(script);
 }
