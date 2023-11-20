@@ -193,7 +193,7 @@ function injectProductStructuredData(product: Product) {
 
   let structuredData = "";
 
-  if (product?.extraData?.customAttributes.length) {
+  if (product?.extraData?.customAttributes?.length) {
     for (const customAttr of product.extraData.customAttributes) {
       if (customAttr.name === "structured-data" && customAttr.value) {
         structuredData = customAttr.value;
