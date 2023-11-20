@@ -7,7 +7,7 @@ const props = defineProps<{
 	width: string,
 	height: string,
 	class?: string,
-	loading?: string,
+	loading?: "eager" | "lazy" | undefined,
 	format?: string,
 	alt?: string,
 	picture?: boolean,
