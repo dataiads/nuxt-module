@@ -19,6 +19,8 @@ interface Props {
     asideScrollerClass?: string[]
     
     asideImageDirection?: "horizontal" | "vertical"
+
+    filter?: (link: string) => boolean,
 }
 const props = withDefaults(defineProps<Props>(), {
     class: () => ["flex", "flex-row"],
@@ -44,6 +46,11 @@ if (props.product?.extraData?.additionalImageLinks?.length) {
     if (props.product?.data?.additionalImageLinks) {
         allImages = allImages.concat(props.product.data.additionalImageLinks)
     }
+}
+
+// apply optionnal filter
+if (props.filter) {
+    allImages = allImages.filter(props.filter)
 }
 
 // remove falsy links and deduplicate
