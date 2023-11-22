@@ -216,8 +216,8 @@ function injectProductStructuredData(product: Product) {
       offers: {
         "@type": "Offer",
         url: product.data.link,
-        priceCurrency: product.data.price?.currency,
-        price: product.data.price?.value,
+        priceCurrency: product.data.salePrice?.currency || product.data.price?.currency,
+        price: product.data.salePrice?.value || product.data.price?.value,
       }
     });
   }
