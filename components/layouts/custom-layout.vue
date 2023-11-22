@@ -1,57 +1,39 @@
 <script setup lang="ts">
 const props = defineProps(layoutProps);
-
-/* interface GlobalLayout {
-  breadcrumb: {
-    enable: true;
-  };
-  banners: {
-    enable: true;
-    backgroundColor: string;
-    textColor: string;
-    bannerHTML: string;
-    bannerImage: string;
-  };
-  crossSell: {
-    enable: true;
-    crossSellData?: CrossSellData;
-    dataKey?: string;
-  };
-  recoSlider: {
-    enable: true;
-  };
-} */
+const product = useProduct();
 
 const globalComponent = {
   stickyATC: {
-    enable: true
+    enable: true,
   },
+  mainProductLight: true,
   mainReco: {
     enable: true,
+    highFilters: true,
     params: {
       limit: 24,
-      deduplicate: 'itemGroupId',
+      deduplicate: "itemGroupId",
       filterRules: [
         [
           {
-            criteria: 'productType',
-            operator: 'EQUAL',
-            baseProductValue: 'productType',
+            criteria: "productType",
+            operator: "EQUAL",
+            baseProductValue: "productType",
           },
         ],
       ],
       sortRules: [
         [
           {
-            criteria: 'salePrice',
-            operator: 'LOWER',
-            valueCriteria: 'price',
+            criteria: "salePrice",
+            operator: "LOWER",
+            valueCriteria: "price",
           },
         ],
       ],
     },
-  }
-}
+  },
+};
 
 const config = {
   prependHeader: [
@@ -161,9 +143,16 @@ const config = {
     },
   ],
   appendMainProduct: [],
+  appendMainReco: [],
 };
 
 let { data: filterProducts } = props.filter.results;
+
+// global singleton to ensure only a single dropdown is open on mobile
+const mobileFilterOpen = useState<(() => void) | null>(
+  "responsiveAsideItemSingleton",
+  () => null
+);
 </script>
 
 <template>
@@ -207,28 +196,114 @@ let { data: filterProducts } = props.filter.results;
           <slot :name="name" v-bind="scope"></slot>
         </template>
       </RecoSlider>
-      Après reco
     </div>
 
-    <main id="main-product">
-      <slot name="main-product-light">
-        <slot name="main-product-light-header"></slot>
+    <div v-if="globalComponent.mainReco.highFilters">
+      <div
+        id="filters-aside"
+        :class="[
+          mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll',
+        ]"
+      >
+        <slot name="filters-aside" />
+      </div>
+      <MainProduct :light="globalComponent.mainProductLight">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope"></slot>
+        </template>
+      </MainProduct>
+      <div
+        v-for="(element, i) in config.appendMainProduct"
+        :id="element.type"
+        :key="'appendmainProduct_' + i"
+      >
+        <slot
+          v-if="element.options.enable"
+          :name="element.type"
+          :options="element.options"
+        />
+        <RecoSlider
+          v-if="element.type === 'reco-slider' && element.options.enable"
+          :slider-props="{
+            autoscroll: element.options.autoScroll,
+            scrollSpeed: element.options.scrollSpeed,
+          }"
+          :algo="element.options.algo"
+        >
+          <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+          </template>
+        </RecoSlider>
+      </div>
+    </div>
+    <template v-else>
+      <MainProduct :light="globalComponent.mainProductLight">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope"></slot>
+        </template>
+      </MainProduct>
+      <div
+        v-for="(element, i) in config.appendMainProduct"
+        :id="element.type"
+        :key="'appendmainProduct_' + i"
+      >
+        <slot
+          v-if="element.options.enable"
+          :name="element.type"
+          :options="element.options"
+        />
+        <RecoSlider
+          v-if="element.type === 'reco-slider' && element.options.enable"
+          :slider-props="{
+            autoscroll: element.options.autoScroll,
+            scrollSpeed: element.options.scrollSpeed,
+          }"
+          :algo="element.options.algo"
+        >
+          <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+          </template>
+        </RecoSlider>
+      </div>
+      <div id="filters-header">
+        <slot name="filters-header"></slot>
+      </div>
 
-        <slot name="main-product-light-aside"></slot>
-
-        <div>
-          <slot name="main-product-light-image"></slot>
+      <div id="filters">
+        <div
+          id="filters-aside"
+          :class="[
+            mobileFilterOpen != null
+              ? 'overflow-x-hidden'
+              : 'overflow-x-scroll',
+          ]"
+        >
+          <slot name="filters-aside"></slot>
         </div>
-        <div>
-          <slot name="main-product-light-description"></slot>
+        <div id="filters-content">
+          <div id="filters-content-header">
+            <slot name="filters-content-header"></slot>
+          </div>
+          <div>
+            <slot
+              v-if="filterProducts?.length"
+              name="filters-content-grid-item"
+              v-for="(item, index) in filterProducts"
+              :key="item.id ? item.id : JSON.stringify(item)"
+              :item="item"
+              :index="index"
+            ></slot>
+            <slot v-else name="filters-no-results"></slot>
+          </div>
+          <div id="filters-pagination">
+            <slot name="filters-pagination"></slot>
+          </div>
         </div>
-
-        <slot name="main-product-light-footer"></slot>
-      </slot>
-    </main>
+      </div>
+    </template>
 
     <div
-      v-for="(element, i) in config.appendMainProduct"
+      v-for="(element, i) in config.appendMainReco"
       :id="element.type"
       :key="'appendmainProduct_' + i"
     >
@@ -249,35 +324,6 @@ let { data: filterProducts } = props.filter.results;
           <slot :name="name" v-bind="scope"></slot>
         </template>
       </RecoSlider>
-    </div>
-
-    <div id="filters-header">
-      <slot name="filters-header"></slot>
-    </div>
-
-    <div id="filters">
-      <div id="filters-aside">
-        <slot name="filters-aside"></slot>
-      </div>
-      <div id="filters-content">
-        <div id="filters-content-header">
-          <slot name="filters-content-header"></slot>
-        </div>
-        <div>
-          <slot
-            v-if="filterProducts?.length"
-            name="filters-content-grid-item"
-            v-for="(item, index) in filterProducts"
-            :key="item.id ? item.id : JSON.stringify(item)"
-            :item="item"
-            :index="index"
-          ></slot>
-          <slot v-else name="filters-no-results"></slot>
-        </div>
-        <div id="filters-pagination">
-          <slot name="filters-pagination"></slot>
-        </div>
-      </div>
     </div>
 
     <footer id="footer">
