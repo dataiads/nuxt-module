@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   // @ts-ignore
   modules: [
     "@nuxtjs/tailwindcss",
-    "@nuxt/image-edge",
+    "@nuxt/image",
     "@vueuse/nuxt",
   ],
 
