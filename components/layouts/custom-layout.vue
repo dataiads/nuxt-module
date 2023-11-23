@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const props = defineProps(layoutProps);
 const product = useProduct();
 
 const globalComponent = {
@@ -10,7 +9,70 @@ const globalComponent = {
   mainReco: {
     enable: true,
     highFilters: true,
+    filters: [
+      {
+        title: "productType",
+        elements: [
+          {
+            component: "autolist-checkbox",
+            props: {
+              criteria: "productType",
+              operator: "EQUAL",
+            },
+          },
+        ],
+      },
+      {
+        title: "color",
+        elements: [
+          {
+            component: "autolist-checkbox",
+            props: {
+              criteria: "color",
+              operator: "EQUAL",
+            },
+          },
+        ],
+      },
+      {
+        title: "price",
+        elements: [
+          {
+            component: "range",
+            props: {
+              criteria: "price",
+              min: "0",
+              minPlaceholder: "Min €",
+              max: "10000",
+              maxPlaceholder: "Max €",
+            },
+          },
+          {
+            component: "checkbox",
+            props: {
+              criteria: "salePrice",
+              operator: "LOWER",
+              "value-criteria": "price",
+              label: "En promotion",
+            },
+          },
+        ],
+      },
+      {
+        title: "size",
+        elements: [
+          {
+            component: "autolist-checkbox",
+            props: {
+              criteria: "size",
+              operator: "EQUAL",
+            },
+          },
+        ],
+      },
+    ],
     params: {
+      criteriaValues: ["size", "color", "productType"],
       limit: 24,
       deduplicate: "itemGroupId",
       filterRules: [
@@ -146,13 +208,28 @@ const config = {
   appendMainReco: [],
 };
 
-let { data: filterProducts } = props.filter.results;
-
 // global singleton to ensure only a single dropdown is open on mobile
 const mobileFilterOpen = useState<(() => void) | null>(
   "responsiveAsideItemSingleton",
   () => null
 );
+
+const filter = useFilterState();
+
+let { data: filterProducts } = filter.results;
+
+onMounted(() => {
+  // scroll top of the filters when returning less results
+  watch(filterProducts, (newData, oldData) => {
+    if (
+      globalComponent.mainReco.highFilters &&
+      oldData &&
+      newData.length < oldData.length
+    ) {
+      document.querySelector("#filters")?.scrollIntoView();
+    }
+  });
+});
 </script>
 
 <template>
@@ -197,45 +274,75 @@ const mobileFilterOpen = useState<(() => void) | null>(
         </template>
       </RecoSlider>
     </div>
-
-    <div v-if="globalComponent.mainReco.highFilters">
-      <div
-        id="filters-aside"
-        :class="[
-          mobileFilterOpen != null ? 'overflow-x-hidden' : 'overflow-x-scroll',
-        ]"
-      >
-        <slot name="filters-aside" />
+    <template v-if="globalComponent.mainReco.highFilters">
+      <div id="filters-header">
+        <slot name="filters-header"></slot>
       </div>
-      <MainProduct :light="globalComponent.mainProductLight">
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
-        </template>
-      </MainProduct>
-      <div
-        v-for="(element, i) in config.appendMainProduct"
-        :id="element.type"
-        :key="'appendmainProduct_' + i"
-      >
-        <slot
-          v-if="element.options.enable"
-          :name="element.type"
-          :options="element.options"
-        />
-        <RecoSlider
-          v-if="element.type === 'reco-slider' && element.options.enable"
-          :slider-props="{
-            autoscroll: element.options.autoScroll,
-            scrollSpeed: element.options.scrollSpeed,
-          }"
-          :algo="element.options.algo"
+      <div>
+        <div
+          id="filters-aside"
+          :class="[
+            mobileFilterOpen != null
+              ? 'overflow-x-hidden'
+              : 'overflow-x-scroll',
+          ]"
         >
+          <slot name="filters-aside" />
+        </div>
+        <MainProduct :light="globalComponent.mainProductLight">
           <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
           </template>
-        </RecoSlider>
+        </MainProduct>
+
+        <div id="filters">
+          <div id="filters-content">
+            <div id="filters-content-header">
+              <slot name="filters-content-header"></slot>
+            </div>
+            <div>
+              <slot
+                v-if="filterProducts?.length"
+                name="filters-content-grid-item"
+                v-for="(item, index) in filterProducts"
+                :key="item.id ? item.id : JSON.stringify(item)"
+                :item="item"
+                :index="index"
+              ></slot>
+              <slot v-else name="filters-no-results"></slot>
+            </div>
+            <div id="filters-pagination">
+              <slot name="filters-pagination"></slot>
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-for="(element, i) in config.appendMainProduct"
+          :id="element.type"
+          :key="'appendmainProduct_' + i"
+        >
+          <slot
+            v-if="element.options.enable"
+            :name="element.type"
+            :options="element.options"
+          />
+          <RecoSlider
+            v-if="element.type === 'reco-slider' && element.options.enable"
+            :slider-props="{
+              autoscroll: element.options.autoScroll,
+              scrollSpeed: element.options.scrollSpeed,
+            }"
+            :algo="element.options.algo"
+          >
+            <template v-for="(_, name) in $slots" #[name]="scope">
+              <slot :name="name" v-bind="scope"></slot>
+            </template>
+          </RecoSlider>
+        </div>
       </div>
-    </div>
+    </template>
+
     <template v-else>
       <MainProduct :light="globalComponent.mainProductLight">
         <template v-for="(_, name) in $slots" #[name]="scope">
