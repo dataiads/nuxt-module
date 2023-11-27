@@ -103,143 +103,133 @@ const config = {
   preHeader: [
     {
       type: "banner",
-      options: {
-        enable: true,
-        interval: 4000,
-        banners: [{ text: "RETRAIT ET LIVRAISON OFFERTE 1h magasin" }],
-      },
+      enable: true,
+      interval: 4000,
+      banners: [{ text: "RETRAIT ET LIVRAISON OFFERTE 1h magasin" }],
     },
   ],
   postHeader: [
     {
       type: "breadcrumb",
-      options: {
-        enable: true,
-      },
+      enable: true,
     },
     {
       type: "reco-slider",
-      options: {
-        enable: true,
-        autoScroll: true,
-        scrollSpeed: 7,
-        algo: {
-          baseRules: [
-            [
-              {
-                criteria: "productType",
-                operator: "EQUAL",
-                baseProductValue: "productType",
-              },
-            ],
-            [
-              {
-                criteria: "channel",
-                operator: "EQUAL",
-                baseProductValue: "channel",
-              },
-            ],
+      enable: true,
+      autoScroll: true,
+      scrollSpeed: 7,
+      algo: {
+        baseRules: [
+          [
+            {
+              criteria: "productType",
+              operator: "EQUAL",
+              baseProductValue: "productType",
+            },
           ],
-          sortRules: [
-            [
-              {
-                criteria: "salePrice",
-                operator: "LOWER",
-                valueCriteria: "price",
-              },
-            ],
+          [
+            {
+              criteria: "channel",
+              operator: "EQUAL",
+              baseProductValue: "channel",
+            },
           ],
-        },
+        ],
+        sortRules: [
+          [
+            {
+              criteria: "salePrice",
+              operator: "LOWER",
+              valueCriteria: "price",
+            },
+          ],
+        ],
       },
     },
     {
       type: "cross-sell",
-      options: {
-        enable: true,
-        crossSellData: {
-          Demo: [
-            {
-              text: "Nouvelle collection",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/files/big_727593_5110_V1_1080x.png?v=1631004631",
-            },
-            {
-              text: "Vestes et Manteaux",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/727407_2200_V5_600x.jpg?v=1631027312",
-            },
-            {
-              text: "Tee-shirts",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/727593_9010_V4_600x.jpg?v=1631003250",
-            },
-            {
-              text: "Chemises",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/725348_5080_V4_470x.jpg?v=1631002065",
-            },
-            {
-              text: "Pantalons",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/724246_1400_V3_2048x2048.jpg?v=1631027254",
-            },
-            {
-              text: "Costumes",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/723014_8080_V1_600x.jpg?v=1631027500",
-            },
-            {
-              text: "Accessoires",
-              link: "",
-              image:
-                "https://shop.dataiads.io/cdn/shop/products/727872_7550_V1_470x.jpg?v=1631089842",
-            },
-          ],
-        },
-        dataKey: "",
+      enable: true,
+      crossSellData: {
+        Demo: [
+          {
+            text: "Nouvelle collection",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/files/big_727593_5110_V1_1080x.png?v=1631004631",
+          },
+          {
+            text: "Vestes et Manteaux",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/727407_2200_V5_600x.jpg?v=1631027312",
+          },
+          {
+            text: "Tee-shirts",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/727593_9010_V4_600x.jpg?v=1631003250",
+          },
+          {
+            text: "Chemises",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/725348_5080_V4_470x.jpg?v=1631002065",
+          },
+          {
+            text: "Pantalons",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/724246_1400_V3_2048x2048.jpg?v=1631027254",
+          },
+          {
+            text: "Costumes",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/723014_8080_V1_600x.jpg?v=1631027500",
+          },
+          {
+            text: "Accessoires",
+            link: "",
+            image:
+              "https://shop.dataiads.io/cdn/shop/products/727872_7550_V1_470x.jpg?v=1631089842",
+          },
+        ],
       },
+      dataKey: "",
     },
   ],
   postMainProduct: [
     {
       type: "reco-slider",
-      options: {
-        enable: true,
-        autoScroll: true,
-        scrollSpeed: 7,
-        algo: {
-          baseRules: [
-            [
-              {
-                criteria: "productType",
-                operator: "EQUAL",
-                baseProductValue: "productType",
-              },
-            ],
-            [
-              {
-                criteria: "channel",
-                operator: "EQUAL",
-                baseProductValue: "channel",
-              },
-            ],
+      enable: true,
+      autoScroll: true,
+      scrollSpeed: 7,
+      algo: {
+        baseRules: [
+          [
+            {
+              criteria: "productType",
+              operator: "EQUAL",
+              baseProductValue: "productType",
+            },
           ],
-          sortRules: [
-            [
-              {
-                criteria: "salePrice",
-                operator: "LOWER",
-                valueCriteria: "price",
-              },
-            ],
+          [
+            {
+              criteria: "channel",
+              operator: "EQUAL",
+              baseProductValue: "channel",
+            },
           ],
-        },
+        ],
+        sortRules: [
+          [
+            {
+              criteria: "salePrice",
+              operator: "LOWER",
+              valueCriteria: "price",
+            },
+          ],
+        ],
       },
     },
   ],
@@ -279,9 +269,9 @@ onMounted(() => {
       :key="'prependheader_' + i"
     >
       <slot
-        v-if="element.options.enable"
+        v-if="element.enable"
         :name="element.type"
-        :options="element.options"
+        :element="element"
       />
     </div>
 
@@ -295,17 +285,17 @@ onMounted(() => {
       :key="'postheader_' + i"
     >
       <slot
-        v-if="element.options.enable"
+        v-if="element.enable"
         :name="element.type"
-        :options="element.options"
+        :options="element"
       />
       <RecoSlider
-        v-if="element.type === 'reco-slider' && element.options.enable"
+        v-if="element.type === 'reco-slider' && element.enable"
         :slider-props="{
-          autoscroll: element.options.autoScroll,
-          scrollSpeed: element.options.scrollSpeed,
+          autoscroll: element.autoScroll,
+          scrollSpeed: element.scrollSpeed,
         }"
-        :algo="element.options.algo"
+        :algo="element.algo"
       >
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope"></slot>
@@ -349,7 +339,9 @@ onMounted(() => {
               <div id="filters-content-header">
                 <slot name="filters-content-header"></slot>
               </div>
-              <div class="grid grid-cols-[var(--catalog-grid-cols)] md:grid-cols-[var(--md-catalog-grid-cols)] lg:grid-cols-[var(--lg-catalog-grid-cols)] xl:grid-cols-[var(--xl-catalog-grid-cols)] 2xl:grid-cols-[var(--2xl-catalog-grid-cols)] 3xl:grid-cols-[var(--3xl-catalog-grid-cols)] gap-[var(--catalog-grid-gap)] md:gap-[var(--md-catalog-grid-gap)] lg:gap-[var(--lg-catalog-grid-gap)] xl:gap-[var(--xl-catalog-grid-gap)] 2xl:gap-[var(--2xl-catalog-grid-gap)] 3xl:gap-[var(--3xl-catalog-grid-gap)]">
+              <div
+                class="grid grid-cols-[var(--catalog-grid-cols)] md:grid-cols-[var(--md-catalog-grid-cols)] lg:grid-cols-[var(--lg-catalog-grid-cols)] xl:grid-cols-[var(--xl-catalog-grid-cols)] 2xl:grid-cols-[var(--2xl-catalog-grid-cols)] 3xl:grid-cols-[var(--3xl-catalog-grid-cols)] gap-[var(--catalog-grid-gap)] md:gap-[var(--md-catalog-grid-gap)] lg:gap-[var(--lg-catalog-grid-gap)] xl:gap-[var(--xl-catalog-grid-gap)] 2xl:gap-[var(--2xl-catalog-grid-gap)] 3xl:gap-[var(--3xl-catalog-grid-gap)]"
+              >
                 <slot
                   v-if="filterProducts?.length"
                   name="filters-content-grid-item"
@@ -372,17 +364,17 @@ onMounted(() => {
             :key="'appendmainProduct_' + i"
           >
             <slot
-              v-if="element.options.enable"
+              v-if="element.enable"
               :name="element.type"
-              :options="element.options"
+              :options="element"
             />
             <RecoSlider
-              v-if="element.type === 'reco-slider' && element.options.enable"
+              v-if="element.type === 'reco-slider' && element.enable"
               :slider-props="{
-                autoscroll: element.options.autoScroll,
-                scrollSpeed: element.options.scrollSpeed,
+                autoscroll: element.autoScroll,
+                scrollSpeed: element.scrollSpeed,
               }"
-              :algo="element.options.algo"
+              :algo="element.algo"
             >
               <template v-for="(_, name) in $slots" #[name]="scope">
                 <slot :name="name" v-bind="scope"></slot>
@@ -405,17 +397,17 @@ onMounted(() => {
         :key="'appendmainProduct_' + i"
       >
         <slot
-          v-if="element.options.enable"
+          v-if="element.enable"
           :name="element.type"
-          :options="element.options"
+          :options="element"
         />
         <RecoSlider
-          v-if="element.type === 'reco-slider' && element.options.enable"
+          v-if="element.type === 'reco-slider' && element.enable"
           :slider-props="{
-            autoscroll: element.options.autoScroll,
-            scrollSpeed: element.options.scrollSpeed,
+            autoscroll: element.autoScroll,
+            scrollSpeed: element.scrollSpeed,
           }"
-          :algo="element.options.algo"
+          :algo="element.algo"
         >
           <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope"></slot>
@@ -470,17 +462,17 @@ onMounted(() => {
       :key="'appendmainProduct_' + i"
     >
       <slot
-        v-if="element.options.enable"
+        v-if="element.enable"
         :name="element.type"
         :options="element.options"
       />
       <RecoSlider
-        v-if="element.type === 'reco-slider' && element.options.enable"
+        v-if="element.type === 'reco-slider' && element.enable"
         :slider-props="{
-          autoscroll: element.options.autoScroll,
-          scrollSpeed: element.options.scrollSpeed,
+          autoscroll: element.autoScroll,
+          scrollSpeed: element.scrollSpeed,
         }"
-        :algo="element.options.algo"
+        :algo="element.algo"
       >
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope"></slot>
@@ -500,6 +492,6 @@ onMounted(() => {
 
 <style lang="scss">
 #filters {
-  @apply flex
+  @apply flex;
 }
 </style>
