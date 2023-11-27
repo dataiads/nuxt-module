@@ -1,240 +1,9 @@
 <script setup lang="ts">
 const product = useProduct();
 
-const globalComponent = ref({
-  stickyATC: {
-    enable: true,
-  },
-  mainProduct: {
-    light: true,
-  },
-  mainReco: {
-    showFilters: true,
-    highFilters: false,
-    filterParams: [
-      {
-        title: "productType",
-        elements: [
-          {
-            component: "autolist-checkbox",
-            props: {
-              criteria: "productType",
-              operator: "EQUAL",
-            },
-          },
-        ],
-      },
-      {
-        title: "color",
-        elements: [
-          {
-            component: "autolist-checkbox",
-            props: {
-              criteria: "color",
-              operator: "EQUAL",
-            },
-          },
-        ],
-      },
-      {
-        title: "price",
-        elements: [
-          {
-            component: "range",
-            props: {
-              criteria: "price",
-              min: "0",
-              minPlaceholder: "Min €",
-              max: "10000",
-              maxPlaceholder: "Max €",
-            },
-          },
-          {
-            component: "checkbox",
-            props: {
-              criteria: "salePrice",
-              operator: "LOWER",
-              "value-criteria": "price",
-              label: "En promotion",
-            },
-          },
-        ],
-      },
-      {
-        title: "size",
-        elements: [
-          {
-            component: "autolist-checkbox",
-            props: {
-              criteria: "size",
-              operator: "EQUAL",
-            },
-          },
-        ],
-      },
-    ],
-    algo: {
-      criteriaValues: ["size", "color", "productType"],
-      limit: 24,
-      deduplicate: "itemGroupId",
-      filterRules: [
-        [
-          {
-            criteria: "productType",
-            operator: "EQUAL",
-            baseProductValue: "productType",
-          },
-        ],
-      ],
-      sortRules: [
-        [
-          {
-            criteria: "salePrice",
-            operator: "LOWER",
-            valueCriteria: "price",
-          },
-        ],
-      ],
-    },
-  },
-});
+const layoutConfig = useLpoConfig().customLayout
 
-const config = {
-  preHeader: [
-    {
-      type: "banner",
-      enable: true,
-      interval: 4000,
-      banners: [{ text: "RETRAIT ET LIVRAISON OFFERTE 1h magasin" }],
-    },
-  ],
-  postHeader: [
-    {
-      type: "breadcrumb",
-      enable: true,
-    },
-    {
-      type: "reco-slider",
-      enable: true,
-      autoScroll: true,
-      scrollSpeed: 7,
-      algo: {
-        baseRules: [
-          [
-            {
-              criteria: "productType",
-              operator: "EQUAL",
-              baseProductValue: "productType",
-            },
-          ],
-          [
-            {
-              criteria: "channel",
-              operator: "EQUAL",
-              baseProductValue: "channel",
-            },
-          ],
-        ],
-        sortRules: [
-          [
-            {
-              criteria: "salePrice",
-              operator: "LOWER",
-              valueCriteria: "price",
-            },
-          ],
-        ],
-      },
-    },
-    {
-      type: "cross-sell",
-      enable: true,
-      crossSellData: {
-        Demo: [
-          {
-            text: "Nouvelle collection",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/files/big_727593_5110_V1_1080x.png?v=1631004631",
-          },
-          {
-            text: "Vestes et Manteaux",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/727407_2200_V5_600x.jpg?v=1631027312",
-          },
-          {
-            text: "Tee-shirts",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/727593_9010_V4_600x.jpg?v=1631003250",
-          },
-          {
-            text: "Chemises",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/725348_5080_V4_470x.jpg?v=1631002065",
-          },
-          {
-            text: "Pantalons",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/724246_1400_V3_2048x2048.jpg?v=1631027254",
-          },
-          {
-            text: "Costumes",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/723014_8080_V1_600x.jpg?v=1631027500",
-          },
-          {
-            text: "Accessoires",
-            link: "",
-            image:
-              "https://shop.dataiads.io/cdn/shop/products/727872_7550_V1_470x.jpg?v=1631089842",
-          },
-        ],
-      },
-      dataKey: "",
-    },
-  ],
-  postMainProduct: [
-    {
-      type: "reco-slider",
-      enable: true,
-      autoScroll: true,
-      scrollSpeed: 7,
-      algo: {
-        baseRules: [
-          [
-            {
-              criteria: "productType",
-              operator: "EQUAL",
-              baseProductValue: "productType",
-            },
-          ],
-          [
-            {
-              criteria: "channel",
-              operator: "EQUAL",
-              baseProductValue: "channel",
-            },
-          ],
-        ],
-        sortRules: [
-          [
-            {
-              criteria: "salePrice",
-              operator: "LOWER",
-              valueCriteria: "price",
-            },
-          ],
-        ],
-      },
-    },
-  ],
-  postMainReco: [],
-};
+console.log("CUSTOM LAYOUT CONFIG", layoutConfig)
 
 // global singleton to ensure only a single dropdown is open on mobile
 const mobileFilterOpen = useState<(() => void) | null>(
@@ -250,7 +19,7 @@ onMounted(() => {
   // scroll top of the filters when returning less results
   watch(filterProducts, (newData, oldData) => {
     if (
-      globalComponent.value.mainReco.highFilters &&
+      layoutConfig.mainReco.highFilters &&
       oldData &&
       newData.length < oldData.length
     ) {
@@ -264,7 +33,7 @@ onMounted(() => {
   <div class="lg:mx-auto">
     <!-- Prepend Header-->
     <div
-      v-for="(element, i) in config.preHeader"
+      v-for="(element, i) in layoutConfig.preHeader"
       :id="element.type"
       :key="'prependheader_' + i"
     >
@@ -280,7 +49,7 @@ onMounted(() => {
     </header>
 
     <div
-      v-for="(element, i) in config.postHeader"
+      v-for="(element, i) in layoutConfig.postHeader"
       :id="element.type"
       :key="'postheader_' + i"
     >
@@ -303,13 +72,13 @@ onMounted(() => {
       </RecoSlider>
     </div>
     <div>HIGH FILTERS</div>
-    <input v-model="globalComponent.mainReco.highFilters" type="checkbox" />
+    <input v-model="layoutConfig.mainReco.highFilters" type="checkbox" />
     <div>Show Filters</div>
-    <input v-model="globalComponent.mainReco.showFilters" type="checkbox" />
+    <input v-model="layoutConfig.mainReco.showFilters" type="checkbox" />
     <template
       v-if="
-        globalComponent.mainReco.showFilters &&
-        globalComponent.mainReco.highFilters
+        layoutConfig.mainReco.showFilters &&
+        layoutConfig.mainReco.highFilters
       "
     >
       <div id="filters-header">
@@ -328,7 +97,7 @@ onMounted(() => {
           <slot name="filters-aside" />
         </div>
         <div>
-          <MainProduct :light="globalComponent.mainProduct.light">
+          <MainProduct :light="layoutConfig.mainProduct.light">
             <template v-for="(_, name) in $slots" #[name]="scope">
               <slot :name="name" v-bind="scope"></slot>
             </template>
@@ -359,7 +128,7 @@ onMounted(() => {
           </div>
 
           <div
-            v-for="(element, i) in config.postMainProduct"
+            v-for="(element, i) in layoutConfig.postMainProduct"
             :id="element.type"
             :key="'appendmainProduct_' + i"
           >
@@ -386,13 +155,13 @@ onMounted(() => {
     </template>
 
     <template v-else>
-      <MainProduct :light="globalComponent.mainProduct.light">
+      <MainProduct :light="layoutConfig.mainProduct.light">
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope"></slot>
         </template>
       </MainProduct>
       <div
-        v-for="(element, i) in config.postMainProduct"
+        v-for="(element, i) in layoutConfig.postMainProduct"
         :id="element.type"
         :key="'appendmainProduct_' + i"
       >
@@ -414,7 +183,7 @@ onMounted(() => {
           </template>
         </RecoSlider>
       </div>
-      <template v-if="globalComponent.mainReco.showFilters">
+      <template v-if="layoutConfig.mainReco.showFilters">
         <div id="filters-header">
           <slot name="filters-header"></slot>
         </div>
@@ -457,7 +226,7 @@ onMounted(() => {
     </template>
 
     <div
-      v-for="(element, i) in config.postMainReco"
+      v-for="(element, i) in layoutConfig.postMainReco"
       :id="element.type"
       :key="'appendmainProduct_' + i"
     >
@@ -484,7 +253,7 @@ onMounted(() => {
       <slot name="footer" />
     </footer>
 
-    <StickyFooter v-if="globalComponent.stickyATC.enable">
+    <StickyFooter v-if="layoutConfig.stickyAtc.enable">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
   </div>
