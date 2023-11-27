@@ -35,9 +35,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 // use all available images, ordered by priority
 let allImages: string[] = []
-if (props.product?.extraData?.additionalImageLinks?.length) {
+if (props.product?.extraData?.additionalImageLinks?.length || props.product?.extraData?.imageLink) {
     // use collected images in priority
-    allImages = allImages.concat(props.product.extraData.additionalImageLinks)
+    if (props.product?.extraData?.imageLink) {
+        allImages.push(props.product.extraData.imageLink)
+    }
+    if (props.product?.extraData?.additionalImageLinks) {
+        allImages = allImages.concat(props.product.extraData.additionalImageLinks)
+    }
 } else {
     // fallback on feed images otherwise
     if (props.product?.data?.imageLink) {
