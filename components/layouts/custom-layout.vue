@@ -1,15 +1,17 @@
 <script setup lang="ts">
 const product = useProduct();
 
-const globalComponent = {
+const globalComponent = ref({
   stickyATC: {
     enable: true,
   },
-  mainProductLight: true,
+  mainProduct: {
+    light: true,
+  },
   mainReco: {
-    enable: true,
-    highFilters: true,
-    filters: [
+    showFilters: true,
+    highFilters: false,
+    filterParams: [
       {
         title: "productType",
         elements: [
@@ -71,7 +73,7 @@ const globalComponent = {
         ],
       },
     ],
-    params: {
+    algo: {
       criteriaValues: ["size", "color", "productType"],
       limit: 24,
       deduplicate: "itemGroupId",
@@ -95,10 +97,10 @@ const globalComponent = {
       ],
     },
   },
-};
+});
 
 const config = {
-  prependHeader: [
+  preHeader: [
     {
       type: "banner",
       options: {
@@ -108,7 +110,7 @@ const config = {
       },
     },
   ],
-  appendHeader: [
+  postHeader: [
     {
       type: "breadcrumb",
       options: {
@@ -204,8 +206,44 @@ const config = {
       },
     },
   ],
-  appendMainProduct: [],
-  appendMainReco: [],
+  postMainProduct: [
+    {
+      type: "reco-slider",
+      options: {
+        enable: true,
+        autoScroll: true,
+        scrollSpeed: 7,
+        algo: {
+          baseRules: [
+            [
+              {
+                criteria: "productType",
+                operator: "EQUAL",
+                baseProductValue: "productType",
+              },
+            ],
+            [
+              {
+                criteria: "channel",
+                operator: "EQUAL",
+                baseProductValue: "channel",
+              },
+            ],
+          ],
+          sortRules: [
+            [
+              {
+                criteria: "salePrice",
+                operator: "LOWER",
+                valueCriteria: "price",
+              },
+            ],
+          ],
+        },
+      },
+    },
+  ],
+  postMainReco: [],
 };
 
 // global singleton to ensure only a single dropdown is open on mobile
@@ -222,7 +260,7 @@ onMounted(() => {
   // scroll top of the filters when returning less results
   watch(filterProducts, (newData, oldData) => {
     if (
-      globalComponent.mainReco.highFilters &&
+      globalComponent.value.mainReco.highFilters &&
       oldData &&
       newData.length < oldData.length
     ) {
@@ -236,7 +274,7 @@ onMounted(() => {
   <div class="lg:mx-auto">
     <!-- Prepend Header-->
     <div
-      v-for="(element, i) in config.prependHeader"
+      v-for="(element, i) in config.preHeader"
       :id="element.type"
       :key="'prependheader_' + i"
     >
@@ -252,7 +290,7 @@ onMounted(() => {
     </header>
 
     <div
-      v-for="(element, i) in config.appendHeader"
+      v-for="(element, i) in config.postHeader"
       :id="element.type"
       :key="'postheader_' + i"
     >
@@ -274,11 +312,20 @@ onMounted(() => {
         </template>
       </RecoSlider>
     </div>
-    <template v-if="globalComponent.mainReco.highFilters">
+    <div>HIGH FILTERS</div>
+    <input v-model="globalComponent.mainReco.highFilters" type="checkbox" />
+    <div>Show Filters</div>
+    <input v-model="globalComponent.mainReco.showFilters" type="checkbox" />
+    <template
+      v-if="
+        globalComponent.mainReco.showFilters &&
+        globalComponent.mainReco.highFilters
+      "
+    >
       <div id="filters-header">
         <slot name="filters-header"></slot>
       </div>
-      <div>
+      <div class="flex flex-row">
         <div
           id="filters-aside"
           :class="[
@@ -286,71 +333,74 @@ onMounted(() => {
               ? 'overflow-x-hidden'
               : 'overflow-x-scroll',
           ]"
+          class="shrink-0"
         >
           <slot name="filters-aside" />
         </div>
-        <MainProduct :light="globalComponent.mainProductLight">
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-          </template>
-        </MainProduct>
-
-        <div id="filters">
-          <div id="filters-content">
-            <div id="filters-content-header">
-              <slot name="filters-content-header"></slot>
-            </div>
-            <div>
-              <slot
-                v-if="filterProducts?.length"
-                name="filters-content-grid-item"
-                v-for="(item, index) in filterProducts"
-                :key="item.id ? item.id : JSON.stringify(item)"
-                :item="item"
-                :index="index"
-              ></slot>
-              <slot v-else name="filters-no-results"></slot>
-            </div>
-            <div id="filters-pagination">
-              <slot name="filters-pagination"></slot>
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-for="(element, i) in config.appendMainProduct"
-          :id="element.type"
-          :key="'appendmainProduct_' + i"
-        >
-          <slot
-            v-if="element.options.enable"
-            :name="element.type"
-            :options="element.options"
-          />
-          <RecoSlider
-            v-if="element.type === 'reco-slider' && element.options.enable"
-            :slider-props="{
-              autoscroll: element.options.autoScroll,
-              scrollSpeed: element.options.scrollSpeed,
-            }"
-            :algo="element.options.algo"
-          >
+        <div>
+          <MainProduct :light="globalComponent.mainProduct.light">
             <template v-for="(_, name) in $slots" #[name]="scope">
               <slot :name="name" v-bind="scope"></slot>
             </template>
-          </RecoSlider>
+          </MainProduct>
+
+          <div id="filters">
+            <div id="filters-content">
+              <div id="filters-content-header">
+                <slot name="filters-content-header"></slot>
+              </div>
+              <div class="grid grid-cols-[var(--catalog-grid-cols)] md:grid-cols-[var(--md-catalog-grid-cols)] lg:grid-cols-[var(--lg-catalog-grid-cols)] xl:grid-cols-[var(--xl-catalog-grid-cols)] 2xl:grid-cols-[var(--2xl-catalog-grid-cols)] 3xl:grid-cols-[var(--3xl-catalog-grid-cols)] gap-[var(--catalog-grid-gap)] md:gap-[var(--md-catalog-grid-gap)] lg:gap-[var(--lg-catalog-grid-gap)] xl:gap-[var(--xl-catalog-grid-gap)] 2xl:gap-[var(--2xl-catalog-grid-gap)] 3xl:gap-[var(--3xl-catalog-grid-gap)]">
+                <slot
+                  v-if="filterProducts?.length"
+                  name="filters-content-grid-item"
+                  v-for="(item, index) in filterProducts"
+                  :key="item.id ? item.id : JSON.stringify(item)"
+                  :item="item"
+                  :index="index"
+                ></slot>
+                <slot v-else name="filters-no-results"></slot>
+              </div>
+              <div id="filters-pagination">
+                <slot name="filters-pagination"></slot>
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-for="(element, i) in config.postMainProduct"
+            :id="element.type"
+            :key="'appendmainProduct_' + i"
+          >
+            <slot
+              v-if="element.options.enable"
+              :name="element.type"
+              :options="element.options"
+            />
+            <RecoSlider
+              v-if="element.type === 'reco-slider' && element.options.enable"
+              :slider-props="{
+                autoscroll: element.options.autoScroll,
+                scrollSpeed: element.options.scrollSpeed,
+              }"
+              :algo="element.options.algo"
+            >
+              <template v-for="(_, name) in $slots" #[name]="scope">
+                <slot :name="name" v-bind="scope"></slot>
+              </template>
+            </RecoSlider>
+          </div>
         </div>
       </div>
     </template>
 
     <template v-else>
-      <MainProduct :light="globalComponent.mainProductLight">
+      <MainProduct :light="globalComponent.mainProduct.light">
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope"></slot>
         </template>
       </MainProduct>
       <div
-        v-for="(element, i) in config.appendMainProduct"
+        v-for="(element, i) in config.postMainProduct"
         :id="element.type"
         :key="'appendmainProduct_' + i"
       >
@@ -372,45 +422,50 @@ onMounted(() => {
           </template>
         </RecoSlider>
       </div>
-      <div id="filters-header">
-        <slot name="filters-header"></slot>
-      </div>
+      <template v-if="globalComponent.mainReco.showFilters">
+        <div id="filters-header">
+          <slot name="filters-header"></slot>
+        </div>
 
-      <div id="filters">
-        <div
-          id="filters-aside"
-          :class="[
-            mobileFilterOpen != null
-              ? 'overflow-x-hidden'
-              : 'overflow-x-scroll',
-          ]"
-        >
-          <slot name="filters-aside"></slot>
+        <div id="filters">
+          <div
+            id="filters-aside"
+            :class="[
+              mobileFilterOpen != null
+                ? 'overflow-x-hidden'
+                : 'overflow-x-scroll',
+            ]"
+            class="shrink-0"
+          >
+            <slot name="filters-aside"></slot>
+          </div>
+          <div id="filters-content">
+            <div id="filters-content-header">
+              <slot name="filters-content-header"></slot>
+            </div>
+            <div
+              class="grid grid-cols-[var(--catalog-grid-cols)] md:grid-cols-[var(--md-catalog-grid-cols)] lg:grid-cols-[var(--lg-catalog-grid-cols)] xl:grid-cols-[var(--xl-catalog-grid-cols)] 2xl:grid-cols-[var(--2xl-catalog-grid-cols)] 3xl:grid-cols-[var(--3xl-catalog-grid-cols)] gap-[var(--catalog-grid-gap)] md:gap-[var(--md-catalog-grid-gap)] lg:gap-[var(--lg-catalog-grid-gap)] xl:gap-[var(--xl-catalog-grid-gap)] 2xl:gap-[var(--2xl-catalog-grid-gap)] 3xl:gap-[var(--3xl-catalog-grid-gap)]"
+            >
+              <slot
+                v-if="filterProducts?.length"
+                name="filters-content-grid-item"
+                v-for="(item, index) in filterProducts"
+                :key="item.id ? item.id : JSON.stringify(item)"
+                :item="item"
+                :index="index"
+              ></slot>
+              <slot v-else name="filters-no-results"></slot>
+            </div>
+            <div id="filters-pagination">
+              <slot name="filters-pagination"></slot>
+            </div>
+          </div>
         </div>
-        <div id="filters-content">
-          <div id="filters-content-header">
-            <slot name="filters-content-header"></slot>
-          </div>
-          <div>
-            <slot
-              v-if="filterProducts?.length"
-              name="filters-content-grid-item"
-              v-for="(item, index) in filterProducts"
-              :key="item.id ? item.id : JSON.stringify(item)"
-              :item="item"
-              :index="index"
-            ></slot>
-            <slot v-else name="filters-no-results"></slot>
-          </div>
-          <div id="filters-pagination">
-            <slot name="filters-pagination"></slot>
-          </div>
-        </div>
-      </div>
+      </template>
     </template>
 
     <div
-      v-for="(element, i) in config.appendMainReco"
+      v-for="(element, i) in config.postMainReco"
       :id="element.type"
       :key="'appendmainProduct_' + i"
     >
@@ -442,3 +497,9 @@ onMounted(() => {
     </StickyFooter>
   </div>
 </template>
+
+<style lang="scss">
+#filters {
+  @apply flex
+}
+</style>

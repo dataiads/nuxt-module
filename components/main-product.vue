@@ -18,7 +18,7 @@ withDefaults(defineProps<{ light: boolean }>(), { light: false });
       <slot name="main-product-footer"></slot>
     </slot>
   </main>
-  <main v-else>
+  <main v-else id="main-product">
     <slot name="main-product-light">
       <slot name="main-product-light-header"></slot>
 

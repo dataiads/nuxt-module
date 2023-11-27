@@ -21,7 +21,6 @@ const items = computed(() => Array.prototype.concat.apply([], slider.results.dat
 </script>
 <template>
   <div
-      id="reco-slider"
       v-if="items?.length"
     >
       <div>

@@ -7,7 +7,7 @@ const globalComponent = {
   mainReco: {
     enable: true,
     highFilters: true,
-    params: {
+    algo: {
       criteriaValues: ["size", "color", "productType"],
       limit: 24,
       deduplicate: "itemGroupId",
@@ -37,8 +37,8 @@ export default () => {
   const product = useProduct()
   return useStructuredRecommender({
     productId: product.value.id,
-    baseRules: globalComponent.mainReco.params.filterRules,
-    ...globalComponent.mainReco.params,
+    baseRules: globalComponent.mainReco.algo.filterRules,
+    ...globalComponent.mainReco.algo,
     fetchQuery: { type: "filter" },
   });
 }
