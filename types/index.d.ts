@@ -508,6 +508,43 @@ export interface StructuredRecommender {
   reset: () => void;
 }
 
+
+export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
+
+export interface RecoSliderParams {
+  type: "reco-slider";
+  enabled: boolean;
+  title: string;
+  algo: FilterParams;
+}
+
+export interface CrossSellParams {
+  type: "cross-sell";
+  enabled: boolean;
+  title: string;
+  key: CrossSellKey;
+  data: CrossSellData;
+}
+
+export interface BannerParams {
+  type: "banner";
+  enabled: boolean;
+  background: string;
+  interval: number;
+  elements: BannerElement[];
+}
+
+export interface BannerElement {
+  type: "html" | "message";
+  html: string;
+  text: string;
+  link: string;
+  color: string;
+  background: string;
+  yPadding: string;
+  fontSize: string;
+}
+
 export interface CustomLayout {
   header: HeaderParams;
   breadcrumbs: BradcrumbsParams;

@@ -32,49 +32,22 @@ onMounted(() => {
 <template>
   <div class="lg:mx-auto">
     <!-- Prepend Header-->
-    <div
-      v-for="(element, i) in layoutConfig.preHeader"
-      :id="element.type"
-      :key="'prependheader_' + i"
-    >
-      <slot
-        v-if="element.enable"
-        :name="element.type"
-        :element="element"
-      />
-    </div>
+    <CustomLayoutInserts :config="layoutConfig.preHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutInserts>
 
     <header id="header">
       <slot name="header" />
     </header>
 
-    <div
-      v-for="(element, i) in layoutConfig.postHeader"
-      :id="element.type"
-      :key="'postheader_' + i"
-    >
-      <slot
-        v-if="element.enable"
-        :name="element.type"
-        :options="element"
-      />
-      <RecoSlider
-        v-if="element.type === 'reco-slider' && element.enable"
-        :slider-props="{
-          autoscroll: element.autoScroll,
-          scrollSpeed: element.scrollSpeed,
-        }"
-        :algo="element.algo"
-      >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
-        </template>
-      </RecoSlider>
-    </div>
-    <div>HIGH FILTERS</div>
-    <input v-model="layoutConfig.mainReco.highFilters" type="checkbox" />
-    <div>Show Filters</div>
-    <input v-model="layoutConfig.mainReco.showFilters" type="checkbox" />
+    <CustomLayoutInserts :config="layoutConfig.preHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutInserts>
+
     <template
       v-if="
         layoutConfig.mainReco.showFilters &&
