@@ -20,7 +20,19 @@ const sliderProps = computed(() => ({
   autoscroll: props.config.autoscroll,
   scrollSpeed: props.config.scrollSpeed,
   absoluteArrows: props.config.absoluteArrows,
+  scrollerStyle: {
+    columnGap: props.config.columnGap,
+  },
 }));
+
+const rootClass = computed(() => ({
+    background: props.config.background,
+    padding: props.config.padding,
+}))
+
+const scrollerClass = computed(() => ({
+
+}))
 
 // Flatten the array
 const items = computed(() =>
@@ -30,7 +42,7 @@ const items = computed(() =>
 
 <template>
   <div v-if="items?.length">
-    <div>
+    <div :style="rootClass">
       <slot name="reco-slider-header"></slot>
       <div v-if="config.title">{{ config.title }}</div>
       <Slider v-bind="sliderProps" :items="items">
@@ -39,7 +51,7 @@ const items = computed(() =>
         </template>
         <template #previous-btn="scope">
           <template v-if="config.previousButton">
-            <img :src="config.previousButton" />
+            <img :src="config.previousButton" @click="scope.click" class="cursor-pointer"/>
           </template>
           <template v-else>
             <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
@@ -47,7 +59,7 @@ const items = computed(() =>
         </template>
         <template #next-btn="scope">
           <template v-if="config.nextButton">
-            <img :src="config.nextButton" />
+            <img :src="config.nextButton"  @click="scope.click" class="cursor-pointer"/>
           </template>
           <template v-else>
             <slot name="reco-slider-next-btn" v-bind="scope"></slot>

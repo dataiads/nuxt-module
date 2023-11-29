@@ -516,6 +516,14 @@ export interface RecoSliderParams {
   enabled: boolean;
   title: string;
   algo: FilterParams;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
+  background: string; 
+  previousButton: string;
+  nextButton: string;
+  columnGap: string;
+  padding: string;
 }
 
 export interface CrossSellParams {
