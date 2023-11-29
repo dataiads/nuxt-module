@@ -1,37 +1,45 @@
-
-
 <script setup lang="ts">
-import { BannerElement, BannerParams } from '~/types';
-import Elements from '../filters/elements.vue';
+import { BannerElement, BannerParams } from "~/types";
 
 const props = defineProps<{
-    config: BannerParams;
+  config: BannerParams;
 }>();
 
-const listClass = computed(() => ({
-    background: props.config.background,
-}))
+const rootStyle = computed(() => ({
+  background: props.config.background,
+}));
 
-const messageClass = (element: BannerElement) => ({
-    background: element.background,
-    color: element.color,
-    paddingTop: element.yPadding,
-    paddingBottom: element.yPadding,
-    fontSize: element.fontSize,
-})
+const messageStyle = (element: BannerElement) => ({
+  background: element.background,
+  color: element.color,
+  paddingTop: element.yPadding,
+  paddingBottom: element.yPadding,
+  fontSize: element.fontSize,
+});
+
+const activeIndex = ref(0);
+const element = computed(() => props.config.elements[activeIndex.value]);
+
+if (props.config.interval > 0) {
+  setInterval(() => {
+    activeIndex.value = (activeIndex.value + 1) % props.config.elements.length;
+  }, props.config.interval);
+}
 </script>
 
 <template>
-    <ul class="flex flex-col flex-nowrap snap-y scrollbar-hide list-none items-justify" :class="listClass">
-        <template v-for="element in config.elements">
-            <li v-if="element.type === 'html'" v-html="element.html" class="snap-center"></li>
+  <div :style="rootStyle">
+    <div v-if="element.type === 'html'" v-html="element.html"></div>
 
-            <li v-else-if="element.type === 'message'" class="snap-center flex flex-row justify-center items-center" :class="messageClass(element)">
-                <a :href="element.link" v-if="element.link">
-                    <span>{{ element.text }}</span>
-                </a>
-                <span v-else>{{ element.text }}</span>
-            </li>
-        </template>
-    </ul>
+    <div
+      v-else-if="element.type === 'message'"
+      class="flex flex-row justify-center items-center"
+      :style="messageStyle(element)"
+    >
+      <a :href="element.link" v-if="element.link">
+        <span>{{ element.text }}</span>
+      </a>
+      <span v-else>{{ element.text }}</span>
+    </div>
+  </div>
 </template>

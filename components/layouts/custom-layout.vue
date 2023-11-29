@@ -42,7 +42,7 @@ onMounted(() => {
       <slot name="header" />
     </header>
 
-    <CustomLayoutInserts :config="layoutConfig.preHeader">
+    <CustomLayoutInserts :config="layoutConfig.postHeader">
       <template v-for="(_, name) in $slots" #[name]="scope">
         <slot :name="name" v-bind="scope"></slot>
       </template>
