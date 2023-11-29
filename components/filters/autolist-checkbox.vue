@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<{
   inputClass?: string
   labelClass?: string
   operator?: string
+  limit?: number
 }>(), {
   operator: "EQUAL",
   wrapperDiv: false,
@@ -42,6 +43,10 @@ const sortedValues = computed(() => {
     } else if (props.valuesFilter instanceof Function) {
       keys = keys.filter(props.valuesFilter)
     }
+  }
+
+  if (props.limit) {
+    keys = keys.slice(0, props.limit);
   }
 
   if (props.sort) {
