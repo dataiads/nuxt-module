@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.225](https://github.com/dataiads/nuxt-module/compare/v0.2.224...v0.2.225) (2023-11-29)
+
+
+### Features
+
+* - autolist-checkbox limit prop ([#44](https://github.com/dataiads/nuxt-module/issues/44)) ([0376f1c](https://github.com/dataiads/nuxt-module/commit/0376f1c9e76e23e9ce9785714b75ae84debae07c))
+
 ### [0.2.224](https://github.com/dataiads/nuxt-module/compare/v0.2.223...v0.2.224) (2023-11-27)
 
 ### [0.2.223](https://github.com/dataiads/nuxt-module/compare/v0.2.222...v0.2.223) (2023-11-23)
