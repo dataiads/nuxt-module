@@ -46,7 +46,7 @@ const sortedValues = computed(() => {
   }
 
   if (props.limit) {
-    keys=keys.splice(0, props.limit)
+    keys = keys.slice(0, props.limit);
   }
 
   if (props.sort) {
