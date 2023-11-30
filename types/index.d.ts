@@ -519,11 +519,10 @@ export interface RecoSliderParams {
   autoscroll: boolean;
   scrollSpeed: number;
   absoluteArrows: boolean;
-  background: string; 
   previousButton: string;
   nextButton: string;
   columnGap: string;
-  padding: string;
+  style: StyleValue;
 }
 
 export interface CrossSellParams {
@@ -537,9 +536,9 @@ export interface CrossSellParams {
 export interface BannerParams {
   type: "banner";
   enabled: boolean;
-  background: string;
   interval: number;
   elements: BannerElement[];
+  style: StyleValue;
 }
 
 export interface BannerElement {
@@ -547,10 +546,7 @@ export interface BannerElement {
   html: string;
   text: string;
   link: string;
-  color: string;
-  background: string;
-  yPadding: string;
-  fontSize: string;
+  style: StyleValue;
 }
 
 export interface CustomLayout {

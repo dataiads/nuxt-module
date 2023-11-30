@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NuxtConfigSchema } from "@nuxt/schema";
 import { RecoSliderParams } from "~/types";
 
 const props = defineProps<{
@@ -25,15 +26,6 @@ const sliderProps = computed(() => ({
   },
 }));
 
-const rootClass = computed(() => ({
-    background: props.config.background,
-    padding: props.config.padding,
-}))
-
-const scrollerClass = computed(() => ({
-
-}))
-
 // Flatten the array
 const items = computed(() =>
   Array.prototype.concat.apply([], slider.results.data.value)
@@ -42,7 +34,7 @@ const items = computed(() =>
 
 <template>
   <div v-if="items?.length">
-    <div :style="rootClass">
+    <div :style="config.style">
       <slot name="reco-slider-header"></slot>
       <div v-if="config.title">{{ config.title }}</div>
       <Slider v-bind="sliderProps" :items="items">

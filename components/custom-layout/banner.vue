@@ -5,18 +5,6 @@ const props = defineProps<{
   config: BannerParams;
 }>();
 
-const rootStyle = computed(() => ({
-  background: props.config.background,
-}));
-
-const messageStyle = (element: BannerElement) => ({
-  background: element.background,
-  color: element.color,
-  paddingTop: element.yPadding,
-  paddingBottom: element.yPadding,
-  fontSize: element.fontSize,
-});
-
 const activeIndex = ref(0);
 const element = computed(() => props.config.elements[activeIndex.value]);
 
@@ -28,13 +16,13 @@ if (props.config.interval > 0) {
 </script>
 
 <template>
-  <div :style="rootStyle">
+  <div :style="config.style">
     <div v-if="element.type === 'html'" v-html="element.html"></div>
 
     <div
       v-else-if="element.type === 'message'"
       class="flex flex-row justify-center items-center"
-      :style="messageStyle(element)"
+      :style="element.style"
     >
       <a :href="element.link" v-if="element.link">
         <span>{{ element.text }}</span>
