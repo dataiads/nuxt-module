@@ -531,6 +531,12 @@ export interface CrossSellParams {
   title: string;
   key: CrossSellKey;
   data: CrossSellData;
+  style: StyleValue;
+  columnGap: string;
+  scroll: boolean;
+  titleStyle: StyleValue;
+  itemStyle: StyleValue;
+  imageStyle: StyleValue;
 }
 
 export interface BannerParams {
