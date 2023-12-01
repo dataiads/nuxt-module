@@ -3,7 +3,6 @@ const props = withDefaults(
   defineProps<{
     parameters: { title: string };
     elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
-    filter: Recommender;
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
@@ -31,6 +30,8 @@ const hasLabelSlot = computed(() => {
   const instance = getCurrentInstance();
   return !!instance!.slots.checkbox_label;
 });
+
+const filter = useFilterState()
 </script>
 
 <template>

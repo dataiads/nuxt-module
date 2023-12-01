@@ -3,7 +3,6 @@ const AsideItem = resolveComponent("AsideItem");
 
 const props = withDefaults(
   defineProps<{
-    filter: Recommender;
     open: boolean;
     headerClass?: string;
     asideItemClass?: string;
@@ -18,10 +17,11 @@ const props = withDefaults(
 );
 
 const lpoConfig = useLpoConfig();
-const filterParams = lpoConfig?.filterParams;
+const filter = useFilterState();
+const filterParams = lpoConfig.mainReco.filterParams as FilterElement[] || lpoConfig?.filterParams;
 
 // Add the group key to props
-filterParams.forEach((f, i) => {
+filterParams.forEach((f) => {
   f.elements.forEach((el) => {
     el.props.group = `${f.title}-${el.component}-filter`;
   });
@@ -33,7 +33,7 @@ const getGroups = (filterParam: FilterElement) => {
 };
 
 const removeAllRulesFromGroups = (groups: string[]) => {
-  groups.forEach((g) => props.filter.removeAllRules(g));
+  groups.forEach((g) => filter.removeAllRules(g));
 };
 
 </script>

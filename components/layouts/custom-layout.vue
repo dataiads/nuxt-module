@@ -262,46 +262,22 @@ onMounted(() => {
 
 <template>
   <div class="lg:mx-auto">
-    <!-- Prepend Header-->
-    <div
-      v-for="(element, i) in config.preHeader"
-      :id="element.type"
-      :key="'prependheader_' + i"
-    >
-      <slot
-        v-if="element.enable"
-        :name="element.type"
-        :element="element"
-      />
-    </div>
+    <InsertZone :elements="config.preHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </InsertZone>
 
     <header id="header">
       <slot name="header" />
     </header>
 
-    <div
-      v-for="(element, i) in config.postHeader"
-      :id="element.type"
-      :key="'postheader_' + i"
-    >
-      <slot
-        v-if="element.enable"
-        :name="element.type"
-        :options="element"
-      />
-      <RecoSlider
-        v-if="element.type === 'reco-slider' && element.enable"
-        :slider-props="{
-          autoscroll: element.autoScroll,
-          scrollSpeed: element.scrollSpeed,
-        }"
-        :algo="element.algo"
-      >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
-        </template>
-      </RecoSlider>
-    </div>
+    <InsertZone :elements="config.postHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </InsertZone>
+
     <div>HIGH FILTERS</div>
     <input v-model="globalComponent.mainReco.highFilters" type="checkbox" />
     <div>Show Filters</div>
@@ -358,29 +334,11 @@ onMounted(() => {
             </div>
           </div>
 
-          <div
-            v-for="(element, i) in config.postMainProduct"
-            :id="element.type"
-            :key="'appendmainProduct_' + i"
-          >
-            <slot
-              v-if="element.enable"
-              :name="element.type"
-              :options="element"
-            />
-            <RecoSlider
-              v-if="element.type === 'reco-slider' && element.enable"
-              :slider-props="{
-                autoscroll: element.autoScroll,
-                scrollSpeed: element.scrollSpeed,
-              }"
-              :algo="element.algo"
-            >
-              <template v-for="(_, name) in $slots" #[name]="scope">
-                <slot :name="name" v-bind="scope"></slot>
-              </template>
-            </RecoSlider>
-          </div>
+          <InsertZone :elements="config.postMainProduct">
+            <template v-for="(_, name) in $slots" #[name]="scope">
+              <slot :name="name" v-bind="scope"></slot>
+            </template>
+          </InsertZone>
         </div>
       </div>
     </template>
@@ -391,29 +349,12 @@ onMounted(() => {
           <slot :name="name" v-bind="scope"></slot>
         </template>
       </MainProduct>
-      <div
-        v-for="(element, i) in config.postMainProduct"
-        :id="element.type"
-        :key="'appendmainProduct_' + i"
-      >
-        <slot
-          v-if="element.enable"
-          :name="element.type"
-          :options="element"
-        />
-        <RecoSlider
-          v-if="element.type === 'reco-slider' && element.enable"
-          :slider-props="{
-            autoscroll: element.autoScroll,
-            scrollSpeed: element.scrollSpeed,
-          }"
-          :algo="element.algo"
-        >
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-          </template>
-        </RecoSlider>
-      </div>
+      <InsertZone :elements="config.postMainProduct">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope"></slot>
+        </template>
+      </InsertZone>
+
       <template v-if="globalComponent.mainReco.showFilters">
         <div id="filters-header">
           <slot name="filters-header"></slot>
@@ -445,7 +386,7 @@ onMounted(() => {
                 :key="item.id ? item.id : JSON.stringify(item)"
                 :item="item"
                 :index="index"
-              ></slot>
+              />
               <slot v-else name="filters-no-results"></slot>
             </div>
             <div id="filters-pagination">
@@ -456,29 +397,11 @@ onMounted(() => {
       </template>
     </template>
 
-    <div
-      v-for="(element, i) in config.postMainReco"
-      :id="element.type"
-      :key="'appendmainProduct_' + i"
-    >
-      <slot
-        v-if="element.enable"
-        :name="element.type"
-        :options="element.options"
-      />
-      <RecoSlider
-        v-if="element.type === 'reco-slider' && element.enable"
-        :slider-props="{
-          autoscroll: element.autoScroll,
-          scrollSpeed: element.scrollSpeed,
-        }"
-        :algo="element.algo"
-      >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
-        </template>
-      </RecoSlider>
-    </div>
+    <InsertZone :elements="config.postMainReco">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </InsertZone>
 
     <footer id="footer">
       <slot name="footer" />
