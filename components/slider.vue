@@ -62,6 +62,7 @@ interface Props<T> {
     direction?: ScrollDirection
     class?: string[]
     scrollerClass?: string[]
+    scrollerStyle?: Record<string, string>;
     autoscroll?: boolean,
     scrollSpeed?: number,
     absoluteArrows?: boolean,
@@ -72,6 +73,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
     scrollBehavior: "smooth",
     class: () => [],
     scrollerClass: () => [],
+    scrollerStyle: () => ({}),
     autoscroll: false,
     scrollSpeed: 5,
     absoluteArrows: true,
@@ -191,7 +193,7 @@ onMounted(() => {
             </div>
         </div>
 
-        <div :class="scrollerClass" ref="scrollerEl">
+        <div :class="scrollerClass" :style="scrollerStyle" ref="scrollerEl">
             <slot name="item" v-for="(item, i) in props.items" :item="item" :key="i"></slot>
         </div>
 

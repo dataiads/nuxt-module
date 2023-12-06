@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// MOVED ~/components/custom-layout/reco-slider.vue
+/*
 import type { UseStructuredRecommenderOptions } from "~/types";
 
 const props = defineProps<{
@@ -18,8 +20,10 @@ const slider = useStructuredRecommender({
 // Flatten the array
 const items = computed(() => Array.prototype.concat.apply([], slider.results.data.value))
 
+*/
 </script>
 <template>
+  <!--
   <div
       v-if="items?.length"
     >
@@ -41,4 +45,5 @@ const items = computed(() => Array.prototype.concat.apply([], slider.results.dat
         </Slider>
       </div>
     </div>
+-->
 </template>
