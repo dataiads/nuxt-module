@@ -62,7 +62,7 @@ const hasLabelSlot = computed(() => {
         <template #label="{ value, count }">
           <slot name="checkbox_label" :value="value" :count="count">
             <slot name="auto_list_label" :value="value" :count="count">
-              <slot :name="`auto_list_label_${parameters.title}`">
+              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count">
                 <template v-if="value">{{ value }} ({{ count }})</template>
               </slot>
             </slot>
