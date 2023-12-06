@@ -1,5 +1,5 @@
-import { ComputedRef, Ref } from "vue";
-import { UseStructuredRecommenderOptions, StructuredFilterResponse, StructuredRecommender } from "~/types";
+import { type ComputedRef, type Ref } from "vue";
+import { type UseStructuredRecommenderOptions, type StructuredFilterResponse, type StructuredRecommender } from "~/types";
 
 type FetchParams = Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>>;
 

@@ -2,7 +2,7 @@
 import {
   defineNuxtPlugin,
   useRuntimeConfig,
-  UseFetchOptions,
+  type UseFetchOptions,
   useHead,
   useState,
   useFetch,

@@ -1,4 +1,4 @@
-import { ComputedRef, Ref } from "vue";
+import { type ComputedRef, type Ref } from "vue";
 
 export const useFilter = (options: Omit<UseRecommenderOptions, "configRecoParams" | "endpoint">) => {
   return useRecommender({
