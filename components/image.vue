@@ -11,7 +11,7 @@ const props = defineProps<{
   format?: string;
   alt?: string;
   picture?: boolean;
-  zoom: boolean;
+  zoom?: boolean;
   // optional: remove elements from the DOM when link is broken
   removeOnError?: boolean;
 }>();
@@ -49,7 +49,7 @@ const src = computed(() => {
 const imageRef = ref();
 const translate = ref();
 const scale = ref(1);
-const handleMouseMove = (event) => {
+const handleMouseMove = (event: MouseEvent) => {
   if (props.zoom) {
     const bounds = imageRef.value.getBoundingClientRect();
     const x = ((event.clientX - bounds.left) / bounds.width) * 100;

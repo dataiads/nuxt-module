@@ -18,7 +18,7 @@ interface Props {
 
   asideImageDirection?: "horizontal" | "vertical";
   // Apply zoom on the main image
-  zoom: boolean;
+  zoom?: boolean;
 
   filter?: (link: string) => boolean;
 }
@@ -185,7 +185,7 @@ const lightboxDecrIndex = () => {
 </script>
 
 <template>
-  <div :class="props.class">
+  <div :class="props.class ?? ''">
     <slot
       name="lightbox"
       :close="() => (openLightbox = false)"
@@ -203,13 +203,12 @@ const lightboxDecrIndex = () => {
           @previous="lightboxDecrIndex"
           @next="lightboxIncrIndex"
         >
-        <template #previous>
-            <slot name="carousel-previous" />
-        </template>
-        <template #next>
-            <slot name="carousel-next" />
-        </template>
-        <slot name="carousel-image" :image="image" />
+          <template #previous>
+              <slot name="carousel-previous" />
+          </template>
+          <template #next>
+              <slot name="carousel-next" />
+          </template>
           <template #image="{ image }">
             <slot name="carousel-image" :image="image" />
           </template>
