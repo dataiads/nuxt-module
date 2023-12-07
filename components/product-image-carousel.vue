@@ -1,9 +1,9 @@
 <script setup lang="ts">
 defineProps<{
-  images: [];
+  images: string[];
   selectedIndex: number;
-  iconNext: string;
-  iconPrevious: string;
+  iconNext?: string;
+  iconPrevious?: string;
 }>();
 
 defineEmits(["previous", "next"]);
