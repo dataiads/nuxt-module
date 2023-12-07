@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const lpoConfig = useLpoConfig();
 
-const banner = props.banner ?? lpoConfig.imageBanner ?? {};
+const banner = props.banner ?? lpoConfig.imageBanner ?? { href: "#", imageLink: "", desktopImageLink: "", mobileImageLink: "" };
 </script>
 
 <template>
