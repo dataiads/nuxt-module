@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.229](https://github.com/dataiads/nuxt-module/compare/v0.2.228...v0.2.229) (2023-12-07)
+
+
+### Features
+
+* add product image zoom ([#45](https://github.com/dataiads/nuxt-module/issues/45)) ([f28180e](https://github.com/dataiads/nuxt-module/commit/f28180e086ef693d419ca23563732730aef5a309))
+
+
+### Bug Fixes
+
+* **filtersElement:** add scoped slots values to autolistlabel ([cc7f136](https://github.com/dataiads/nuxt-module/commit/cc7f1369c44a16b5dbdb3266c025fcf517c8892a))
+
 ### [0.2.228](https://github.com/dataiads/nuxt-module/compare/v0.2.227...v0.2.228) (2023-12-06)
 
 ### [0.2.227](https://github.com/dataiads/nuxt-module/compare/v0.2.226...v0.2.227) (2023-12-06)
