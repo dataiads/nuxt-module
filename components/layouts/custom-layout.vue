@@ -1,15 +1,18 @@
 <script setup lang="ts">
 const product = useProduct();
 
-const layoutConfig = useLpoConfig().customLayout
+const layoutConfig = useLpoConfig().customLayout;
 
-console.log("CUSTOM LAYOUT CONFIG", layoutConfig)
+console.log("CUSTOM LAYOUT CONFIG", layoutConfig);
 
 // global singleton to ensure only a single dropdown is open on mobile
 const mobileFilterOpen = useState<(() => void) | null>(
   "responsiveAsideItemSingleton",
   () => null
 );
+
+
+const overlayContent = ref(null);
 
 const filter = useFilterState();
 
@@ -27,6 +30,8 @@ onMounted(() => {
     }
   });
 });
+
+
 </script>
 
 <template>
@@ -50,8 +55,7 @@ onMounted(() => {
 
     <template
       v-if="
-        layoutConfig.mainReco.showFilters &&
-        layoutConfig.mainReco.highFilters
+        layoutConfig.mainReco.showFilters && layoutConfig.mainReco.highFilters
       "
     >
       <div id="filters-header">
@@ -138,11 +142,7 @@ onMounted(() => {
         :id="element.type"
         :key="'appendmainProduct_' + i"
       >
-        <slot
-          v-if="element.enable"
-          :name="element.type"
-          :options="element"
-        />
+        <slot v-if="element.enable" :name="element.type" :options="element" />
         <RecoSlider
           v-if="element.type === 'reco-slider' && element.enable"
           :slider-props="{
@@ -221,6 +221,50 @@ onMounted(() => {
         </template>
       </RecoSlider>
     </div>
+
+    <CustomLayoutOverlay v-if="layoutConfig.overlay">
+      <template #overlay-content>
+        <CustomLayoutInserts :config="layoutConfig.overlay">
+          <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+          </template>
+        </CustomLayoutInserts>  
+      </template>
+    </CustomLayoutOverlay>
+
+    <!-- 
+      <div
+        v-if="layoutConfig.overlay"
+        id="overlay"
+        class="fixed bottom-0 w-full bg-black/50 z-20"
+        :class="{
+          'pointer-events-none': overlayState === 'closed',
+          'h-0': overlayState === 'closed',
+          'h-full': overlayState !== 'closed',
+        }"
+      >
+        <div
+          id="overlayContent"
+          ref="overlayContent"
+          class="fixed right-0 top-0 bottom-0 transition duration-500 ease-in-out z-21 bg-white p-2 w-2/5 lg:w-[380px] h-full"
+          :class="{
+            'translate-y-[50vh]': overlayState === 'initial',
+            'md:translate-y-0': overlayState === 'initial',
+            'translate-y-0': overlayState === 'open',
+            'translate-y-full': overlayState === 'closed',
+          }"
+        >
+          <slot name="overlay-content">
+            <CustomLayoutInserts :config="layoutConfig.overlay">
+              <template v-for="(_, name) in $slots" #[name]="scope">
+                <slot :name="name" v-bind="scope"></slot>
+              </template>
+            </CustomLayoutInserts>
+          </slot>
+        </div>
+      </div>
+
+     -->
 
     <footer id="footer">
       <slot name="footer" />
