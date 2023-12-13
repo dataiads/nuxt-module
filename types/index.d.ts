@@ -319,8 +319,8 @@ declare global {
   export interface RecommenderResults {
     data: ComputedRef<any | null>;
     pending: Ref<boolean>;
-    refresh: (opts?: any) => Promise<Product[] | null>;
-    execute: (opts?: any) => Promise<Product[] | null>;
+    refresh: (opts?: any) => Promise<void>;
+    execute: (opts?: any) => Promise<void>;
     error: Ref<FetchError<any> | null>;
   }
 
