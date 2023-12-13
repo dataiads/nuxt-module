@@ -26,6 +26,8 @@ export default defineNuxtConfig({
 
       baseURL: "",
 
+      liveConfigUrl: process.env.LIVECONFIGURL,
+
       // default timeouts for server interaction
       timeout: {
         pageDataLoad: 8000,
