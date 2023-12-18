@@ -5,19 +5,19 @@ import { Variations } from "~~/components/variation-layout.vue";
 
 declare global {
   export interface InlineLPOConfig {
-    name: string,
-    isDefault: string,
-    PublishUp: Date | null,
-    PublishDown: Date | null,
-    fields: InlineLPOConfigField[],
+    name: string;
+    isDefault: string;
+    PublishUp: Date | null;
+    PublishDown: Date | null;
+    fields: InlineLPOConfigField[];
   }
 
   export interface InlineLPOConfigField {
-    name: keyof LPOConfig,
-    type: string,
-    value: string,
-    active: boolean,
-    updatedAt: Date
+    name: keyof LPOConfig;
+    type: string;
+    value: string;
+    active: boolean;
+    updatedAt: Date;
   }
 
   export interface Window {
@@ -152,10 +152,10 @@ declare global {
   }
 
   export interface ImageBanner {
-    imageLink: string,
-    mobileImageLink?: string,
-    desktopImageLink?: string,
-    href?: string,
+    imageLink: string;
+    mobileImageLink?: string;
+    desktopImageLink?: string;
+    href?: string;
   }
 
   export interface GtmConfig {
@@ -175,33 +175,33 @@ declare global {
   }
 
   export interface MenuItem {
-    text: string
-    href?: string
-    color?: string
-    imageLink: string
+    text: string;
+    href?: string;
+    color?: string;
+    imageLink: string;
   }
 
   export interface FooterColumn {
-    title: string
-    items: FooterColumnItem[]
+    title: string;
+    items: FooterColumnItem[];
   }
 
   export interface FooterColumnItem {
-    text: string
-    href?: string
+    text: string;
+    href?: string;
   }
 
-  export type CrossSellData = Record<string, CrossSellItem[]>
+  export type CrossSellData = Record<string, CrossSellItem[]>;
 
   export interface CrossSellKey {
-    key: string
-    caseInsensitive: boolean
+    key: string;
+    caseInsensitive: boolean;
   }
 
   export interface CrossSellItem {
-    text: string
-    link: string
-    image?: string
+    text: string;
+    link: string;
+    image?: string;
   }
 
   export interface GoogleFont {
@@ -230,8 +230,8 @@ declare global {
     onetrust?: OnetrustConfig;
     axeptio?: AxeptioConfig;
     didomi?: DidomiConfig;
-    messages?: Record<string, Record<string, any>>
-    numberFormats?: Record<string, Record<string, Record<string, string>>>
+    messages?: Record<string, Record<string, any>>;
+    numberFormats?: Record<string, Record<string, Record<string, string>>>;
     menu?: MenuItem[];
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];
@@ -239,7 +239,7 @@ declare global {
     crossSellData?: CrossSellData;
     crossSellKey?: CrossSellKey;
     useLightMainProduct?: boolean;
-    customerSpecific?: Record<string, JSONValue>
+    customerSpecific?: Record<string, JSONValue>;
     cssVariables?: Record<string, string>;
     extraReco?: boolean;
     colorData?: Record<string, string>;
@@ -259,19 +259,19 @@ declare global {
   }
 
   export interface FilterElement {
-    title: string // Titre de la section
+    title: string; // Titre de la section
     elements: {
-      component: string // Le nom du composant
-      props: any  // Les props associé à ce composant
-    }[]
+      component: string; // Le nom du composant
+      props: any; // Les props associé à ce composant
+    }[];
   }
 
   export interface FilterParams {
-    filterRules?: FilterRule[][]
-    sortRules?: FilterRule[][]
-    sort?: string
-    limit?: number
-    deduplicate?: string
+    filterRules?: FilterRule[][];
+    sortRules?: FilterRule[][];
+    sort?: string;
+    limit?: number;
+    deduplicate?: string;
   }
 
   export interface UseRecommenderOptions {
@@ -319,12 +319,10 @@ declare global {
   export interface RecommenderResults {
     data: ComputedRef<any | null>;
     pending: Ref<boolean>;
-    refresh: (opts?: any) => Promise<void>;
-    execute: (opts?: any) => Promise<void>;
+    refresh: (opts?: any) => Promise<Product[] | null>;
+    execute: (opts?: any) => Promise<Product[] | null>;
     error: Ref<FetchError<any> | null>;
   }
-
-
 
   export interface Recommender {
     results: FilterResults;
@@ -357,95 +355,87 @@ declare global {
   }
 
   export interface Region {
-    displayName: string
-    merchantId: string
-    postalCodeArea: PostalCodeArea
-    regionId: string
-    regionalInventoryEligible: boolean
-    shippingEligible: boolean
+    displayName: string;
+    merchantId: string;
+    postalCodeArea: PostalCodeArea;
+    regionId: string;
+    regionalInventoryEligible: boolean;
+    shippingEligible: boolean;
   }
 
   export interface PostalCodeArea {
-    postalCodes: PostalCode[]
-    regionCode: string
+    postalCodes: PostalCode[];
+    regionCode: string;
   }
 
   export interface PostalCode {
-    begin: string
+    begin: string;
   }
-
 }
 
 // a json serializable type
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | { [x: string]: JSONValue }
-  | Array<JSONValue>;
+type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 
+export interface UseStructuredRecommenderOptions {
+  // where to get recommendation params from
+  //configRecoParams?: "mainRecoParams" | "sliderRecoParams";
 
-  export interface UseStructuredRecommenderOptions {
+  // product to get recommendations for
+  productId: string;
 
-    // where to get recommendation params from
-    //configRecoParams?: "mainRecoParams" | "sliderRecoParams";
+  // base recommendation rules for all queries
+  baseRules?: FilterRule[][];
 
-    // product to get recommendations for
-    productId: string;
+  // initial rules to add to the state
+  initialRules?: InitialFilterRule[];
 
-    // base recommendation rules for all queries
-    baseRules?: FilterRule[][];
+  // sorting rules
+  sortRules?: FilterRule[][];
 
-    // initial rules to add to the state
-    initialRules?: InitialFilterRule[];
+  // deduplication criteria
+  deduplicate?: string;
 
-    // sorting rules
-    sortRules?: FilterRule[][];
+  // optional extra query parameters for recommendation endpoint
+  fetchQuery?: Record<string, string | number>;
 
-    // deduplication criteria
-    deduplicate?: string;
+  // optional options for useFetch composable
+  fetchOptions?: UseFetchOptions<StructuredFilterResponse>;
 
-    // optional extra query parameters for recommendation endpoint
-    fetchQuery?: Record<string, string | number>;
+  // default page size (can be updated dynamically using Recommender.limit property)
+  defaultLimit?: number;
 
-    // optional options for useFetch composable
-    fetchOptions?: UseFetchOptions<StructuredFilterResponse>;
+  // default sort field (can be updated dynamically using Recommender.sort property)
+  defaultSort?: string;
 
-    // default page size (can be updated dynamically using Recommender.limit property)
-    defaultLimit?: number;
+  // list these criteria values along structured filters response
+  criteriaValues?: string[];
 
-    // default sort field (can be updated dynamically using Recommender.sort property)
-    defaultSort?: string;
+  // only request criteria values on initial structured-filters call
+  cacheCriteriaValues?: boolean;
+}
 
-    // list these criteria values along structured filters response
-    criteriaValues?: string[];
+export interface StructuredFilterResponse {
+  page: Product[][];
+  total: number;
+  criteriaValues: Record<string, Record<string, number>>;
+}
 
-    // only request criteria values on initial structured-filters call
-    cacheCriteriaValues?: boolean;
-  }
+export interface FetchCriteriaValuesReturn {
+  data: ComputedRef<Record<string, number>>;
+}
 
-  export interface StructuredFilterResponse {
-    page: Product[][];
-    total: number;
-    criteriaValues: Record<string, Record<string, number>>;
-  }
-
-  export interface FetchCriteriaValuesReturn {
-    data: ComputedRef<Record<string, number>>
-  }
-
-  export interface StructuredRecommender {
-    results: FilterResults;
-    count: ComputedRef<number>;
-    limit: Ref<number>;
-    sort: Ref<string>;
-    page: Ref<number>;
-    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
-    getFirstRuleValue: (group: string) => string | null;
-    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-    removeAllRules: (group: string) => void;
-    fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn
-    reset: () => void;
-  }
+export interface StructuredRecommender {
+  results: FilterResults;
+  count: ComputedRef<number>;
+  limit: Ref<number>;
+  sort: Ref<string>;
+  page: Ref<number>;
+  hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
+  getFirstRuleValue: (group: string) => string | null;
+  pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  removeAllRules: (group: string) => void;
+  fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn;
+  reset: () => void;
+}

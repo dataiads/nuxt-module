@@ -230,7 +230,7 @@ const lightboxDecrIndex = () => {
         <div v-if="imageSets.length > 0" v-for="(image, index) in imageSets" @click="() => onImageClick(index)" class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
           <slot name="main-image" :src="image.src" :srcset="image.srcset" :alt="image.alt || props.alt">
             <!-- default content for slot for main image -->
-            <Image height="400" width="400" :src="image.src" :srcset="image.srcset" :alt="image.alt || props.alt" zoom />
+            <Image height="400" width="400" :src="image.src || ''" :srcset="image.srcset" :alt="image.alt || props.alt" zoom />
           </slot>
         </div>
         <div v-else v-for="(additionalImage, index) in allImages" @click="() => onImageClick(index)" class="flex-none snap-center max-w-fit min-w-full" ref="mainImagesRef">
