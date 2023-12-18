@@ -137,6 +137,3 @@ function deserializeServerConfig(
   }
   return lpoConfig;
 }
-
-
-console.log("HELLO FROM module");
