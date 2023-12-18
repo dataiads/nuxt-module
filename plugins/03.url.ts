@@ -13,6 +13,8 @@ export default defineNuxtPlugin(() => {
     // add to cart script handles session wide persistence
     const transactionId = Math.floor(Math.random() * 100000)
 
+    const redirecting = useState<boolean>("redirect.redirecting", () => false)
+    const redirectMessage = useState<string>("redirect.message", () => "")
 
     const urlGen = (product: Product, actionType: string, searchParams?: Record<string, string>): string => {
         //const product = useState<Product>("product")
@@ -68,6 +70,15 @@ export default defineNuxtPlugin(() => {
                 url.hostname = mirroredHost
                 url.hash = hash
                 return url.toString()
+            },
+            showLoader(message?: string): void {
+                redirectMessage.value = message ?? "";
+                redirecting.value = true;
+                setTimeout(() => {
+                    // I'm scared that hitting back on some browsers will have you return with the overloay still open.
+                    redirecting.value = false;
+                    redirectMessage.value = "";
+                }, 5000);
             },
             isSafeLink(url: string): boolean {
                 const mirroredDomain = useMirroredDomain()

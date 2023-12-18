@@ -117,4 +117,16 @@ const s = config.public.layoutStyle;
   <slot id="filters-drawer" name="filters-drawer"></slot>
 
   <slot id="menus-drawer" name="menus-drawer"></slot>
+
+  <RedirectOverlay>
+    <template #overlay>
+      <slot name="redirect-overlay"></slot>
+    </template>
+    <template #message>
+      <slot name="redirect-message"></slot>
+    </template>
+    <template #loader>
+      <slot name="redirect-loader"></slot>
+    </template>
+  </RedirectOverlay>
 </template>
