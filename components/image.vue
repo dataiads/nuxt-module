@@ -79,7 +79,6 @@ const translateStyle = computed(() => {
     <nuxt-img
       v-if="config.public.optimizeImageLoad && !picture && !props.srcset"
       :src="src"
-      :srcset="props.srcset"
       :alt="props.alt"
       :width="props.width"
       :height="props.height"
@@ -92,7 +91,6 @@ const translateStyle = computed(() => {
       <slot :translateStyle="translateStyle"></slot>
       <nuxt-img
         :src="src"
-        :srcset="props.srcset"
         :alt="props.alt"
         :width="props.width"
         :height="props.height"
