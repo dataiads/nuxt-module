@@ -10,6 +10,7 @@ const props = defineProps<{
   loading?: "eager" | "lazy" | undefined;
   format?: string;
   alt?: string;
+  srcset?: string;
   picture?: boolean;
   zoom?: boolean;
   // optional: remove elements from the DOM when link is broken
@@ -76,8 +77,9 @@ const translateStyle = computed(() => {
 <template>
   <div @mouseover="hover = true" @mouseleave="handleMouseLeave">
     <nuxt-img
-      v-if="config.public.optimizeImageLoad && !picture"
+      v-if="config.public.optimizeImageLoad && !picture && !props.srcset"
       :src="src"
+      :srcset="props.srcset"
       :alt="props.alt"
       :width="props.width"
       :height="props.height"
@@ -86,10 +88,11 @@ const translateStyle = computed(() => {
       :loading="loading"
       @error="fallbackToUncompressed"
     />
-    <picture v-else-if="config.public.optimizeImageLoad && picture">
+    <picture v-else-if="config.public.optimizeImageLoad && picture && !props.srcset">
       <slot :translateStyle="translateStyle"></slot>
       <nuxt-img
         :src="src"
+        :srcset="props.srcset"
         :alt="props.alt"
         :width="props.width"
         :height="props.height"
@@ -104,6 +107,7 @@ const translateStyle = computed(() => {
       @mousemove="handleMouseMove"
       ref="imageRef"
       :src="src"
+      :srcset="props.srcset"
       :alt="props.alt"
       :class="props.class"
       :width="props.width"
