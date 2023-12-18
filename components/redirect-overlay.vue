@@ -19,7 +19,7 @@ const message = useState<string>("redirect.message");
                     <div class="mx-auto loader ease-linear rounded-full border-4 border-t-4 border-t-primary border-gray-200 h-12 w-12 mb-4"></div>
                 </slot>
                 <slot name="message">
-                    <h2 v-if="message" class="text-center text-xl font-semibold">{{ $t(message) }}</h2>
+                    <h2 v-if="message" class="text-center text-xl font-semibold">{{ message }}</h2>
                 </slot>
             </div>
         </slot>
