@@ -19,6 +19,7 @@ interface Props {
   asideImageDirection?: "horizontal" | "vertical";
   // Apply zoom on the main image
   zoom?: boolean;
+  defaultModal: boolean;
 
   filter?: (link: string) => boolean;
 }
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   asideImageDirection: "vertical",
   scroller: false,
   zoom: false,
+  defaultModal: false,
 });
 
 const imageSets = computed(() => {
@@ -181,9 +183,15 @@ const lightboxDecrIndex = () => {
       :open="openLightbox"
       :selected-index="lightboxImageIndex"
     >
-      <Dialog v-model="openLightbox" @close="() => (openLightbox = false)">
-        <ProductImageCarousel :selected-index="lightboxImageIndex" :images="allImages" @close="() => (openLightbox = false)" @previous="lightboxDecrIndex" @next="lightboxIncrIndex">
-          <template #previous>
+      <Dialog v-if="defaultModal" v-model="openLightbox" @close="() => (openLightbox = false)">
+        <ProductImageCarousel
+          :selected-index="lightboxImageIndex"
+          :images="allImages"
+          @close="() => (openLightbox = false)"
+          @previous="lightboxDecrIndex"
+          @next="lightboxIncrIndex"
+        >
+        <template #previous>
             <slot name="carousel-previous" />
           </template>
           <template #next>

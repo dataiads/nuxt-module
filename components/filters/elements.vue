@@ -41,8 +41,8 @@ const hasLabelSlot = computed(() => {
         v-bind="props"
         :filter="filter"
         :class="autoListClass"
-        :input-class="hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="hasLabelSlot ? labelClass : ''"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
       >
         <template #checkbox="scope">
           <slot
@@ -80,8 +80,8 @@ const hasLabelSlot = computed(() => {
       <FiltersCheckbox
         v-else-if="component === 'checkbox'"
         :filter="filter"
-        :input-class="hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="hasLabelSlot ? labelClass : ''"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
         :class="checkboxContainerClass"
         v-bind="props"
       >
