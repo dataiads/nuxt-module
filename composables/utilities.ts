@@ -166,6 +166,14 @@ export function redirect(url: string) {
   window.location.replace(url);
 }
 
+// Show the loader overlay, used for the user to wait
+export function showLoader(message?: string): void {
+  const redirecting = useState<boolean>("redirect.redirecting")
+  const redirectMessage = useState<string>("redirect.message")
+  redirectMessage.value = message ?? "";
+  redirecting.value = true;
+}
+
 // For pagination, decrement current page index
 export function previousPaginationHandler(filter: Recommender, _pageCount: number) {
   if (filter.page.value > 1) {

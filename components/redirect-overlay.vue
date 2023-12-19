@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const redirecting = useState<boolean>("redirect.redirecting");
-const message = useState<string>("redirect.message");
+const redirecting = useState<boolean>("redirect.redirecting", () => false);
+const message = useState<string>("redirect.message", () => "");
 </script>
 
 <template>
