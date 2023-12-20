@@ -13,7 +13,6 @@ export default defineNuxtPlugin(() => {
     // add to cart script handles session wide persistence
     const transactionId = Math.floor(Math.random() * 100000)
 
-
     const urlGen = (product: Product, actionType: string, searchParams?: Record<string, string>): string => {
         //const product = useState<Product>("product")
         let url = new URL(product.data.link)
