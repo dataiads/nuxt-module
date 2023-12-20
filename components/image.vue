@@ -10,8 +10,9 @@ const props = defineProps<{
   loading?: "eager" | "lazy" | undefined;
   format?: string;
   alt?: string;
+  srcset?: string;
   picture?: boolean;
-  zoom: boolean;
+  zoom?: boolean;
   // optional: remove elements from the DOM when link is broken
   removeOnError?: boolean;
 }>();
@@ -49,7 +50,7 @@ const src = computed(() => {
 const imageRef = ref();
 const translate = ref();
 const scale = ref(1);
-const handleMouseMove = (event) => {
+const handleMouseMove = (event: MouseEvent) => {
   if (props.zoom) {
     const bounds = imageRef.value.getBoundingClientRect();
     const x = ((event.clientX - bounds.left) / bounds.width) * 100;
@@ -76,7 +77,7 @@ const translateStyle = computed(() => {
 <template>
   <div @mouseover="hover = true" @mouseleave="handleMouseLeave">
     <nuxt-img
-      v-if="config.public.optimizeImageLoad && !picture"
+      v-if="config.public.optimizeImageLoad && !picture && !props.srcset"
       :src="src"
       :alt="props.alt"
       :width="props.width"
@@ -86,7 +87,7 @@ const translateStyle = computed(() => {
       :loading="loading"
       @error="fallbackToUncompressed"
     />
-    <picture v-else-if="config.public.optimizeImageLoad && picture">
+    <picture v-else-if="config.public.optimizeImageLoad && picture && !props.srcset">
       <slot :translateStyle="translateStyle"></slot>
       <nuxt-img
         :src="src"
@@ -104,6 +105,7 @@ const translateStyle = computed(() => {
       @mousemove="handleMouseMove"
       ref="imageRef"
       :src="src"
+      :srcset="props.srcset"
       :alt="props.alt"
       :class="props.class"
       :width="props.width"

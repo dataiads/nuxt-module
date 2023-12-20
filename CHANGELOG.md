@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.240](https://github.com/dataiads/nuxt-module/compare/v0.2.239...v0.2.240) (2023-12-20)
+
+### [0.2.239](https://github.com/dataiads/nuxt-module/compare/v0.2.238...v0.2.239) (2023-12-20)
+
+### [0.2.238](https://github.com/dataiads/nuxt-module/compare/v0.2.237...v0.2.238) (2023-12-20)
+
+### [0.2.237](https://github.com/dataiads/nuxt-module/compare/v0.2.236...v0.2.237) (2023-12-20)
+
+### [0.2.236](https://github.com/dataiads/nuxt-module/compare/v0.2.235...v0.2.236) (2023-12-19)
+
+### [0.2.235](https://github.com/dataiads/nuxt-module/compare/v0.2.234...v0.2.235) (2023-12-18)
+
+### [0.2.234](https://github.com/dataiads/nuxt-module/compare/v0.2.233...v0.2.234) (2023-12-18)
+
+### [0.2.233](https://github.com/dataiads/nuxt-module/compare/v0.2.232...v0.2.233) (2023-12-18)
+
+### [0.2.232](https://github.com/dataiads/nuxt-module/compare/v0.2.231...v0.2.232) (2023-12-13)
+
+### [0.2.231](https://github.com/dataiads/nuxt-module/compare/v0.2.230...v0.2.231) (2023-12-13)
+
+### [0.2.230](https://github.com/dataiads/nuxt-module/compare/v0.2.229...v0.2.230) (2023-12-07)
+
+### [0.2.229](https://github.com/dataiads/nuxt-module/compare/v0.2.228...v0.2.229) (2023-12-07)
+
+
+### Features
+
+* add product image zoom ([#45](https://github.com/dataiads/nuxt-module/issues/45)) ([f28180e](https://github.com/dataiads/nuxt-module/commit/f28180e086ef693d419ca23563732730aef5a309))
+
+
+### Bug Fixes
+
+* **filtersElement:** add scoped slots values to autolistlabel ([cc7f136](https://github.com/dataiads/nuxt-module/commit/cc7f1369c44a16b5dbdb3266c025fcf517c8892a))
+
 ### [0.2.228](https://github.com/dataiads/nuxt-module/compare/v0.2.227...v0.2.228) (2023-12-06)
 
 ### [0.2.227](https://github.com/dataiads/nuxt-module/compare/v0.2.226...v0.2.227) (2023-12-06)

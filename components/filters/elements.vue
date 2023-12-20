@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
   defineProps<{
     parameters: { title: string };
     elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
@@ -41,9 +41,10 @@ const filter = useFilterState()
         v-if="component === 'autolist-checkbox'"
         v-bind="props"
         :filter="filter"
+        :group="`${props.criteria}-${component}-filter`"
         :class="autoListClass"
-        :input-class="hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="hasLabelSlot ? labelClass : ''"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
       >
         <template #checkbox="scope">
           <slot
@@ -73,6 +74,7 @@ const filter = useFilterState()
       <FiltersRangeInputs
         v-else-if="component === 'range'"
         :filter="filter"
+        :group="`${props.criteria}-${component}-filter`"
         v-bind="props"
         :class="rangeClass"
         :input-class="inputClass"
@@ -81,8 +83,9 @@ const filter = useFilterState()
       <FiltersCheckbox
         v-else-if="component === 'checkbox'"
         :filter="filter"
-        :input-class="hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="hasLabelSlot ? labelClass : ''"
+        :group="`${props.criteria}-${component}-filter`"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
         :class="checkboxContainerClass"
         v-bind="props"
       >

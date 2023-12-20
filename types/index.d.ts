@@ -409,12 +409,7 @@ declare global {
 }
 
 // a json serializable type
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | { [x: string]: JSONValue }
-  | Array<JSONValue>;
+type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 
 export interface UseStructuredRecommenderOptions {
   // where to get recommendation params from
