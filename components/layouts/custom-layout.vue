@@ -1,16 +1,28 @@
 <script setup lang="ts">
+
 const product = useProduct();
 
 const layoutConfig = useLpoConfig().customLayout;
 
+// get criteria values to be listed from filter params
+const criteriaValues = layoutConfig.mainReco.filterParams.reduce((acc, item) => {
+  for (const el of item.elements) {
+    if (el.component === 'autolist-checkbox' && el.props.criteria && acc.indexOf(el.props.criteria) < 0) {
+      acc.push(el.props.criteria)
+    }
+  }
+  return acc
+}, [] as string[])
+
 const filter = useState("filter", () =>
   useStructuredRecommender({
     productId: product.value.id,
-    baseRules: layoutConfig.mainReco.filterRules,
-    sortRules: layoutConfig.mainReco.sortRules,
-    deduplicate: layoutConfig.mainReco.deduplicate,
-    defaultLimit: layoutConfig.mainReco.limit,
-    defaultSort: layoutConfig.mainReco.sort,
+    baseRules: layoutConfig.mainReco.algo.filterRules,
+    sortRules: layoutConfig.mainReco.algo.sortRules,
+    deduplicate: layoutConfig.mainReco.algo.deduplicate,
+    defaultLimit: layoutConfig.mainReco.algo.limit,
+    defaultSort: layoutConfig.mainReco.algo.sort,
+    criteriaValues,
   })
 );
 
@@ -55,8 +67,10 @@ onMounted(() => {
       "
       class="flex"
     >
-      <div id="filters-aside" class="shrink-0">
-        <slot name="filters-aside" />
+      <div id="filters-aside" class="shrink-0" :style="layoutConfig.mainReco.filterStyle">
+        <slot name="filters-aside" :filter="filter">
+          <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
+        </slot>
       </div>
 
       <div class="flex flex-col grow">
@@ -136,9 +150,12 @@ onMounted(() => {
         <div
           id="filters-aside"
           class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
           v-if="layoutConfig.mainReco.showFilters"
         >
-          <slot name="filters-aside"></slot>
+          <slot name="filters-aside" :filter="filter">
+            <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
+          </slot>
         </div>
 
         <div id="filters-content" class="grow">

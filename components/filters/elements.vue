@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types';
+
 withDefaults(
   defineProps<{
     parameters: { title: string };
+    filter: StructuredRecommender,
     elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
     inputClass?: string;
     checkboxClass?: string;
@@ -31,7 +34,6 @@ const hasLabelSlot = computed(() => {
   return !!instance!.slots.checkbox_label;
 });
 
-const filter = useFilterState()
 </script>
 
 <template>

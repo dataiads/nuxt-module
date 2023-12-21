@@ -262,7 +262,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: string; // Le nom du composant
+      component: "autolist-checkbox" | "checkbox" | "range"; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
   }
@@ -552,7 +552,7 @@ export interface BannerElement {
 
 export interface CustomLayout {
   header: HeaderParams;
-  breadcrumbs: BradcrumbsParams;
+  //breadcrumbs: BradcrumbsParams;
   mainProduct: MainProductParams;
   mainReco: MainRecoParams;
   footer: FooterParams;
@@ -563,4 +563,34 @@ export interface CustomLayout {
   preMainProduct: InsertParams[];
   postMainProduct: InsertParams[];
   postMainReco: InsertParams[];
+}
+
+export interface MainRecoParams {
+  showFilters: boolean;
+  highFilters: boolean;
+  filterStyle: StyleValue;
+  filterParams: FilterElement[];
+  gridStyle: StyleValue;
+  algo: FilterParams;
+}
+
+export interface MainProductParams {
+  light: boolean;
+  //TODO
+}
+
+export interface HeaderParams {
+  //TODO
+}
+
+export interface FooterParams {
+  //TODO
+}
+
+export interface LayerParams {
+  //TODO
+}
+
+export interface StickyAtcParams {
+  //TODO
 }
