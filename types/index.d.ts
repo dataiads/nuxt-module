@@ -510,6 +510,7 @@ export interface RecoSliderParams {
   type: "reco-slider";
   enabled: boolean;
   title: string;
+  titleStyle: StyleValue;
   algo: FilterParams;
   autoscroll: boolean;
   scrollSpeed: number;

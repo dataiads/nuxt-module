@@ -36,7 +36,7 @@ const items = computed(() =>
   <div v-if="items?.length">
     <div :style="config.style">
       <slot name="reco-slider-header"></slot>
-      <div v-if="config.title">{{ config.title }}</div>
+      <div v-if="config.title" :style="config.titleStyle">{{ config.title }}</div>
       <Slider v-bind="sliderProps" :items="items">
         <template #item="{ item }">
           <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
