@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const redirecting = useState<boolean>("redirect.redirecting", () => false);
 const message = useState<string>("redirect.message", () => "");
+
+document.addEventListener("visibilitychange", () => {
+    redirecting.value = false;
+});
 </script>
 
 <template>
@@ -12,7 +16,7 @@ const message = useState<string>("redirect.message", () => "");
     leave-from-class="opacity-100"
     leave-to-class="transform opacity-0"
   >
-    <div v-if="redirecting" class="fixed inset-0 w-screen h-screen z-50">
+    <div v-if="redirecting" @click="redirecting = false" class="fixed inset-0 w-screen h-screen z-50">
         <slot name="overlay">
             <div class="h-full w-full bg-grey1 bg-opacity-80 flex flex-col items-center justify-center">
                 <slot name="loader">
