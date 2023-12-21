@@ -18,5 +18,12 @@ export default defineNuxtPlugin(async ({ vueApp }) => {
       numberFormats: lpoConfig.numberFormats,
     })
     vueApp.use(i18n)
+  } else {
+    return {
+      provide: {
+        // if no locale is configured, inject $t helper to prevent errors
+        t(a: string) { return a},
+      }
+    }
   }
 })
