@@ -11,7 +11,6 @@ defineEmits(["previous", "next"]);
 <template>
   <div class="absolute left-0 top-[50%] m-2 z-100">
     <button
-      v-if="selectedIndex > 0"
       @click="$emit('previous')"
       class="w-[28px] h-[46px] bg-white/20 hover:bg-white/60 hover:cursor-pointer"
     >
@@ -37,7 +36,6 @@ defineEmits(["previous", "next"]);
   <div class="absolute right-0 top-[50%] m-2">
     <button
       @click="$emit('next')"
-      v-show="selectedIndex < images.length - 1"
       class="w-[28px] h-[46px] flex justify-center bg-white/20 hover:bg-white/60 hover:cursor-pointer"
     >
       <slot name="next">

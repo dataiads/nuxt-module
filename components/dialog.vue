@@ -32,7 +32,7 @@ function closeModal() {
     <Dialog
       as="div"
       @close="closeModal"
-      class="relative z-10"
+      class="relative z-[100]"
       :initialFocus="closeButtonRef"
     >
       <TransitionChild
