@@ -99,6 +99,7 @@ onMounted(() => {
             <Slider
               :items="props.recoSliderProducts"
               :scroller-class="s.recoSlider.sliderClass"
+              :arrow-class="s.recoSlider.arrowClass"
               :autoscroll="s.recoSlider.autoscroll"
               :scroll-speed="s.recoSlider.scrollSpeed"
             >

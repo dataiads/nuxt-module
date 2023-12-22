@@ -110,7 +110,7 @@ onMounted(() => {
         <div id="reco-slider" :class="s.recoSlider.class" v-if="recoSliderProducts?.length">
           <div :class="s.recoSlider.containerClass">
             <slot name="reco-slider-header"></slot>
-            <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
+            <Slider :items="props.recoSliderProducts" :scroller-class="s.recoSlider.sliderClass" :arrow-class="s.recoSlider.arrowClass" :autoscroll="s.recoSlider.autoscroll" :scroll-speed="s.recoSlider.scrollSpeed">
               <template #item="{ item }">
                 <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
               </template>

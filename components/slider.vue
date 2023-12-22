@@ -62,6 +62,7 @@ interface Props<T> {
     direction?: ScrollDirection
     class?: string[]
     scrollerClass?: string[]
+    arrowClass?: string[],
     autoscroll?: boolean,
     scrollSpeed?: number,
     absoluteArrows?: boolean,
@@ -72,6 +73,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
     scrollBehavior: "smooth",
     class: () => [],
     scrollerClass: () => [],
+    arrowClass: () => [],
     autoscroll: false,
     scrollSpeed: 5,
     absoluteArrows: true,
@@ -142,6 +144,7 @@ const previousClass = [
     "top-0",
     "left-0",
     props.direction === "horizontal" ? "bottom-0" : "right-0",
+    ...props.arrowClass,
 ]
 
 const nextClass = [
@@ -151,6 +154,7 @@ const nextClass = [
     "bottom-0",
     "right-0",
     props.direction === "horizontal" ? "top-0" : "left-0",
+    ...props.arrowClass,
 ]
 
 const previousContentClass = [
