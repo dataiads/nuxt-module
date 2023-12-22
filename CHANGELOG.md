@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.242](https://github.com/dataiads/nuxt-module/compare/v0.2.241...v0.2.242) (2023-12-22)
+
+
+### Features
+
+* **ProductImage:** add circular photo by default ([6392769](https://github.com/dataiads/nuxt-module/commit/6392769ffbd5474551924a47ec4ef218a41bd732))
+* **ProductImage:** show nav button only when multiple img ([69efd86](https://github.com/dataiads/nuxt-module/commit/69efd860ba08e55e47c754127677bcc1e6fd1f59))
+
 ### [0.2.241](https://github.com/dataiads/nuxt-module/compare/v0.2.240...v0.2.241) (2023-12-20)
 
 ### [0.2.240](https://github.com/dataiads/nuxt-module/compare/v0.2.239...v0.2.240) (2023-12-20)
