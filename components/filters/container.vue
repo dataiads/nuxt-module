@@ -1,0 +1,73 @@
+<script setup lang="ts">
+const AsideItem = resolveComponent('AsideItem')
+
+const props = withDefaults(
+  defineProps<{
+    filter: Recommender;
+    open: boolean;
+    headerClass?: string;
+    asideItemClass?: string;
+    rootComponent?: Component;
+  }>(),
+  {
+    asideItemClass: '!h-auto px-4 py-2',
+    headerClass: 'cursor-pointer lg:py-4 flex items-center',
+    rangeInputClass: 'grid grid-cols-2 gap-2',
+    inputClass: 'border-[#9E9E9E]'
+  }
+)
+
+const lpoConfig = useLpoConfig()
+const filterParams = lpoConfig?.filterParams
+
+// Add the group key to props
+filterParams.forEach((f, i) => {
+  f.elements.forEach((el) => {
+    el.props.group = `${f.title}-${el.component}-filter`
+  })
+})
+
+// Return the group from filterParam
+const getGroups = (filterParam: FilterElement) => {
+  return filterParam.elements.map((el) => el.props.group)
+}
+
+const removeAllRulesFromGroups = (groups: string[]) => {
+  groups.forEach((g) => props.filter.removeAllRules(g))
+}
+
+</script>
+
+<template>
+  <div>
+    <component
+      :is="rootComponent ? rootComponent : AsideItem"
+      v-for="filterParam in filterParams"
+      :key="filterParam.title"
+      :display="open"
+      :class="asideItemClass"
+      content-class=""
+    >
+      <template #header="{ displayed }">
+        <slot name="header" :displayed="displayed" :title="filterParam.title">
+          <div :class="[headerClass, { '': displayed }]">
+            <slot name="title" :value="filterParam.title">
+              <span class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]">{{ filterParam.title }}</span>
+            </slot>
+            <slot name="append" :displayed="displayed" />
+          </div>
+        </slot>
+      </template>
+
+      <template #content>
+        <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
+        <slot
+          name="content"
+          :elements="filterParam.elements"
+          :parameters="filterParam"
+          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))"
+        />
+      </template>
+    </component>
+  </div>
+</template>

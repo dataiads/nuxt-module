@@ -2,32 +2,32 @@
 const lpoConfig = useLpoConfig()
 
 interface Props {
-    columnClass?: string|string[]
-    columnListClass?: string|string[]
+  columnClass?: string|string[]
+  columnListClass?: string|string[]
 }
 const props = withDefaults(defineProps<Props>(), {
-    columnClass: "",
-    columnListClass: "",
+  columnClass: '',
+  columnListClass: ''
 })
 
-let columns = lpoConfig.footerColumns || []
+const columns = lpoConfig.footerColumns || []
 
 
 
 </script>
 
 <template>
-    <div class="flex flex-col" :class="props.columnClass" v-for="(column, index) in columns" :key="index">
-        <slot name="column-title" :text="column.title"></slot>
-        <ul :class="props.columnListClass">
-            <li v-for="(item, itemIndex) in column.items" :key="itemIndex">
-                <a v-if="item.href" :href="item.href">
-                    <slot name="column-item" :text="item.text"></slot>
-                </a>
-                <span v-else>
-                    <slot name="column-item" :text="item.text"></slot>
-                </span>
-            </li>
-        </ul>
-    </div>
+  <div v-for="(column, index) in columns" :key="index" class="flex flex-col" :class="props.columnClass">
+    <slot name="column-title" :text="column.title" />
+    <ul :class="props.columnListClass">
+      <li v-for="(item, itemIndex) in column.items" :key="itemIndex">
+        <a v-if="item.href" :href="item.href">
+          <slot name="column-item" :text="item.text" />
+        </a>
+        <span v-else>
+          <slot name="column-item" :text="item.text" />
+        </span>
+      </li>
+    </ul>
+  </div>
 </template>

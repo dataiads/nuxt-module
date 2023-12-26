@@ -1,9 +1,7 @@
 <script setup lang="ts">
-const uuid = Math.floor(Math.random() * 10 ** 16);
-
 const props = withDefaults(defineProps<{
   // filter values listing settings
-  filter: Filter
+  filter: Recommender
   criteria: string
   group: string
 
@@ -24,10 +22,11 @@ const props = withDefaults(defineProps<{
   inputClass?: string
   labelClass?: string
   operator?: string
+  limit?: number
 }>(), {
-  operator: "EQUAL",
-  wrapperDiv: false,
-});
+  operator: 'EQUAL',
+  wrapperDiv: false
+})
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
 
@@ -35,39 +34,52 @@ const sortedValues = computed(() => {
   if (availableValues.value == null) {
     return null
   }
+
   let keys = Object.keys(availableValues.value)
 
   if (props.valuesFilter) {
-    if (props.valuesFilter instanceof RegExp) {
-      keys = keys.filter(v => !!props.valuesFilter.exec(v))
+    if (props.valuesFilter && props.valuesFilter instanceof RegExp) {
+      keys = keys.filter(v => !!(props.valuesFilter as RegExp).exec(v))
     } else if (props.valuesFilter instanceof Function) {
       keys = keys.filter(props.valuesFilter)
     }
+  }
+
+  if (props.limit) {
+    keys = keys.slice(0, props.limit)
   }
 
   if (props.sort) {
     keys = props.sort(keys)
   }
 
-  return keys.map(k => [k, availableValues.value[k]])
+  return keys.map(k => [k, availableValues.value ? availableValues.value[k] : null])
 })
 
 </script>
 
 <template>
   <template v-if="sortedValues?.length">
-    <slot name="autolist-label"></slot>
+    <slot name="autolist-label" />
 
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
-            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})</slot>
+              <slot name="label" :value="value" :count="count">
+                {{ value }} ({{ count }})
+              </slot>
             </template>
           </FiltersCheckbox>
         </slot>
@@ -79,17 +91,26 @@ const sortedValues = computed(() => {
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value.toString()"
-            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
+              <slot name="label" :value="value" :count="count">
+                {{ value }} ({{ count }})
               </slot>
+            </template>
+            <template #checkbox="scope">
+              <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
             </template>
           </FiltersCheckbox>
         </slot>
       </template>
     </template>
-
   </template>
 </template>

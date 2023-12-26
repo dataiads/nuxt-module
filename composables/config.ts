@@ -1,11 +1,18 @@
 export const useLpoConfig = (): LPOConfig => {
-    const {$lpoConfig} = useNuxtApp()
-    return $lpoConfig
+    const { $lpoConfig } = useNuxtApp()
+    return $lpoConfig as LPOConfig
 }
 
-export const useMirroredDomain = () => {
+export const useMirroredDomain = (): string => {
     const lpoConfig = useLpoConfig()
+    const serverMirroredDomain = !process.server ? window.__LPO_MIRRORED_DOMAIN__ : ''
     const runtimeConfig = useRuntimeConfig()
 
-    return lpoConfig.mirroredDomainOverride || runtimeConfig.mirroredDomain
+    return (
+        lpoConfig.mirroredDomainOverride ||
+        serverMirroredDomain ||
+        (runtimeConfig.mirroredDomain as string) ||
+        runtimeConfig.public.mirroredDomain ||
+        ''
+    )
 }

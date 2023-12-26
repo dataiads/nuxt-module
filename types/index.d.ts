@@ -1,9 +1,30 @@
-import { AsyncData, UseFetchOptions } from "#app";
-import { Ref, ComputedRef } from "vue";
-import { FetchError } from "ofetch";
-import { Variations } from "~~/components/variation-layout.vue";
+import { AsyncData, UseFetchOptions } from '#app'
+import { Ref, ComputedRef } from 'vue'
+import { FetchError } from 'ofetch'
+import { Variations } from '~~/components/variation-layout.vue'
 
 declare global {
+  export interface InlineLPOConfig {
+    name: string;
+    isDefault: string;
+    PublishUp: Date | null;
+    PublishDown: Date | null;
+    fields: InlineLPOConfigField[];
+  }
+
+  export interface InlineLPOConfigField {
+    name: keyof LPOConfig;
+    type: string;
+    value: string;
+    active: boolean;
+    updatedAt: Date;
+  }
+
+  export interface Window {
+    __LPO_CONFIG__: Partial<InlineLPOConfig> | undefined;
+    __LPO_MIRRORED_DOMAIN__: string | undefined;
+  }
+
   export interface ProductDataPrice {
     currency: string;
     value: string;
@@ -130,6 +151,13 @@ declare global {
     href?: string;
   }
 
+  export interface ImageBanner {
+    imageLink: string;
+    mobileImageLink?: string;
+    desktopImageLink?: string;
+    href?: string;
+  }
+
   export interface GtmConfig {
     id: string | string[];
   }
@@ -138,33 +166,55 @@ declare global {
     dataDomainScript: string | null;
   }
 
+  export interface AxeptioConfig {
+    clientId: string | null;
+  }
+
   export interface DidomiConfig {
-    id: string;
+    id: string | null;
   }
 
   export interface MenuItem {
-    text: string
-    href?: string
-    color?: string
-    imageLink: string
+    text: string;
+    href?: string;
+    color?: string;
+    imageLink: string;
   }
 
   export interface FooterColumn {
-    title: string
-    items: FooterColumnItem[]
+    title: string;
+    items: FooterColumnItem[];
   }
 
   export interface FooterColumnItem {
-    text: string
-    href?: string
+    text: string;
+    href?: string;
   }
 
-  export type CrossSellData = Record<string, CrossSellItem[]>
+  export type CrossSellData = Record<string, CrossSellItem[]>;
+
+  export interface CrossSellKey {
+    key: string;
+    caseInsensitive: boolean;
+  }
 
   export interface CrossSellItem {
-    text: string
-    link: string
-    image?: string
+    text: string;
+    link: string;
+    image?: string;
+  }
+
+  export interface GoogleFont {
+    family: string;
+    weights: string[];
+  }
+
+  export interface CustomScripts {
+    location: 'appendHead' | 'prependHead' | 'appendBody' | 'prependBody';
+    content: string;
+    defer: boolean;
+    async: boolean;
+    src: string;
   }
 
   // Add available LPO Config fields here.
@@ -172,34 +222,66 @@ declare global {
     mirroredDomainOverride?: string;
     locale?: string;
     variation?: Variations;
-
     banners?: Banner[];
+    imageBanner?: ImageBanner;
     bannerBackground?: string;
     bannerColor?: string;
-
-    breadcrumbs: Record<string, Array<Record<string, string>>>;
-    carousel: Record<string, Array<Record<string, string>>>;
-
     gtm?: GtmConfig;
     onetrust?: OnetrustConfig;
+    axeptio?: AxeptioConfig;
     didomi?: DidomiConfig;
-    messages?: Record<string, Record<string, any>>
+    messages?: Record<string, Record<string, any>>;
+    numberFormats?: Record<string, Record<string, Record<string, string>>>;
     menu?: MenuItem[];
     subMenu?: MenuItem[];
     footerColumns?: FooterColumn[];
     footerItems?: MenuItem[];
     crossSellData?: CrossSellData;
-
+    crossSellKey?: CrossSellKey;
     useLightMainProduct?: boolean;
-    customerSpecific?: Record<string, JSONValue>
+    customerSpecific?: Record<string, JSONValue>;
     cssVariables?: Record<string, string>;
-
     extraReco?: boolean;
-
     customLayout?: CustomLayout;
+    colorData?: Record<string, string>;
+    mainRecoParams: FilterParams;
+    sliderRecoParams: FilterParams;
+    searchRecoParams: FilterParams;
+    filterParams: FilterElement[];
+    accessibilityVariant?: {
+      text: string;
+    };
+    customScripts?: CustomScripts[];
+    productHook?: string;
+
+    // Non-standard fields, do not use !
+    breadcrumbs: Record<string, Array<Record<string, string>>>;
+    carousel: Record<string, Array<Record<string, string>>>;
   }
 
-  export interface UseFilterOptions {
+  export interface FilterElement {
+    title: string; // Titre de la section
+    elements: {
+      component: string; // Le nom du composant
+      props: any; // Les props associé à ce composant
+    }[];
+  }
+
+  export interface FilterParams {
+    filterRules?: FilterRule[][];
+    sortRules?: FilterRule[][];
+    sort?: string;
+    limit?: number;
+    deduplicate?: string;
+  }
+
+  export interface UseRecommenderOptions {
+    // Recommender endpoint to use
+    endpoint: 'filtered' | 'randomfill' | 'filtered-grouped' | 'structured-filter';
+
+    // where to get recommendation params from
+    configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
+
     // product to get recommendations for
     productId: string;
 
@@ -215,8 +297,11 @@ declare global {
     // optional options for useFetch composable
     fetchOptions?: UseFetchOptions<Product[]>;
 
-    // default page size (can be updated dynamically using Filter.limit property)
+    // default page size (can be updated dynamically using Recommender.limit property)
     defaultLimit?: number;
+
+    // default sort field (can be updated dynamically using Recommender.sort property)
+    defaultSort?: string;
 
     // an optional grouping function to return groups of products instead of individual items
     grouper?: (d: Product) => string;
@@ -226,29 +311,34 @@ declare global {
 
     // paginate locally instead of server side. pagination is still controlled using Filter.limit and Filter.page
     localPagination?: boolean;
+
+    structuredResponse?: boolean;
+
+    criteriaValues?: string[];
   }
 
-  export interface FilterResults {
+  export interface RecommenderResults {
     data: ComputedRef<any | null>;
     pending: Ref<boolean>;
-    refresh: (opts?: any) => Promise<void>;
-    execute: (opts?: any) => Promise<void>;
+    refresh: (opts?: any) => Promise<Product[] | null>;
+    execute: (opts?: any) => Promise<Product[] | null>;
     error: Ref<FetchError<any> | null>;
   }
 
-  export interface Filter {
+  export interface Recommender {
     results: FilterResults;
-    count: Ref<number>;
+    count: Ref<number> | ComputedRef<number>;
     limit: Ref<number>;
-    page: Ref<number>;
     sort: Ref<string>;
-    hasRule: (group: string, criteria: string, operator: string, value: string) => boolean;
+    page: Ref<number>;
+    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
     getFirstRuleValue: (group: string) => string | null;
-    pushRule: (group: string, criteria: string, operator: string, value: string) => void;
-    setOnlyRule: (group: string, criteria: string, operator: string, value: string) => void;
-    removeRule: (group: string, criteria: string, operator: string, value: string) => void;
+    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
     removeAllRules: (group: string) => void;
     fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
+    reset: () => void;
   }
 
   export interface InitialFilterRule extends FilterRule {
@@ -259,33 +349,96 @@ declare global {
     criteria: string;
     operator: string;
     value: string;
+    valueCriteria?: string;
+    baseProductValue?: string;
+    baseProductRegexpMatch?: string;
+    baseProductRegexpReplace?: string;
+  }
+
+  export interface Region {
+    displayName: string;
+    merchantId: string;
+    postalCodeArea: PostalCodeArea;
+    regionId: string;
+    regionalInventoryEligible: boolean;
+    shippingEligible: boolean;
+  }
+
+  export interface PostalCodeArea {
+    postalCodes: PostalCode[];
+    regionCode: string;
+  }
+
+  export interface PostalCode {
+    begin: string;
   }
 }
 
 // a json serializable type
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | { [x: string]: JSONValue }
-  | Array<JSONValue>;
+type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 
-export interface Region {
-  displayName: string
-  merchantId: string
-  postalCodeArea: PostalCodeArea
-  regionId: string
-  regionalInventoryEligible: boolean
-  shippingEligible: boolean
+export interface UseStructuredRecommenderOptions {
+  // where to get recommendation params from
+  //configRecoParams?: "mainRecoParams" | "sliderRecoParams";
+
+  // product to get recommendations for
+  productId: string;
+
+  // base recommendation rules for all queries
+  baseRules?: FilterRule[][];
+
+  // initial rules to add to the state
+  initialRules?: InitialFilterRule[];
+
+  // sorting rules
+  sortRules?: FilterRule[][];
+
+  // deduplication criteria
+  deduplicate?: string;
+
+  // optional extra query parameters for recommendation endpoint
+  fetchQuery?: Record<string, string | number>;
+
+  // optional options for useFetch composable
+  fetchOptions?: UseFetchOptions<StructuredFilterResponse>;
+
+  // default page size (can be updated dynamically using Recommender.limit property)
+  defaultLimit?: number;
+
+  // default sort field (can be updated dynamically using Recommender.sort property)
+  defaultSort?: string;
+
+  // list these criteria values along structured filters response
+  criteriaValues?: string[];
+
+  // only request criteria values on initial structured-filters call
+  cacheCriteriaValues?: boolean;
 }
 
-export interface PostalCodeArea {
-  postalCodes: PostalCode[]
-  regionCode: string
+export interface StructuredFilterResponse {
+  page: Product[][];
+  total: number;
+  criteriaValues: Record<string, Record<string, number>>;
 }
 
-export interface PostalCode {
-  begin: string
+export interface FetchCriteriaValuesReturn {
+  data: ComputedRef<Record<string, number>>;
+}
+
+export interface StructuredRecommender {
+  results: FilterResults;
+  count: ComputedRef<number>;
+  limit: Ref<number>;
+  sort: Ref<string>;
+  page: Ref<number>;
+  hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
+  getFirstRuleValue: (group: string) => string | null;
+  pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  removeAllRules: (group: string) => void;
+  fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn;
+  reset: () => void;
 }
 
 export interface CustomLayout {

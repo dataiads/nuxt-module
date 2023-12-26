@@ -2,29 +2,27 @@
 const lpoConfig = useLpoConfig()
 
 interface Props {
-    configKey?: "menu" | "subMenu" | "footerItems"
+  configKey?: 'menu' | 'subMenu' | 'footerItems'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    configKey: "menu"
+  configKey: 'menu'
 })
 
-let entries: MenuItem[] = lpoConfig[props.configKey] || []
+const entries: MenuItem[] = lpoConfig[props.configKey] || []
 </script>
 
 <template>
-    <template v-for="(item, index) in entries" :key="index">
-        <a v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit'}">
-            <slot :text="item.text" :image-link="item.imageLink">
-                <li>{{ item.text }}</li>
-            </slot>
-        </a>
-        <span v-else :style="{ color: item.color || 'inherit'}">
-
-            <slot :text="item.text" :image-link="item.imageLink">
-                <li>{{ item.text }}</li>
-            </slot>
-        </span>
-    </template>
-
+  <li v-for="(item, index) in entries" :key="index">
+    <a v-if="item.href" :href="item.href" :style="{ color: item.color || 'inherit' }">
+      <slot :text="item.text" :image-link="item.imageLink">
+        <span>{{ item.text }}</span>
+      </slot>
+    </a>
+    <span v-else :style="{ color: item.color || 'inherit' }">
+      <slot :text="item.text" :image-link="item.imageLink">
+        <span>{{ item.text }}</span>
+      </slot>
+    </span>
+  </li>
 </template>

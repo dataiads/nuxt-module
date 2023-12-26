@@ -2,6 +2,283 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.242](https://github.com/dataiads/nuxt-module/compare/v0.2.241...v0.2.242) (2023-12-22)
+
+
+### Features
+
+* **ProductImage:** add circular photo by default ([6392769](https://github.com/dataiads/nuxt-module/commit/6392769ffbd5474551924a47ec4ef218a41bd732))
+* **ProductImage:** show nav button only when multiple img ([69efd86](https://github.com/dataiads/nuxt-module/commit/69efd860ba08e55e47c754127677bcc1e6fd1f59))
+
+### [0.2.241](https://github.com/dataiads/nuxt-module/compare/v0.2.240...v0.2.241) (2023-12-20)
+
+### [0.2.240](https://github.com/dataiads/nuxt-module/compare/v0.2.239...v0.2.240) (2023-12-20)
+
+### [0.2.239](https://github.com/dataiads/nuxt-module/compare/v0.2.238...v0.2.239) (2023-12-20)
+
+### [0.2.238](https://github.com/dataiads/nuxt-module/compare/v0.2.237...v0.2.238) (2023-12-20)
+
+### [0.2.237](https://github.com/dataiads/nuxt-module/compare/v0.2.236...v0.2.237) (2023-12-20)
+
+### [0.2.236](https://github.com/dataiads/nuxt-module/compare/v0.2.235...v0.2.236) (2023-12-19)
+
+### [0.2.235](https://github.com/dataiads/nuxt-module/compare/v0.2.234...v0.2.235) (2023-12-18)
+
+### [0.2.234](https://github.com/dataiads/nuxt-module/compare/v0.2.233...v0.2.234) (2023-12-18)
+
+### [0.2.233](https://github.com/dataiads/nuxt-module/compare/v0.2.232...v0.2.233) (2023-12-18)
+
+### [0.2.232](https://github.com/dataiads/nuxt-module/compare/v0.2.231...v0.2.232) (2023-12-13)
+
+### [0.2.231](https://github.com/dataiads/nuxt-module/compare/v0.2.230...v0.2.231) (2023-12-13)
+
+### [0.2.230](https://github.com/dataiads/nuxt-module/compare/v0.2.229...v0.2.230) (2023-12-07)
+
+### [0.2.229](https://github.com/dataiads/nuxt-module/compare/v0.2.228...v0.2.229) (2023-12-07)
+
+
+### Features
+
+* add product image zoom ([#45](https://github.com/dataiads/nuxt-module/issues/45)) ([f28180e](https://github.com/dataiads/nuxt-module/commit/f28180e086ef693d419ca23563732730aef5a309))
+
+
+### Bug Fixes
+
+* **filtersElement:** add scoped slots values to autolistlabel ([cc7f136](https://github.com/dataiads/nuxt-module/commit/cc7f1369c44a16b5dbdb3266c025fcf517c8892a))
+
+### [0.2.228](https://github.com/dataiads/nuxt-module/compare/v0.2.227...v0.2.228) (2023-12-06)
+
+### [0.2.227](https://github.com/dataiads/nuxt-module/compare/v0.2.226...v0.2.227) (2023-12-06)
+
+### [0.2.226](https://github.com/dataiads/nuxt-module/compare/v0.2.225...v0.2.226) (2023-12-06)
+
+### [0.2.225](https://github.com/dataiads/nuxt-module/compare/v0.2.224...v0.2.225) (2023-11-29)
+
+
+### Features
+
+* - autolist-checkbox limit prop ([#44](https://github.com/dataiads/nuxt-module/issues/44)) ([0376f1c](https://github.com/dataiads/nuxt-module/commit/0376f1c9e76e23e9ce9785714b75ae84debae07c))
+
+### [0.2.224](https://github.com/dataiads/nuxt-module/compare/v0.2.223...v0.2.224) (2023-11-27)
+
+### [0.2.223](https://github.com/dataiads/nuxt-module/compare/v0.2.222...v0.2.223) (2023-11-23)
+
+### [0.2.222](https://github.com/dataiads/nuxt-module/compare/v0.2.221...v0.2.222) (2023-11-23)
+
+### [0.2.221](https://github.com/dataiads/nuxt-module/compare/v0.2.220...v0.2.221) (2023-11-22)
+
+### [0.2.220](https://github.com/dataiads/nuxt-module/compare/v0.2.219...v0.2.220) (2023-11-21)
+
+### [0.2.219](https://github.com/dataiads/nuxt-module/compare/v0.2.218...v0.2.219) (2023-11-20)
+
+### [0.2.218](https://github.com/dataiads/nuxt-module/compare/v0.2.217...v0.2.218) (2023-11-20)
+
+### [0.2.217](https://github.com/dataiads/nuxt-module/compare/v0.2.216...v0.2.217) (2023-11-17)
+
+### [0.2.216](https://github.com/dataiads/nuxt-module/compare/v0.2.215...v0.2.216) (2023-11-15)
+
+### [0.2.215](https://github.com/dataiads/nuxt-module/compare/v0.2.214...v0.2.215) (2023-11-09)
+
+### [0.2.214](https://github.com/dataiads/nuxt-module/compare/v0.2.213...v0.2.214) (2023-11-08)
+
+### [0.2.213](https://github.com/dataiads/nuxt-module/compare/v0.2.212...v0.2.213) (2023-11-08)
+
+### [0.2.212](https://github.com/dataiads/nuxt-module/compare/v0.2.211...v0.2.212) (2023-11-07)
+
+### [0.2.211](https://github.com/dataiads/nuxt-module/compare/v0.2.210...v0.2.211) (2023-11-03)
+
+### [0.2.210](https://github.com/dataiads/nuxt-module/compare/v0.2.209...v0.2.210) (2023-11-02)
+
+### [0.2.209](https://github.com/dataiads/nuxt-module/compare/v0.2.208...v0.2.209) (2023-10-31)
+
+### [0.2.208](https://github.com/dataiads/nuxt-module/compare/v0.2.207...v0.2.208) (2023-10-30)
+
+### [0.2.207](https://github.com/dataiads/nuxt-module/compare/v0.2.206...v0.2.207) (2023-10-26)
+
+### [0.2.206](https://github.com/dataiads/nuxt-module/compare/v0.2.205...v0.2.206) (2023-10-26)
+
+### [0.2.205](https://github.com/dataiads/nuxt-module/compare/v0.2.204...v0.2.205) (2023-10-26)
+
+### [0.2.204](https://github.com/dataiads/nuxt-module/compare/v0.2.203...v0.2.204) (2023-10-26)
+
+### [0.2.203](https://github.com/dataiads/nuxt-module/compare/v0.2.202...v0.2.203) (2023-10-24)
+
+### [0.2.202](https://github.com/dataiads/nuxt-module/compare/v0.2.201...v0.2.202) (2023-10-19)
+
+### [0.2.201](https://github.com/dataiads/nuxt-module/compare/v0.2.200...v0.2.201) (2023-10-19)
+
+### [0.2.200](https://github.com/dataiads/nuxt-module/compare/v0.2.199...v0.2.200) (2023-10-19)
+
+### [0.2.199](https://github.com/dataiads/nuxt-module/compare/v0.2.198...v0.2.199) (2023-10-18)
+
+### [0.2.198](https://github.com/dataiads/nuxt-module/compare/v0.2.197...v0.2.198) (2023-10-17)
+
+### [0.2.197](https://github.com/dataiads/nuxt-module/compare/v0.2.196...v0.2.197) (2023-10-11)
+
+### [0.2.196](https://github.com/dataiads/nuxt-module/compare/v0.2.195...v0.2.196) (2023-10-11)
+
+### [0.2.195](https://github.com/dataiads/nuxt-module/compare/v0.2.194...v0.2.195) (2023-10-09)
+
+### [0.2.194](https://github.com/dataiads/nuxt-module/compare/v0.2.193...v0.2.194) (2023-10-09)
+
+### [0.2.193](https://github.com/dataiads/nuxt-module/compare/v0.2.192...v0.2.193) (2023-10-02)
+
+### [0.2.192](https://github.com/dataiads/nuxt-module/compare/v0.2.191...v0.2.192) (2023-09-28)
+
+### [0.2.191](https://github.com/dataiads/nuxt-module/compare/v0.2.190...v0.2.191) (2023-09-28)
+
+### [0.2.190](https://github.com/dataiads/nuxt-module/compare/v0.2.189...v0.2.190) (2023-09-27)
+
+### [0.2.189](https://github.com/dataiads/nuxt-module/compare/v0.2.188...v0.2.189) (2023-09-27)
+
+### [0.2.188](https://github.com/dataiads/nuxt-module/compare/v0.2.187...v0.2.188) (2023-09-27)
+
+### [0.2.187](https://github.com/dataiads/nuxt-module/compare/v0.2.186...v0.2.187) (2023-09-27)
+
+### [0.2.186](https://github.com/dataiads/nuxt-module/compare/v0.2.185...v0.2.186) (2023-09-27)
+
+### [0.2.185](https://github.com/dataiads/nuxt-module/compare/v0.2.184...v0.2.185) (2023-09-26)
+
+### [0.2.184](https://github.com/dataiads/nuxt-module/compare/v0.2.183...v0.2.184) (2023-09-26)
+
+### [0.2.183](https://github.com/dataiads/nuxt-module/compare/v0.2.182...v0.2.183) (2023-09-26)
+
+### [0.2.182](https://github.com/dataiads/nuxt-module/compare/v0.2.181...v0.2.182) (2023-09-11)
+
+### [0.2.181](https://github.com/dataiads/nuxt-module/compare/v0.2.180...v0.2.181) (2023-09-07)
+
+### [0.2.180](https://github.com/dataiads/nuxt-module/compare/v0.2.179...v0.2.180) (2023-09-07)
+
+### [0.2.179](https://github.com/dataiads/nuxt-module/compare/v0.2.178...v0.2.179) (2023-09-05)
+
+### [0.2.178](https://github.com/dataiads/nuxt-module/compare/v0.2.177...v0.2.178) (2023-09-05)
+
+### [0.2.177](https://github.com/dataiads/nuxt-module/compare/v0.2.176...v0.2.177) (2023-09-04)
+
+### [0.2.176](https://github.com/dataiads/nuxt-module/compare/v0.2.175...v0.2.176) (2023-09-04)
+
+### [0.2.175](https://github.com/dataiads/nuxt-module/compare/v0.2.174...v0.2.175) (2023-09-04)
+
+### [0.2.174](https://github.com/dataiads/nuxt-module/compare/v0.2.173...v0.2.174) (2023-09-04)
+
+### [0.2.173](https://github.com/dataiads/nuxt-module/compare/v0.2.172...v0.2.173) (2023-09-04)
+
+### [0.2.172](https://github.com/dataiads/nuxt-module/compare/v0.2.171...v0.2.172) (2023-08-31)
+
+### [0.2.171](https://github.com/dataiads/nuxt-module/compare/v0.2.170...v0.2.171) (2023-08-31)
+
+### [0.2.170](https://github.com/dataiads/nuxt-module/compare/v0.2.169...v0.2.170) (2023-08-31)
+
+### [0.2.169](https://github.com/dataiads/nuxt-module/compare/v0.2.168...v0.2.169) (2023-08-30)
+
+### [0.2.168](https://github.com/dataiads/nuxt-module/compare/v0.2.167...v0.2.168) (2023-08-29)
+
+### [0.2.167](https://github.com/dataiads/nuxt-module/compare/v0.2.166...v0.2.167) (2023-08-28)
+
+### [0.2.166](https://github.com/dataiads/nuxt-module/compare/v0.2.165...v0.2.166) (2023-08-28)
+
+### [0.2.165](https://github.com/dataiads/nuxt-module/compare/v0.2.164...v0.2.165) (2023-08-28)
+
+### [0.2.164](https://github.com/dataiads/nuxt-module/compare/v0.2.163...v0.2.164) (2023-08-28)
+
+### [0.2.163](https://github.com/dataiads/nuxt-module/compare/v0.2.162...v0.2.163) (2023-08-28)
+
+### [0.2.162](https://github.com/dataiads/nuxt-module/compare/v0.2.161...v0.2.162) (2023-08-28)
+
+### [0.2.161](https://github.com/dataiads/nuxt-module/compare/v0.2.160...v0.2.161) (2023-08-28)
+
+### [0.2.160](https://github.com/dataiads/nuxt-module/compare/v0.2.159...v0.2.160) (2023-08-28)
+
+### [0.2.159](https://github.com/dataiads/nuxt-module/compare/v0.2.158...v0.2.159) (2023-08-28)
+
+### [0.2.158](https://github.com/dataiads/nuxt-module/compare/v0.2.157...v0.2.158) (2023-08-25)
+
+### [0.2.157](https://github.com/dataiads/nuxt-module/compare/v0.2.156...v0.2.157) (2023-08-24)
+
+### [0.2.156](https://github.com/dataiads/nuxt-module/compare/v0.2.155...v0.2.156) (2023-08-24)
+
+### [0.2.155](https://github.com/dataiads/nuxt-module/compare/v0.2.154...v0.2.155) (2023-08-23)
+
+### [0.2.154](https://github.com/dataiads/nuxt-module/compare/v0.2.153...v0.2.154) (2023-08-17)
+
+### [0.2.153](https://github.com/dataiads/nuxt-module/compare/v0.2.152...v0.2.153) (2023-08-16)
+
+### [0.2.152](https://github.com/dataiads/nuxt-module/compare/v0.2.151...v0.2.152) (2023-08-16)
+
+### [0.2.151](https://github.com/dataiads/nuxt-module/compare/v0.2.150...v0.2.151) (2023-08-16)
+
+### [0.2.150](https://github.com/dataiads/nuxt-module/compare/v0.2.149...v0.2.150) (2023-08-11)
+
+### [0.2.149](https://github.com/dataiads/nuxt-module/compare/v0.2.148...v0.2.149) (2023-08-10)
+
+### [0.2.148](https://github.com/dataiads/nuxt-module/compare/v0.2.147...v0.2.148) (2023-08-09)
+
+### [0.2.147](https://github.com/dataiads/nuxt-module/compare/v0.2.146...v0.2.147) (2023-08-08)
+
+### [0.2.146](https://github.com/dataiads/nuxt-module/compare/v0.2.145...v0.2.146) (2023-08-08)
+
+### [0.2.145](https://github.com/dataiads/nuxt-module/compare/v0.2.144...v0.2.145) (2023-08-07)
+
+### [0.2.144](https://github.com/dataiads/nuxt-module/compare/v0.2.143...v0.2.144) (2023-08-04)
+
+### [0.2.143](https://github.com/dataiads/nuxt-module/compare/v0.2.142...v0.2.143) (2023-08-04)
+
+### [0.2.142](https://github.com/dataiads/nuxt-module/compare/v0.2.141...v0.2.142) (2023-07-31)
+
+### [0.2.141](https://github.com/dataiads/nuxt-module/compare/v0.2.140...v0.2.141) (2023-07-26)
+
+### [0.2.140](https://github.com/dataiads/nuxt-module/compare/v0.2.139...v0.2.140) (2023-07-26)
+
+### [0.2.139](https://github.com/dataiads/nuxt-module/compare/v0.2.138...v0.2.139) (2023-07-26)
+
+### [0.2.138](https://github.com/dataiads/nuxt-module/compare/v0.2.137...v0.2.138) (2023-07-26)
+
+### [0.2.137](https://github.com/dataiads/nuxt-module/compare/v0.2.136...v0.2.137) (2023-07-25)
+
+### [0.2.136](https://github.com/dataiads/nuxt-module/compare/v0.2.135...v0.2.136) (2023-07-25)
+
+### [0.2.135](https://github.com/dataiads/nuxt-module/compare/v0.2.134...v0.2.135) (2023-07-25)
+
+### [0.2.134](https://github.com/dataiads/nuxt-module/compare/v0.2.133...v0.2.134) (2023-07-18)
+
+### [0.2.133](https://github.com/dataiads/nuxt-module/compare/v0.2.132...v0.2.133) (2023-07-11)
+
+### [0.2.132](https://github.com/dataiads/nuxt-module/compare/v0.2.131...v0.2.132) (2023-07-10)
+
+### [0.2.131](https://github.com/dataiads/nuxt-module/compare/v0.2.130...v0.2.131) (2023-07-06)
+
+### [0.2.130](https://github.com/dataiads/nuxt-module/compare/v0.2.129...v0.2.130) (2023-07-06)
+
+### [0.2.129](https://github.com/dataiads/nuxt-module/compare/v0.2.128...v0.2.129) (2023-07-05)
+
+### [0.2.128](https://github.com/dataiads/nuxt-module/compare/v0.2.127...v0.2.128) (2023-07-04)
+
+### [0.2.127](https://github.com/dataiads/nuxt-module/compare/v0.2.126...v0.2.127) (2023-07-04)
+
+### [0.2.126](https://github.com/dataiads/nuxt-module/compare/v0.2.125...v0.2.126) (2023-07-04)
+
+### [0.2.125](https://github.com/dataiads/nuxt-module/compare/v0.2.124...v0.2.125) (2023-06-23)
+
+### [0.2.124](https://github.com/dataiads/nuxt-module/compare/v0.2.123...v0.2.124) (2023-06-20)
+
+### [0.2.123](https://github.com/dataiads/nuxt-module/compare/v0.2.122...v0.2.123) (2023-06-20)
+
+### [0.2.122](https://github.com/dataiads/nuxt-module/compare/v0.2.121...v0.2.122) (2023-06-20)
+
+### [0.2.121](https://github.com/dataiads/nuxt-module/compare/v0.2.120...v0.2.121) (2023-06-19)
+
+### [0.2.120](https://github.com/dataiads/nuxt-module/compare/v0.2.119...v0.2.120) (2023-06-16)
+
+### [0.2.119](https://github.com/dataiads/nuxt-module/compare/v0.2.118...v0.2.119) (2023-06-16)
+
+### [0.2.118](https://github.com/dataiads/nuxt-module/compare/v0.2.117...v0.2.118) (2023-06-16)
+
+### [0.2.117](https://github.com/dataiads/nuxt-module/compare/v0.2.116...v0.2.117) (2023-06-15)
+
+### [0.2.116](https://github.com/dataiads/nuxt-module/compare/v0.2.115...v0.2.116) (2023-06-15)
+
+### [0.2.115](https://github.com/dataiads/nuxt-module/compare/v0.2.114...v0.2.115) (2023-06-14)
+
 ### [0.2.114](https://github.com/dataiads/nuxt-module/compare/v0.2.113...v0.2.114) (2023-06-12)
 
 ### [0.2.113](https://github.com/dataiads/nuxt-module/compare/v0.2.112...v0.2.113) (2023-06-08)

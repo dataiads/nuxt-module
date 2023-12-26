@@ -1,113 +1,52 @@
 <script setup lang="ts">
 const lpoConfig = useLpoConfig()
+const product = useProduct()
 
-const props = defineProps<{
-    recoSliderProducts: Product[] | null;
-    filter: Filter;
-}>()
+const props = defineProps(layoutProps)
 
+let sliderProducts = computed(() => props.recoSliderProducts)
+if (props.slider) {
+  const { data: sliderProductsData } = props.slider.results
+  sliderProducts = sliderProductsData
+}
 </script>
 
 <script lang="ts">
-export type Variations = "catalog" | "catalog-high-filters" | "catalog-high-filters-no-slider" | "catalog-high-filters-top-slider" | "catalog-reco-overlay" | "catalog-reco-overlay-right" | "catalog-no-slider" | "catalog-no-slider-xsell-top" | "catalog-top-slider" | "catalog-vertical-slider" | "light" | "light-no-slider" | "light-no-slider-xsell-top" | "light-top-slider" | "light-vertical-slider" | "custom";
+export type Variations =
+  | 'catalog'
+  | 'catalog-high-filters'
+  | 'catalog-high-filters-no-slider'
+  | 'catalog-high-filters-top-slider'
+  | 'catalog-high-filters-overlay'
+  | 'catalog-high-filters-overlay-right'
+  | 'catalog-reco-overlay'
+  | 'catalog-custom-overlay-right'
+  | 'catalog-reco-overlay-right'
+  | 'catalog-no-slider'
+  | 'catalog-no-slider-xsell-top'
+  | 'catalog-top-slider'
+  | 'catalog-vertical-slider'
+  | 'custom-layout'
+  | 'light'
+  | 'light-no-slider'
+  | 'light-no-slider-xsell-top'
+  | 'light-top-slider'
+  | 'light-vertical-slider'
+  | 'catalog-xsell-top'
+  | 'light-xsell-top'
+  | 'catalog-xsell-top-no-slider'
+  | 'light-xsell-top-no-slider'
+  | 'catalog-high-filters-no-slider-xsell-top';
 </script>
 
 <template>
-    <LayoutsCatalogHighFilters v-if="lpoConfig.variation === 'catalog-high-filters'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogHighFilters>
+  <a v-if="lpoConfig.accessibilityVariant?.text" :href="$oriUrl(product.data.link)" class="sr-only focus:not-sr-only">
+    {{ lpoConfig.accessibilityVariant?.text }}
+  </a>
 
-    <LayoutsCatalogHighFiltersNoSlider v-else-if="lpoConfig.variation === 'catalog-high-filters-no-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogHighFiltersNoSlider>
-
-    <LayoutsCatalogHighFiltersTopSlider v-else-if="lpoConfig.variation === 'catalog-high-filters-top-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogHighFiltersTopSlider>
-
-    <LayoutsCatalogRecoOverlay v-else-if="lpoConfig.variation === 'catalog-reco-overlay'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogRecoOverlay>
-
-    <LayoutsCatalogRecoOverlayRight v-else-if="lpoConfig.variation === 'catalog-reco-overlay-right'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogRecoOverlayRight>
-
-    <LayoutsCatalogNoSlider v-else-if="lpoConfig.variation === 'catalog-no-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogNoSlider>
-
-    <LayoutsCatalogNoSliderXsellTop v-else-if="lpoConfig.variation === 'catalog-no-slider-xsell-top'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogNoSliderXsellTop>
-
-    <LayoutsCatalogTopSlider v-else-if="lpoConfig.variation === 'catalog-top-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogTopSlider>
-
-    <LayoutsCatalogVerticalSlider v-else-if="lpoConfig.variation === 'catalog-vertical-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalogVerticalSlider>
-
-    <LayoutsLight v-else-if="lpoConfig.variation === 'light'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsLight>
-
-    <LayoutsLightNoSlider v-else-if="lpoConfig.variation === 'light-no-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsLightNoSlider>
-
-    <LayoutsLightNoSliderXsellTop v-else-if="lpoConfig.variation === 'light-no-slider-xsell-top'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsLightNoSliderXsellTop>
-
-    <LayoutsLightTopSlider v-else-if="lpoConfig.variation === 'light-top-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsLightTopSlider>
-
-    <LayoutsLightVerticalSlider v-else-if="lpoConfig.variation === 'light-vertical-slider'" v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsLightVerticalSlider>
-
-    <LayoutsCustom v-else-if="lpoConfig.variation === 'custom'" v-bind="props">
-        variation-layout.vue slots: {{ Object.keys($slots) }}
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCustom>
-
-    <!-- "catalog" is the default layout. -->
-    <LayoutsCatalog v-else v-bind="props" >
-        <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-        </template>
-    </LayoutsCatalog>
+  <component :is="resolveComponent(lpoConfig.variation)" v-if="lpoConfig.variation" :filter="filter" :reco-slider-products="sliderProducts" :slider="slider">
+    <template v-for="(_, name) in $slots" #[name]="scope">
+      <slot :name="name" v-bind="scope" />
+    </template>
+  </component>
 </template>
