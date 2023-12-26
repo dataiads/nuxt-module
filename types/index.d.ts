@@ -1,7 +1,7 @@
-import { AsyncData, UseFetchOptions } from '#app'
-import { Ref, ComputedRef } from 'vue'
-import { FetchError } from 'ofetch'
-import { Variations } from '~~/components/variation-layout.vue'
+import { AsyncData, UseFetchOptions } from "#app";
+import { Ref, ComputedRef } from "vue";
+import { FetchError } from "ofetch";
+import { Variations } from "~~/components/variation-layout.vue";
 
 declare global {
   export interface InlineLPOConfig {
@@ -210,7 +210,7 @@ declare global {
   }
 
   export interface CustomScripts {
-    location: 'appendHead' | 'prependHead' | 'appendBody' | 'prependBody';
+    location: "appendHead" | "prependHead" | "appendBody" | "prependBody";
     content: string;
     defer: boolean;
     async: boolean;
@@ -277,18 +277,14 @@ declare global {
 
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
-<<<<<<< HEAD
     endpoint:
       | "filtered"
       | "randomfill"
       | "filtered-grouped"
       | "structured-filter";
-=======
-    endpoint: 'filtered' | 'randomfill' | 'filtered-grouped' | 'structured-filter';
->>>>>>> main
 
     // where to get recommendation params from
-    configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
+    configRecoParams?: "mainRecoParams" | "sliderRecoParams";
 
     // product to get recommendations for
     productId: string;
@@ -413,7 +409,12 @@ declare global {
 }
 
 // a json serializable type
-type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
+type JSONValue =
+  | string
+  | number
+  | boolean
+  | { [x: string]: JSONValue }
+  | Array<JSONValue>;
 
 export interface UseStructuredRecommenderOptions {
   // where to get recommendation params from
@@ -507,7 +508,6 @@ export interface StructuredRecommender {
   reset: () => void;
 }
 
-
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
 
 export interface RecoSliderParams {
@@ -585,20 +585,20 @@ export interface MainProductParams {
 }
 
 export interface HeaderParams {
-  source: "slot" | "scrapped-html" | "scrapped-block"
+  source: "slot" | "scrapped-html" | "scrapped-block";
   sourceCustomAttribute: string;
   style: StyleValue;
 }
 
 export interface FooterParams {
-  source: "slot" | "scrapped-html" | "scrapped-block"
+  source: "slot" | "scrapped-html" | "scrapped-block";
   sourceCustomAttribute: string;
   style: StyleValue;
 }
 
 export interface LayerParams {
   enabled: true;
-  position: "top" | "left" | "right" | "bottom"
+  position: "top" | "left" | "right" | "bottom";
   delay: number;
   style: StyleValue;
   title: string;
