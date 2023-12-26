@@ -2,7 +2,10 @@
 withDefaults(
   defineProps<{
     parameters: { title: string };
-    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
+    elements: {
+      component: "autolist-checkbox" | "checkbox" | "range";
+      props: any;
+    }[];
     filter: Recommender;
     inputClass?: string;
     checkboxClass?: string;
@@ -63,7 +66,11 @@ const hasLabelSlot = computed(() => {
         <template #label="{ value, count }">
           <slot name="checkbox_label" :value="value" :count="count">
             <slot name="auto_list_label" :value="value" :count="count">
-              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count">
+              <slot
+                :name="`auto_list_label_${parameters.title}`"
+                :value="value"
+                :count="count"
+              >
                 <template v-if="value">{{ value }} ({{ count }})</template>
               </slot>
             </slot>
@@ -103,6 +110,16 @@ const hasLabelSlot = computed(() => {
           </slot>
         </template>
       </FiltersCheckbox>
+      <FiltersDoubleRange
+        v-else-if="component === 'double-range'"
+        v-bind="props"
+        :filter="filter"
+        :group="`${props.criteria}-${component}-filter`"
+      >
+        <template #text-min>
+          
+        </template>
+      </FiltersDoubleRange>
       <slot v-else :name="`filter_${parameters.title}`" />
     </template>
   </div>
