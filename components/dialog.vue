@@ -3,27 +3,27 @@ import {
   TransitionRoot,
   TransitionChild,
   Dialog,
-  DialogPanel,
-} from "@headlessui/vue";
+  DialogPanel
+} from '@headlessui/vue'
 
-const props = defineProps(["modelValue"]);
+const props = defineProps(['modelValue'])
 
-const emits = defineEmits(["close", "update:modelValue"]);
+const emits = defineEmits(['close', 'update:modelValue'])
 
 const isOpen = computed({
-  get() {
-    return props.modelValue;
+  get () {
+    return props.modelValue
   },
-  set(value) {
-    emits("update:modelValue", value);
-  },
-});
+  set (value) {
+    emits('update:modelValue', value)
+  }
+})
 
-const closeButtonRef = ref(null);
+const closeButtonRef = ref(null)
 
-function closeModal() {
-  isOpen.value = false;
-  emits("close");
+function closeModal () {
+  isOpen.value = false
+  emits('close')
 }
 </script>
 
@@ -31,9 +31,9 @@ function closeModal() {
   <TransitionRoot appear :show="isOpen" as="template">
     <Dialog
       as="div"
-      @close="closeModal"
       class="relative z-[100]"
-      :initialFocus="closeButtonRef"
+      :initial-focus="closeButtonRef"
+      @close="closeModal"
     >
       <TransitionChild
         as="template"

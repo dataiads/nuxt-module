@@ -24,15 +24,15 @@ const props = withDefaults(defineProps<{
   operator?: string
   limit?: number
 }>(), {
-  operator: "EQUAL",
-  wrapperDiv: false,
-});
+  operator: 'EQUAL',
+  wrapperDiv: false
+})
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
 
 const sortedValues = computed(() => {
   if (availableValues.value == null) {
-    return null;
+    return null
   }
 
   let keys = Object.keys(availableValues.value)
@@ -46,7 +46,7 @@ const sortedValues = computed(() => {
   }
 
   if (props.limit) {
-    keys = keys.slice(0, props.limit);
+    keys = keys.slice(0, props.limit)
   }
 
   if (props.sort) {
@@ -60,18 +60,26 @@ const sortedValues = computed(() => {
 
 <template>
   <template v-if="sortedValues?.length">
-    <slot name="autolist-label"></slot>
+    <slot name="autolist-label" />
 
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value?.toString()"
-            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})</slot>
+              <slot name="label" :value="value" :count="count">
+                {{ value }} ({{ count }})
+              </slot>
             </template>
           </FiltersCheckbox>
         </slot>
@@ -83,20 +91,26 @@ const sortedValues = computed(() => {
       <template v-for="[value, count] in sortedValues" :key="value">
         <slot name="input" :value="value" :count="count">
           <FiltersCheckbox
-            :filter="props.filter" :criteria="props.criteria" :group="props.group" :value="value?.toString()"
-            :class="props.class" :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator"
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">{{ value }} ({{ count }})
+              <slot name="label" :value="value" :count="count">
+                {{ value }} ({{ count }})
               </slot>
             </template>
             <template #checkbox="scope">
-              <slot name="checkbox" :info="{id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
+              <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
             </template>
           </FiltersCheckbox>
         </slot>
       </template>
     </template>
-
   </template>
 </template>

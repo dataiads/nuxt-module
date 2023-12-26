@@ -7,12 +7,12 @@ declare global {
 }
 
 // Exposes a collected dataLayer into the window
-export function sourceGTMDataLayerArray(product: Product, customAttributeName="dataLayer") {
-  const dataLayerContent = getCustomAttrJSON(product, customAttributeName, []);
+export function sourceGTMDataLayerArray (product: Product, customAttributeName = 'dataLayer') {
+  const dataLayerContent = getCustomAttrJSON(product, customAttributeName, [])
 
   if (!dataLayerContent?.length || !Array.isArray(dataLayerContent)) {
-    console.error("can't source dataLayer");
-    return;
+    console.error('can\'t source dataLayer')
+    return
   }
 
   if (!window.dataLayer) {
@@ -21,8 +21,8 @@ export function sourceGTMDataLayerArray(product: Product, customAttributeName="d
   window.dataLayer.push(...dataLayerContent)
 }
 
-export function sourceTcVars(product: Product) {
-  const tcVarsAttr = getCustomAttrJSON<Record<string, string>>(product, "tcVars", {});
+export function sourceTcVars (product: Product) {
+  const tcVarsAttr = getCustomAttrJSON<Record<string, string>>(product, 'tcVars', {})
   window.tc_vars = {
     ...window.tc_vars,
     ...tcVarsAttr

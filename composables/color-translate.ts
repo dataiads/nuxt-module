@@ -3,5 +3,5 @@ export default (color: string) => {
 
   const colorData = lpoConfig.colorData || {}
 
-  return colorData[color] || "#ffffff";
+  return colorData[color] || '#ffffff'
 }

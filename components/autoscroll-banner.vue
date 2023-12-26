@@ -10,13 +10,13 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   interval: 4000,
-  class: "",
-});
+  class: ''
+})
 
-const lpoConfig = useLpoConfig();
-const container = ref<HTMLElement | null>(null);
+const lpoConfig = useLpoConfig()
+const container = ref<HTMLElement | null>(null)
 
-const banners = props.banners || lpoConfig.banners || [];
+const banners = props.banners || lpoConfig.banners || []
 
 onBeforeMount(() => {
   if (banners.length > 1) {
@@ -25,36 +25,36 @@ onBeforeMount(() => {
         if (Math.round(container.value.scrollTop) >= container.value.scrollHeight - container.value.clientHeight) {
           container.value.scroll({
             top: 0,
-            behavior: "auto",
-          });
+            behavior: 'auto'
+          })
         }
         container.value.scrollBy({
           top: container.value.clientHeight,
-          behavior: "smooth",
-        });
+          behavior: 'smooth'
+        })
       }
-    }, props.interval);
+    }, props.interval)
   }
-});
+})
 
-const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners);
-const backgroundColor = lpoConfig.bannerBackground;
+const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners)
+const backgroundColor = lpoConfig.bannerBackground
 </script>
 
 <template>
   <ul
+    v-if="repeatedBanners.length"
+    ref="container"
     role="list"
     :class="props.class"
     class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide list-none"
     :style="{ backgroundColor: backgroundColor }"
-    ref="container"
-    v-if="repeatedBanners.length"
   >
-    <li class="min-h-full max-h-full w-full flex justify-center items-center snap-center" v-for="banner in repeatedBanners">
-      <a :href="banner.href" v-if="banner.href && $isSafeLink(banner.href)">
-        <slot v-bind="banner"></slot>
+    <li v-for="banner in repeatedBanners" class="min-h-full max-h-full w-full flex justify-center items-center snap-center">
+      <a v-if="banner.href && $isSafeLink(banner.href)" :href="banner.href">
+        <slot v-bind="banner" />
       </a>
-      <slot v-else v-bind="banner"></slot>
+      <slot v-else v-bind="banner" />
     </li>
   </ul>
 </template>

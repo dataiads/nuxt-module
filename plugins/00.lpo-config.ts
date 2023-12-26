@@ -1,25 +1,25 @@
-const StringLoader = (v: string, _?: string) => v;
+const StringLoader = (v: string, _?: string) => v
 
 const JSONLoader = (v: string, debugInfo?: string) => {
   try {
-    return JSON.parse(v);
+    return JSON.parse(v)
   } catch (err) {
-    console.debug(debugInfo || "", err);
+    console.debug(debugInfo || '', err)
   }
-};
+}
 
 const useUrlConfig = () => {
-  const route = useRoute();
+  const route = useRoute()
   const inlineLPOparams = route.params?.[
-    "lpo-config"
-  ] as Partial<InlineLPOConfig>;
+    'lpo-config'
+  ] as Partial<InlineLPOConfig>
 
   // remove this from URL
-  if (route.params?.["lpo-config"]) {
-    delete route.params["lpo-config"];
+  if (route.params?.['lpo-config']) {
+    delete route.params['lpo-config']
   }
-  return inlineLPOparams;
-};
+  return inlineLPOparams
+}
 
 export default defineNuxtPlugin(async () => {
   /**
@@ -28,58 +28,58 @@ export default defineNuxtPlugin(async () => {
    */
   const inlineLPOConfig = process.server
     ? useUrlConfig()
-    : window.__LPO_CONFIG__;
+    : window.__LPO_CONFIG__
 
-  const config = useRuntimeConfig();
-  let lpoConfig: Partial<LPOConfig> = {};
+  const config = useRuntimeConfig()
+  let lpoConfig: Partial<LPOConfig> = {}
 
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     if (config.public.liveConfigUrl) {
-      let cfg = await $fetch<InlineLPOConfig>(config.public.liveConfigUrl as string);
-      lpoConfig = deserializeServerConfig(cfg);
-      console.log("Loaded live config from ", config.public.liveConfigUrl);
+      const cfg = await $fetch<InlineLPOConfig>(config.public.liveConfigUrl as string)
+      lpoConfig = deserializeServerConfig(cfg)
+      console.log('Loaded live config from ', config.public.liveConfigUrl)
     } else {
-      lpoConfig = config.public.devLpoConfig as typeof lpoConfig;
+      lpoConfig = config.public.devLpoConfig as typeof lpoConfig
     }
   } else if (inlineLPOConfig !== undefined) {
-    lpoConfig = deserializeServerConfig(inlineLPOConfig);
+    lpoConfig = deserializeServerConfig(inlineLPOConfig)
   }
 
   // Pop a decpreciation warning is the nuxt config has a field also in the LPO config.
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     class DepreciationError extends Error {
-      constructor(message: string, ...params: any[]) {
-        super(message, ...params);
-        this.name = "DepreciationError";
+      constructor (message: string, ...params: any[]) {
+        super(message, ...params)
+        this.name = 'DepreciationError'
       }
     }
 
     Object.keys(config.public).forEach((c) => {
       if (!lpoConfig.hasOwnProperty(c)) {
-        return;
+        return
       }
 
       console.warn(
         `USING DEV VALUE: ${c} -> "${lpoConfig[c as keyof LPOConfig]}"`
-      );
+      )
       throw new DepreciationError(
         `DEPRECATED: "${c}" has been found in the nuxt.config but is now handled by the LPO config`
-      );
-    });
+      )
+    })
   }
 
   return {
     provide: {
-      lpoConfig: lpoConfig,
-    },
-  };
-});
+      lpoConfig: lpoConfig
+    }
+  }
+})
 
-function deserializeServerConfig(
+function deserializeServerConfig (
   inlineLPOConfig: Partial<InlineLPOConfig>
 ): Partial<LPOConfig> {
-  const lpoConfig = {};
+  const lpoConfig = {}
   // Prod env reads config from the data injected into the window object when LP is served.
   const fieldLoaders: Record<keyof LPOConfig, (v: string) => any> = {
     variation: StringLoader,
@@ -115,25 +115,25 @@ function deserializeServerConfig(
     filterParams: JSONLoader,
     // unused but kept for compat compatibility
     breadcrumbs: JSONLoader,
-    carousel: JSONLoader,
-  };
+    carousel: JSONLoader
+  }
 
   try {
-    for (let field of inlineLPOConfig.fields ?? []) {
+    for (const field of inlineLPOConfig.fields ?? []) {
       if (!field.active) {
-        continue;
+        continue
       }
 
-      let fieldLoader = fieldLoaders[field.name];
+      const fieldLoader = fieldLoaders[field.name]
       if (fieldLoader) {
         // @ts-ignore: ts2590 error due to LPOConfig type being too complex. No true fix has been found yet. see: https://github.com/microsoft/TypeScript/issues/45149
-        lpoConfig[field.name] = fieldLoader(field.value, `field ${field.name}:`);
+        lpoConfig[field.name] = fieldLoader(field.value, `field ${field.name}:`)
       } else {
-        console.debug("skipping undefined lpo config field", field.name);
+        console.debug('skipping undefined lpo config field', field.name)
       }
     }
   } catch (e) {
-    console.error("invalid lpo config");
+    console.error('invalid lpo config')
   }
-  return lpoConfig;
+  return lpoConfig
 }

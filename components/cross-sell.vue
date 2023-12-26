@@ -17,7 +17,7 @@ interface Props {
   // Slider scroll options
   scroller?: boolean
   scrollerClass?: string[]
-  direction?: "horizontal" | "vertical",
+  direction?: 'horizontal' | 'vertical',
   autoscroll?: boolean
   scrollSpeed?: number
   absoluteArrows?: boolean
@@ -31,10 +31,10 @@ const props = withDefaults(defineProps<Props>(), {
 
   scroller: false,
   scrollerClass: () => [],
-  direction: "horizontal",
+  direction: 'horizontal',
   autoscroll: false,
   scrollSpeed: 5,
-  absoluteArrows: true,
+  absoluteArrows: true
 })
 
 const lpoConfig = useLpoConfig()
@@ -78,29 +78,35 @@ if (props.dataTransformer) {
 </script>
 
 <template>
-<template v-if="items">
-  <slot name="title"></slot>
+  <template v-if="items">
+    <slot name="title" />
 
-  <div :class="props.class">
+    <div :class="props.class">
+      <Slider
+        v-if="scroller"
+        :items="items"
+        :direction="direction"
+        :scroller-class="scrollerClass"
+        :autoscroll="autoscroll"
+        :scroll-speed="scrollSpeed"
+        :absolute-arrows="absoluteArrows"
+      >
+        <template #previous-btn="{ click }">
+          <slot name="previous-btn" :click="click" />
+        </template>
+        <template #item="{ item }">
+          <a :href="item.link">
+            <slot name="item" :text="item.text" :image="item.image" />
+          </a>
+        </template>
+        <template #next-btn="{ click }">
+          <slot name="next-btn" :click="click" />
+        </template>
+      </Slider>
 
-    <Slider v-if="scroller" :items="items" :direction="direction" :scroller-class="scrollerClass" :autoscroll="autoscroll" :scroll-speed="scrollSpeed" :absolute-arrows="absoluteArrows">
-      <template #previous-btn="{ click }">
-        <slot name="previous-btn" :click="click"></slot>
-      </template>
-      <template #item="{ item }">
-        <a :href="item.link">
-          <slot name="item" :text="item.text" :image="item.image"></slot>
-        </a>
-      </template>
-      <template #next-btn="{ click }">
-        <slot name="next-btn" :click="click"></slot>
-      </template>
-    </Slider>
-
-    <a v-else v-for="item in items" :href="item.link">
-      <slot name="item" :text="item.text" :image="item.image"></slot>
-    </a>
-  </div>
-</template>
-
+      <a v-for="item in items" v-else :href="item.link">
+        <slot name="item" :text="item.text" :image="item.image" />
+      </a>
+    </div>
+  </template>
 </template>

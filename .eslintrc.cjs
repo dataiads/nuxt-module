@@ -24,6 +24,8 @@ module.exports = {
 
     // Vuejs
     'vue/multi-word-component-names': 0,
+    'vue/no-multiple-template-root': 0,
+    'vue/require-v-for-key': 1,
     'vue/html-indent': ['error', 2],
     'vue/comma-spacing': ['error', { before: false, after: true }],
     'vue/script-indent': ['error', 2, { baseIndent: 0 }],

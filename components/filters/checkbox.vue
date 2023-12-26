@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // random id to link label to the input
-const uid = Math.floor(Math.random() * 10 ** 16).toString();
+const uid = Math.floor(Math.random() * 10 ** 16).toString()
 
 const props = withDefaults(
   defineProps<{
@@ -18,16 +18,16 @@ const props = withDefaults(
     labelClass?: string;
   }>(),
   {
-    label: "",
-    operator: "EQUAL",
-    value: "",
-    valueCriteria: "",
-    baseProductCriteria: "",
-    class: "flex items-center gap-1 my-1",
-    inputClass: "hover:cursor-pointer",
-    labelClass: "",
+    label: '',
+    operator: 'EQUAL',
+    value: '',
+    valueCriteria: '',
+    baseProductCriteria: '',
+    class: 'flex items-center gap-1 my-1',
+    inputClass: 'hover:cursor-pointer',
+    labelClass: ''
   }
-);
+)
 
 const get = () => {
   return props.filter.hasRule(
@@ -37,8 +37,8 @@ const get = () => {
     props.value,
     props.valueCriteria,
     props.baseProductCriteria
-  );
-};
+  )
+}
 
 const set = (v: any) => {
   if (v) {
@@ -49,7 +49,7 @@ const set = (v: any) => {
       props.value,
       props.valueCriteria,
       props.baseProductCriteria
-    );
+    )
   } else {
     props.filter.removeRule(
       props.group,
@@ -58,16 +58,16 @@ const set = (v: any) => {
       props.value,
       props.valueCriteria,
       props.baseProductCriteria
-    );
+    )
   }
-};
+}
 
-let binder = computed({
+const binder = computed({
   get: () => get(),
   set: (val) => {
-    set(val);
-  },
-});
+    set(val)
+  }
+})
 </script>
 
 <template>
@@ -79,12 +79,12 @@ let binder = computed({
       :set="set"
     >
       <input
-        type="checkbox"
         :id="uid"
-        :class="props.inputClass"
         v-model="binder"
+        type="checkbox"
+        :class="props.inputClass"
         :style="props.inputStyle"
-      />
+      >
     </slot>
     <label :class="props.labelClass" :for="uid">
       <slot name="label" :value="props.label" :checked="binder">{{

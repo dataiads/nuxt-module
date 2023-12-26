@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
     // Defaults are currently available in assets/tailwind.css file
 
     if (config?.cssVariables) {
-        for (let [key, value] of Object.entries(config.cssVariables)) {
+        for (const [key, value] of Object.entries(config.cssVariables)) {
             rootStyle.setProperty(key, value)
         }
     }

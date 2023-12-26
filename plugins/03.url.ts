@@ -1,13 +1,13 @@
 
 // @ts-ignore
-import { defineNuxtPlugin, useState } from "#app";
+import { defineNuxtPlugin, useState } from '#app'
 
 export default defineNuxtPlugin(() => {
-    const [protocol, mirroredHost] = useMirroredDomain().split("//")
+    const [protocol, mirroredHost] = useMirroredDomain().split('//')
 
     // global add to cart state
-    const quantity = useState<number>("cart.quantity", () => 1)
-    const size = useState<string>("cart.size", () => "")
+    const quantity = useState<number>('cart.quantity', () => 1)
+    const size = useState<string>('cart.size', () => '')
 
     // unique transaction id for every visitor to avoid adding to cart twice
     // add to cart script handles session wide persistence
@@ -15,11 +15,11 @@ export default defineNuxtPlugin(() => {
 
     const urlGen = (product: Product, actionType: string, searchParams?: Record<string, string>): string => {
         //const product = useState<Product>("product")
-        let url = new URL(product.data.link)
+        const url = new URL(product.data.link)
         url.protocol = protocol
         url.hostname = mirroredHost
-        url.searchParams.set("lpo-basket", actionType)
-        url.searchParams.set("lpo-transaction", transactionId.toString())
+        url.searchParams.set('lpo-basket', actionType)
+        url.searchParams.set('lpo-transaction', transactionId.toString())
 
         if (quantity.value != 1) {
             url.searchParams.set('lpo-qty', quantity.value.toString())
@@ -40,13 +40,13 @@ export default defineNuxtPlugin(() => {
 
     return {
         provide: {
-            oriUrl(link: string, query?: Record<string, string>): string {
+            oriUrl (link: string, query?: Record<string, string>): string {
                 // force original domain on a link, add query parameters
                 if (!link) {
-                    return "#"
+                    return '#'
                 }
                 try {
-                    let url = new URL(link)
+                    const url = new URL(link)
                     url.protocol = protocol
                     url.hostname = mirroredHost
                     if (query) {
@@ -56,33 +56,33 @@ export default defineNuxtPlugin(() => {
                     }
                     return url.toString()
                 } catch (e) {
-                    console.log("broken link", link)
-                    return "#"
+                    console.log('broken link', link)
+                    return '#'
                 }
             },
-            oriUrlWithHash(link: string, hash: string): string {
+            oriUrlWithHash (link: string, hash: string): string {
                 // force original domain on a link, add query parameters
-                let url = new URL(link)
+                const url = new URL(link)
                 url.protocol = protocol
                 url.hostname = mirroredHost
                 url.hash = hash
                 return url.toString()
             },
-            isSafeLink(url: string): boolean {
+            isSafeLink (url: string): boolean {
                 const mirroredDomain = useMirroredDomain()
-                return url.startsWith("/") || url.startsWith(`${mirroredDomain}/`) || url === mirroredDomain
+                return url.startsWith('/') || url.startsWith(`${mirroredDomain}/`) || url === mirroredDomain
             },
-            addToCartUrl(searchParams?: Record<string, string>): string {
-                const product = useState<Product>("product")
-                return urlGen(product.value, "add", searchParams)
+            addToCartUrl (searchParams?: Record<string, string>): string {
+                const product = useState<Product>('product')
+                return urlGen(product.value, 'add', searchParams)
             },
-            recoAddToCartUrl(product: Product, searchParams?: Record<string, string>): string {
-                return urlGen(product, "add", searchParams)
+            recoAddToCartUrl (product: Product, searchParams?: Record<string, string>): string {
+                return urlGen(product, 'add', searchParams)
             },
-            customActionUrl(actionType: string, searchParams?: Record<string, string>): string {
-                const product = useState<Product>("product")
+            customActionUrl (actionType: string, searchParams?: Record<string, string>): string {
+                const product = useState<Product>('product')
                 return urlGen(product.value, actionType, searchParams)
-            },
+            }
         }
     }
 })

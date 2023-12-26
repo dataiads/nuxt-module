@@ -1,7 +1,7 @@
-import { createI18n } from 'vue-i18n';
+import { createI18n } from 'vue-i18n'
 
 // @ts-ignore
-import bundleMessages from "~/locales"
+import bundleMessages from '~/locales'
 
 export default defineNuxtPlugin(({ vueApp }) => {
   // Locale is changed in the backoffice.
@@ -15,14 +15,14 @@ export default defineNuxtPlugin(({ vueApp }) => {
       globalInjection: true,
       locale: lpoConfig.locale,
       messages: messages,
-      numberFormats: lpoConfig.numberFormats,
+      numberFormats: lpoConfig.numberFormats
     })
     vueApp.use(i18n)
   } else {
     return {
       provide: {
         // if no locale is configured, inject $t helper to prevent errors
-        t(a: string) { return a},
+        t (a: string) { return a}
       }
     }
   }

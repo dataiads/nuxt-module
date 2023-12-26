@@ -4,15 +4,16 @@ defineProps<{
   selectedIndex: number;
   iconNext?: string;
   iconPrevious?: string;
-}>();
+}>()
 
-defineEmits(["previous", "next"]);
+defineEmits(['previous', 'next'])
 </script>
+
 <template>
   <div class="absolute left-0 top-[50%] m-2 z-100">
     <button
-      @click="$emit('previous')"
       class="w-[28px] h-[46px] bg-white/20 hover:bg-white/60 hover:cursor-pointer"
+      @click="$emit('previous')"
     >
       <slot name="previous">
         <svg
@@ -35,8 +36,8 @@ defineEmits(["previous", "next"]);
   </div>
   <div class="absolute right-0 top-[50%] m-2">
     <button
-      @click="$emit('next')"
       class="w-[28px] h-[46px] flex justify-center bg-white/20 hover:bg-white/60 hover:cursor-pointer"
+      @click="$emit('next')"
     >
       <slot name="next">
         <svg
