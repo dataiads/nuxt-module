@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { CrossSellParams } from '~/types';
+import type { CrossSellParams } from '~/types';
 
 const props = defineProps<{
     config: CrossSellParams;

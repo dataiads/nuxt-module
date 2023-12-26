@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { InsertParams } from '~/types';
+import type { InsertParams } from '~/types';
 
 defineProps<{
     config: InsertParams[];

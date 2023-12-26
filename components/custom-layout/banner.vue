@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BannerElement, BannerParams } from "~/types";
+import type { BannerParams } from "~/types";
 
 const props = defineProps<{
   config: BannerParams;

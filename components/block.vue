@@ -4,11 +4,6 @@
  */
 import type { BlockConfig } from "~/types";
 
-interface BlockConfig {
-  html: string;
-  style: string;
-}
-
 const props = defineProps<{
   config?: BlockConfig;
   isolateStyle?: boolean;
