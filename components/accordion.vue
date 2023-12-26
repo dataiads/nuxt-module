@@ -2,7 +2,7 @@
 /**
  * This component is highly inspired from nuxt ui accordion component
  */
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 interface Props {
   class: string;
@@ -16,41 +16,41 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  class: "w-full flex flex-col border-b border-grey3",
-});
+  class: 'w-full flex flex-col border-b border-grey3'
+})
 
 const onEnter = (el: Element, done: any) => {
-  const hel = el as HTMLElement;
-  hel.style.height = "0";
-  hel.offsetHeight; // Trigger a reflow, flushing the CSS changes
-  hel.style.height = el.scrollHeight + "px";
+  const hel = el as HTMLElement
+  hel.style.height = '0'
+  hel.offsetHeight // Trigger a reflow, flushing the CSS changes
+  hel.style.height = el.scrollHeight + 'px'
 
-  hel.addEventListener("transitionend", done, { once: true });
-};
+  hel.addEventListener('transitionend', done, { once: true })
+}
 
 const onBeforeLeave = (el: Element) => {
-  const hel = el as HTMLElement;
-  hel.style.height = el.scrollHeight + "px";
-  hel.offsetHeight; // Trigger a reflow, flushing the CSS changes
-};
+  const hel = el as HTMLElement
+  hel.style.height = el.scrollHeight + 'px'
+  hel.offsetHeight // Trigger a reflow, flushing the CSS changes
+}
 
 const onAfterEnter = (el: Element) => {
-  const hel = el as HTMLElement;
-  hel.style.height = "auto";
-};
+  const hel = el as HTMLElement
+  hel.style.height = 'auto'
+}
 
 const onLeave = (el: any, done: any) => {
-  const hel = el as HTMLElement;
-  hel.style.height = "0";
+  const hel = el as HTMLElement
+  hel.style.height = '0'
 
-  hel.addEventListener("transitionend", done, { once: true });
-};
+  hel.addEventListener('transitionend', done, { once: true })
+}
 </script>
 
 <template>
   <Disclosure
-    v-slot="{ open }"
     v-for="column in columns"
+    v-slot="{ open }"
     as="div"
     :class="class"
   >

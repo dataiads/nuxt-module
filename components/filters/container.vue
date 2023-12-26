@@ -13,12 +13,12 @@ const props = withDefaults(
     rootComponent?: Component;
   }>(),
   {
-    asideItemClass: "!h-auto px-4 py-2",
-    headerClass: "cursor-pointer lg:py-4 flex items-center",
-    rangeInputClass: "grid grid-cols-2 gap-2",
-    inputClass: "border-[#9E9E9E]",
+    asideItemClass: '!h-auto px-4 py-2',
+    headerClass: 'cursor-pointer lg:py-4 flex items-center',
+    rangeInputClass: 'grid grid-cols-2 gap-2',
+    inputClass: 'border-[#9E9E9E]'
   }
-);
+)
 
 const lpoConfig = useLpoConfig();
 const filterParams = props.filterParams || lpoConfig?.filterParams;
@@ -26,14 +26,14 @@ const filterParams = props.filterParams || lpoConfig?.filterParams;
 // Add the group key to props
 filterParams.forEach((f) => {
   f.elements.forEach((el) => {
-    el.props.group = `${f.title}-${el.component}-filter`;
-  });
-});
+    el.props.group = `${f.title}-${el.component}-filter`
+  })
+})
 
 // Return the group from filterParam
 const getGroups = (filterParam: FilterElement) => {
-  return filterParam.elements.map((el) => el.props.group);
-};
+  return filterParam.elements.map((el) => el.props.group)
+}
 
 const removeAllRulesFromGroups = (groups: string[]) => {
   groups.forEach((g) => props.filter.removeAllRules(g));
@@ -44,20 +44,17 @@ const removeAllRulesFromGroups = (groups: string[]) => {
   <div>
     <component
       :is="rootComponent ? rootComponent : AsideItem"
-      :display="open"
-      :class="asideItemClass"
       v-for="filterParam in filterParams"
       :key="filterParam.title"
-      contentClass=""
+      :display="open"
+      :class="asideItemClass"
+      content-class=""
     >
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
-          <div :class="headerClass" v-bind:class="{ '': displayed }">
+          <div :class="[headerClass, { '': displayed }]">
             <slot name="title" :value="filterParam.title">
-              <span
-                class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]"
-                >{{ filterParam.title }}</span
-              >
+              <span class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]">{{ filterParam.title }}</span>
             </slot>
             <slot name="append" :displayed="displayed" />
           </div>
@@ -65,12 +62,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
       </template>
 
       <template #content>
-        <slot
-          name="prepend-content"
-          :removeAllFilter="removeAllRulesFromGroups"
-          :groups="getGroups(filterParam)"
-        >
-        </slot>
+        <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
         <slot
           name="content"
           :elements="filterParam.elements"

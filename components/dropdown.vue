@@ -3,23 +3,21 @@ const { openByDefault } = withDefaults(defineProps<{
   openByDefault?: boolean
 }>(), {
   openByDefault: false
-});
+})
 
-const open = ref(openByDefault);
-const toggleDisplay = () => open.value = !open.value;
+const open = ref(openByDefault)
+const toggleDisplay = () => open.value = !open.value
 </script>
 
 <template>
-  <slot name="header" :open="open" :toggleDisplay="toggleDisplay">
+  <slot name="header" :open="open" :toggle-display="toggleDisplay">
     <div class="flex flex-row justify-around cursor-pointer" @click="open = !open">
       <span>DRAWER_DEFAULT</span>
       <span :class="{ 'rotate-90': open }">></span>
     </div>
   </slot>
   <transition name="slide">
-    <slot v-if="open" name="content">
-
-    </slot>
+    <slot v-if="open" name="content" />
   </transition>
 </template>
 

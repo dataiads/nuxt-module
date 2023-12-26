@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const config = useRuntimeConfig();
+const config = useRuntimeConfig()
 
 const props = defineProps<{
   src: string;
@@ -7,7 +7,7 @@ const props = defineProps<{
   width: string;
   height: string;
   class?: string;
-  loading?: "eager" | "lazy" | undefined;
+  loading?: 'eager' | 'lazy' | undefined;
   format?: string;
   alt?: string;
   srcset?: string;
@@ -15,63 +15,63 @@ const props = defineProps<{
   zoom?: boolean;
   // optional: remove elements from the DOM when link is broken
   removeOnError?: boolean;
-}>();
+}>()
 
-const format = props.format ?? "webp";
-const loading = props.loading ?? "eager";
-const picture = props.picture ?? false;
+const format = props.format ?? 'webp'
+const loading = props.loading ?? 'eager'
+const picture = props.picture ?? false
 
 const fallbackToUncompressed = (event: Event) => {
   if (!event.target) {
-    return;
+    return
   }
 
-  const target = event.target as HTMLImageElement;
+  const target = event.target as HTMLImageElement
 
   // User defined type guard
   if (!target.src) {
-    return;
+    return
   }
 
   if (target.src != props.src) {
-    target.src = props.src;
+    target.src = props.src
   } else if (props.removeOnError) {
-    target.remove();
+    target.remove()
   }
-};
+}
 
-const hover = ref(false);
+const hover = ref(false)
 const src = computed(() => {
   if (hover.value && props.hoverSrc) {
-    return props.hoverSrc;
+    return props.hoverSrc
   }
-  return props.src;
-});
-const imageRef = ref();
-const translate = ref();
-const scale = ref(1);
+  return props.src
+})
+const imageRef = ref()
+const translate = ref()
+const scale = ref(1)
 const handleMouseMove = (event: MouseEvent) => {
   if (props.zoom) {
-    const bounds = imageRef.value.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-    translate.value = `${x}% ${y}%`;
-    scale.value = 3;
+    const bounds = imageRef.value.getBoundingClientRect()
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100
+    translate.value = `${x}% ${y}%`
+    scale.value = 3
   }
-};
+}
 const handleMouseLeave = () => {
-  hover.value = false;
+  hover.value = false
   if (props.zoom) {
-    scale.value = 1;
-    translate.value = `${0}px ${0}px`;
+    scale.value = 1
+    translate.value = `${0}px ${0}px`
   }
-};
+}
 
 const translateStyle = computed(() => {
   if (props.zoom) {
-    return `transform: scale(${scale.value}); transform-origin: ${translate.value}; cursor: zoom-in;`;
+    return `transform: scale(${scale.value}); transform-origin: ${translate.value}; cursor: zoom-in;`
   }
-});
+})
 </script>
 
 <template>
@@ -88,7 +88,7 @@ const translateStyle = computed(() => {
       @error="fallbackToUncompressed"
     />
     <picture v-else-if="config.public.optimizeImageLoad && picture && !props.srcset">
-      <slot :translateStyle="translateStyle"></slot>
+      <slot :translate-style="translateStyle" />
       <nuxt-img
         :src="src"
         :alt="props.alt"
@@ -102,7 +102,6 @@ const translateStyle = computed(() => {
     </picture>
     <img
       v-else
-      @mousemove="handleMouseMove"
       ref="imageRef"
       :src="src"
       :srcset="props.srcset"
@@ -112,6 +111,7 @@ const translateStyle = computed(() => {
       :height="props.height"
       :loading="loading"
       :style="translateStyle"
-    />
+      @mousemove="handleMouseMove"
+    >
   </div>
 </template>

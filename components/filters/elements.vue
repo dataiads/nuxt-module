@@ -14,26 +14,25 @@ withDefaults(
     checkboxContainerClass?: string;
   }>(),
   {
-    inputClass: "border-[#9E9E9E]",
+    inputClass: 'border-[#9E9E9E]',
     checkboxClass:
-      "text-black bg-white rounded-xs border-[#9E9E9E] rounded-sm w-[18px] h-[18px] focus:ring-primary focus:ring-0 hover:cursor-pointer",
-    labelClass: "leading-[15px] text-sm",
-    autoListClass: "flex items-center gap-3",
-    rangeClass: "grid grid-cols-2 gap-2",
-    checkboxContainerClass: "flex items-center gap-3",
+      'text-black bg-white rounded-xs border-[#9E9E9E] rounded-sm w-[18px] h-[18px] focus:ring-primary focus:ring-0 hover:cursor-pointer',
+    labelClass: 'leading-[15px] text-sm',
+    autoListClass: 'flex items-center gap-3',
+    rangeClass: 'grid grid-cols-2 gap-2',
+    checkboxContainerClass: 'flex items-center gap-3'
   }
-);
+)
 
 const hasCheckboxSlot = computed(() => {
-  const instance = getCurrentInstance();
-  return !!instance!.slots.checkbox;
-});
+  const instance = getCurrentInstance()
+  return !!instance!.slots.checkbox
+})
 
 const hasLabelSlot = computed(() => {
   const instance = getCurrentInstance();
   return !!instance!.slots.checkbox_label;
 });
-
 </script>
 
 <template>
@@ -66,8 +65,14 @@ const hasLabelSlot = computed(() => {
         <template #label="{ value, count }">
           <slot name="checkbox_label" :value="value" :count="count">
             <slot name="auto_list_label" :value="value" :count="count">
-              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count">
-                <template v-if="value">{{ value }} ({{ count }})</template>
+              <slot
+                :name="`auto_list_label_${parameters.title}`"
+                :value="value"
+                :count="count"
+              >
+                <template v-if="value">
+                  {{ value }} ({{ count }})
+                </template>
               </slot>
             </slot>
           </slot>
@@ -97,15 +102,24 @@ const hasLabelSlot = computed(() => {
             :info="{ id: scope.info.id, type: scope.info.type }"
             :get="scope.get"
             :set="scope.set"
-          >
-          </slot>
+          />
         </template>
         <template #label="{ value }">
           <slot name="checkbox_label" :value="value">
-            <template v-if="value">{{ value }}</template>
+            <template v-if="value">
+              {{ value }}
+            </template>
           </slot>
         </template>
       </FiltersCheckbox>
+      <FiltersDoubleRange
+        v-else-if="component === 'double-range'"
+        v-bind="props"
+        :filter="filter"
+        :group="`${props.criteria}-${component}-filter`"
+      >
+        <template #text-min />
+      </FiltersDoubleRange>
       <slot v-else :name="`filter_${parameters.title}`" />
     </template>
   </div>
