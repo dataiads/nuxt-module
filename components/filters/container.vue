@@ -50,11 +50,9 @@ const removeAllRulesFromGroups = (groups: string[]) => {
     >
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
-          <div :class="headerClass" :class="{ '': displayed }">
+          <div :class="[headerClass, { '': displayed }]">
             <slot name="title" :value="filterParam.title">
-              <span
-                class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]"
-              >{{ filterParam.title }}</span>
+              <span class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]">{{ filterParam.title }}</span>
             </slot>
             <slot name="append" :displayed="displayed" />
           </div>
@@ -62,11 +60,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
       </template>
 
       <template #content>
-        <slot
-          name="prepend-content"
-          :remove-all-filter="removeAllRulesFromGroups"
-          :groups="getGroups(filterParam)"
-        />
+        <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
         <slot
           name="content"
           :elements="filterParam.elements"
