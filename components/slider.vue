@@ -62,6 +62,7 @@ interface Props<T> {
   direction?: ScrollDirection
   class?: string[]
   scrollerClass?: string[]
+  scrollerStyle?: Record<string, string>;
   arrowClass?: string[],
   autoscroll?: boolean,
   scrollSpeed?: number,
@@ -73,6 +74,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
   scrollBehavior: 'smooth',
   class: () => [],
   scrollerClass: () => [],
+  scrollerStyle: () => ({}),
   arrowClass: () => [],
   autoscroll: false,
   scrollSpeed: 5,

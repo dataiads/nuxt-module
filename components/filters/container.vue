@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const AsideItem = resolveComponent('AsideItem')
+import type { StructuredRecommender } from "~/types";
+
+const AsideItem = resolveComponent("AsideItem");
 
 const props = withDefaults(
   defineProps<{
-    filter: Recommender;
     open: boolean;
+    filter: StructuredRecommender;
+    filterParams?: FilterElement[];
     headerClass?: string;
     asideItemClass?: string;
     rootComponent?: Component;
@@ -17,11 +20,11 @@ const props = withDefaults(
   }
 )
 
-const lpoConfig = useLpoConfig()
-const filterParams = lpoConfig?.filterParams
+const lpoConfig = useLpoConfig();
+const filterParams = props.filterParams || lpoConfig?.filterParams;
 
 // Add the group key to props
-filterParams.forEach((f, i) => {
+filterParams.forEach((f) => {
   f.elements.forEach((el) => {
     el.props.group = `${f.title}-${el.component}-filter`
   })
@@ -33,9 +36,8 @@ const getGroups = (filterParam: FilterElement) => {
 }
 
 const removeAllRulesFromGroups = (groups: string[]) => {
-  groups.forEach((g) => props.filter.removeAllRules(g))
-}
-
+  groups.forEach((g) => props.filter.removeAllRules(g));
+};
 </script>
 
 <template>
@@ -65,8 +67,25 @@ const removeAllRulesFromGroups = (groups: string[]) => {
           name="content"
           :elements="filterParam.elements"
           :parameters="filterParam"
-          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))"
-        />
+          :removeAllFilter="removeAllRulesFromGroups(getGroups(filterParam))"
+        >
+          <FiltersElements
+            class="flex flex-col max-h-[300px] overflow-y-auto gap-3 mb-3"
+            :filter="filter"
+            :elements="filterParam.elements"
+            :parameters="filterParam"
+          >
+            <template #checkbox="{ get, set, info}">
+              <input
+                v-bind="info"
+                type="checkbox"
+                :checked="get()"
+                @change="set(($event.target as HTMLInputElement)?.checked)"
+                class="text-black bg-white rounded-xs border-[#9E9E9E] rounded-sm w-[18px] h-[18px] focus:ring-primary focus:ring-0 hover:cursor-pointer"
+              />
+            </template>
+          </FiltersElements>
+        </slot>
       </template>
     </component>
   </div>

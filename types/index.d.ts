@@ -1,7 +1,7 @@
-import { AsyncData, UseFetchOptions } from '#app'
-import { Ref, ComputedRef } from 'vue'
-import { FetchError } from 'ofetch'
-import { Variations } from '~~/components/variation-layout.vue'
+import { AsyncData, UseFetchOptions } from "#app";
+import { Ref, ComputedRef } from "vue";
+import { FetchError } from "ofetch";
+import { Variations } from "~~/components/variation-layout.vue";
 
 declare global {
   export interface InlineLPOConfig {
@@ -210,7 +210,7 @@ declare global {
   }
 
   export interface CustomScripts {
-    location: 'appendHead' | 'prependHead' | 'appendBody' | 'prependBody';
+    location: "appendHead" | "prependHead" | "appendBody" | "prependBody";
     content: string;
     defer: boolean;
     async: boolean;
@@ -252,6 +252,7 @@ declare global {
     };
     customScripts?: CustomScripts[];
     productHook?: string;
+    customLayout: CustomLayout;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
@@ -261,7 +262,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: string; // Le nom du composant
+      component: "autolist-checkbox" | "checkbox" | "range"; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
   }
@@ -276,10 +277,14 @@ declare global {
 
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
-    endpoint: 'filtered' | 'randomfill' | 'filtered-grouped' | 'structured-filter';
+    endpoint:
+      | "filtered"
+      | "randomfill"
+      | "filtered-grouped"
+      | "structured-filter";
 
     // where to get recommendation params from
-    configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
+    configRecoParams?: "mainRecoParams" | "sliderRecoParams";
 
     // product to get recommendations for
     productId: string;
@@ -330,13 +335,43 @@ declare global {
     limit: Ref<number>;
     sort: Ref<string>;
     page: Ref<number>;
-    hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
+    hasRule: (
+      group: string,
+      criteria: string,
+      operator: string,
+      value: string,
+      valueCriteria?: string,
+      baseProductValue?: string
+    ) => boolean;
     getFirstRuleValue: (group: string) => string | null;
-    pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-    setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-    removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+    pushRule: (
+      group: string,
+      criteria: string,
+      operator: string,
+      value: string,
+      valueCriteria?: string,
+      baseProductValue?: string
+    ) => void;
+    setOnlyRule: (
+      group: string,
+      criteria: string,
+      operator: string,
+      value: string,
+      valueCriteria?: string,
+      baseProductValue?: string
+    ) => void;
+    removeRule: (
+      group: string,
+      criteria: string,
+      operator: string,
+      value: string,
+      valueCriteria?: string,
+      baseProductValue?: string
+    ) => void;
     removeAllRules: (group: string) => void;
-    fetchCriteriaValues: (criteria: string) => AsyncData<Record<string, number>, FetchError<any> | null>;
+    fetchCriteriaValues: (
+      criteria: string
+    ) => AsyncData<Record<string, number>, FetchError<any> | null>;
     reset: () => void;
   }
 
@@ -374,7 +409,12 @@ declare global {
 }
 
 // a json serializable type
-type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
+type JSONValue =
+  | string
+  | number
+  | boolean
+  | { [x: string]: JSONValue }
+  | Array<JSONValue>;
 
 export interface UseStructuredRecommenderOptions {
   // where to get recommendation params from
@@ -430,12 +470,153 @@ export interface StructuredRecommender {
   limit: Ref<number>;
   sort: Ref<string>;
   page: Ref<number>;
-  hasRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => boolean;
+  hasRule: (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria?: string,
+    baseProductValue?: string
+  ) => boolean;
   getFirstRuleValue: (group: string) => string | null;
-  pushRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-  setOnlyRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
-  removeRule: (group: string, criteria: string, operator: string, value: string, valueCriteria?: string, baseProductValue?: string) => void;
+  pushRule: (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria?: string,
+    baseProductValue?: string
+  ) => void;
+  setOnlyRule: (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria?: string,
+    baseProductValue?: string
+  ) => void;
+  removeRule: (
+    group: string,
+    criteria: string,
+    operator: string,
+    value: string,
+    valueCriteria?: string,
+    baseProductValue?: string
+  ) => void;
   removeAllRules: (group: string) => void;
   fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn;
   reset: () => void;
+}
+
+export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
+
+export interface RecoSliderParams {
+  type: "reco-slider";
+  enabled: boolean;
+  title: string;
+  titleStyle: StyleValue;
+  algo: FilterParams;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
+  previousButton: string;
+  nextButton: string;
+  buttonStyle: StyleValue;
+  columnGap: string;
+  style: StyleValue;
+}
+
+export interface CrossSellParams {
+  type: "cross-sell";
+  enabled: boolean;
+  title: string;
+  key: CrossSellKey;
+  data: CrossSellData;
+  style: StyleValue;
+  columnGap: string;
+  scroll: boolean;
+  titleStyle: StyleValue;
+  itemStyle: StyleValue;
+  imageStyle: StyleValue;
+}
+
+export interface BannerParams {
+  type: "banner";
+  enabled: boolean;
+  interval: number;
+  elements: BannerElement[];
+  style: StyleValue;
+}
+
+export interface BannerElement {
+  type: "html" | "message";
+  html: string;
+  text: string;
+  link: string;
+  style: StyleValue;
+}
+
+export interface CustomLayout {
+  global: GlobalParams;
+  header: HeaderParams;
+  mainProduct: MainProductParams;
+  mainReco: MainRecoParams;
+  footer: FooterParams;
+  layer: LayerParams;
+  stickyAtc: StickyAtcParams;
+  preHeader: InsertParams[];
+  postHeader: InsertParams[];
+  preMainProduct: InsertParams[];
+  postMainProduct: InsertParams[];
+  postMainReco: InsertParams[];
+}
+
+export interface MainRecoParams {
+  showFilters: boolean;
+  highFilters: boolean;
+  filterStyle: StyleValue;
+  filterParams: FilterElement[];
+  gridStyle: StyleValue;
+  algo: FilterParams;
+}
+
+export interface MainProductParams {
+  light: boolean;
+}
+
+export interface HeaderParams {
+  source: "slot" | "scrapped-html" | "scrapped-block";
+  sourceCustomAttribute: string;
+  style: StyleValue;
+}
+
+export interface FooterParams {
+  source: "slot" | "scrapped-html" | "scrapped-block";
+  sourceCustomAttribute: string;
+  style: StyleValue;
+}
+
+export interface LayerParams {
+  enabled: true;
+  position: "top" | "left" | "right" | "bottom";
+  delay: number;
+  style: StyleValue;
+  title: string;
+  titleStyle: StyleValue;
+  gridStyle: StyleValue;
+  algo: FilterParams;
+}
+
+export interface StickyAtcParams {
+  enabled: true;
+  //TODO
+}
+
+export interface GlobalParams {
+  stylesheet: string;
+}
+
+export interface BlockConfig {
+  html: string;
+  style: string;
 }

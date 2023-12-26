@@ -89,6 +89,24 @@ export const getCustomAttr = (product: Product, attr: string): string | null => 
   return null
 }
 
+// check if a product has a customAttribute value by its name.
+// extraData will take precedence over regular data
+export const hasCustomAttr = (product: Product, attr: string): boolean => {
+  if (product?.extraData?.customAttributes) {
+    const match = product.extraData.customAttributes.find((i) => i.name == attr);
+    if (match != undefined) {
+      return true;
+    }
+  }
+  if (product?.data?.customAttributes) {
+    const match = product.data.customAttributes.find((i) => i.name == attr);
+    if (match != undefined) {
+      return true;
+    }
+  }
+  return false;
+};
+
 // same as getCustomAttr but casts the returned value to an integer.
 // if parsing fails, returns null
 export const getCustomAttrInt = (product: Product, attr: string): number | null => {

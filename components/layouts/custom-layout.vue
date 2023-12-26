@@ -1,0 +1,245 @@
+<script setup lang="ts">
+const product = useProduct();
+
+const layoutConfig = useLpoConfig().customLayout;
+
+// get criteria values to be listed from filter params
+const criteriaValues = layoutConfig.mainReco.filterParams.reduce(
+  (acc, item) => {
+    for (const el of item.elements) {
+      if (
+        el.component === "autolist-checkbox" &&
+        el.props.criteria &&
+        acc.indexOf(el.props.criteria) < 0
+      ) {
+        acc.push(el.props.criteria);
+      }
+    }
+    return acc;
+  },
+  [] as string[]
+);
+
+const filter = useState("filter", () =>
+  useStructuredRecommender({
+    productId: product.value.id,
+    baseRules: layoutConfig.mainReco.algo.filterRules,
+    sortRules: layoutConfig.mainReco.algo.sortRules,
+    deduplicate: layoutConfig.mainReco.algo.deduplicate,
+    defaultLimit: layoutConfig.mainReco.algo.limit,
+    defaultSort: layoutConfig.mainReco.algo.sort,
+    criteriaValues,
+  })
+);
+
+// scroll top of the filters when returning less results
+onMounted(() => {
+  watch(filter.value.results.data, (newData, oldData) => {
+    if (
+      layoutConfig.mainReco.highFilters &&
+      oldData &&
+      newData.length < oldData.length
+    ) {
+      document.querySelector("#filters")?.scrollIntoView();
+    }
+  });
+});
+
+if (layoutConfig?.global?.stylesheet) {
+  useHead({
+    style: [{ children: layoutConfig.global.stylesheet }],
+  });
+}
+</script>
+
+<template>
+  <div class="flex flex-col w-full justify-center">
+    <!-- preHeader -->
+    <CustomLayoutInserts :config="layoutConfig.preHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutInserts>
+
+    <!-- Header -->
+    <CustomLayoutHeader :config="layoutConfig.header">
+      <template #header>
+        <slot name="header"></slot>
+      </template>
+    </CustomLayoutHeader>
+
+    <!-- postHeader -->
+    <CustomLayoutInserts :config="layoutConfig.postHeader">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutInserts>
+
+    <!-- high filters mode -->
+    <div
+      v-if="
+        layoutConfig.mainReco.showFilters && layoutConfig.mainReco.highFilters
+      "
+      class="flex"
+    >
+      <div
+        id="filters-aside"
+        class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
+        <slot name="filters-aside" :filter="filter">
+          <FiltersContainer
+            :filter-params="layoutConfig.mainReco.filterParams"
+            :filter="filter"
+            :open="true"
+          />
+        </slot>
+      </div>
+
+      <div class="flex flex-col grow">
+        <!-- preMainProduct -->
+        <CustomLayoutInserts :config="layoutConfig.preMainProduct">
+          <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+          </template>
+        </CustomLayoutInserts>
+
+        <!-- main product -->
+        <MainProduct :light="layoutConfig.mainProduct.light">
+          <template #main-product>
+            <slot name="main-product"></slot>
+          </template>
+          <template #main-light>
+            <slot name="main-product-light"></slot>
+          </template>
+        </MainProduct>
+
+        <!-- postMainProduct -->
+        <CustomLayoutInserts :config="layoutConfig.postMainProduct">
+          <template v-for="(_, name) in $slots" #[name]="scope">
+            <slot :name="name" v-bind="scope"></slot>
+          </template>
+        </CustomLayoutInserts>
+
+        <!-- main reco -->
+        <div id="filters">
+          <div id="filters-content">
+            <div id="filters-content-header">
+              <slot name="filters-content-header"></slot>
+            </div>
+
+            <div
+              class="grid grid-cols-[var(--catalog-grid-cols)] md:grid-cols-[var(--md-catalog-grid-cols)] lg:grid-cols-[var(--lg-catalog-grid-cols)] xl:grid-cols-[var(--xl-catalog-grid-cols)] 2xl:grid-cols-[var(--2xl-catalog-grid-cols)] 3xl:grid-cols-[var(--3xl-catalog-grid-cols)] gap-[var(--catalog-grid-gap)] md:gap-[var(--md-catalog-grid-gap)] lg:gap-[var(--lg-catalog-grid-gap)] xl:gap-[var(--xl-catalog-grid-gap)] 2xl:gap-[var(--2xl-catalog-grid-gap)] 3xl:gap-[var(--3xl-catalog-grid-gap)]"
+            >
+              <slot
+                v-if="filter.results?.data?.length"
+                name="filters-content-grid-item"
+                v-for="(item, index) in filter.results.data"
+                :key="item.id ? item.id : JSON.stringify(item)"
+                :item="item"
+                :index="index"
+              ></slot>
+              <slot v-else name="filters-no-results"></slot>
+            </div>
+
+            <div id="filters-pagination">
+              <slot name="filters-pagination"></slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template v-else>
+      <!-- preMainProduct -->
+      <CustomLayoutInserts :config="layoutConfig.preMainProduct">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope"></slot>
+        </template>
+      </CustomLayoutInserts>
+
+      <!-- main product -->
+      <MainProduct :light="layoutConfig.mainProduct.light">
+        <template #main-product>
+          <slot name="main-product"></slot>
+        </template>
+        <template #main-light>
+          <slot name="main-product-light"></slot>
+        </template>
+      </MainProduct>
+
+      <!-- postMainProduct -->
+      <CustomLayoutInserts :config="layoutConfig.postMainProduct">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope"></slot>
+        </template>
+      </CustomLayoutInserts>
+
+      <div id="filters" class="flex flex-row">
+        <div
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+          v-if="layoutConfig.mainReco.showFilters"
+        >
+          <slot name="filters-aside" :filter="filter">
+            <FiltersContainer
+              :filter-params="layoutConfig.mainReco.filterParams"
+              :filter="filter"
+              :open="true"
+            />
+          </slot>
+        </div>
+
+        <div id="filters-content" class="grow">
+          <div id="filters-content-header">
+            <slot name="filters-content-header"></slot>
+          </div>
+          <div :style="layoutConfig.mainReco.gridStyle">
+            <slot
+              v-if="filter.results?.data?.length"
+              name="filters-content-grid-item"
+              v-for="(item, index) in filter.results.data"
+              :key="item.id ? item.id : JSON.stringify(item)"
+              :item="item"
+              :index="index"
+            />
+            <slot v-else name="filters-no-results"></slot>
+          </div>
+          <div id="filters-pagination">
+            <slot name="filters-pagination"></slot>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- postMainReco -->
+    <CustomLayoutInserts :config="layoutConfig.postMainReco">
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutInserts>
+
+    <!-- Footer -->
+    <CustomLayoutFooter :config="layoutConfig.header">
+      <template #footer>
+        <slot name="footer"></slot>
+      </template>
+    </CustomLayoutFooter>
+
+    <!-- Sticky ATC -->
+    <StickyFooter v-if="layoutConfig.stickyAtc.enabled">
+      <slot name="sticky-add-to-cart" />
+    </StickyFooter>
+
+    <!-- Layers -->
+    <CustomLayoutOverlay
+      v-if="layoutConfig.layer.enabled"
+      :config="layoutConfig.layer"
+    >
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutOverlay>
+  </div>
+</template>

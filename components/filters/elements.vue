@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types';
+
 withDefaults(
   defineProps<{
     parameters: { title: string };
-    elements: {
-      component: 'autolist-checkbox' | 'checkbox' | 'range';
-      props: any;
-    }[];
-    filter: Recommender;
+    filter: StructuredRecommender,
+    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any}[];
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
@@ -31,9 +30,9 @@ const hasCheckboxSlot = computed(() => {
 })
 
 const hasLabelSlot = computed(() => {
-  const instance = getCurrentInstance()
-  return !!instance!.slots.checkbox_label
-})
+  const instance = getCurrentInstance();
+  return !!instance!.slots.checkbox_label;
+});
 </script>
 
 <template>
