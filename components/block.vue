@@ -3,11 +3,7 @@
 /*
  * Render scrapped "block" elements
  */
-
-interface BlockConfig {
-    html: string;
-    style: string;
-}
+import type {BlockConfig} from "~/types"
 
 const props = defineProps<{
     config?: BlockConfig;

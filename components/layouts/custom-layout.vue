@@ -1,18 +1,24 @@
 <script setup lang="ts">
-
 const product = useProduct();
 
 const layoutConfig = useLpoConfig().customLayout;
 
 // get criteria values to be listed from filter params
-const criteriaValues = layoutConfig.mainReco.filterParams.reduce((acc, item) => {
-  for (const el of item.elements) {
-    if (el.component === 'autolist-checkbox' && el.props.criteria && acc.indexOf(el.props.criteria) < 0) {
-      acc.push(el.props.criteria)
+const criteriaValues = layoutConfig.mainReco.filterParams.reduce(
+  (acc, item) => {
+    for (const el of item.elements) {
+      if (
+        el.component === "autolist-checkbox" &&
+        el.props.criteria &&
+        acc.indexOf(el.props.criteria) < 0
+      ) {
+        acc.push(el.props.criteria);
+      }
     }
-  }
-  return acc
-}, [] as string[])
+    return acc;
+  },
+  [] as string[]
+);
 
 const filter = useState("filter", () =>
   useStructuredRecommender({
@@ -38,6 +44,12 @@ onMounted(() => {
     }
   });
 });
+
+if (layoutConfig?.global?.stylesheet) {
+  useHead({
+    style: [{ children: layoutConfig.global.stylesheet }],
+  });
+}
 </script>
 
 <template>
@@ -49,9 +61,12 @@ onMounted(() => {
       </template>
     </CustomLayoutInserts>
 
-    <header id="header">
-      <slot name="header" />
-    </header>
+    <!-- Header -->
+    <CustomLayoutHeader :config="layoutConfig.header">
+      <template #header>
+        <slot name="header"></slot>
+      </template>
+    </CustomLayoutHeader>
 
     <!-- postHeader -->
     <CustomLayoutInserts :config="layoutConfig.postHeader">
@@ -67,9 +82,17 @@ onMounted(() => {
       "
       class="flex"
     >
-      <div id="filters-aside" class="shrink-0" :style="layoutConfig.mainReco.filterStyle">
+      <div
+        id="filters-aside"
+        class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <slot name="filters-aside" :filter="filter">
-          <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
+          <FiltersContainer
+            :filter-params="layoutConfig.mainReco.filterParams"
+            :filter="filter"
+            :open="true"
+          />
         </slot>
       </div>
 
@@ -83,8 +106,11 @@ onMounted(() => {
 
         <!-- main product -->
         <MainProduct :light="layoutConfig.mainProduct.light">
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
+          <template #main-product>
+            <slot name="main-product"></slot>
+          </template>
+          <template #main-light>
+            <slot name="main-product-light"></slot>
           </template>
         </MainProduct>
 
@@ -134,8 +160,11 @@ onMounted(() => {
 
       <!-- main product -->
       <MainProduct :light="layoutConfig.mainProduct.light">
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope"></slot>
+        <template #main-product>
+          <slot name="main-product"></slot>
+        </template>
+        <template #main-light>
+          <slot name="main-product-light"></slot>
         </template>
       </MainProduct>
 
@@ -154,7 +183,11 @@ onMounted(() => {
           v-if="layoutConfig.mainReco.showFilters"
         >
           <slot name="filters-aside" :filter="filter">
-            <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
+            <FiltersContainer
+              :filter-params="layoutConfig.mainReco.filterParams"
+              :filter="filter"
+              :open="true"
+            />
           </slot>
         </div>
 
@@ -162,9 +195,7 @@ onMounted(() => {
           <div id="filters-content-header">
             <slot name="filters-content-header"></slot>
           </div>
-          <div
-            :style="layoutConfig.mainReco.gridStyle"
-          >
+          <div :style="layoutConfig.mainReco.gridStyle">
             <slot
               v-if="filter.results?.data?.length"
               name="filters-content-grid-item"
@@ -189,25 +220,26 @@ onMounted(() => {
       </template>
     </CustomLayoutInserts>
 
-    <!-- TODO Overlay -->
-    <!--
-    <CustomLayoutOverlay v-if="layoutConfig.overlay">
-      <template #overlay-content>
-        <CustomLayoutInserts :config="layoutConfig.overlay">
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope"></slot>
-          </template>
-        </CustomLayoutInserts>
+    <!-- Footer -->
+    <CustomLayoutFooter :config="layoutConfig.header">
+      <template #footer>
+        <slot name="footer"></slot>
       </template>
-    </CustomLayoutOverlay>
-    -->
+    </CustomLayoutFooter>
 
-    <footer id="footer">
-      <slot name="footer" />
-    </footer>
-
-    <StickyFooter v-if="layoutConfig.stickyAtc.enable">
+    <!-- Sticky ATC -->
+    <StickyFooter v-if="layoutConfig.stickyAtc.enabled">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
+
+    <!-- Layers -->
+    <CustomLayoutOverlay
+      v-if="layoutConfig.layer.enabled"
+      :config="layoutConfig.layer"
+    >
+      <template v-for="(_, name) in $slots" #[name]="scope">
+        <slot :name="name" v-bind="scope"></slot>
+      </template>
+    </CustomLayoutOverlay>
   </div>
 </template>

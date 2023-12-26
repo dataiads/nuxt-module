@@ -517,6 +517,7 @@ export interface RecoSliderParams {
   absoluteArrows: boolean;
   previousButton: string;
   nextButton: string;
+  buttonStyle: StyleValue;
   columnGap: string;
   style: StyleValue;
 }
@@ -552,8 +553,8 @@ export interface BannerElement {
 }
 
 export interface CustomLayout {
+  global: GlobalParams;
   header: HeaderParams;
-  //breadcrumbs: BradcrumbsParams;
   mainProduct: MainProductParams;
   mainReco: MainRecoParams;
   footer: FooterParams;
@@ -577,21 +578,41 @@ export interface MainRecoParams {
 
 export interface MainProductParams {
   light: boolean;
-  //TODO
 }
 
 export interface HeaderParams {
-  //TODO
+  source: "slot" | "scrapped-html" | "scrapped-block"
+  sourceCustomAttribute: string;
+  style: StyleValue;
 }
 
 export interface FooterParams {
-  //TODO
+  source: "slot" | "scrapped-html" | "scrapped-block"
+  sourceCustomAttribute: string;
+  style: StyleValue;
 }
 
 export interface LayerParams {
-  //TODO
+  enabled: true;
+  position: "top" | "left" | "right" | "bottom"
+  delay: number;
+  style: StyleValue;
+  title: string;
+  titleStyle: StyleValue;
+  gridStyle: StyleValue;
+  algo: FilterParams;
 }
 
 export interface StickyAtcParams {
+  enabled: true;
   //TODO
+}
+
+export interface GlobalParams {
+  stylesheet: string;
+}
+
+export interface BlockConfig {
+  html: string;
+  style: string;
 }

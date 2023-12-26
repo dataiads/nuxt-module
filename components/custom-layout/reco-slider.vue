@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { NuxtConfigSchema } from "@nuxt/schema";
-import { RecoSliderParams } from "~/types";
+import type { RecoSliderParams } from "~/types";
 
 const props = defineProps<{
   config: RecoSliderParams;
@@ -36,14 +35,21 @@ const items = computed(() =>
   <div v-if="items?.length">
     <div :style="config.style">
       <slot name="reco-slider-header"></slot>
-      <div v-if="config.title" :style="config.titleStyle">{{ config.title }}</div>
+      <div v-if="config.title" :style="config.titleStyle">
+        {{ config.title }}
+      </div>
       <Slider v-bind="sliderProps" :items="items">
         <template #item="{ item }">
           <slot name="reco-slider-item" :key="item.id" :item="item"></slot>
         </template>
         <template #previous-btn="scope">
           <template v-if="config.previousButton">
-            <img :src="config.previousButton" @click="scope.click" class="cursor-pointer"/>
+            <img
+              :src="config.previousButton"
+              @click="scope.click"
+              class="cursor-pointer"
+              :style="config.buttonStyle"
+            />
           </template>
           <template v-else>
             <slot name="reco-slider-previous-btn" v-bind="scope"></slot>
@@ -51,7 +57,12 @@ const items = computed(() =>
         </template>
         <template #next-btn="scope">
           <template v-if="config.nextButton">
-            <img :src="config.nextButton"  @click="scope.click" class="cursor-pointer"/>
+            <img
+              :src="config.nextButton"
+              @click="scope.click"
+              class="cursor-pointer"
+              :style="config.buttonStyle"
+            />
           </template>
           <template v-else>
             <slot name="reco-slider-next-btn" v-bind="scope"></slot>
