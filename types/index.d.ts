@@ -1,7 +1,7 @@
-import { AsyncData, UseFetchOptions } from "#app";
-import { Ref, ComputedRef } from "vue";
-import { FetchError } from "ofetch";
-import { Variations } from "~~/components/variation-layout.vue";
+import { AsyncData, UseFetchOptions } from '#app'
+import { Ref, ComputedRef } from 'vue'
+import { FetchError } from 'ofetch'
+import { Variations } from '~~/components/variation-layout.vue'
 
 declare global {
   export interface InlineLPOConfig {
@@ -210,7 +210,7 @@ declare global {
   }
 
   export interface CustomScripts {
-    location: "appendHead" | "prependHead" | "appendBody" | "prependBody";
+    location: 'appendHead' | 'prependHead' | 'appendBody' | 'prependBody';
     content: string;
     defer: boolean;
     async: boolean;
@@ -262,7 +262,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: "autolist-checkbox" | "checkbox" | "range"; // Le nom du composant
+      component: 'autolist-checkbox' | 'checkbox' | 'range'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
   }
@@ -278,13 +278,13 @@ declare global {
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
     endpoint:
-      | "filtered"
-      | "randomfill"
-      | "filtered-grouped"
-      | "structured-filter";
+      | 'filtered'
+      | 'randomfill'
+      | 'filtered-grouped'
+      | 'structured-filter';
 
     // where to get recommendation params from
-    configRecoParams?: "mainRecoParams" | "sliderRecoParams";
+    configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
 
     // product to get recommendations for
     productId: string;
@@ -511,7 +511,7 @@ export interface StructuredRecommender {
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
 
 export interface RecoSliderParams {
-  type: "reco-slider";
+  type: 'reco-slider';
   enabled: boolean;
   title: string;
   titleStyle: StyleValue;
@@ -527,7 +527,7 @@ export interface RecoSliderParams {
 }
 
 export interface CrossSellParams {
-  type: "cross-sell";
+  type: 'cross-sell';
   enabled: boolean;
   title: string;
   key: CrossSellKey;
@@ -541,7 +541,7 @@ export interface CrossSellParams {
 }
 
 export interface BannerParams {
-  type: "banner";
+  type: 'banner';
   enabled: boolean;
   interval: number;
   elements: BannerElement[];
@@ -549,7 +549,7 @@ export interface BannerParams {
 }
 
 export interface BannerElement {
-  type: "html" | "message";
+  type: 'html' | 'message';
   html: string;
   text: string;
   link: string;
@@ -572,8 +572,10 @@ export interface CustomLayout {
 }
 
 export interface MainRecoParams {
-  showFilters: boolean;
-  highFilters: boolean;
+  filtersDisplay: 'none' | 'left' | 'left-high' | 'right' | 'right-high' | 'slideover';
+  slideoverStyle: StyleValue;
+  slideoverCloseButton: string;
+  slideoverCloseButtonStyle: StyleValue;
   filterStyle: StyleValue;
   filterParams: FilterElement[];
   gridStyle: StyleValue;
@@ -585,20 +587,20 @@ export interface MainProductParams {
 }
 
 export interface HeaderParams {
-  source: "slot" | "scrapped-html" | "scrapped-block";
+  source: 'slot' | 'scrapped-html' | 'scrapped-block';
   sourceCustomAttribute: string;
   style: StyleValue;
 }
 
 export interface FooterParams {
-  source: "slot" | "scrapped-html" | "scrapped-block";
+  source: 'slot' | 'scrapped-html' | 'scrapped-block';
   sourceCustomAttribute: string;
   style: StyleValue;
 }
 
 export interface LayerParams {
   enabled: true;
-  position: "top" | "left" | "right" | "bottom";
+  position: 'top' | 'left' | 'right' | 'bottom';
   delay: number;
   style: StyleValue;
   title: string;
