@@ -198,7 +198,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div ref="scrollerEl" :class="scrollerClass">
+    <div ref="scrollerEl" :class="scrollerClass" :style="scrollerStyle">
       <slot v-for="(item, i) in props.items" :key="i" name="item" :item="item" />
     </div>
 
