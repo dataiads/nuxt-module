@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
   defineProps<{
     modelValue: number;
     name?: string;
@@ -7,9 +7,11 @@ const props = withDefaults(
     max?: number;
     step?: number;
   }>(),
-  { max: 1000 }
+  { max: Math.max(), name: '', min: 0, step: 1 }
 )
 
+const progressClass: string[] = []
+const progressStyle: string[] = []
 
 const emit = defineEmits(['change', 'update:modelValue'])
 
@@ -22,11 +24,9 @@ const maxAngle = ref(30)
 
 const sliderMin = computed(() => ({
   get: () => {
-    const val = parseInt(minAngle.value)
-    return val
+    return minAngle.value
   },
-  set: (val) => {
-    val = parseInt(val)
+  set: (val: number) => {
     if (val > maxAngle.value) {
       maxAngle.value = val
     }
@@ -36,11 +36,9 @@ const sliderMin = computed(() => ({
 
 const sliderMax = computed(() => ({
   get: function () {
-    const val = parseInt(maxAngle.value)
-    return val
+    return maxAngle
   },
-  set: function (val) {
-    val = parseInt(val)
+  set: function (val: number) {
     if (val < minAngle.value) {
       minAngle.value = val
     }
@@ -53,7 +51,7 @@ const sliderMax = computed(() => ({
   <div class="range-slider">
     {{ sliderMin }} - {{ sliderMax }}
     <input
-      v-model="sliderMin"
+      v-model.number="sliderMin"
       :name="name"
       :min="min"
       :max="max"
@@ -63,7 +61,7 @@ const sliderMax = computed(() => ({
       @change="onChange"
     >
     <input
-      v-model="sliderMax"
+      v-model.number="sliderMax"
       :name="name"
       :min="min"
       :max="max"

@@ -68,6 +68,7 @@ export default defineNuxtConfig({
           class: ['w-full', 'transition-translate', 'duration-1000'],
           containerClass: ['mx-auto'],
           overlayClass: [],
+          arrowClass: [],
           sliderClass: ['flex', 'flex-nowrap', 'overflow-x-scroll'],
           itemClass: ['w-1/2 md:w-auto md:min-w-[160px] p-2'],
           autoscroll: false,

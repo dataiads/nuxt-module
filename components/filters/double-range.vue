@@ -21,8 +21,7 @@ const sliderMin = computed({
   get: () => {
     return minAngle.value
   },
-  set: (val) => {
-    val = parseInt(val)
+  set: (val: number) => {
     if (val > maxAngle.value) {
       maxAngle.value = val
     }
@@ -34,8 +33,7 @@ const sliderMax = computed({
   get: () => {
     return maxAngle.value
   },
-  set: (val) => {
-    val = parseInt(val)
+  set: (val: number) => {
     if (val < minAngle.value) {
       minAngle.value = val
     }
@@ -74,7 +72,7 @@ watchDebounced(
           type="number"
           :min="props.min"
           :max="props.max"
-          class="focus:border-secondary text-black focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         >
         <slot name="trailing">
           <span class="absolute inset-y-0 end-0 flex items-center pointer-events-none px-2">
@@ -89,7 +87,7 @@ watchDebounced(
           type="number"
           :min="props.min"
           :max="props.max"
-          class="focus:border-secondary text-black focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         >
         <slot name="trailing">
           <span class="absolute inset-y-0 end-0 flex items-center pointer-events-none px-2">
@@ -99,8 +97,8 @@ watchDebounced(
       </div>
     </div>
     <div class="range-slider h-[12px] mt-4 w-full relative">
-      <input v-model="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
-      <input v-model="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
+      <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
+      <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
       <span class="absolute bg-primary h-[5px] bottom-0 top-0" :style="progressStyle">
         <!-- 
 
