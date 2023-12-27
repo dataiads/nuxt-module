@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.243](https://github.com/dataiads/nuxt-module/compare/v0.2.242...v0.2.243) (2023-12-27)
+
+
+### Features
+
+* eslint + double range slider ([f91552c](https://github.com/dataiads/nuxt-module/commit/f91552c187c8d98d0e1481df7f97cf6b69c5bd34))
+
+
+### Bug Fixes
+
+* **FiltersContainer:** duplicate attr ([d6b712d](https://github.com/dataiads/nuxt-module/commit/d6b712d60d9f7bd3732659d2c6cd28a193ba6d77))
+
 ### [0.2.242](https://github.com/dataiads/nuxt-module/compare/v0.2.241...v0.2.242) (2023-12-22)
 
 
