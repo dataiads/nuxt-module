@@ -37,7 +37,7 @@ if (props.config.data) {
     </div>
     <div
       class="flex flex-row"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-scroll': config.scroll }"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
       :style="{ 'column-gap': config.columnGap }"
     >
       <template v-for="item in items">
