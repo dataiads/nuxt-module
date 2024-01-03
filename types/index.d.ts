@@ -601,7 +601,7 @@ export interface FooterParams {
 }
 
 export interface LayerParams {
-  enabled: true;
+  enabled: boolean;
   position: 'top' | 'left' | 'right' | 'bottom';
   delay: number;
   style: StyleValue;
@@ -612,8 +612,9 @@ export interface LayerParams {
 }
 
 export interface StickyAtcParams {
-  enabled: true;
-  //TODO
+  enabled: boolean;
+  delay: number;
+  yThreshold: number;
 }
 
 export interface GlobalParams {
