@@ -253,7 +253,7 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutFooter>
 
     <!-- Sticky ATC -->
-    <StickyFooter v-if="layoutConfig.stickyAtc.enabled">
+    <StickyFooter v-bind="layoutConfig.stickyAtc" v-if="layoutConfig.stickyAtc.enabled">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 

@@ -3,6 +3,7 @@
 interface Props {
   class?: string[]
   yThreshold?: number
+  delay?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
