@@ -57,7 +57,7 @@ if (layoutConfig?.global?.stylesheet) {
 </script>
 
 <template>
-  <div class="flex flex-col w-full justify-center max-w-[100vw]">
+  <div id="custom-layout" class="flex flex-col w-full justify-center">
     <!-- preHeader -->
     <CustomLayoutInserts :config="layoutConfig.preHeader">
       <template v-for="(_, name) in $slots" #[name]="scope">
