@@ -1,31 +1,29 @@
 
 <script setup lang="ts">
-import type { CrossSellParams } from '~/types';
+import type { CrossSellParams } from '~/types'
 
 const props = defineProps<{
-    config: CrossSellParams;
-}>();
+  config: CrossSellParams;
+}>()
 
-const product = useProduct();
+const product = useProduct()
 
 // only one algorithm for now
-const keyMatcher = (productKey: string, dataKey: string) => productKey.startsWith(dataKey);
+const keyMatcher = (productKey: string, dataKey: string) => productKey.startsWith(dataKey)
 
 
-let items: CrossSellItem[] = [];
+let items: CrossSellItem[] = []
 if (props.config.data) {
-  let key = getAttr(product.value, props.config.key.key) || "";
+  let key = getAttr(product.value, props.config.key.key) || ''
   if (props.config.key.caseInsensitive) {
-    key = key.toLowerCase();
+    key = key.toLowerCase()
   }
 
-  for (let [dataKey, value] of Object.entries(props.config.data)) {
-    if (props.config.key.caseInsensitive) {
-        dataKey = dataKey.toLowerCase();
-    }
-    if (keyMatcher(key, dataKey)) {
-        items = value
-        break
+  for (const [dataKey, value] of Object.entries(props.config.data)) {
+    const dataKey_ = (props.config.key.caseInsensitive) ? dataKey.toLowerCase() : dataKey
+    if (keyMatcher(key, dataKey_)) {
+      items = value
+      break
     }
   }
 }
@@ -33,23 +31,25 @@ if (props.config.data) {
 </script>
 
 <template>
-<div :style="config.style" v-if="items.length">
-    <div :style="config.titleStyle" v-if="config.title">{{ config.title }}</div>
-    <div
-        class="flex flex-row"
-        :class="{'flex-wrap': !config.scroll, 'overflow-x-scroll': config.scroll}"
-        :style="{'column-gap': config.columnGap}"
-    >
-        <div v-for="item in items" :style="config.itemStyle">
-            <a v-if="item.link">
-                <img v-if="item.image" :style="config.imageStyle" :src="item.image">
-                <div>{{ item.text }}</div>
-            </a>
-            <template v-else>
-                <img v-if="item.image" :style="config.imageStyle" :src="item.image">
-                <div>{{ item.text }}</div>
-            </template>
-        </div>
+  <div v-if="items.length" :style="config.style">
+    <div v-if="config.title" :style="config.titleStyle">
+      {{ config.title }}
     </div>
-</div>
+    <div
+      class="flex flex-row"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
+      :style="{ 'column-gap': config.columnGap }"
+    >
+      <template v-for="item in items">
+        <a v-if="item.link" :key="item.link" :style="config.itemStyle">
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </a>
+        <span v-else :key="item.text" :style="config.itemStyle">
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </span>
+      </template>
+    </div>
+  </div>
 </template>

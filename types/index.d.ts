@@ -573,6 +573,8 @@ export interface CustomLayout {
 
 export interface MainRecoParams {
   filtersDisplay: 'none' | 'left' | 'left-high' | 'right' | 'right-high' | 'slideover';
+  filtersTitle: string;
+  filtersTitleStyle: StyleValue;
   slideoverStyle: StyleValue;
   slideoverCloseButton: string;
   slideoverCloseButtonStyle: StyleValue;

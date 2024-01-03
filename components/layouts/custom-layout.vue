@@ -57,7 +57,7 @@ if (layoutConfig?.global?.stylesheet) {
 </script>
 
 <template>
-  <div class="flex flex-col w-full justify-center max-w-[100vw]">
+  <div id="custom-layout" class="flex flex-col w-full justify-center">
     <!-- preHeader -->
     <CustomLayoutInserts :config="layoutConfig.preHeader">
       <template v-for="(_, name) in $slots" #[name]="scope">
@@ -92,6 +92,10 @@ if (layoutConfig?.global?.stylesheet) {
         class="flex-none"
         :style="layoutConfig.mainReco.filterStyle"
       >
+        <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+          {{ layoutConfig.mainReco.filtersTitle }}
+        </div>
+
         <slot name="filters-aside" :filter="customLayout.filter">
           <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
         </slot>
@@ -151,6 +155,9 @@ if (layoutConfig?.global?.stylesheet) {
         class="shrink-0"
         :style="layoutConfig.mainReco.filterStyle"
       >
+        <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+          {{ layoutConfig.mainReco.filtersTitle }}
+        </div>
         <slot name="filters-aside" :filter="filter">
           <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
         </slot>
@@ -187,6 +194,9 @@ if (layoutConfig?.global?.stylesheet) {
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
+          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+            {{ layoutConfig.mainReco.filtersTitle }}
+          </div>
           <slot name="filters-aside" :filter="filter">
             <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
           </slot>
@@ -218,6 +228,9 @@ if (layoutConfig?.global?.stylesheet) {
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
+          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+            {{ layoutConfig.mainReco.filtersTitle }}
+          </div>
           <slot name="filters-aside" :filter="filter">
             <FiltersContainer :filter-params="layoutConfig.mainReco.filterParams" :filter="filter" :open="true" />
           </slot>
