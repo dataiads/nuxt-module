@@ -272,7 +272,7 @@ if (layoutConfig?.global?.stylesheet) {
     >
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-      <div class="fixed inset-0">
+      <div class="fixed inset-0 overflow-y-auto">
         <DialogPanel :style="layoutConfig.mainReco.slideoverStyle">
           <div class="flex justify-end">
             <img v-if="layoutConfig.mainReco.slideoverCloseButton" :src="layoutConfig.mainReco.slideoverCloseButton" :style="layoutConfig.mainReco.slideoverCloseButtonStyle" @click="customLayout.toggleFiltersSlideover">
