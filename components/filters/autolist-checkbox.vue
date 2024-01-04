@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{
   criteria: string
   group: string
 
-  // wrap list items in a global element 
+  // wrap list items in a global element
   wrapperDiv?: boolean
 
   // customize wrapper element
@@ -23,9 +23,13 @@ const props = withDefaults(defineProps<{
   labelClass?: string
   operator?: string
   limit?: number
+  useTranslation?: boolean
+  displayCount?: boolean
 }>(), {
   operator: 'EQUAL',
-  wrapperDiv: false
+  wrapperDiv: false,
+  useTranslation: false,
+  displayCount: true
 })
 
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
@@ -65,7 +69,7 @@ const sortedValues = computed(() => {
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="value" :count="count">
+        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null">
           <FiltersCheckbox
             :filter="props.filter"
             :criteria="props.criteria"
@@ -77,8 +81,11 @@ const sortedValues = computed(() => {
             :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">
-                {{ value }} ({{ count }})
+              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null">
+                {{ useTranslation ? $t(value?.toString() || '') : value }}
+                <template v-if="displayCount">
+                  ({{ count }})
+                </template>
               </slot>
             </template>
           </FiltersCheckbox>
@@ -89,20 +96,23 @@ const sortedValues = computed(() => {
     <!-- default behavior: raw checkboxes without wrapper -->
     <template v-else>
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="value" :count="count">
+        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null">
           <FiltersCheckbox
             :filter="props.filter"
             :criteria="props.criteria"
             :group="props.group"
-            :value="value?.toString()"
+            :value="useTranslation ? $t(value?.toString() || '') : value?.toString()"
             :class="props.class"
             :input-class="props.inputClass"
             :label-class="props.labelClass"
             :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="value" :count="count">
-                {{ value }} ({{ count }})
+              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null">
+                {{ useTranslation ? $t(value?.toString() || '') : value }}
+                <template v-if="displayCount">
+                  ({{ count }})
+                </template>
               </slot>
             </template>
             <template #checkbox="scope">
