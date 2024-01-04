@@ -7,16 +7,29 @@ const props = withDefaults(
   defineProps<{
     open: boolean;
     filter: StructuredRecommender;
-    filterParams?: FilterElement[];
+    filterParams: FilterElement[];
     headerClass?: string;
     asideItemClass?: string;
-    rootComponent?: Component;
+    groupStyle?: StyleValue;
+    headerStyle?: StyleValue;
+    headerTitleStyle?: StyleValue;
+    openedIcon?: string;
+    closedIcon?: string;
+    headerIconStyle?: StyleValue;
+    checkboxStyle?: StyleValue;
   }>(),
   {
     asideItemClass: '!h-auto px-4 py-2',
     headerClass: 'cursor-pointer lg:py-4 flex items-center',
     rangeInputClass: 'grid grid-cols-2 gap-2',
-    inputClass: 'border-[#9E9E9E]'
+    inputClass: 'border-[#9E9E9E]',
+    groupStyle: null,
+    headerStyle: null,
+    openedIcon: '',
+    closedIcon: '',
+    headerTitleStyle: null,
+    headerIconStyle: null,
+    checkboxStyle: null
   }
 )
 
@@ -42,52 +55,35 @@ const removeAllRulesFromGroups = (groups: string[]) => {
 
 <template>
   <div>
-    <component
-      :is="rootComponent ? rootComponent : AsideItem"
-      v-for="filterParam in filterParams"
-      :key="filterParam.title"
-      :display="open"
-      :class="asideItemClass"
-      header-class="w-full text-start"
-      content-class=""
-    >
+    <AsideItem v-for="filterParam in filterParams" :key="filterParam.title" :display="open" :class="asideItemClass"
+      :style="groupStyle" content-class="">
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
-          <div :class="[headerClass, { '': displayed }]">
+          <div :class="[{ headerClass: !headerStyle }, { '': displayed }]" :style="headerStyle">
             <slot name="title" :value="filterParam.title">
-              <span class="grow whitespace-nowrap py-2 md:p-[0] font-bold md:text-[16px]">{{ filterParam.title }}</span>
+              <span :style="headerTitleStyle" class="">{{ filterParam.title }}</span>
             </slot>
-            <slot name="append" :displayed="displayed" />
+            <slot name="append" :displayed="displayed">
+              <img v-if="displayed && openedIcon" :style="headerIconStyle" :src="openedIcon">
+              <img v-else-if="!displayed && closedIcon" :style="headerIconStyle" :src="closedIcon">
+            </slot>
           </div>
         </slot>
       </template>
 
       <template #content>
         <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
-        <slot
-          name="content"
-          :elements="filterParam.elements"
-          :parameters="filterParam"
-          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))"
-        >
-          <FiltersElements
-            class="flex flex-col max-h-[300px] overflow-y-auto gap-3 mb-3"
-            :filter="filter"
-            :elements="filterParam.elements"
-            :parameters="filterParam"
-          >
+        <slot name="content" :elements="filterParam.elements" :parameters="filterParam"
+          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))">
+          <FiltersElements :style="filterParam.style" :filter="filter" :elements="filterParam.elements"
+            :parameters="filterParam">
             <template #checkbox="{ get, set, info }">
-              <input
-                v-bind="info"
-                type="checkbox"
-                :checked="get()"
-                class="text-black bg-white rounded-xs border-[#9E9E9E] rounded-sm w-[18px] h-[18px] focus:ring-primary focus:ring-0 hover:cursor-pointer"
-                @change="set(($event.target as HTMLInputElement)?.checked)"
-              >
+              <input v-bind="info" type="checkbox" :checked="get()" :style="checkboxStyle"
+                @change="set(($event.target as HTMLInputElement)?.checked)">
             </template>
           </FiltersElements>
         </slot>
       </template>
-    </component>
+    </AsideItem>
   </div>
 </template>
