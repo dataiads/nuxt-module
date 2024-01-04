@@ -4,39 +4,43 @@ interface Props {
   class?: string[]
   yThreshold?: number
   delay?: number
+  displayOnScroll?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   class: () => [],
   delay: 100,
-  yThreshold: 100
+  yThreshold: 100,
+  displayOnScroll: false,
 })
 
-const display = ref(false)
+const display = ref(!props.displayOnScroll)
 
 let displayTimer: ReturnType<typeof setTimeout>|null = null
 let hideTimer: ReturnType<typeof setTimeout>|null = null
 
 onMounted(() => {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > props.yThreshold) {
-      if (hideTimer) {
-        clearTimeout(hideTimer)
-        hideTimer = null
+  if (props.displayOnScroll) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY >= props.yThreshold) {
+        if (hideTimer) {
+          clearTimeout(hideTimer)
+          hideTimer = null
+        }
+        if (!displayTimer) {
+          displayTimer = setTimeout(() => (display.value = true), props.delay)
+        }
+      } else {
+        if (displayTimer) {
+          clearTimeout(displayTimer)
+          displayTimer = null
+        }
+        if (!hideTimer) {
+          hideTimer = setTimeout(() => (display.value = false), props.delay)
+        }
       }
-      if (!displayTimer) {
-        displayTimer = setTimeout(() => (display.value = true), props.delay)
-      }
-    } else {
-      if (displayTimer) {
-        clearTimeout(displayTimer)
-        displayTimer = null
-      }
-      if (!hideTimer) {
-        hideTimer = setTimeout(() => (display.value = false), props.delay)
-      }
-    }
-  })
+    })
+  }
 })
 
 const class_ = computed(() => [
