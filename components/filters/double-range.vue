@@ -10,7 +10,7 @@ const props = withDefaults(
     min?: number;
     max?: number;
   }>(),
-  { min: 0, max: 1000, step: 5, trailling: '€' }
+  { min: 0, max: 1000, step: 5, trailling: '€', placeholder: '' }
 )
 
 
@@ -100,7 +100,7 @@ watchDebounced(
       <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
       <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
       <span class="absolute bg-primary h-[5px] bottom-0 top-0" :style="progressStyle">
-        <!-- 
+        <!--
 
                 <div class="absolute left-[-8px] top-[-25px]">
                   <slot name="text-min" :value="sliderMin">

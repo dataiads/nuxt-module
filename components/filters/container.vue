@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { normalizeClass, type StyleValue } from 'nuxt/dist/app/compat/capi'
 import type { StructuredRecommender } from '~/types'
 
-const AsideItem = resolveComponent('AsideItem')
+const AsideItem = resolveComponent('AccessibleAsideItem')
 
 const props = withDefaults(
   defineProps<{
