@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import localeIncludes from '~/utils/local-includes'
+
 const props = withDefaults(defineProps<{
   // filter values listing settings
   filter: Recommender
@@ -14,6 +16,10 @@ const props = withDefaults(defineProps<{
   // optional sorting function for value items
   sort?: (values: string[]) => string[]
 
+  // optionnal input to filter values
+  searchable?: boolean
+  searchPlaceholder?: string
+
   // optionnal filter function for value items
   valuesFilter?: RegExp | ((value: string) => boolean)
 
@@ -21,6 +27,7 @@ const props = withDefaults(defineProps<{
   class?: string
   inputClass?: string
   labelClass?: string
+  searchInputClass?: string
   operator?: string
   limit?: number
   useTranslation?: boolean
@@ -29,9 +36,12 @@ const props = withDefaults(defineProps<{
   operator: 'EQUAL',
   wrapperDiv: false,
   useTranslation: false,
-  displayCount: true
+  displayCount: true,
+  searchable: false,
+  searchPlaceholder: 'Search...'
 })
 
+const search = ref('')
 const { data: availableValues } = props.filter.fetchCriteriaValues(props.criteria)
 
 const sortedValues = computed(() => {
@@ -41,7 +51,11 @@ const sortedValues = computed(() => {
 
   let keys = Object.keys(availableValues.value)
 
-  if (props.valuesFilter) {
+  if (props.searchable) {
+    try {
+      keys = keys.filter(v => localeIncludes(v.toLowerCase(), search.value.toLowerCase()))
+    } catch { /* empty */ }
+  } else if (props.valuesFilter) {
     if (props.valuesFilter && props.valuesFilter instanceof RegExp) {
       keys = keys.filter(v => !!(props.valuesFilter as RegExp).exec(v))
     } else if (props.valuesFilter instanceof Function) {
@@ -63,8 +77,12 @@ const sortedValues = computed(() => {
 </script>
 
 <template>
-  <template v-if="sortedValues?.length">
+  <template v-if="sortedValues">
     <slot name="autolist-label" />
+
+    <slot v-if="searchable" name="autolist-search-input">
+      <input v-model="search" type="search" :placeholder="searchPlaceholder" class="sticky top-0 mr-1" :class="searchInputClass">
+    </slot>
 
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">

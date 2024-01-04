@@ -3,9 +3,9 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 interface Props {
-  class?: String,
-  headerClass?: String,
-  contentClass?: String,
+  class?: string,
+  headerClass?: string,
+  contentClass?: string,
   display?: boolean,
   label?: string;
 }

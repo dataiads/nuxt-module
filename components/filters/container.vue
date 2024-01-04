@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StructuredRecommender } from '~/types'
 
-const AsideItem = resolveComponent('AsideItem')
+const AsideItem = resolveComponent('AccessibleAsideItem')
 
 const props = withDefaults(
   defineProps<{
@@ -48,6 +48,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
       :key="filterParam.title"
       :display="open"
       :class="asideItemClass"
+      header-class="w-full text-start"
       content-class=""
     >
       <template #header="{ displayed }">
