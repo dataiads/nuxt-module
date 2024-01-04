@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { StructuredRecommender } from '~/types'
+import type { StyleValue } from 'nuxt/dist/app/compat/capi'
 
 const AsideItem = resolveComponent('AccessibleAsideItem')
 
