@@ -265,6 +265,7 @@ declare global {
       component: 'autolist-checkbox' | 'checkbox' | 'range'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
+    style: StyleValue;
   }
 
   export interface FilterParams {
@@ -580,6 +581,13 @@ export interface MainRecoParams {
   slideoverCloseButtonStyle: StyleValue;
   filterStyle: StyleValue;
   filterParams: FilterElement[];
+  filterParamsGroupStyle: StyleValue;
+  filterParamsHeaderStyle: StyleValue;
+  filterParamsHeaderTitleStyle: StyleValue;
+  filterParamsOpenedIcon: string;
+  filterParamsClosedIcon: string;
+  filterParamsHeaderIconStyle: StyleValue;
+  filterParamsCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
 }
