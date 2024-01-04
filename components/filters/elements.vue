@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { StructuredRecommender } from '~/types';
+import type { StructuredRecommender } from '~/types'
 
 withDefaults(
   defineProps<{
@@ -30,9 +30,9 @@ const hasCheckboxSlot = computed(() => {
 })
 
 const hasLabelSlot = computed(() => {
-  const instance = getCurrentInstance();
-  return !!instance!.slots.checkbox_label;
-});
+  const instance = getCurrentInstance()
+  return !!instance!.slots.checkbox_label
+})
 </script>
 
 <template>
@@ -71,7 +71,9 @@ const hasLabelSlot = computed(() => {
                 :count="count"
               >
                 <template v-if="value">
-                  {{ value }} ({{ count }})
+                  {{ value }} <template v-if="count">
+                    ({{ count }})
+                  </template>
                 </template>
               </slot>
             </slot>

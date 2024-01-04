@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { StructuredRecommender } from "~/types";
+import type { StructuredRecommender } from '~/types'
 
-const AsideItem = resolveComponent("AsideItem");
+const AsideItem = resolveComponent('AsideItem')
 
 const props = withDefaults(
   defineProps<{
@@ -20,8 +20,8 @@ const props = withDefaults(
   }
 )
 
-const lpoConfig = useLpoConfig();
-const filterParams = props.filterParams || lpoConfig?.filterParams;
+const lpoConfig = useLpoConfig()
+const filterParams = props.filterParams || lpoConfig?.filterParams
 
 // Add the group key to props
 filterParams.forEach((f) => {
@@ -36,8 +36,8 @@ const getGroups = (filterParam: FilterElement) => {
 }
 
 const removeAllRulesFromGroups = (groups: string[]) => {
-  groups.forEach((g) => props.filter.removeAllRules(g));
-};
+  groups.forEach((g) => props.filter.removeAllRules(g))
+}
 </script>
 
 <template>
@@ -67,7 +67,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
           name="content"
           :elements="filterParam.elements"
           :parameters="filterParam"
-          :removeAllFilter="removeAllRulesFromGroups(getGroups(filterParam))"
+          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))"
         >
           <FiltersElements
             class="flex flex-col max-h-[300px] overflow-y-auto gap-3 mb-3"
@@ -75,14 +75,14 @@ const removeAllRulesFromGroups = (groups: string[]) => {
             :elements="filterParam.elements"
             :parameters="filterParam"
           >
-            <template #checkbox="{ get, set, info}">
+            <template #checkbox="{ get, set, info }">
               <input
                 v-bind="info"
                 type="checkbox"
                 :checked="get()"
-                @change="set(($event.target as HTMLInputElement)?.checked)"
                 class="text-black bg-white rounded-xs border-[#9E9E9E] rounded-sm w-[18px] h-[18px] focus:ring-primary focus:ring-0 hover:cursor-pointer"
-              />
+                @change="set(($event.target as HTMLInputElement)?.checked)"
+              >
             </template>
           </FiltersElements>
         </slot>
