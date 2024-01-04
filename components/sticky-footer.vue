@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
   class: () => [],
   delay: 100,
   yThreshold: 100,
-  displayOnScroll: false,
+  displayOnScroll: false
 })
 
 const display = ref(!props.displayOnScroll)

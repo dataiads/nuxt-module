@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt'
   ],
 
-  
+
   app: {
     // use cdn url from environment
     cdnURL: process.env.CDN_URL || ''

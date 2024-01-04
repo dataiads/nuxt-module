@@ -3,5 +3,4 @@ dist/
 tmp/
 *.log
 .nuxt
-.vscode/
 .output/
