@@ -38,7 +38,7 @@ export const getAutolistCriteriaFromFiltersParams = (filterParams: FilterElement
       )
 }
 
-export const getInitialRulesFromFiltersParams = async (product: Product, filterParams: FilterElement[]): InitialFilterRule[] => {
+export const getInitialRulesFromFiltersParams = async (product: Product, filterParams: FilterElement[]): Promise<InitialFilterRule[]> => {
     /* use filters params prechecked attributes to build a recommender initialFilterRules array
      * requires an api call to resolve criteria into actual values
      */
@@ -65,7 +65,7 @@ export const getInitialRulesFromFiltersParams = async (product: Product, filterP
 
     try {
         // resolve criteria values using api
-        const values = await $fetch<Record<string, string|number>>(`/api/products/${encodeURIComponent(product.id)}/criteria-values`, { params: {
+        const values = await $fetch<Record<string, string>>(`/api/products/${encodeURIComponent(product.id)}/criteria-values`, { params: {
             criteria: JSON.stringify(withCriteriaValues.map(item => item.criteria))
         } })
 
