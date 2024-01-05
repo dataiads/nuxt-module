@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel } from '@headlessui/vue'
-import { useCustomLayout } from '~/composables/custom-layout'
+import { useCustomLayout, getAutolistCriteriaFromFiltersParams, getInitialRulesFromFiltersParams } from '~/composables/custom-layout'
 
 const product = useProduct()
 const customLayout = useCustomLayout()
@@ -16,38 +16,8 @@ filter.value = useStructuredRecommender({
   deduplicate: layoutConfig.mainReco.algo.deduplicate,
   defaultLimit: layoutConfig.mainReco.algo.limit,
   defaultSort: layoutConfig.mainReco.algo.sort,
-  criteriaValues: layoutConfig.mainReco.filterParams.reduce(
-    (acc, item) => {
-      for (const el of item.elements) {
-        if (
-          el.component === 'autolist-checkbox' &&
-          el.props.criteria &&
-          acc.indexOf(el.props.criteria) < 0
-        ) {
-          acc.push(el.props.criteria)
-        }
-      }
-      return acc
-    },
-    [] as string[]
-  ),
-  initialRules: layoutConfig.mainReco.filterParams.reduce(
-    (acc, item, groupIndex) => {
-      for (const [elementIndex, el] of item.elements.entries()) {
-        if (el.component === 'autolist-checkbox' && el.props.prechecked) {
-          acc.push({
-            group: `auto-${groupIndex}-${elementIndex}`,  // name convention is reused in ~/components/filters/container.vue
-            criteria: el.props.criteria,
-            operator: el.props.operator,
-            baseProductValue: el.props.criteria,
-            value: ''
-          })
-        }
-      }
-      return acc
-    },
-    [] as InitialFilterRule[]
-  )
+  criteriaValues: getAutolistCriteriaFromFiltersParams(layoutConfig.mainReco.filterParams),
+  initialRules: await getInitialRulesFromFiltersParams(product.value, layoutConfig.mainReco.filterParams)
 })
 
 // init filters slideover

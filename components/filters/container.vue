@@ -42,7 +42,7 @@ const filterParams = props.filterParams || lpoConfig?.filterParams
 // Add the group key to props
 filterParams.forEach((f, groupIndex) => {
   f.elements.forEach((el, elementIndex) => {
-    el.props.group = `auto-${groupIndex}-${elementIndex}`  // name convention is reused in ~/components/layouts/custom-layout.vue
+    el.props.group = `auto-${groupIndex}-${elementIndex}`  // name convention is reused in ~/composables/custom-layout.ts
   })
 })
 
