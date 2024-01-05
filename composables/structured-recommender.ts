@@ -286,6 +286,8 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     removeRule,
     setOnlyRule,
     removeAllRules,
+    initialRules: options.initialRules,
+    state: state,
     reset
   } as StructuredRecommender
 }
