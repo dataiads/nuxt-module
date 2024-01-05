@@ -82,7 +82,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
             :parameters="filterParam">
             <template #checkbox="{ get, set, info }">
               <input v-bind="info" type="checkbox" :checked="get()"
-                :style="get() ? { ...checkboxStyle, ...activeCheckboxStyle } : checkboxStyle"
+                :style="get() ? [checkboxStyle, activeCheckboxStyle] : [checkboxStyle]"
                 class="appearance-none focus:ring-0" @change="set(($event.target as HTMLInputElement)?.checked)">
             </template>
           </FiltersElements>
