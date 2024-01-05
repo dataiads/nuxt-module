@@ -7,10 +7,12 @@ const props = defineProps<{
   width: string;
   height: string;
   class?: string;
-  loading?: 'eager' | 'lazy' | undefined;
+  loading?: 'eager' | 'lazy';
   format?: string;
   alt?: string;
   srcset?: string;
+  hoverSrcset?: string;
+  sizes?: string;
   picture?: boolean;
   zoom?: boolean;
   // optional: remove elements from the DOM when link is broken
@@ -47,6 +49,13 @@ const src = computed(() => {
   }
   return props.src
 })
+const srcset = computed(() => {
+  if (hover.value && props.hoverSrcset) {
+    return props.hoverSrcset
+  }
+  return props.srcset
+})
+
 const imageRef = ref()
 const translate = ref()
 const scale = ref(1)
@@ -104,7 +113,8 @@ const translateStyle = computed(() => {
       v-else
       ref="imageRef"
       :src="src"
-      :srcset="props.srcset"
+      :srcset="srcset"
+      :sizes="props.sizes"
       :alt="props.alt"
       :class="props.class"
       :width="props.width"
