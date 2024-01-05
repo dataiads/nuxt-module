@@ -588,6 +588,7 @@ export interface MainRecoParams {
   filterParamsClosedIcon: string;
   filterParamsHeaderIconStyle: StyleValue;
   filterParamsCheckboxStyle: StyleValue;
+  filterParamsActiveCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
 }

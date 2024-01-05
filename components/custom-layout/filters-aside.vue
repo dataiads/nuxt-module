@@ -14,5 +14,6 @@ defineProps<{
         :header-title-style="config.mainReco.filterParamsHeaderTitleStyle"
         :opened-icon="config.mainReco.filterParamsOpenedIcon" :closed-icon="config.mainReco.filterParamsClosedIcon"
         :header-icon-style="config.mainReco.filterParamsHeaderIconStyle"
-        :checkbox-style="config.mainReco.filterParamsCheckboxStyle" />
+        :checkbox-style="config.mainReco.filterParamsCheckboxStyle"
+        :active-checkbox-style="config.mainReco.filterParamsActiveCheckboxStyle" />
 </template>

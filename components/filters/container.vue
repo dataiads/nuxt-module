@@ -18,6 +18,7 @@ const props = withDefaults(
     closedIcon?: string;
     headerIconStyle?: StyleValue;
     checkboxStyle?: StyleValue;
+    activeCheckboxStyle?: StyleValue;
   }>(),
   {
     asideItemClass: '!h-auto px-4 py-2',
@@ -30,7 +31,8 @@ const props = withDefaults(
     closedIcon: '',
     headerTitleStyle: null,
     headerIconStyle: null,
-    checkboxStyle: null
+    checkboxStyle: null,
+    activeCheckboxStyle: null
   }
 )
 
@@ -38,9 +40,9 @@ const lpoConfig = useLpoConfig()
 const filterParams = props.filterParams || lpoConfig?.filterParams
 
 // Add the group key to props
-filterParams.forEach((f) => {
-  f.elements.forEach((el) => {
-    el.props.group = `${f.title}-${el.component}-filter`
+filterParams.forEach((f, groupIndex) => {
+  f.elements.forEach((el, elementIndex) => {
+    el.props.group = `auto-${groupIndex}-${elementIndex}`  // name convention is reused in ~/components/layouts/custom-layout.vue
   })
 })
 
@@ -75,12 +77,13 @@ const removeAllRulesFromGroups = (groups: string[]) => {
       <template #content>
         <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
         <slot name="content" :elements="filterParam.elements" :parameters="filterParam"
-          :remove-all-filter="removeAllRulesFromGroups(getGroups(filterParam))">
+          :remove-all-filter="() => removeAllRulesFromGroups(getGroups(filterParam))">
           <FiltersElements :style="filterParam.style" :filter="filter" :elements="filterParam.elements"
             :parameters="filterParam">
             <template #checkbox="{ get, set, info }">
-              <input v-bind="info" type="checkbox" :checked="get()" :style="checkboxStyle"
-                @change="set(($event.target as HTMLInputElement)?.checked)">
+              <input v-bind="info" type="checkbox" :checked="get()"
+                :style="get() ? { ...checkboxStyle, ...activeCheckboxStyle } : checkboxStyle"
+                class="appearance-none focus:ring-0" @change="set(($event.target as HTMLInputElement)?.checked)">
             </template>
           </FiltersElements>
         </slot>

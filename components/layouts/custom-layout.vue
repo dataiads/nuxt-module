@@ -30,6 +30,23 @@ filter.value = useStructuredRecommender({
       return acc
     },
     [] as string[]
+  ),
+  initialRules: layoutConfig.mainReco.filterParams.reduce(
+    (acc, item, groupIndex) => {
+      for (const [elementIndex, el] of item.elements.entries()) {
+        if (el.component === 'autolist-checkbox' && el.props.prechecked) {
+          acc.push({
+            group: `auto-${groupIndex}-${elementIndex}`,  // name convention is reused in ~/components/filters/container.vue
+            criteria: el.props.criteria,
+            operator: el.props.operator,
+            baseProductValue: el.props.criteria,
+            value: ''
+          })
+        }
+      }
+      return acc
+    },
+    [] as InitialFilterRule[]
   )
 })
 
