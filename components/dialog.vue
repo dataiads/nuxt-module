@@ -6,7 +6,7 @@ import {
   DialogPanel
 } from '@headlessui/vue'
 
-const props = defineProps(['modelValue'])
+const props = defineProps(['modelValue', 'initialFocus'])
 
 const emits = defineEmits(['close', 'update:modelValue'])
 
@@ -21,6 +21,8 @@ const isOpen = computed({
 
 const closeButtonRef = ref(null)
 
+const initialFocus = computed(() => props.initialFocus ? props.initialFocus : closeButtonRef.value)
+
 function closeModal () {
   isOpen.value = false
   emits('close')
@@ -32,7 +34,7 @@ function closeModal () {
     <Dialog
       as="div"
       class="relative z-[100]"
-      :initial-focus="closeButtonRef"
+      :initial-focus="initialFocus"
       @close="closeModal"
     >
       <TransitionChild

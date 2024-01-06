@@ -34,6 +34,9 @@ interface Props {
   deduplicate?: string;
 
   manualMode?: boolean;
+
+  // In dialog select an element to focus
+  dialogInitialFocus: Ref<HTMLElement>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -232,27 +235,14 @@ if (props.allowEmptySearch) {
     </div>
     <slot v-else name="manuel-search-results" :search-reco-products="searchRecoProducts" :loading="loading" />
   </div>
-  <Teleport v-if="fullScreenOverlay" to="body">
-    <Transition
-      :duration="{ enter: 800, leave: 800 }"
-      enter-active-class="transition-all transition-slow ease-out-quad"
-      leave-active-class="transition-all transition-slow ease-in-quad"
-      enter-from-class="opacity-0 scale-70"
-      enter-to-class="opacity-100 scale-100"
-      leave-from-class="opacity-100 scale-100"
-      leave-to-class="opacity-0 scale-70"
-      appear
-    >
-      <div v-if="overlayOpen" aria-modal="true" tabindex="0" class="fixed inset-0 w-full h-full z-[101] overflow-hidden bg-white">
-        <slot
-          name="full-screen-overlay"
-          :close="() => overlayOpen = false"
-          :items="searchRecoProducts"
-          :value="value"
-          :input="input"
-          :loading="loading"
-        />
-      </div>
-    </Transition>
-  </Teleport>
+  <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event"> 
+    <slot
+      name="full-screen-overlay"
+      :close="() => overlayOpen = false"
+      :items="searchRecoProducts"
+      :value="value"
+      :input="input"
+      :loading="loading"
+    />
+  </Dialog>
 </template>
