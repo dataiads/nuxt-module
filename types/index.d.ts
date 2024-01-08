@@ -545,6 +545,7 @@ export interface CrossSellParams {
   nextButton: string;
   previousButton: string;
   buttonStyle: StyleValue;
+  sliderMode: boolean;
 }
 
 export interface BannerParams {

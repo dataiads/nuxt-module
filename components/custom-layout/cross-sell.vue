@@ -44,7 +44,7 @@ if (props.config.data) {
     <div v-if="config.title" :style="config.titleStyle">
       {{ config.title }}
     </div>
-    <Slider v-bind="sliderProps" :items="items">
+    <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
         <a v-if="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
@@ -73,5 +73,22 @@ if (props.config.data) {
         </template>
       </template>
     </Slider>
+    <div
+      v-else
+      class="flex flex-row"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
+      :style="{ 'column-gap': config.columnGap }"
+    >
+      <template v-for="item in items">
+        <a v-if="item.link" :key="item.link" :style="config.itemStyle">
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </a>
+        <span v-else :key="item.text" :style="config.itemStyle">
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </span>
+      </template>
+    </div>
   </div>
 </template>
