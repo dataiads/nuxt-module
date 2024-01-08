@@ -591,6 +591,17 @@ export interface MainRecoParams {
   filterParamsActiveCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
+  paginationContainerStyle: StyleValue;
+  paginationButtonStyle: StyleValue;
+  paginationActiveButtonStyle: StyleValue;
+  paginationImageStyle: StyleValue;
+  paginationLoadMoreMode: boolean;
+  paginationLoadMoreText: string;
+  paginationMaxVisibleButtons: string;
+  paginationPreviousText: string;
+  paginationNextText: string;
+  paginationPreviousImage: string;
+  paginationNextImage: string;
 }
 
 export interface MainProductParams {
