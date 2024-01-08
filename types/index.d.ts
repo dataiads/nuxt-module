@@ -538,7 +538,13 @@ export interface CrossSellParams {
   scroll: boolean;
   titleStyle: StyleValue;
   itemStyle: StyleValue;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
   imageStyle: StyleValue;
+  nextButton: string;
+  previousButton: string;
+  buttonStyle: StyleValue;
 }
 
 export interface BannerParams {

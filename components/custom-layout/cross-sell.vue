@@ -12,6 +12,15 @@ const product = useProduct()
 const keyMatcher = (productKey: string, dataKey: string) => productKey.startsWith(dataKey)
 
 
+const sliderProps = computed(() => ({
+  autoscroll: props.config.autoscroll,
+  scrollSpeed: props.config.scrollSpeed,
+  absoluteArrows: props.config.absoluteArrows,
+  scrollerStyle: {
+    columnGap: props.config.columnGap
+  }
+}))
+
 let items: CrossSellItem[] = []
 if (props.config.data) {
   let key = getAttr(product.value, props.config.key.key) || ''
@@ -35,12 +44,8 @@ if (props.config.data) {
     <div v-if="config.title" :style="config.titleStyle">
       {{ config.title }}
     </div>
-    <div
-      class="flex flex-row"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
-      :style="{ 'column-gap': config.columnGap }"
-    >
-      <template v-for="item in items">
+    <Slider v-bind="sliderProps" :items="items">
+      <template #item="{ item }">
         <a v-if="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
@@ -50,6 +55,22 @@ if (props.config.data) {
           <div>{{ item.text }}</div>
         </span>
       </template>
-    </div>
+      <template #previous-btn="scope">
+        <template v-if="config.previousButton">
+          <img :src="config.previousButton" class="cursor-pointer" :style="config.buttonStyle" @click="scope.click">
+        </template>
+        <template v-else>
+          <slot name="cross-sell-previous-btn" v-bind="scope" />
+        </template>
+      </template>
+      <template #next-btn="scope">
+        <template v-if="config.nextButton">
+          <img :src="config.nextButton" class="cursor-pointer" :style="config.buttonStyle" @click="scope.click">
+        </template>
+        <template v-else>
+          <slot name="cross-sell-next-btn" v-bind="scope" />
+        </template>
+      </template>
+    </Slider>
   </div>
 </template>
