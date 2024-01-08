@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   class: () => [],
 
   // default key matcher: match by prefix
-  keyMatcher: (productKey: string, dataKey: string) => productKey.startsWith(dataKey),
+  keyMatcher: (productKey: string, dataKey: string) => dataKey === '' ? productKey === dataKey : productKey.startsWith(dataKey),
 
   scroller: false,
   scrollerClass: () => [],
@@ -61,6 +61,7 @@ if (lpoConfig.crossSellKey) {
 
 if (data) {
   for (const [dataKey, value] of Object.entries(data)) {
+    console.log(crossSellKey.key, dataKey)
     if (crossSellKey.caseInsensitive && props.keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase())) {
       items = value
       break
