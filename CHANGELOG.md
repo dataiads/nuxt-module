@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.261](https://github.com/dataiads/nuxt-module/compare/v0.2.260...v0.2.261) (2024-01-08)
+
+
+### Features
+
+* **search:** use dialog component for accessibility ([c4c4a01](https://github.com/dataiads/nuxt-module/commit/c4c4a01059fac9b815039c02f5ef3bb91937533e))
+
 ### [0.2.260](https://github.com/dataiads/nuxt-module/compare/v0.2.259...v0.2.260) (2024-01-05)
 
 ### [0.2.259](https://github.com/dataiads/nuxt-module/compare/v0.2.258...v0.2.259) (2024-01-05)
