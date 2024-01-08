@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StructuredRecommender } from '~/types'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     parameters: { title: string };
     filter: StructuredRecommender,
