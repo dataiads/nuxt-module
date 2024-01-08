@@ -141,8 +141,7 @@ const scrollerClass = [
 
 const previousClass = [
   props.absoluteArrows ? 'absolute' : 'static',
-  'hidden',
-  'md:block',
+  'block',
   'top-0',
   'left-0',
   props.direction === 'horizontal' ? 'bottom-0' : 'right-0',
@@ -151,8 +150,7 @@ const previousClass = [
 
 const nextClass = [
   props.absoluteArrows ? 'absolute' : 'static',
-  'hidden',
-  'md:block',
+  'block',
   'bottom-0',
   'right-0',
   props.direction === 'horizontal' ? 'top-0' : 'left-0',
