@@ -459,6 +459,7 @@ export interface StructuredFilterResponse {
   page: Product[][];
   total: number;
   criteriaValues: Record<string, Record<string, number>>;
+  criteriaValuesMinMax?: Record<string, { min: number, max: number }>;
 }
 
 export interface FetchCriteriaValuesReturn {
