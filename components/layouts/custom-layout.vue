@@ -118,7 +118,7 @@ if (layoutConfig?.global?.stylesheet) {
             <slot v-else name="filters-no-results" />
 
             <div id="filters-pagination">
-              <slot name="filters-pagination" />
+              <CustomLayoutPagination :filter="filter" :config="layoutConfig.mainReco" />
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ if (layoutConfig?.global?.stylesheet) {
           <slot v-else name="filters-no-results" />
 
           <div id="filters-pagination">
-            <slot name="filters-pagination" />
+            <CustomLayoutPagination :filter="filter" :config="layoutConfig.mainReco" />
           </div>
         </div>
 

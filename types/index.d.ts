@@ -540,6 +540,13 @@ export interface CrossSellParams {
   titleStyle: StyleValue;
   itemStyle: StyleValue;
   imageStyle: StyleValue;
+  sliderMode: boolean;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
+  nextButton: string;
+  previousButton: string;
+  buttonStyle: StyleValue;
 }
 
 export interface BannerParams {
@@ -592,6 +599,17 @@ export interface MainRecoParams {
   filterParamsActiveCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
+  paginationContainerStyle: StyleValue;
+  paginationButtonStyle: StyleValue;
+  paginationActiveButtonStyle: StyleValue;
+  paginationImageStyle: StyleValue;
+  paginationLoadMoreMode: boolean;
+  paginationLoadMoreText: string;
+  paginationMaxVisibleButtons: string;
+  paginationPreviousText: string;
+  paginationNextText: string;
+  paginationPreviousImage: string;
+  paginationNextImage: string;
 }
 
 export interface MainProductParams {
