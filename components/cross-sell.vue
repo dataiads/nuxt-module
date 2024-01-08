@@ -61,7 +61,6 @@ if (lpoConfig.crossSellKey) {
 
 if (data) {
   for (const [dataKey, value] of Object.entries(data)) {
-    console.log(crossSellKey.key, dataKey)
     if (crossSellKey.caseInsensitive && props.keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase())) {
       items = value
       break
