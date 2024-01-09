@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   class: () => [],
 
   // default key matcher: match by prefix
-  keyMatcher: (productKey: string, dataKey: string) => productKey.startsWith(dataKey),
+  keyMatcher: (productKey: string, dataKey: string) => dataKey === '' ? productKey === dataKey : productKey.startsWith(dataKey),
 
   scroller: false,
   scrollerClass: () => [],

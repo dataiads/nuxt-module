@@ -262,7 +262,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: 'autolist-checkbox' | 'checkbox' | 'range'; // Le nom du composant
+      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
     style: StyleValue;
@@ -459,6 +459,7 @@ export interface StructuredFilterResponse {
   page: Product[][];
   total: number;
   criteriaValues: Record<string, Record<string, number>>;
+  criteriaValuesMinMax?: Record<string, { min: number, max: number }>;
 }
 
 export interface FetchCriteriaValuesReturn {
@@ -471,6 +472,7 @@ export interface StructuredRecommender {
   limit: Ref<number>;
   sort: Ref<string>;
   page: Ref<number>;
+  criteriaValuesMinMax?: ComputedRef<StructuredFilterResponse['criteriaValuesMinMax']>;
   hasRule: (
     group: string,
     criteria: string,
@@ -542,10 +544,13 @@ export interface CrossSellParams {
   scrollSpeed: number;
   absoluteArrows: boolean;
   imageStyle: StyleValue;
+  sliderMode: boolean;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
   nextButton: string;
   previousButton: string;
   buttonStyle: StyleValue;
-  sliderMode: boolean;
 }
 
 export interface BannerParams {
@@ -598,6 +603,17 @@ export interface MainRecoParams {
   filterParamsActiveCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
+  paginationContainerStyle: StyleValue;
+  paginationButtonStyle: StyleValue;
+  paginationActiveButtonStyle: StyleValue;
+  paginationImageStyle: StyleValue;
+  paginationLoadMoreMode: boolean;
+  paginationLoadMoreText: string;
+  paginationMaxVisibleButtons: number;
+  paginationPreviousText: string;
+  paginationNextText: string;
+  paginationPreviousImage: string;
+  paginationNextImage: string;
 }
 
 export interface MainProductParams {

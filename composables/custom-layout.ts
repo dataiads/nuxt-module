@@ -1,12 +1,13 @@
 
 import type { StructuredRecommender } from '~/types'
+import { EmptyStructuredRecommender } from './structured-recommender'
 
 export const useCustomLayout = () => {
     /*
      * primary interface for interacting with custom layouts from outside the layer
      */
     const filtersSlideoverState = useState<boolean>('customLayout.showFiltersSlideover', () => false)
-    const filterState = useState<StructuredRecommender>('customLayout.mainRecommender')
+    const filterState = shallowRef<StructuredRecommender>(EmptyStructuredRecommender)
 
     return {
         // main recommendation recommender
@@ -19,13 +20,13 @@ export const useCustomLayout = () => {
 }
 
 export const getAutolistCriteriaFromFiltersParams = (filterParams: FilterElement[]): string[] => {
-    /* List all autolist-checkbox criteria in a filter params configuration
+    /* List all autolist-checkbox criteria in a filter params configuration. Also include range elements for min / max values
      */
     return filterParams.reduce(
         (acc, item) => {
           for (const el of item.elements) {
             if (
-              el.component === 'autolist-checkbox' &&
+              (el.component === 'autolist-checkbox' || ((el.component === 'double-range' || el.component === 'range') && el.props.autoMinMax)) &&
               el.props.criteria &&
               acc.indexOf(el.props.criteria) < 0
             ) {

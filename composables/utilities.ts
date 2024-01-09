@@ -93,19 +93,19 @@ export const getCustomAttr = (product: Product, attr: string): string | null => 
 // extraData will take precedence over regular data
 export const hasCustomAttr = (product: Product, attr: string): boolean => {
   if (product?.extraData?.customAttributes) {
-    const match = product.extraData.customAttributes.find((i) => i.name == attr);
+    const match = product.extraData.customAttributes.find((i) => i.name == attr)
     if (match != undefined) {
-      return true;
+      return true
     }
   }
   if (product?.data?.customAttributes) {
-    const match = product.data.customAttributes.find((i) => i.name == attr);
+    const match = product.data.customAttributes.find((i) => i.name == attr)
     if (match != undefined) {
-      return true;
+      return true
     }
   }
-  return false;
-};
+  return false
+}
 
 // same as getCustomAttr but casts the returned value to an integer.
 // if parsing fails, returns null
@@ -114,7 +114,9 @@ export const getCustomAttrInt = (product: Product, attr: string): number | null 
   if (strVal) {
     try {
       return parseInt(strVal, 10)
-    } catch (e) {}
+    } catch (e) {
+      // Fail quietly
+    }
   }
   return null
 }
@@ -126,7 +128,9 @@ export const getCustomAttrFloat = (product: Product, attr: string): number | nul
   if (strVal) {
     try {
       return parseFloat(strVal)
-    } catch (e) {}
+    } catch (e) {
+      // Fail quietly
+    }
   }
   return null
 }
@@ -139,7 +143,9 @@ export const getCustomAttrJSON = <Type>(product: Product, attr: string, def: Typ
   if (strVal) {
     try {
       return JSON.parse(strVal)
-    } catch (e) {}
+    } catch (e) {
+      // Fail quietly
+    }
   }
   return def
 }
@@ -153,7 +159,9 @@ export const salePriceDifference = (product: Product): number => {
       const salePrice = parseFloat(product.data.salePrice.value)
       const diff = (100 * (price - salePrice)) / price
       return diff > 0 ? Math.round(diff) : 0
-    } catch (e) {}
+    } catch (e) {
+      // Fail quietly
+    }
   }
 
   return 0
@@ -180,12 +188,11 @@ export const uniqBy = <T, K>(it: T[], keyFunc: (_: T) => K): T[] => {
 }
 
 // redirects to the targeted url
-export function redirect (url: string) {
-  window.location.replace(url)
-}
+export const redirect = (url: string) => window.location.replace(url)
+
 
 // Show the loader overlay, used for the user to wait
-export function showLoader (message?: string): void {
+export const showLoader = (message?: string): void => {
   const redirecting = useState<boolean>('redirect.redirecting')
   const redirectMessage = useState<string>('redirect.message')
   redirectMessage.value = message ?? ''
@@ -193,31 +200,31 @@ export function showLoader (message?: string): void {
 }
 
 // For pagination, decrement current page index
-export function previousPaginationHandler (filter: Recommender, _pageCount: number) {
+export const previousPaginationHandler = (filter: Recommender, _pageCount: number) => {
   if (filter.page.value > 1) {
     filter.page.value -= 1
   }
 }
 
 // For pagination, increment page index
-export function nextPaginationHandler (filter: Recommender, pageCount: number) {
+export const nextPaginationHandler = (filter: Recommender, pageCount: number) => {
   if (filter.page.value < pageCount) {
     filter.page.value += 1
   }
 }
 
 // For pagination, go to first page
-export function firstPaginationHandler (filter: Recommender, _pageCount: number) {
+export const firstPaginationHandler = (filter: Recommender, _pageCount: number) => {
   filter.page.value = 1
 }
 
 // For pagination, increment page index
-export function lastPaginationHandler (filter: Recommender, pageCount: number) {
+export const lastPaginationHandler = (filter: Recommender, pageCount: number) => {
   filter.page.value = pageCount
 }
 
 // Used for "one page" pagination (a "load more" button)
-export function loadMorePaginationHandler (filter: Recommender, nb: number) {
+export const loadMorePaginationHandler = (filter: Recommender, nb: number) => {
   filter.limit.value += nb
 }
 

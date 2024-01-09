@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { StructuredRecommender } from '~/types'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     parameters: { title: string };
     filter: StructuredRecommender,
-    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range'; props: any }[];
+    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range'; props: any }[];
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
@@ -24,6 +24,8 @@ withDefaults(
   }
 )
 
+const { criteriaValuesMinMax } = props.filter
+
 const hasCheckboxSlot = computed(() => {
   const instance = getCurrentInstance()
   return !!instance!.slots.checkbox
@@ -38,13 +40,24 @@ const hasLabelSlot = computed(() => {
 <template>
   <div>
     <template v-for="{ component, props } in elements">
-      <FiltersAutolistCheckbox v-if="component === 'autolist-checkbox'" v-bind="props" :filter="filter"
-        :group="props.group || `${props.criteria}-${component}-filter`" :class="autoListClass"
-        :input-class="!hasCheckboxSlot ? checkboxClass : ''" :label-class="!hasLabelSlot ? labelClass : ''">
+      <FiltersAutolistCheckbox
+        v-if="component === 'autolist-checkbox'"
+        :key="`autolist-checkbox-${props}`"
+        v-bind="props"
+        :filter="filter"
+        :group="props.group || `${props.criteria}-${component}-filter`"
+        :class="autoListClass"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
+      >
         <template #checkbox="scope">
           <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set">
-            <slot name="auto_checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get"
-              :set="scope.set" />
+            <slot
+              name="auto_checkbox"
+              :info="{ id: scope.info.id, type: scope.info.type }"
+              :get="scope.get"
+              :set="scope.set"
+            />
           </slot>
         </template>
         <template #label="{ value, count }">
@@ -61,12 +74,26 @@ const hasLabelSlot = computed(() => {
           </slot>
         </template>
       </FiltersAutolistCheckbox>
-      <FiltersRangeInputs v-else-if="component === 'range'" :filter="filter"
-        :group="props.group || `${props.criteria}-${component}-filter`" v-bind="props" :class="rangeClass"
-        :input-class="inputClass" :label-class="labelClass" />
-      <FiltersCheckbox v-else-if="component === 'checkbox'" :filter="filter"
-        :group="`${props.criteria}-${component}-filter`" :input-class="!hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="!hasLabelSlot ? labelClass : ''" :class="checkboxContainerClass" v-bind="props">
+      <FiltersRangeInputs
+        v-else-if="component === 'range'"
+        :key="`range-${props}`"
+        :filter="filter"
+        :group="props.group || `${props.criteria}-${component}-filter`"
+        v-bind="props"
+        :class="rangeClass"
+        :input-class="inputClass"
+        :label-class="labelClass"
+      />
+      <FiltersCheckbox
+        v-else-if="component === 'checkbox'"
+        :key="`checkbox-${props}`"
+        :filter="filter"
+        :group="`${props.criteria}-${component}-filter`"
+        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+        :label-class="!hasLabelSlot ? labelClass : ''"
+        :class="checkboxContainerClass"
+        v-bind="props"
+      >
         <template #checkbox="scope">
           <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
         </template>
@@ -78,8 +105,15 @@ const hasLabelSlot = computed(() => {
           </slot>
         </template>
       </FiltersCheckbox>
-      <FiltersDoubleRange v-else-if="component === 'double-range'" v-bind="props" :filter="filter"
-        :group="props.group || `${props.criteria}-${component}-filter`">
+      <FiltersDoubleRange
+        v-else-if="component === 'double-range'"
+        v-bind="props"
+        :key="JSON.stringify(criteriaValuesMinMax?.[props.criteria])"
+        :filter="filter"
+        :group="props.group || `${props.criteria}-${component}-filter`"
+        :min="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.min !== undefined) ? criteriaValuesMinMax[props.criteria].min : props.min"
+        :max="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.max !== undefined) ? criteriaValuesMinMax[props.criteria].max : props.max"
+      >
         <template #text-min />
       </FiltersDoubleRange>
       <slot v-else :name="`filter_${parameters.title}`" />

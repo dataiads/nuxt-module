@@ -272,6 +272,8 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     state.value = initState()
   }
 
+  const criteriaValuesMinMax = computed(() => _fetcher.data.value?.criteriaValuesMinMax)
+
   return {
     results: fetcher,
     count: count,
@@ -287,6 +289,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     setOnlyRule,
     removeAllRules,
     initialRules: options.initialRules,
+    criteriaValuesMinMax,
     state: state,
     reset
   } as StructuredRecommender
@@ -321,4 +324,20 @@ export const useStructuredSlider = (options: Omit<UseStructuredRecommenderOption
   }
 
   return useStructuredRecommender(opts)
+}
+
+export const EmptyStructuredRecommender: StructuredRecommender = {
+  results: [],
+  count: computed(() => 0),
+  limit: ref(0),
+  sort: ref(''),
+  page: ref(1),
+  hasRule: () => false,
+  getFirstRuleValue: () => null,
+  pushRule: () => {},
+  setOnlyRule: () => {},
+  removeRule: () => {},
+  removeAllRules: () => {},
+  fetchCriteriaValues: () => ({ data: computed(() => ({})) }),
+  reset: () => {}
 }
