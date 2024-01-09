@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { StyleValue } from 'nuxt/dist/app/compat/capi';
+
 const props = withDefaults(
   defineProps<{
     filter: Recommender;
@@ -99,7 +101,7 @@ watchDebounced(
     <div class="range-slider h-[12px] mt-4 w-full relative">
       <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
       <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
-      <span class="absolute bg-primary h-[5px] bottom-0 top-0" :style="progressStyle">
+      <span class="absolute bg-primary h-[var(--double-range-height)] bottom-0 top-0" :style="{ ...progressStyle }">
         <!--
 
                 <div class="absolute left-[-8px] top-[-25px]">
@@ -119,6 +121,12 @@ watchDebounced(
 </template>
 
 <style>
+:root {
+  --double-range-height: 5px;
+  --double-range-slider-diameter: 12px;
+  --double-range-slider-margin-top: -4px;
+}
+
 .range-slider {
   text-align: center;
   position: relative;
@@ -141,9 +149,8 @@ watchDebounced(
 .range-slider>input[type="range"]::-webkit-slider-runnable-track {
   @apply bg-gray-200;
   width: 100%;
-  height: 5px;
+  height: var(--double-range-height);
   cursor: pointer;
-  animate: 0.2s;
   border-radius: 1px;
   box-shadow: none;
   border: 0;
@@ -151,9 +158,8 @@ watchDebounced(
 
 .range-slider>input[type="range"] {
   width: 100%;
-  height: 5px;
+  height: var(--double-range-height);
   cursor: pointer;
-  animate: 0.2s;
   border-radius: 1px;
   box-shadow: none;
   border: 0;
@@ -165,11 +171,11 @@ watchDebounced(
   position: relative;
   box-shadow: 0px 0px 0px #000;
   border: 1px solid;
-  height: 12px;
-  width: 12px;
+  height: var(--double-range-slider-diameter);
+  width: var(--double-range-slider-diameter);
   border-radius: 25px;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -4px;
+  margin-top: var(--double-range-slider-margin-top);
 }
 </style>
