@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StructuredRecommender } from '~/types'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     parameters: { title: string };
     filter: StructuredRecommender,
@@ -24,6 +24,8 @@ withDefaults(
   }
 )
 
+const { criteriaValuesMinMax } = props.filter
+
 const hasCheckboxSlot = computed(() => {
   const instance = getCurrentInstance()
   return !!instance!.slots.checkbox
@@ -40,6 +42,7 @@ const hasLabelSlot = computed(() => {
     <template v-for="{ component, props } in elements">
       <FiltersAutolistCheckbox
         v-if="component === 'autolist-checkbox'"
+        :key="`autolist-checkbox-${props}`"
         v-bind="props"
         :filter="filter"
         :group="props.group || `${props.criteria}-${component}-filter`"
@@ -73,6 +76,7 @@ const hasLabelSlot = computed(() => {
       </FiltersAutolistCheckbox>
       <FiltersRangeInputs
         v-else-if="component === 'range'"
+        :key="`range-${props}`"
         :filter="filter"
         :group="props.group || `${props.criteria}-${component}-filter`"
         v-bind="props"
@@ -82,6 +86,7 @@ const hasLabelSlot = computed(() => {
       />
       <FiltersCheckbox
         v-else-if="component === 'checkbox'"
+        :key="`checkbox-${props}`"
         :filter="filter"
         :group="`${props.criteria}-${component}-filter`"
         :input-class="!hasCheckboxSlot ? checkboxClass : ''"
@@ -103,11 +108,11 @@ const hasLabelSlot = computed(() => {
       <FiltersDoubleRange
         v-else-if="component === 'double-range'"
         v-bind="props"
-        :key="JSON.stringify(filter.criteriaValuesMinMax?.[props.criteria])"
+        :key="JSON.stringify(criteriaValuesMinMax?.[props.criteria])"
         :filter="filter"
         :group="props.group || `${props.criteria}-${component}-filter`"
-        :min="(props.autoMinMax && filter.criteriaValuesMinMax?.[props.criteria]?.min !== undefined) ? filter.criteriaValuesMinMax[props.criteria].min : props.min"
-        :max="(props.autoMinMax && filter.criteriaValuesMinMax?.[props.criteria]?.max !== undefined) ? filter.criteriaValuesMinMax[props.criteria].max : props.max"
+        :min="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.min !== undefined) ? criteriaValuesMinMax[props.criteria].min : props.min"
+        :max="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.max !== undefined) ? criteriaValuesMinMax[props.criteria].max : props.max"
       >
         <template #text-min />
       </FiltersDoubleRange>
