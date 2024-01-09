@@ -472,7 +472,7 @@ export interface StructuredRecommender {
   limit: Ref<number>;
   sort: Ref<string>;
   page: Ref<number>;
-  criteriaValuesMinMax?: StructuredFilterResponse['criteriaValuesMinMax'];
+  criteriaValuesMinMax?: ComputedRef<StructuredFilterResponse['criteriaValuesMinMax']>;
   hasRule: (
     group: string,
     criteria: string,
