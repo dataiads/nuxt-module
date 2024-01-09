@@ -472,7 +472,7 @@ export interface StructuredRecommender {
   limit: Ref<number>;
   sort: Ref<string>;
   page: Ref<number>;
-  criteriaValuesMinMax?: StructuredFilterResponse['criteriaValuesMinMax'];
+  criteriaValuesMinMax?: ComputedRef<StructuredFilterResponse['criteriaValuesMinMax']>;
   hasRule: (
     group: string,
     criteria: string,
@@ -540,6 +540,9 @@ export interface CrossSellParams {
   scroll: boolean;
   titleStyle: StyleValue;
   itemStyle: StyleValue;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
   imageStyle: StyleValue;
   sliderMode: boolean;
   autoscroll: boolean;
@@ -606,7 +609,7 @@ export interface MainRecoParams {
   paginationImageStyle: StyleValue;
   paginationLoadMoreMode: boolean;
   paginationLoadMoreText: string;
-  paginationMaxVisibleButtons: string;
+  paginationMaxVisibleButtons: number;
   paginationPreviousText: string;
   paginationNextText: string;
   paginationPreviousImage: string;

@@ -44,28 +44,16 @@ const items = computed(() =>
         </template>
         <template #previous-btn="scope">
           <template v-if="config.previousButton">
-            <img
-              :src="config.previousButton"
-              class="cursor-pointer"
-              :style="config.buttonStyle"
-              @click="scope.click"
-            >
-          </template>
-          <template v-else>
-            <slot name="reco-slider-previous-btn" v-bind="scope" />
+            <button class="z-[10]" @click="scope.click">
+              <img :style="config.buttonStyle" :src="config.previousButton">
+            </button>
           </template>
         </template>
         <template #next-btn="scope">
           <template v-if="config.nextButton">
-            <img
-              :src="config.nextButton"
-              class="cursor-pointer"
-              :style="config.buttonStyle"
-              @click="scope.click"
-            >
-          </template>
-          <template v-else>
-            <slot name="reco-slider-next-btn" v-bind="scope" />
+            <button @click="scope.click">
+              <img :style="config.buttonStyle" :src="config.nextButton">
+            </button>
           </template>
         </template>
       </Slider>
