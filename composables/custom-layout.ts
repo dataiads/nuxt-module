@@ -20,13 +20,13 @@ export const useCustomLayout = () => {
 }
 
 export const getAutolistCriteriaFromFiltersParams = (filterParams: FilterElement[]): string[] => {
-    /* List all autolist-checkbox criteria in a filter params configuration
+    /* List all autolist-checkbox criteria in a filter params configuration. Also include range elements for min / max values
      */
     return filterParams.reduce(
         (acc, item) => {
           for (const el of item.elements) {
             if (
-              el.component === 'autolist-checkbox' &&
+              (el.component === 'autolist-checkbox' || ((el.component === 'double-range' || el.component === 'range') && el.props.autoMinMax)) &&
               el.props.criteria &&
               acc.indexOf(el.props.criteria) < 0
             ) {

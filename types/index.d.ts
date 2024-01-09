@@ -262,7 +262,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: 'autolist-checkbox' | 'checkbox' | 'range'; // Le nom du composant
+      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
     style: StyleValue;
@@ -472,6 +472,7 @@ export interface StructuredRecommender {
   limit: Ref<number>;
   sort: Ref<string>;
   page: Ref<number>;
+  criteriaValuesMinMax?: StructuredFilterResponse['criteriaValuesMinMax'];
   hasRule: (
     group: string,
     criteria: string,
