@@ -272,6 +272,8 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     state.value = initState()
   }
 
+  const criteriaValuesMinMax = computed(() => _fetcher.data.value?.criteriaValuesMinMax)
+
   return {
     results: fetcher,
     count: count,
@@ -287,6 +289,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     setOnlyRule,
     removeAllRules,
     initialRules: options.initialRules,
+    criteriaValuesMinMax,
     state: state,
     reset
   } as StructuredRecommender
