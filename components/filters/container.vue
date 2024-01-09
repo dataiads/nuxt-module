@@ -10,6 +10,7 @@ const props = withDefaults(
     filter: StructuredRecommender;
     filterParams: FilterElement[];
     headerClass?: string;
+    headerButtonClass?: string;
     asideItemClass?: string;
     groupStyle?: StyleValue;
     headerStyle?: StyleValue;
@@ -23,6 +24,7 @@ const props = withDefaults(
   {
     asideItemClass: '!h-auto px-4 py-2',
     headerClass: 'cursor-pointer lg:py-4 flex items-center',
+    headerButtonClass: 'w-full',
     rangeInputClass: 'grid grid-cols-2 gap-2',
     inputClass: 'border-[#9E9E9E]',
     groupStyle: null,
@@ -58,7 +60,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
 
 <template>
   <div>
-    <AsideItem v-for="filterParam in filterParams" :key="filterParam.title" :display="open" :class="asideItemClass"
+    <AsideItem v-for="filterParam in filterParams" :header-class="headerButtonClass" :key="filterParam.title" :display="open" :class="asideItemClass"
       :style="groupStyle" content-class="">
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
