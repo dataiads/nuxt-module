@@ -322,3 +322,19 @@ export const useStructuredSlider = (options: Omit<UseStructuredRecommenderOption
 
   return useStructuredRecommender(opts)
 }
+
+export const EmptyStructuredRecommender: StructuredRecommender = {
+  results: [],
+  count: computed(() => 0),
+  limit: ref(0),
+  sort: ref(''),
+  page: ref(1),
+  hasRule: () => false,
+  getFirstRuleValue: () => null,
+  pushRule: () => {},
+  setOnlyRule: () => {},
+  removeRule: () => {},
+  removeAllRules: () => {},
+  fetchCriteriaValues: () => ({ data: computed(() => ({})) }),
+  reset: () => {}
+}

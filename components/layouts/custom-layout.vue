@@ -67,18 +67,23 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutInserts>
 
     <!-- high filters mode -->
-    <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
-      layoutConfig.mainReco.filtersDisplay === 'right-high'
-      " class="flex">
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'" id="filters-aside" class="flex-none"
-        :style="layoutConfig.mainReco.filterStyle">
+    <div
+      v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
+        layoutConfig.mainReco.filtersDisplay === 'right-high'
+      "
+      class="flex"
+    >
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'"
+        id="filters-aside"
+        class="flex-none"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
 
-        <slot name="filters-aside" :filter="customLayout.filter">
-          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
-        </slot>
+        <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
       </div>
 
       <div class="flex flex-col grow shrink min-w-0">
@@ -111,27 +116,34 @@ if (layoutConfig?.global?.stylesheet) {
               <slot name="filters-content-header" />
             </div>
 
-            <div v-if="filter.results?.data?.length" :style="layoutConfig.mainReco.gridStyle">
-              <slot v-for="(item, index) in filter.results.data" :key="item.id ? item.id : JSON.stringify(item)"
-                name="filters-content-grid-item" :item="item" :index="index" />
+            <div v-if="filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
+              <slot
+                v-for="(item, index) in filter.results.data.value"
+                :key="item.id ? item.id : JSON.stringify(item)"
+                name="filters-content-grid-item"
+                :item="item"
+                :index="index"
+              />
             </div>
             <slot v-else name="filters-no-results" />
 
             <div id="filters-pagination">
-              <CustomLayoutPagination :filter="filter" :config="layoutConfig.mainReco" />
+              <CustomLayoutPagination :config="layoutConfig.mainReco" />
             </div>
           </div>
         </div>
       </div>
 
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'" id="filters-aside" class="shrink-0"
-        :style="layoutConfig.mainReco.filterStyle">
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'"
+        id="filters-aside"
+        class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
-        <slot name="filters-aside" :filter="filter">
-          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
-        </slot>
+        <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
       </div>
     </div>
 
@@ -159,39 +171,48 @@ if (layoutConfig?.global?.stylesheet) {
       </CustomLayoutInserts>
 
       <div id="filters" class="flex flex-row">
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'left'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <slot name="filters-aside" :filter="filter">
-            <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
-          </slot>
+          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
         </div>
 
         <div id="filters-content" class="grow">
           <div id="filters-content-header">
             <slot name="filters-content-header" />
           </div>
-          <div v-if="filter.results?.data?.length" :style="layoutConfig.mainReco.gridStyle">
-            <slot v-for="(item, index) in filter.results.data" :key="item.id ? item.id : JSON.stringify(item)"
-              name="filters-content-grid-item" :item="item" :index="index" />
+          <div v-if="filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
+            <slot
+              v-for="(item, index) in filter.results.data.value"
+              :key="item.id ? item.id : JSON.stringify(item)"
+              name="filters-content-grid-item"
+              :item="item"
+              :index="index"
+            />
           </div>
           <slot v-else name="filters-no-results" />
 
           <div id="filters-pagination">
-            <CustomLayoutPagination :filter="filter" :config="layoutConfig.mainReco" />
+            <CustomLayoutPagination :config="layoutConfig.mainReco" />
           </div>
         </div>
 
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'right'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <slot name="filters-aside" :filter="filter">
-            <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
-          </slot>
+          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
         </div>
       </div>
     </template>
@@ -223,22 +244,27 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
-    <Dialog v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'" :open="showFiltersSlideover"
-      @close="showFiltersSlideover = false">
+    <Dialog
+      v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
+      :open="showFiltersSlideover"
+      @close="showFiltersSlideover = false"
+    >
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       <div class="fixed inset-0 overflow-y-auto">
         <DialogPanel :style="layoutConfig.mainReco.slideoverStyle">
           <div class="flex justify-end">
-            <img v-if="layoutConfig.mainReco.slideoverCloseButton" :src="layoutConfig.mainReco.slideoverCloseButton"
-              :style="layoutConfig.mainReco.slideoverCloseButtonStyle" @click="customLayout.toggleFiltersSlideover">
+            <img
+              v-if="layoutConfig.mainReco.slideoverCloseButton"
+              :src="layoutConfig.mainReco.slideoverCloseButton"
+              :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+              @click="customLayout.toggleFiltersSlideover"
+            >
             <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
               close
             </div>
           </div>
-          <slot name="filters-aside" :filter="filter">
-            <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
-          </slot>
+          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
         </DialogPanel>
       </div>
     </Dialog>

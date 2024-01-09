@@ -605,7 +605,7 @@ export interface MainRecoParams {
   paginationImageStyle: StyleValue;
   paginationLoadMoreMode: boolean;
   paginationLoadMoreText: string;
-  paginationMaxVisibleButtons: string;
+  paginationMaxVisibleButtons: number;
   paginationPreviousText: string;
   paginationNextText: string;
   paginationPreviousImage: string;

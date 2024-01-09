@@ -1,12 +1,13 @@
 
 import type { StructuredRecommender } from '~/types'
+import { EmptyStructuredRecommender } from './structured-recommender'
 
 export const useCustomLayout = () => {
     /*
      * primary interface for interacting with custom layouts from outside the layer
      */
     const filtersSlideoverState = useState<boolean>('customLayout.showFiltersSlideover', () => false)
-    const filterState = useState<StructuredRecommender>('customLayout.mainRecommender')
+    const filterState = shallowRef<StructuredRecommender>(EmptyStructuredRecommender)
 
     return {
         // main recommendation recommender
