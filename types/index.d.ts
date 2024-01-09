@@ -540,6 +540,9 @@ export interface CrossSellParams {
   scroll: boolean;
   titleStyle: StyleValue;
   itemStyle: StyleValue;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
   imageStyle: StyleValue;
   sliderMode: boolean;
   autoscroll: boolean;
