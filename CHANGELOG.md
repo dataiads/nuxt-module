@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.266](https://github.com/dataiads/nuxt-module/compare/v0.2.265...v0.2.266) (2024-01-09)
+
+
+### Features
+
+* **CustomLayoutCrossSell:** migrate to use Slider component ([#53](https://github.com/dataiads/nuxt-module/issues/53)) ([0397263](https://github.com/dataiads/nuxt-module/commit/0397263a8f9822c6c90354001a45e0ab2ee2523b))
+
 ### [0.2.265](https://github.com/dataiads/nuxt-module/compare/v0.2.264...v0.2.265) (2024-01-09)
 
 ### [0.2.264](https://github.com/dataiads/nuxt-module/compare/v0.2.263...v0.2.264) (2024-01-09)
