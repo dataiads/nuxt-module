@@ -26,6 +26,7 @@ export type Variations =
   | 'catalog-no-slider-xsell-top'
   | 'catalog-top-slider'
   | 'catalog-vertical-slider'
+  | 'custom-layout'
   | 'light'
   | 'light-no-slider'
   | 'light-no-slider-xsell-top'

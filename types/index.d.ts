@@ -3,6 +3,8 @@ import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
 
+
+
 declare global {
   export interface InlineLPOConfig {
     name: string;
@@ -656,4 +658,16 @@ export interface GlobalParams {
 export interface BlockConfig {
   html: string;
   style: string;
+}
+
+interface CustomLayoutContext {
+  filter: StructuredRecommender
+  showFiltersSlideover: Ref<boolean>
+  toggleFiltersSlideover: () => void
+}
+
+declare module '#app' {
+  interface NuxtApp {
+    $customLayout?: CustomLayoutContext
+  }
 }

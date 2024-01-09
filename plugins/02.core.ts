@@ -13,7 +13,7 @@ import {
   handles compatibility with url based product match
   when no lpoid parameter is present
  */
-function fetchPageData (u: URL) {
+function fetchPageData(u: URL) {
   const lpoid = u.searchParams.get('lpoid')
 
   if (lpoid == null) {
@@ -29,7 +29,7 @@ function fetchPageData (u: URL) {
   return useFetch<PageData>(`/api/page-data/${encodeURI(lpoid)}`)
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
   const lpoConfig = useLpoConfig()
   const product = useState<Product | undefined>('product')
@@ -80,41 +80,40 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   // fetch the product on init
-  nuxtApp.hook('app:created', async () => {
-    const dataTimeout = setTimeout(
-      () => errorRedirect('page data timeout', mirroredDomain),
-      runtimeConfig.public.timeout.pageDataLoad
-    )
-    
-    const route = useRoute()
-    let pageUrl = runtimeConfig.public.baseURL + route.fullPath
-    if (!process.server) {
-      pageUrl = window.location.href
-    }
-  
-    const u = new URL(pageUrl)
-    const { data: pageData, error } = await fetchPageData(u)
-    clearTimeout(dataTimeout)
-    if (error.value) {
-      errorRedirect(error.value, mirroredDomain)
-    }
+  const dataTimeout = setTimeout(
+    () => errorRedirect('page data timeout', mirroredDomain),
+    runtimeConfig.public.timeout.pageDataLoad
+  )
 
-    if (pageData.value === null) {
-      errorRedirect('Failed to fetch page data', mirroredDomain)
-    }
+  const route = useRoute()
+  let pageUrl = runtimeConfig.public.baseURL + route.fullPath
+  if (!process.server) {
+    pageUrl = window.location.href
+  }
 
-    const data = pageData.value
-    product.value = data?.product
-    collectorData.value = data?.collectorData
+  const u = new URL(pageUrl)
+  const { data: pageData, error } = await fetchPageData(u)
+  clearTimeout(dataTimeout)
+  if (error.value) {
+    errorRedirect(error.value, mirroredDomain)
+  }
 
-    if (!process.server && data?.product) {
-      injectProductStructuredData(data.product)
-    }
+  if (pageData.value === null) {
+    errorRedirect('Failed to fetch page data', mirroredDomain)
+  }
 
-    useHead({
-      title: data?.product.extraData?.title ?? data?.product.data.title
-    })
+  const data = pageData.value
+  product.value = data?.product
+  collectorData.value = data?.collectorData
+
+  if (!process.server && data?.product) {
+    injectProductStructuredData(data.product)
+  }
+
+  useHead({
+    title: data?.product.extraData?.title ?? data?.product.data.title
   })
+
   return {
     provide: {
       fetchProductRecommendations,
@@ -124,7 +123,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 })
 
-function errorRedirect (reason: unknown, mirroredDomain: string, path?: string): void {
+function errorRedirect(reason: unknown, mirroredDomain: string, path?: string): void {
   /* Redirect to same URI on mirroredDomain */
   if (!path && process.server) {
     const route = useRoute()
@@ -145,7 +144,7 @@ function errorRedirect (reason: unknown, mirroredDomain: string, path?: string):
   }
 }
 
-export function reportError (err: unknown) {
+export function reportError(err: unknown) {
   return $fetch('/api/error/report', {
     method: 'POST',
     body: {
@@ -156,7 +155,7 @@ export function reportError (err: unknown) {
   })
 }
 
-function fetchProductRecommendations (
+function fetchProductRecommendations(
   recommender: string,
   algo: string,
   params?: Record<string, any>,
@@ -185,7 +184,7 @@ function fetchProductRecommendations (
   return fetcher
 }
 
-function injectProductStructuredData (product: Product) {
+function injectProductStructuredData(product: Product) {
   /* Inject structured product data in application/ld+json script from:
    *   1. scrapped or collected data stored in "structured-data" custom attribute
    *   2. reconstructed from GMC feed data

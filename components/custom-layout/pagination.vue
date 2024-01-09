@@ -2,10 +2,11 @@
 import type { MainRecoParams, StructuredRecommender } from '~/types'
 
 const props = defineProps<{
+  filter: StructuredRecommender,
   config: MainRecoParams;
 }>()
 
-const { page, limit, count } = useCustomLayout().filter.value as StructuredRecommender
+const { page, limit, count } = props.filter
 
 const pageCount = computed(() => Math.ceil(count.value / limit.value))
 const minVisiblePage = computed(() => Math.max(1, Math.ceil(page.value - (props.config.paginationMaxVisibleButtons / 2))))

@@ -1,31 +1,15 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel } from '@headlessui/vue'
-import { useCustomLayout, getAutolistCriteriaFromFiltersParams, getInitialRulesFromFiltersParams } from '~/composables/custom-layout'
+import { useCustomLayout } from '~/composables/custom-layout'
 
-const product = useProduct()
 const customLayout = useCustomLayout()
+if (!customLayout) throw new Error("no custom layout initialized")
 
 const layoutConfig = useLpoConfig().customLayout
 
-// init main recommmender
-const filter = customLayout.filter
-filter.value = useStructuredRecommender({
-  productId: product.value.id,
-  baseRules: layoutConfig.mainReco.algo.filterRules,
-  sortRules: layoutConfig.mainReco.algo.sortRules,
-  deduplicate: layoutConfig.mainReco.algo.deduplicate,
-  defaultLimit: layoutConfig.mainReco.algo.limit,
-  defaultSort: layoutConfig.mainReco.algo.sort,
-  criteriaValues: getAutolistCriteriaFromFiltersParams(layoutConfig.mainReco.filterParams),
-  initialRules: await getInitialRulesFromFiltersParams(product.value, layoutConfig.mainReco.filterParams)
-})
-
-// init filters slideover
-const showFiltersSlideover = customLayout.showFiltersSlideover
-
 // scroll top of the filters when returning less results
 onMounted(() => {
-  watch(filter.value.results.data, (newData, oldData) => {
+  watch(customLayout.filter.results.data, (newData, oldData) => {
     if (
       oldData &&
       newData.length < oldData.length
@@ -83,7 +67,7 @@ if (layoutConfig?.global?.stylesheet) {
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
 
-        <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
+        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
       </div>
 
       <div class="flex flex-col grow shrink min-w-0">
@@ -116,9 +100,9 @@ if (layoutConfig?.global?.stylesheet) {
               <slot name="filters-content-header" />
             </div>
 
-            <div v-if="filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
+            <div v-if="customLayout.filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
               <slot
-                v-for="(item, index) in filter.results.data.value"
+                v-for="(item, index) in customLayout.filter.results.data.value"
                 :key="item.id ? item.id : JSON.stringify(item)"
                 name="filters-content-grid-item"
                 :item="item"
@@ -128,7 +112,7 @@ if (layoutConfig?.global?.stylesheet) {
             <slot v-else name="filters-no-results" />
 
             <div id="filters-pagination">
-              <CustomLayoutPagination :config="layoutConfig.mainReco" />
+              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
             </div>
           </div>
         </div>
@@ -143,7 +127,7 @@ if (layoutConfig?.global?.stylesheet) {
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
-        <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
+        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
       </div>
     </div>
 
@@ -180,16 +164,16 @@ if (layoutConfig?.global?.stylesheet) {
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
+          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
 
         <div id="filters-content" class="grow">
           <div id="filters-content-header">
             <slot name="filters-content-header" />
           </div>
-          <div v-if="filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
+          <div v-if="customLayout.filter.results?.data?.value?.length" :style="layoutConfig.mainReco.gridStyle">
             <slot
-              v-for="(item, index) in filter.results.data.value"
+              v-for="(item, index) in customLayout.filter.results.data.value"
               :key="item.id ? item.id : JSON.stringify(item)"
               name="filters-content-grid-item"
               :item="item"
@@ -199,7 +183,7 @@ if (layoutConfig?.global?.stylesheet) {
           <slot v-else name="filters-no-results" />
 
           <div id="filters-pagination">
-            <CustomLayoutPagination :config="layoutConfig.mainReco" />
+            <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
           </div>
         </div>
 
@@ -212,7 +196,7 @@ if (layoutConfig?.global?.stylesheet) {
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
+          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
       </div>
     </template>
@@ -246,8 +230,8 @@ if (layoutConfig?.global?.stylesheet) {
     <!-- Filters slideover -->
     <Dialog
       v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
-      :open="showFiltersSlideover"
-      @close="showFiltersSlideover = false"
+      :open="customLayout.showFiltersSlideover.value"
+      @close="customLayout.showFiltersSlideover.value = false"
     >
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
@@ -264,7 +248,7 @@ if (layoutConfig?.global?.stylesheet) {
               close
             </div>
           </div>
-          <CustomLayoutFiltersAside :filter="filter" :config="layoutConfig" />
+          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </DialogPanel>
       </div>
     </Dialog>
