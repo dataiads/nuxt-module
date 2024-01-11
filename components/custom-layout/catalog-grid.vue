@@ -22,7 +22,6 @@ const onIntersect = () => {
         // limit still under total count
         customLayout.filter.limit.value < customLayout.filter.count.value
     ) {
-        console.log("loading more")
         customLayout.filter.loadMore()
     }
 }
