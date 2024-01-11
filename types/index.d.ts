@@ -511,6 +511,7 @@ export interface StructuredRecommender {
   removeAllRules: (group: string) => void;
   fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn;
   reset: () => void;
+  loadMore: () => void;
 }
 
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
@@ -609,13 +610,14 @@ export interface MainRecoParams {
   paginationButtonStyle: StyleValue;
   paginationActiveButtonStyle: StyleValue;
   paginationImageStyle: StyleValue;
-  paginationLoadMoreMode: boolean;
+  paginationType: "none" | "page" | "more" | "scroll";
   paginationLoadMoreText: string;
   paginationMaxVisibleButtons: number;
   paginationPreviousText: string;
   paginationNextText: string;
   paginationPreviousImage: string;
   paginationNextImage: string;
+  paginationLoadMoreMode: boolean; // DEPRECATED use paginationType instead
 }
 
 export interface MainProductParams {

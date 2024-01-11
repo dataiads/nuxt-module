@@ -274,6 +274,20 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
 
   const criteriaValuesMinMax = computed(() => _fetcher.data.value?.criteriaValuesMinMax)
 
+  const loadMore = () => {
+    // if limit is already over the count, do nothing
+    if (count.value > 0 && limit.value > count.value ) {
+      return
+    } 
+
+    if (options.defaultLimit) {
+      limit.value += options.defaultLimit
+    } else {
+      // no default limit was provided, fallback to twice the previous limit
+      limit.value += limit.value
+    }
+  }
+
   return {
     results: fetcher,
     count: count,
@@ -291,7 +305,8 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     initialRules: options.initialRules,
     criteriaValuesMinMax,
     state: state,
-    reset
+    reset,
+    loadMore
   } as StructuredRecommender
 }
 
