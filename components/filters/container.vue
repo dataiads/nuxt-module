@@ -60,13 +60,15 @@ const removeAllRulesFromGroups = (groups: string[]) => {
 
 <template>
   <div>
-    <AsideItem v-for="filterParam in filterParams" :header-class="headerButtonClass" :key="filterParam.title" :display="open" :class="asideItemClass"
-      :style="groupStyle" content-class="">
+    <AsideItem v-for="filterParam in filterParams" :header-class="headerButtonClass" :key="filterParam.title"
+      :display="open" :class="asideItemClass" :style="groupStyle" content-class="">
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
           <div :class="[{ headerClass: !headerStyle }, { '': displayed }]" :style="headerStyle">
             <slot name="title" :value="filterParam.title">
-              <span :style="headerTitleStyle" class="">{{ filterParam.title }}</span>
+              <span :style="headerTitleStyle" class="">
+                <DynamicLabel :value="filterParam.title" />
+              </span>
             </slot>
             <slot name="append" :displayed="displayed">
               <img v-if="displayed && openedIcon" :style="headerIconStyle" :src="openedIcon">

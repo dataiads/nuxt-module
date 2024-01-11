@@ -29,6 +29,7 @@ const sliderProps = computed(() => ({
 const items = computed(() =>
   Array.prototype.concat.apply([], slider.results.data.value)
 )
+
 </script>
 
 <template>
@@ -36,7 +37,7 @@ const items = computed(() =>
     <div :style="config.style">
       <slot name="reco-slider-header" />
       <div v-if="config.title" :style="config.titleStyle">
-        {{ config.title }}
+        <DynamicLabel :value="config.title" />
       </div>
       <Slider v-bind="sliderProps" :items="items">
         <template #item="{ item }">
