@@ -54,7 +54,7 @@ if (props.config.data) {
     </div>
     <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
-        <a v-if="item.link" :key="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
@@ -88,7 +88,7 @@ if (props.config.data) {
       :style="{ 'column-gap': config.columnGap }"
     >
       <template v-for="item in items">
-        <a v-if="item.link" :key="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
