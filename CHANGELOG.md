@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.271](https://github.com/dataiads/nuxt-module/compare/v0.2.270...v0.2.271) (2024-01-12)
+
+
+### Bug Fixes
+
+* **CustomLayoutCrossSell:** add cross sell key ([3cd4d5c](https://github.com/dataiads/nuxt-module/commit/3cd4d5cadb4c1704974c7446f4cf33f3fd685797))
+
 ### [0.2.270](https://github.com/dataiads/nuxt-module/compare/v0.2.269...v0.2.270) (2024-01-11)
 
 ### [0.2.269](https://github.com/dataiads/nuxt-module/compare/v0.2.268...v0.2.269) (2024-01-09)
