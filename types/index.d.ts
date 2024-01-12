@@ -2,6 +2,7 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
+import type { StyleValue } from 'nuxt/dist/app/compat/capi';
 
 
 
@@ -281,10 +282,10 @@ declare global {
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
     endpoint:
-      | 'filtered'
-      | 'randomfill'
-      | 'filtered-grouped'
-      | 'structured-filter';
+    | 'filtered'
+    | 'randomfill'
+    | 'filtered-grouped'
+    | 'structured-filter';
 
     // where to get recommendation params from
     configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
@@ -548,9 +549,6 @@ export interface CrossSellParams {
   absoluteArrows: boolean;
   imageStyle: StyleValue;
   sliderMode: boolean;
-  autoscroll: boolean;
-  scrollSpeed: number;
-  absoluteArrows: boolean;
   nextButton: string;
   previousButton: string;
   buttonStyle: StyleValue;
@@ -640,11 +638,36 @@ export interface LayerParams {
   enabled: boolean;
   position: 'top' | 'left' | 'right' | 'bottom';
   delay: number;
+  hideOnScroll: boolean;
   style: StyleValue;
+  backdropStyle: StyleValue;
   title: string;
   titleStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
+
+  itemLayout: 'default' | 'reco-slider-slot'
+  itemStyle: StyleValue;
+  itemImageStyle: StyleValue;
+  itemTitleStyle: StyleValue;
+  itemPriceStyle: StyleValue;
+
+  sliderMode: boolean;
+  nextButton: string;
+  previousButton: string;
+  columnGap: string;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
+  buttonStyle: StyleValue;
+}
+
+export interface RecoSliderItemParams {
+  item: Product;
+  style: StyleValue;
+  imageStyle: StyleValue;
+  titleStyle: StyleValue;
+  priceStyle: StyleValue;
 }
 
 export interface StickyAtcParams {
