@@ -22,7 +22,7 @@ const props = withDefaults(
     activeCheckboxStyle?: StyleValue;
   }>(),
   {
-    asideItemClass: '!h-auto px-4 py-2',
+    asideItemClass: '!h-auto',
     headerClass: 'cursor-pointer lg:py-4 flex items-center',
     headerButtonClass: 'w-full',
     rangeInputClass: 'grid grid-cols-2 gap-2',
