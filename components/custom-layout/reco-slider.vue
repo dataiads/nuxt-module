@@ -25,11 +25,7 @@ const sliderProps = computed(() => ({
   }
 }))
 
-// Flatten the array
-const items = computed(() =>
-  Array.prototype.concat.apply([], slider.results.data.value)
-)
-
+const items = computed(() => slider.results.data.value as Product[][]);
 </script>
 
 <template>
@@ -41,7 +37,8 @@ const items = computed(() =>
       </div>
       <Slider v-bind="sliderProps" :items="items">
         <template #item="{ item }">
-          <slot :key="item.id" name="reco-slider-item" :item="item" />
+          <slot v-if="item.id" :key="item.id" name="reco-slider-item" :item="item" />
+          <slot v-else name="reco-slider-item" :item="item" />
         </template>
         <template #previous-btn="scope">
           <template v-if="config.previousButton">
