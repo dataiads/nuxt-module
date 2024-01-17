@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.274](https://github.com/dataiads/nuxt-module/compare/v0.2.273...v0.2.274) (2024-01-17)
+
+
+### Features
+
+* **filtersElements:** Added Input filter option + passed checked status to checkbox labels ([c75d8a2](https://github.com/dataiads/nuxt-module/commit/c75d8a232c090230129f9afa3a3aa73027402c40))
+
 ### [0.2.273](https://github.com/dataiads/nuxt-module/compare/v0.2.272...v0.2.273) (2024-01-15)
 
 ### [0.2.272](https://github.com/dataiads/nuxt-module/compare/v0.2.271...v0.2.272) (2024-01-15)
