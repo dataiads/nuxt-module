@@ -31,16 +31,17 @@ const sliderProps = computed(() => ({
 
 let items: CrossSellItem[] = []
 
-let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false }
+let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false, regex: props.config.key.regex }
 if (props.config.key.key === '') {
   // Empty key option, in case the xSell is the same for all products.
   crossSellKey.key = ''
 } else {
-  crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive }
+  crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive, regex: props.config.key.regex }
 }
 
 if (props.config.data) {
   for (const [dataKey, value] of Object.entries(props.config.data)) {
+    console.log(crossSellKey)
     if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
       items = value
       break
