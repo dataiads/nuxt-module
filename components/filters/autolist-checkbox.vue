@@ -126,7 +126,7 @@ const sortedValues = computed(() => {
             :operator="props.operator"
           >
             <template #label="scope">
-              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null">
+              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value" :count="displayCount ? count : null" :checked="scope.checked">
                 {{ useTranslation ? $t(value?.toString() || '') : value }}
                 <template v-if="displayCount">
                   ({{ count }})

@@ -5,7 +5,7 @@ const props = withDefaults(
   defineProps<{
     parameters: { title: string };
     filter: StructuredRecommender,
-    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range'; props: any }[];
+    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'input'; props: any }[];
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
@@ -60,10 +60,10 @@ const hasLabelSlot = computed(() => {
             />
           </slot>
         </template>
-        <template #label="{ value, count }">
-          <slot name="checkbox_label" :value="value" :count="count">
-            <slot name="auto_list_label" :value="value" :count="count">
-              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count">
+        <template #label="{ value, count, checked }">
+          <slot name="checkbox_label" :value="value" :count="count" :checked="checked">
+            <slot name="auto_list_label" :value="value" :count="count" :checked="checked">
+              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count" :checked="checked">
                 <template v-if="value">
                   {{ value }} <template v-if="count">
                     ({{ count }})
@@ -97,8 +97,8 @@ const hasLabelSlot = computed(() => {
         <template #checkbox="scope">
           <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
         </template>
-        <template #label="{ value }">
-          <slot name="checkbox_label" :value="value">
+        <template #label="{ value, checked }">
+          <slot name="checkbox_label" :value="value" :checked="checked">
             <template v-if="value">
               {{ value }}
             </template>
@@ -116,6 +116,13 @@ const hasLabelSlot = computed(() => {
       >
         <template #text-min />
       </FiltersDoubleRange>
+      <FiltersInput 
+        v-else-if="component === 'input'"
+        :key="`input-${props}`"
+        :filter="filter"
+        :group="props.group || `${props.criteria}-${component}-filter`"
+        v-bind="props"
+      />
       <slot v-else :name="`filter_${parameters.title}`" />
     </template>
   </div>
