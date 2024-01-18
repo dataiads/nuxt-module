@@ -41,7 +41,6 @@ if (props.config.key.key === '') {
 
 if (props.config.data) {
   for (const [dataKey, value] of Object.entries(props.config.data)) {
-    console.log(crossSellKey)
     if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
       items = value
       break
