@@ -13,13 +13,20 @@ interface Props {
   min?: string
   max?: string
   ariaLabel?: string
+  class?: string
+  inputClass?: string
+  labelClass?: string
+  icon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   type: 'text',
   min: '0',
-  max: ''
+  max: '',
+  class: 'flex items-center relative',
+  inputClass: "focus:border-secondary text-primary focus:ring-black focus:ring-1 border-primary font-normal",
+  labelClass: "font-normal text-black"
 })
 
 const debounce = (callback: (_: Event) => void, wait: number) => {
@@ -45,10 +52,14 @@ const change = debounce((evt: Event) => {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div :class="class">
+    <label :class="labelClass" :for="uuid">
+      <span v-if="props.label">{{ props.label }}</span>
+      <slot v-else />
+    </label>
     <input
       :id="uuid"
-      class="focus:border-secondary text-black focus:ring-black focus:ring-1 w-full text-black border-black font-normal"
+      :class="props.inputClass"
       :value="value"
       :placeholder="props.placeholder"
       :type="props.type"
@@ -58,9 +69,8 @@ const change = debounce((evt: Event) => {
       @change="change"
       @keyup="change"
     >
-    <label class="font-normal text-black leading-[15px]" :for="uuid">
-      <span v-if="props.label">{{ props.label }}</span>
-      <slot v-else />
-    </label>
+    <div v-if="props.icon" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <img :src="props.icon" class="h-5 w-5" :alt="props.label ?? props.placeholder" />
+    </div>
   </div>
 </template>

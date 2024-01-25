@@ -9,7 +9,15 @@ const props = defineProps<{
 const product = useProduct()
 
 // only one algorithm for now
-const keyMatcher = (productKey: string, dataKey: string) => productKey.startsWith(dataKey)
+const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
+  if (regex) {
+    const regexProductKey = productKey.match(regex)?.[0];
+    if (regexProductKey) {
+      return regexProductKey.startsWith(dataKey)
+    }
+  }
+  return productKey.startsWith(dataKey)
+}
 
 
 const sliderProps = computed(() => ({
@@ -23,28 +31,26 @@ const sliderProps = computed(() => ({
 
 let items: CrossSellItem[] = []
 
-let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false }
+let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false, regex: props.config.key.regex }
 if (props.config.key.key === '') {
   // Empty key option, in case the xSell is the same for all products.
   crossSellKey.key = ''
 } else {
-  crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive }
+  crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive, regex: props.config.key.regex }
 }
 
 if (props.config.data) {
   for (const [dataKey, value] of Object.entries(props.config.data)) {
-    if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase())) {
+    if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
       items = value
       break
     }
-    if (keyMatcher(crossSellKey.key, dataKey)) {
+    if (keyMatcher(crossSellKey.key, dataKey, crossSellKey.regex)) {
       items = value
       break
     }
   }
 }
-
-
 </script>
 
 <template>
@@ -81,12 +87,8 @@ if (props.config.data) {
         </template>
       </template>
     </Slider>
-    <div
-      v-else
-      class="flex flex-row"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
-      :style="{ 'column-gap': config.columnGap }"
-    >
+    <div v-else class="flex flex-row" :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
+      :style="{ 'column-gap': config.columnGap }">
       <template v-for="item in items">
         <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">

@@ -199,6 +199,7 @@ declare global {
   export interface CrossSellKey {
     key: string;
     caseInsensitive: boolean;
+    regex?: string;
   }
 
   export interface CrossSellItem {
