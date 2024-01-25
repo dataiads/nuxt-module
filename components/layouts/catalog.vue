@@ -107,12 +107,12 @@ const mobileFilterOpen = useState<(() => void) | null>(
         <slot name="filters-aside" />
       </div>
       <div id="filters-content" :class="s.filters.contentClass">
-        <div id="filters-content-header" :class="s.filters.contentHeaderClass">
+        <div  id="filters-content-header" :class="s.filters.contentHeaderClass">
           <slot name="filters-content-header" />
         </div>
 
-        <Loader v-if="props.filter.results.pending.value" />
-        <div v-else :class="s.filters.contentGridClass">
+        <!-- <Loader v-if="props.filter.results.pending.value" /> -->
+        <div :class="s.filters.contentGridClass">
           <slot
             v-for="(item, index) in filterProducts"
             v-if="filterProducts?.length"

@@ -7,6 +7,7 @@ interface Props {
   previousHandler?: (filter: Recommender, pageCount: number) => void
   nextHandler?: (filter: Recommender, pageCount: number) => void
   loadMoreHandler?: (filter: Recommender, nb: number) => void
+  scrollToTop?: {active: boolean, smoothMode?: boolean, sectionId: string }
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -14,7 +15,8 @@ const props = withDefaults(defineProps<Props>(), {
   class: 'flex items-center',
   previousHandler: previousPaginationHandler,
   nextHandler: nextPaginationHandler,
-  loadMoreHandler: loadMorePaginationHandler
+  loadMoreHandler: loadMorePaginationHandler,
+  scrollToTop: {active: true, smoothMode: true, sectionId: '#filters-content-header' }
 })
 
 const totalResults = props.filter.count
@@ -31,11 +33,31 @@ const range = (min: number, max: number): number[] => {
   }
   return items
 }
+
+
+// scroll on catalog prodcut results change
+const redirectToSection = () => {
+  if ( props.scrollToTop.active && props.scrollToTop.sectionId) {
+    
+    const targetedSection = document.querySelector(props.scrollToTop.sectionId) as HTMLDivElement
+    
+    if (targetedSection) { 
+      const sectionTop: number = targetedSection.offsetTop;
+      
+      window.scrollTo({
+        top: sectionTop,
+        behavior: props.scrollToTop.smoothMode ? "smooth" : 'auto',
+      });
+    }
+    return;
+  }
+}
+
 </script>
 
 <template>
   <nav :class="props.class">
-    <div v-if="props.filter.page.value > 1" alt="go to previous page" @click="() => previousHandler(filter, pageCount)">
+    <div v-if="props.filter.page.value > 1" alt="go to previous page" @click="() => {previousHandler(filter, pageCount); redirectToSection()}">
       <slot name="previous-button">
         <button type="button">
           &lt;
@@ -53,7 +75,7 @@ const range = (min: number, max: number): number[] => {
       </div>
     </template>
 
-    <div v-if="props.filter.page.value < pageCount" alt="go to next page" @click="() => nextHandler(filter, pageCount)">
+    <div v-if="props.filter.page.value < pageCount" alt="go to next page" @click="() => {nextHandler(filter, pageCount); redirectToSection()}">
       <slot name="next-button">
         <button type="button">
           &gt;
