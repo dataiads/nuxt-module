@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
-import { useRuntimeConfig } from '#app'
+import { useRuntimeConfig } from '#app';
 
 const props = defineProps(layoutProps)
 
@@ -15,6 +15,7 @@ const mobileFilterOpen = useState<(() => void) | null>(
   'responsiveAsideItemSingleton',
   () => null
 )
+
 </script>
 
 <template>
@@ -106,9 +107,11 @@ const mobileFilterOpen = useState<(() => void) | null>(
         <slot name="filters-aside" />
       </div>
       <div id="filters-content" :class="s.filters.contentClass">
-        <div id="filters-content-header" :class="s.filters.contentHeaderClass">
+        <div  id="filters-content-header" :class="s.filters.contentHeaderClass">
           <slot name="filters-content-header" />
         </div>
+
+        <!-- <Loader v-if="props.filter.results.pending.value" /> -->
         <div :class="s.filters.contentGridClass">
           <slot
             v-for="(item, index) in filterProducts"
@@ -120,6 +123,7 @@ const mobileFilterOpen = useState<(() => void) | null>(
           />
           <slot v-else name="filters-no-results" />
         </div>
+
         <div id="filters-pagination" :class="s.filters.paginationClass">
           <slot name="filters-pagination" />
         </div>
