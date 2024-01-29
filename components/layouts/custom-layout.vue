@@ -50,6 +50,9 @@ if (layoutConfig?.global?.stylesheet) {
       </template>
     </CustomLayoutInserts>
 
+    <slot v-if="layoutConfig.mainProduct.light" name="main-product-light-header" />
+    <slot v-else name="main-product-light-header" />
+
     <!-- high filters mode -->
     <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
       layoutConfig.mainReco.filtersDisplay === 'right-high'
