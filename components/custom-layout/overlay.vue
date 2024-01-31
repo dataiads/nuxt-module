@@ -6,7 +6,8 @@
   >
     <Dialog
       id="overlay"
-      class="z-20"
+      class="z-20 fixed flex inset-0"
+      :class="{'justify-end': config.position === 'right', 'flex-col justify-end': config.position === 'bottom'}"
       @close="overlayState = 'closed'"
     >
       <TransitionChild
@@ -21,48 +22,41 @@
         <div class="fixed inset-0" aria-hidden="true" :style="config.backdropStyle" />
       </TransitionChild>
 
-      <TransitionChild
-        enter="transition-transform duration-300 ease-in-out"
-        :enter-from="transitionStart"
-        :enter-to="transitionEnd"
-        leave="transition-transform duration-300 ease-in-out"
-        :leave-from="transitionEnd"
-        :leave-to="transitionStart"
-      >
+      <TransitionChild v-bind="transitionClass" as="template">
         <DialogPanel
           id="overlayContent"
           ref="overlayContent"
-          class="fixed z-21"
-          :class="contentClass"
+          class="relative z-21"
           :style="config.style"
-          @scroll.prevent.stop="onOverlayScroll"
         >
           <DialogTitle v-if="config.title" :style="config.titleStyle">
             {{ config.title }}
           </DialogTitle>
-          <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items" :direction="config.position === 'left' || config.position === 'right' ? 'vertical' : 'horizontal'">
-            <template #item="{ item }">
-              <RecoSliderItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
-              <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
-            </template>
-            <template #previous-btn="scope">
-              <template v-if="config.previousButton">
-                <button @click="scope.click">
-                  <img :style="config.buttonStyle" :src="config.previousButton" alt="back button">
-                </button>
+          <div v-if="config.sliderMode">
+            <Slider v-bind="sliderProps" :items="items">
+              <template #item="{ item }">
+                <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
+                <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
               </template>
-            </template>
-            <template #next-btn="scope">
-              <template v-if="config.nextButton">
-                <button @click="scope.click">
-                  <img :style="config.buttonStyle" :src="config.nextButton" alt="next button">
-                </button>
+              <template #previous-btn="scope">
+                <template v-if="config.previousButton">
+                  <button @click="scope.click">
+                    <img :style="config.buttonStyle" :src="config.previousButton" alt="back button">
+                  </button>
+                </template>
               </template>
-            </template>
-          </Slider>
+              <template #next-btn="scope">
+                <template v-if="config.nextButton">
+                  <button @click="scope.click">
+                    <img :style="config.buttonStyle" :src="config.nextButton" alt="next button">
+                  </button>
+                </template>
+              </template>
+            </Slider>
+          </div>
           <div v-else :style="config.gridStyle">
             <template v-for="item in items">
-              <RecoSliderItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
+              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
               <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
             </template>
           </div>
@@ -82,21 +76,19 @@ import {
 } from '@headlessui/vue'
 
 import type { LayerParams } from '~/types'
+import type { ScrollDirection } from '../slider.vue';
 const props = defineProps<{ config: LayerParams }>()
 const product = useProduct()
 
-const overlayState = useState<'initial' | 'closed' | 'open'>(
-  'recoSlider.overlay.state',
-  () => 'closed'
-)
+const overlayState = useState<'closed' | 'open'>('recoSlider.overlay.state', () => 'closed')
 const overlayContent = ref(null)
-const { y: yScroll } = useWindowScroll()
-const isLocked = useScrollLock(document.body)
 
 const sliderProps = {
   autoscroll: props.config.autoscroll,
   scrollSpeed: props.config.scrollSpeed,
   absoluteArrows: props.config.absoluteArrows,
+  direction: (props.config.position === 'left' || props.config.position === 'right' ? 'vertical' : 'horizontal') as ScrollDirection,
+  scrollerClass: (props.config.position === 'left' || props.config.position === 'right' ? ['h-screen'] : ['w-screen']),
   scrollerStyle: {
     columnGap: props.config.columnGap
   }
@@ -109,50 +101,36 @@ const itemProps = {
   priceStyle: props.config.itemPriceStyle
 }
 
-let transitionStart = '';
-let transitionEnd = '';
-let contentClass = '';
-if (props.config.position === 'bottom') {
-  transitionStart = 'translate-y-full'
-  transitionEnd = 'translate-y-0'
-  contentClass = 'right-0 left-0 bottom-0 w-full'
-}
-if (props.config.position === 'top') {
-  transitionStart = '-translate-y-full'
-  transitionEnd = 'translate-y-0'
-  contentClass = 'right-0 left-0 top-0 w-full'
-}
-if (props.config.position === 'left') {
-  transitionStart = '-translate-x-full'
-  transitionEnd = 'translate-x-0'
-  contentClass = 'left-0 top-0 bottom-0 h-full'
-}
-if (props.config.position === 'right') {
-  transitionStart = 'translate-x-full'
-  transitionEnd = 'translate-x-0'
-  contentClass = 'right-0 top-0 bottom-0 h-full'
-}
+const transitionClass = computed(() => {
+  let transitionStart = '';
+  let transitionEnd = '';
+  if (props.config.position === 'bottom') {
+    transitionStart = 'translate-y-full'
+    transitionEnd = 'translate-y-0'
+  } else if (props.config.position === 'top') {
+    transitionStart = '-translate-y-full'
+    transitionEnd = 'translate-y-0'
+  } else if (props.config.position === 'left') {
+    transitionStart = '-translate-x-full'
+    transitionEnd = 'translate-x-0'
+  } else if (props.config.position === 'right') {
+    transitionStart = 'translate-x-full'
+    transitionEnd = 'translate-x-0'
+  }
 
-onClickOutside(overlayContent, () => (overlayState.value = 'closed'))
-
-setTimeout(() => {
-  overlayState.value = 'initial'
-}, props.config.delay)
-
-watch(yScroll, () => {
-  if (props.config.hideOnScroll && overlayState.value === 'initial') {
-    overlayState.value = 'closed'
+  return {
+    enter: "transition-transform duration-300 ease-in-out",
+    enterFrom: transitionStart,
+    enterTo: transitionEnd,
+    leave: "transition-transform duration-300 ease-in-out",
+    leaveFrom: transitionEnd,
+    leaveTo: transitionStart
   }
 })
 
-const onOverlayScroll = () => {
-  // TODO: Handle overlay state initial
-  if (overlayState.value === 'initial') {
-    overlayState.value = 'open'
-  }
-}
+onClickOutside(overlayContent, () => overlayState.value = 'closed')
 
-watch(overlayState, () => { isLocked.value = (overlayState.value == 'open' || (overlayState.value == 'initial' && !props.config.hideOnScroll))}, { immediate: true })
+setTimeout(() => overlayState.value = 'open', props.config.delay)
 
 // get product suggestions
 const recommender = useStructuredRecommender({
@@ -163,7 +141,5 @@ const recommender = useStructuredRecommender({
   defaultLimit: props.config.algo.limit,
   defaultSort: props.config.algo.sort
 })
-const items = computed(() =>
-  recommender.results.data.value?.map((x: Product[]) => x[0])
-)
+const items = computed(() => recommender.results.data.value as Product[][])
 </script>
