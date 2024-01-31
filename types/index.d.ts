@@ -652,6 +652,9 @@ export interface LayerParams {
   itemImageStyle: StyleValue;
   itemTitleStyle: StyleValue;
   itemPriceStyle: StyleValue;
+  itemSalePriceContainerStyle: StyleValue;
+  itemSalePriceStyle: StyleValue;
+  itemSalePriceOriginalPriceStyle: StyleValue;
 
   sliderMode: boolean;
   nextButton: string;

@@ -98,7 +98,10 @@ const itemProps = {
   style: props.config.itemStyle,
   imageStyle: props.config.itemImageStyle,
   titleStyle: props.config.itemTitleStyle,
-  priceStyle: props.config.itemPriceStyle
+  priceStyle: props.config.itemPriceStyle,
+  salePriceContainerStyle: props.config.itemSalePriceContainerStyle,
+  salePriceStyle: props.config.itemSalePriceStyle,
+  salePriceOriginalPriceStyle: props.config.itemSalePriceOriginalPriceStyle
 }
 
 const transitionClass = computed(() => {
