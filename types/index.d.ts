@@ -648,13 +648,7 @@ export interface LayerParams {
   algo: FilterParams;
 
   itemLayout: 'default' | 'reco-slider-slot'
-  itemStyle: StyleValue;
-  itemImageStyle: StyleValue;
-  itemTitleStyle: StyleValue;
-  itemPriceStyle: StyleValue;
-  itemSalePriceContainerStyle: StyleValue;
-  itemSalePriceStyle: StyleValue;
-  itemSalePriceOriginalPriceStyle: StyleValue;
+  itemStyle: RecoItemStyleParams;
 
   sliderMode: boolean;
   nextButton: string;
@@ -666,8 +660,7 @@ export interface LayerParams {
   buttonStyle: StyleValue;
 }
 
-export interface RecoItemParams {
-  item: Product[];
+export interface RecoItemStyleParams {
   style: StyleValue;
   imageStyle: StyleValue;
   titleStyle: StyleValue;
@@ -675,6 +668,11 @@ export interface RecoItemParams {
   salePriceContainerStyle: StyleValue;
   salePriceStyle: StyleValue;
   salePriceOriginalPriceStyle: StyleValue;
+}
+
+export interface RecoItemParams {
+  item: Product[];
+  style: RecoItemStyleParams;
 }
 
 export interface StickyAtcParams {

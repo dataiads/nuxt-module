@@ -35,7 +35,7 @@
           <div v-if="config.sliderMode">
             <Slider v-bind="sliderProps" :items="items">
               <template #item="{ item }">
-                <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
+                <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: props.config.itemStyle, item}" />
                 <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
               </template>
               <template #previous-btn="scope">
@@ -56,7 +56,7 @@
           </div>
           <div v-else :style="config.gridStyle">
             <template v-for="item in items">
-              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{...itemProps, item}" />
+              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: props.config.itemStyle, item}" />
               <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
             </template>
           </div>
@@ -92,16 +92,6 @@ const sliderProps = {
   scrollerStyle: {
     columnGap: props.config.columnGap
   }
-}
-
-const itemProps = {
-  style: props.config.itemStyle,
-  imageStyle: props.config.itemImageStyle,
-  titleStyle: props.config.itemTitleStyle,
-  priceStyle: props.config.itemPriceStyle,
-  salePriceContainerStyle: props.config.itemSalePriceContainerStyle,
-  salePriceStyle: props.config.itemSalePriceStyle,
-  salePriceOriginalPriceStyle: props.config.itemSalePriceOriginalPriceStyle
 }
 
 const transitionClass = computed(() => {
