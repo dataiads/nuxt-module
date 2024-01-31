@@ -19,7 +19,7 @@
         leave-to="opacity-0"
       >
         <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-        <div class="fixed inset-0" aria-hidden="true" :style="config.backdropStyle" />
+        <div class="fixed inset-0" aria-hidden="true" :style="config.backdropStyle" @wheel="onScroll()" />
       </TransitionChild>
 
       <TransitionChild v-bind="transitionClass" as="template">
@@ -124,6 +124,11 @@ const transitionClass = computed(() => {
 })
 
 onClickOutside(overlayContent, () => overlayState.value = 'closed')
+const onScroll = () => {
+  if (props.config.hideOnScroll) {
+    overlayState.value = 'closed'
+  }
+}
 
 setTimeout(() => overlayState.value = 'open', props.config.delay)
 
