@@ -663,12 +663,15 @@ export interface LayerParams {
   buttonStyle: StyleValue;
 }
 
-export interface RecoSliderItemParams {
-  item: Product;
+export interface RecoItemParams {
+  item: Product[];
   style: StyleValue;
   imageStyle: StyleValue;
   titleStyle: StyleValue;
   priceStyle: StyleValue;
+  salePriceContainerStyle: StyleValue;
+  salePriceStyle: StyleValue;
+  salePriceOriginalPriceStyle: StyleValue;
 }
 
 export interface StickyAtcParams {
