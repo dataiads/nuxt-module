@@ -37,8 +37,15 @@ const items = computed(() => slider.results.data.value as Product[][]);
       </div>
       <Slider v-bind="sliderProps" :items="items">
         <template #item="{ item }">
-          <slot v-if="item.id" :key="item.id" name="reco-slider-item" :item="item" />
-          <slot v-else name="reco-slider-item" :item="item" />
+          <template v-if="(config.itemLayout ?? 'reco-slider-slot') === 'reco-slider-slot'">
+            <slot v-if="item.id" :key="item.id" name="reco-slider-item" :item="item" />
+            <slot v-else name="reco-slider-item" :item="item" />
+          </template>
+          <CustomLayoutRecoItem v-else-if="config.itemLayout === 'default'" :config="{style: config.itemStyle, item}" />
+          <template v-else-if="config.itemLayout === 'filters-content-grid-item'">
+            <slot v-if="item.id" :key="item.id" name="filters-content-grid-item" :item="item" />
+            <slot v-else name="filters-content-grid-item" :item="item" />
+          </template>
         </template>
         <template #previous-btn="scope">
           <template v-if="config.previousButton">

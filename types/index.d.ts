@@ -518,6 +518,8 @@ export interface StructuredRecommender {
 
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
 
+type ItemLayout = 'filters-content-grid-item' | 'reco-slider-slot' | 'default';
+
 export interface RecoSliderParams {
   type: 'reco-slider';
   enabled: boolean;
@@ -532,6 +534,8 @@ export interface RecoSliderParams {
   buttonStyle: StyleValue;
   columnGap: string;
   style: StyleValue;
+  itemLayout: ItemLayout;
+  itemStyle: RecoItemStyleParams;
 }
 
 export interface CrossSellParams {
@@ -604,6 +608,8 @@ export interface MainRecoParams {
   filterParamsCheckboxStyle: StyleValue;
   filterParamsActiveCheckboxStyle: StyleValue;
   gridStyle: StyleValue;
+  itemLayout: ItemLayout;
+  itemStyle: RecoItemStyleParams;
   algo: FilterParams;
   paginationContainerStyle: StyleValue;
   paginationButtonStyle: StyleValue;
@@ -647,7 +653,7 @@ export interface LayerParams {
   gridStyle: StyleValue;
   algo: FilterParams;
 
-  itemLayout: 'default' | 'reco-slider-slot'
+  itemLayout: ItemLayout
   itemStyle: RecoItemStyleParams;
 
   sliderMode: boolean;

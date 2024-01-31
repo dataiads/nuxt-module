@@ -37,6 +37,7 @@
               <template #item="{ item }">
                 <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: props.config.itemStyle, item}" />
                 <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
+                <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />
               </template>
               <template #previous-btn="scope">
                 <template v-if="config.previousButton">
@@ -56,8 +57,9 @@
           </div>
           <div v-else :style="config.gridStyle">
             <template v-for="item in items">
-              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: props.config.itemStyle, item}" />
+              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: config.itemStyle, item}" />
               <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
+              <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />
             </template>
           </div>
         </DialogPanel>
