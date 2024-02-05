@@ -456,6 +456,9 @@ export interface UseStructuredRecommenderOptions {
 
   // only request criteria values on initial structured-filters call
   cacheCriteriaValues?: boolean;
+
+  // always return all filter options on autolist checkboxes
+  disableInteractions?: boolean;
 }
 
 export interface StructuredFilterResponse {
@@ -605,6 +608,7 @@ export interface MainRecoParams {
   filterParamsHeaderIconStyle: StyleValue;
   filterParamsCheckboxStyle: StyleValue;
   filterParamsActiveCheckboxStyle: StyleValue;
+  filterParamsDisableInteractions: boolean;
   gridStyle: StyleValue;
   algo: FilterParams;
   paginationContainerStyle: StyleValue;
