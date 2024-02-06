@@ -16,4 +16,10 @@ defineProps<{
         :header-icon-style="config.mainReco.filterParamsHeaderIconStyle"
         :checkbox-style="config.mainReco.filterParamsCheckboxStyle"
         :active-checkbox-style="config.mainReco.filterParamsActiveCheckboxStyle" />
+    <div :class="config.mainReco.filterParamsButtonsGroupStyle">
+        <button @click="filter.reset" type="button" :class="config.mainReco.filterParamsButtonsResetStyle"
+            :disabled="filter.activeFiltersCount.value <= 0"> {{ config.mainReco.filterParamsButtonsReset }} </button>
+        <button @click="filter.reset" type="button" :class="config.mainReco.filterParamsButtonsConfirmStyle"
+            :disabled="filter.activeFiltersCount.value <= 0"> {{ config.mainReco.filterParamsButtonsConfirm }} </button>
+    </div>
 </template>

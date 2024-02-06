@@ -282,10 +282,10 @@ declare global {
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
     endpoint:
-      | 'filtered'
-      | 'randomfill'
-      | 'filtered-grouped'
-      | 'structured-filter';
+    | 'filtered'
+    | 'randomfill'
+    | 'filtered-grouped'
+    | 'structured-filter';
 
     // where to get recommendation params from
     configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
@@ -516,6 +516,7 @@ export interface StructuredRecommender {
   fetchCriteriaValues: (criteria: string) => FetchCriteriaValuesReturn;
   reset: () => void;
   loadMore: () => void;
+  activeFiltersCount: { value: number };
 }
 
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
@@ -609,6 +610,11 @@ export interface MainRecoParams {
   filterParamsCheckboxStyle: StyleValue;
   filterParamsActiveCheckboxStyle: StyleValue;
   filterParamsDisableInteractions: boolean;
+  filterParamsButtonsGroupStyle: StyleValue;
+  filterParamsButtonsReset: string;
+  filterParamsButtonsConfirm: string;
+  filterParamsButtonsResetStyle: StyleValue;
+  filterParamsButtonsConfirmStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
   paginationContainerStyle: StyleValue;
