@@ -2,6 +2,7 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
+import type { StyleValue } from 'nuxt/dist/app/compat/capi';
 
 
 
@@ -282,10 +283,10 @@ declare global {
   export interface UseRecommenderOptions {
     // Recommender endpoint to use
     endpoint:
-      | 'filtered'
-      | 'randomfill'
-      | 'filtered-grouped'
-      | 'structured-filter';
+    | 'filtered'
+    | 'randomfill'
+    | 'filtered-grouped'
+    | 'structured-filter';
 
     // where to get recommendation params from
     configRecoParams?: 'mainRecoParams' | 'sliderRecoParams';
@@ -520,6 +521,8 @@ export interface StructuredRecommender {
 
 export type InsertParams = RecoSliderParams | CrossSellParams | BannerParams;
 
+type ItemLayout = 'filters-content-grid-item' | 'reco-slider-slot' | 'default';
+
 export interface RecoSliderParams {
   type: 'reco-slider';
   enabled: boolean;
@@ -534,6 +537,8 @@ export interface RecoSliderParams {
   buttonStyle: StyleValue;
   columnGap: string;
   style: StyleValue;
+  itemLayout: ItemLayout;
+  itemStyle: RecoItemStyleParams;
 }
 
 export interface CrossSellParams {
@@ -552,9 +557,6 @@ export interface CrossSellParams {
   absoluteArrows: boolean;
   imageStyle: StyleValue;
   sliderMode: boolean;
-  autoscroll: boolean;
-  scrollSpeed: number;
-  absoluteArrows: boolean;
   nextButton: string;
   previousButton: string;
   buttonStyle: StyleValue;
@@ -610,6 +612,8 @@ export interface MainRecoParams {
   filterParamsActiveCheckboxStyle: StyleValue;
   filterParamsDisableInteractions: boolean;
   gridStyle: StyleValue;
+  itemLayout: ItemLayout;
+  itemStyle: RecoItemStyleParams;
   algo: FilterParams;
   paginationContainerStyle: StyleValue;
   paginationButtonStyle: StyleValue;
@@ -645,11 +649,40 @@ export interface LayerParams {
   enabled: boolean;
   position: 'top' | 'left' | 'right' | 'bottom';
   delay: number;
+  hideOnScroll: boolean;
   style: StyleValue;
+  backdropStyle: StyleValue;
   title: string;
   titleStyle: StyleValue;
   gridStyle: StyleValue;
   algo: FilterParams;
+
+  itemLayout: ItemLayout
+  itemStyle: RecoItemStyleParams;
+
+  sliderMode: boolean;
+  nextButton: string;
+  previousButton: string;
+  columnGap: string;
+  autoscroll: boolean;
+  scrollSpeed: number;
+  absoluteArrows: boolean;
+  buttonStyle: StyleValue;
+}
+
+export interface RecoItemStyleParams {
+  style: StyleValue;
+  imageStyle: StyleValue;
+  titleStyle: StyleValue;
+  priceStyle: StyleValue;
+  salePriceContainerStyle: StyleValue;
+  salePriceStyle: StyleValue;
+  salePriceOriginalPriceStyle: StyleValue;
+}
+
+export interface RecoItemParams {
+  item: Product[];
+  style: RecoItemStyleParams;
 }
 
 export interface StickyAtcParams {

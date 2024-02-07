@@ -31,9 +31,10 @@ const onIntersect = () => {
 
 <template>
     <div v-if="customLayout?.filter.results?.data?.value?.length" :style="config.gridStyle" id="catalog-grid">
-        <template v-for="(item, index) in customLayout.filter.results.data.value"
-            :key="item.id ? item.id : JSON.stringify(item)">
-            <slot name="filters-content-grid-item" :item="item" :index="index" />
+        <template v-for="(item, index) in customLayout.filter.results.data.value" :key="item.id ? item.id : JSON.stringify(item)">
+            <slot v-if="(config.itemLayout ?? 'filters-content-grid-item') === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" :index="index" />
+            <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" :index="index" />
+            <CustomLayoutRecoItem v-else-if="config.itemLayout === 'default'" :config="{style: config.itemStyle, item}" />
         </template>
     </div>
     <slot v-else name="filters-no-results" />

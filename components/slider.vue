@@ -55,7 +55,6 @@ export class ScrollController {
 </script>
 
 <script setup lang="ts">
-
 interface Props<T> {
   items: T[] | null
   scrollBehavior?: ScrollBehavior
@@ -117,9 +116,12 @@ if (props.autoscroll && !process.server) {
   }, 50 / props.scrollSpeed)
 }
 
+let x = ref(0)
+let y = ref(0)
 onMounted(() => {
   if (scrollerEl.value) {
-    scrollController = new ScrollController(scrollerEl.value, props.direction)
+    scrollController = new ScrollController(scrollerEl.value, props.direction);
+    ({ x, y } = useScroll(scrollerEl)) // https://vueuse.org/core/useScroll/#usescroll
   }
 })
 
@@ -166,22 +168,16 @@ const previousContentClass = [
 
 const nextContentClass = previousContentClass.concat()
 
-const largeEnoughToScroll = ref(false)
-let x = computed({ get () { return 0}, set (x) {} })
-let y = computed({ get () { return 0}, set (x) {} })
-onMounted(() => {
+const largeEnoughToScroll = computed(() => {
   if (!scrollerEl.value) {
-    return
+    return false
   }
-
   if (props.direction === 'horizontal') {
-    largeEnoughToScroll.value = scrollerEl.value.scrollWidth > scrollerEl.value.clientWidth    
+    return scrollerEl.value.scrollWidth > scrollerEl.value.clientWidth
   } else {
-    largeEnoughToScroll.value = scrollerEl.value.scrollHeight > scrollerEl.value.clientHeight
+    return scrollerEl.value.scrollHeight > scrollerEl.value.clientHeight
   }
-  ({ x, y } = useScroll(scrollerEl.value)) // https://vueuse.org/core/useScroll/#usescroll
 })
-
 </script>
 
 <template>
