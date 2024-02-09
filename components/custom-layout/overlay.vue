@@ -1,14 +1,92 @@
+<script setup lang="ts">
+import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    TransitionRoot,
+    TransitionChild
+} from '@headlessui/vue'
+
+import type { LayerParams } from '~/types'
+import type { ScrollDirection } from '../slider.vue';
+const props = defineProps<{ config: LayerParams }>()
+const product = useProduct()
+
+const customLayout = useCustomLayout()
+if (!customLayout) throw new Error("no custom layout initialized")
+
+const overlayContent = ref(null)
+
+const sliderProps = {
+  autoscroll: props.config.autoscroll,
+  scrollSpeed: props.config.scrollSpeed,
+  absoluteArrows: props.config.absoluteArrows,
+  direction: (props.config.position === 'left' || props.config.position === 'right' ? 'vertical' : 'horizontal') as ScrollDirection,
+  scrollerClass: (props.config.position === 'left' || props.config.position === 'right' ? ['h-screen'] : ['w-screen']),
+  scrollerStyle: {
+    columnGap: props.config.columnGap
+  }
+}
+
+const transitionClass = computed(() => {
+  let transitionStart = '';
+  let transitionEnd = '';
+  if (props.config.position === 'bottom') {
+    transitionStart = 'translate-y-full'
+    transitionEnd = 'translate-y-0'
+  } else if (props.config.position === 'top') {
+    transitionStart = '-translate-y-full'
+    transitionEnd = 'translate-y-0'
+  } else if (props.config.position === 'left') {
+    transitionStart = '-translate-x-full'
+    transitionEnd = 'translate-x-0'
+  } else if (props.config.position === 'right') {
+    transitionStart = 'translate-x-full'
+    transitionEnd = 'translate-x-0'
+  }
+
+  return {
+    enter: "transition-transform duration-300 ease-in-out",
+    enterFrom: transitionStart,
+    enterTo: transitionEnd,
+    leave: "transition-transform duration-300 ease-in-out",
+    leaveFrom: transitionEnd,
+    leaveTo: transitionStart
+  }
+})
+
+onClickOutside(overlayContent, () => customLayout.showOverlay.value = false)
+const onScroll = () => {
+  if (props.config.hideOnScroll) {
+    customLayout.showOverlay.value = false
+  }
+}
+
+setTimeout(() => customLayout.showOverlay.value = true, props.config.delay)
+
+// get product suggestions
+const recommender = useStructuredRecommender({
+  productId: product.value.id,
+  baseRules: props.config.algo.filterRules,
+  sortRules: props.config.algo.sortRules,
+  deduplicate: props.config.algo.deduplicate,
+  defaultLimit: props.config.algo.limit,
+  defaultSort: props.config.algo.sort
+})
+const items = computed(() => recommender.results.data.value as Product[][])
+</script>
+
 <template>
   <TransitionRoot
     appear
-    :show="overlayState !== 'closed'"
+    :show="customLayout.showOverlay.value"
     as="template"
   >
     <Dialog
       id="overlay"
       class="z-20 fixed flex inset-0"
       :class="{'justify-end': config.position === 'right', 'flex-col justify-end': config.position === 'bottom'}"
-      @close="overlayState = 'closed'"
+      @close="customLayout.showOverlay.value = false"
     >
       <TransitionChild
         enter="transition-opacity duration-300 ease-in-out"
@@ -67,79 +145,3 @@
     </Dialog>
   </TransitionRoot>
 </template>
-
-<script setup lang="ts">
-import {
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    TransitionRoot,
-    TransitionChild
-} from '@headlessui/vue'
-
-import type { LayerParams } from '~/types'
-import type { ScrollDirection } from '../slider.vue';
-const props = defineProps<{ config: LayerParams }>()
-const product = useProduct()
-
-const overlayState = useState<'closed' | 'open'>('recoSlider.overlay.state', () => 'closed')
-const overlayContent = ref(null)
-
-const sliderProps = {
-  autoscroll: props.config.autoscroll,
-  scrollSpeed: props.config.scrollSpeed,
-  absoluteArrows: props.config.absoluteArrows,
-  direction: (props.config.position === 'left' || props.config.position === 'right' ? 'vertical' : 'horizontal') as ScrollDirection,
-  scrollerClass: (props.config.position === 'left' || props.config.position === 'right' ? ['h-screen'] : ['w-screen']),
-  scrollerStyle: {
-    columnGap: props.config.columnGap
-  }
-}
-
-const transitionClass = computed(() => {
-  let transitionStart = '';
-  let transitionEnd = '';
-  if (props.config.position === 'bottom') {
-    transitionStart = 'translate-y-full'
-    transitionEnd = 'translate-y-0'
-  } else if (props.config.position === 'top') {
-    transitionStart = '-translate-y-full'
-    transitionEnd = 'translate-y-0'
-  } else if (props.config.position === 'left') {
-    transitionStart = '-translate-x-full'
-    transitionEnd = 'translate-x-0'
-  } else if (props.config.position === 'right') {
-    transitionStart = 'translate-x-full'
-    transitionEnd = 'translate-x-0'
-  }
-
-  return {
-    enter: "transition-transform duration-300 ease-in-out",
-    enterFrom: transitionStart,
-    enterTo: transitionEnd,
-    leave: "transition-transform duration-300 ease-in-out",
-    leaveFrom: transitionEnd,
-    leaveTo: transitionStart
-  }
-})
-
-onClickOutside(overlayContent, () => overlayState.value = 'closed')
-const onScroll = () => {
-  if (props.config.hideOnScroll) {
-    overlayState.value = 'closed'
-  }
-}
-
-setTimeout(() => overlayState.value = 'open', props.config.delay)
-
-// get product suggestions
-const recommender = useStructuredRecommender({
-  productId: product.value.id,
-  baseRules: props.config.algo.filterRules,
-  sortRules: props.config.algo.sortRules,
-  deduplicate: props.config.algo.deduplicate,
-  defaultLimit: props.config.algo.limit,
-  defaultSort: props.config.algo.sort
-})
-const items = computed(() => recommender.results.data.value as Product[][])
-</script>

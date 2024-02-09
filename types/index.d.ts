@@ -704,6 +704,8 @@ interface CustomLayoutContext {
   filter: StructuredRecommender
   showFiltersSlideover: Ref<boolean>
   toggleFiltersSlideover: () => void
+  showOverlay: Ref<boolean>
+  toggleOverlay: () => void
 }
 
 declare module '#app' {
