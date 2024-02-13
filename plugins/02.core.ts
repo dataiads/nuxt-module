@@ -13,7 +13,7 @@ import {
   handles compatibility with url based product match
   when no lpoid parameter is present
  */
-function fetchPageData (u: URL) {
+function fetchPageData(u: URL) {
   const lpoid = u.searchParams.get('lpoid')
 
   if (lpoid == null) {
@@ -123,7 +123,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   }
 })
 
-function errorRedirect (reason: unknown, mirroredDomain: string, path?: string): void {
+function errorRedirect(reason: unknown, mirroredDomain: string, path?: string): void {
   /* Redirect to same URI on mirroredDomain */
   if (!path && process.server) {
     const route = useRoute()
@@ -144,7 +144,7 @@ function errorRedirect (reason: unknown, mirroredDomain: string, path?: string):
   }
 }
 
-export function reportError (err: unknown) {
+export function reportError(err: unknown) {
   return $fetch('/api/error/report', {
     method: 'POST',
     body: {
@@ -155,7 +155,7 @@ export function reportError (err: unknown) {
   })
 }
 
-function fetchProductRecommendations (
+function fetchProductRecommendations(
   recommender: string,
   algo: string,
   params?: Record<string, any>,
@@ -184,7 +184,7 @@ function fetchProductRecommendations (
   return fetcher
 }
 
-function injectProductStructuredData (product: Product) {
+function injectProductStructuredData(product: Product) {
   /* Inject structured product data in application/ld+json script from:
    *   1. scrapped or collected data stored in "structured-data" custom attribute
    *   2. reconstructed from GMC feed data

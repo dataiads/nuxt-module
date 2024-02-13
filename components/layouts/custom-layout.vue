@@ -3,7 +3,7 @@ import { Dialog, DialogPanel } from '@headlessui/vue'
 import { useCustomLayout } from '~/composables/custom-layout'
 
 const customLayout = useCustomLayout()
-if (!customLayout) throw new Error('no custom layout initialized')
+if (!customLayout) throw new Error("no custom layout initialized")
 
 const layoutConfig = useLpoConfig().customLayout
 
@@ -54,18 +54,11 @@ if (layoutConfig?.global?.stylesheet) {
     <slot v-else name="main-product-light-header" />
 
     <!-- high filters mode -->
-    <div
-      v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
-        layoutConfig.mainReco.filtersDisplay === 'right-high'
-      "
-      class="flex"
-    >
-      <div
-        v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'"
-        id="filters-aside"
-        class="flex-none"
-        :style="layoutConfig.mainReco.filterStyle"
-      >
+    <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
+      layoutConfig.mainReco.filtersDisplay === 'right-high'
+      " class="flex">
+      <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'" id="filters-aside" class="flex-none"
+        :style="layoutConfig.mainReco.filterStyle">
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -105,7 +98,7 @@ if (layoutConfig?.global?.stylesheet) {
 
             <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
               <template #filters-content-grid-item="ctx">
-                <slot name="filters-content-grid-item" v-bind="ctx" />
+                <slot name="filters-content-grid-item" v-bind="ctx"></slot>
               </template>
             </CustomLayoutCatalogGrid>
 
@@ -116,12 +109,8 @@ if (layoutConfig?.global?.stylesheet) {
         </div>
       </div>
 
-      <div
-        v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'"
-        id="filters-aside"
-        class="shrink-0"
-        :style="layoutConfig.mainReco.filterStyle"
-      >
+      <div v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'" id="filters-aside" class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle">
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -153,12 +142,8 @@ if (layoutConfig?.global?.stylesheet) {
       </CustomLayoutInserts>
 
       <div id="filters" class="flex flex-row">
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
+        <div v-if="layoutConfig.mainReco.filtersDisplay === 'left'" id="filters-aside" class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle">
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -172,7 +157,7 @@ if (layoutConfig?.global?.stylesheet) {
 
           <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
             <template #filters-content-grid-item="ctx">
-              <slot name="filters-content-grid-item" v-bind="ctx" />
+              <slot name="filters-content-grid-item" v-bind="ctx"></slot>
             </template>
           </CustomLayoutCatalogGrid>
 
@@ -181,12 +166,8 @@ if (layoutConfig?.global?.stylesheet) {
           </div>
         </div>
 
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
+        <div v-if="layoutConfig.mainReco.filtersDisplay === 'right'" id="filters-aside" class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle">
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -222,22 +203,15 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
-    <Dialog
-      v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
-      :open="customLayout.showFiltersSlideover.value"
-      @close="customLayout.showFiltersSlideover.value = false"
-    >
+    <Dialog v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'" :open="customLayout.showFiltersSlideover.value"
+      @close="customLayout.showFiltersSlideover.value = false">
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       <div class="fixed inset-0 overflow-y-auto">
         <DialogPanel :style="layoutConfig.mainReco.slideoverStyle">
           <div class="flex justify-end">
-            <img
-              v-if="layoutConfig.mainReco.slideoverCloseButton"
-              :src="layoutConfig.mainReco.slideoverCloseButton"
-              :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
-              @click="customLayout.toggleFiltersSlideover"
-            >
+            <img v-if="layoutConfig.mainReco.slideoverCloseButton" :src="layoutConfig.mainReco.slideoverCloseButton"
+              :style="layoutConfig.mainReco.slideoverCloseButtonStyle" @click="customLayout.toggleFiltersSlideover">
             <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
               close
             </div>

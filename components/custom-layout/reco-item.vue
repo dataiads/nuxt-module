@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RecoItemParams } from '~/types'
+import type { RecoItemParams } from '~/types';
 
 defineProps<{ config: RecoItemParams }>()
 </script>
@@ -11,15 +11,15 @@ defineProps<{ config: RecoItemParams }>()
         {{ config.item[0].extraData?.title ?? config.item[0].data.title }}
       </a>
     </div>
-    <ProductImage :key="config.item[0].id" :product="config.item[0]" :max-additional-images="1">
+    <ProductImage :product="config.item[0]" :key="config.item[0].id" :max-additional-images="1">
       <template #main-image="{ src, alt }">
         <Image height="150" width="150" :src="src" :alt="alt" :style="config.style.imageStyle" />
       </template>
       <template #aside-image>
-        <div class="hidden" />
+        <div class="hidden"></div>
       </template>
     </ProductImage>
-    <PriceDisplay :key="config.item[0].id" :product="config.item[0]">
+    <PriceDisplay :product="config.item[0]" :key="config.item[0].id">
       <template #price="{ localPrice }">
         <span :style="config.style.priceStyle">{{ localPrice }}</span>
       </template>

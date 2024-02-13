@@ -60,7 +60,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     activeFilters,
     limit,
     page,
-    disableInteractions: options.disableInteractions ? 'true' : 'false'
+    disableInteractions: options.disableInteractions ? "true": "false",
   }
 
   if (options.sortRules?.length) {

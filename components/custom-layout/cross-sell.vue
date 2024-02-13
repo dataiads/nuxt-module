@@ -11,7 +11,7 @@ const product = useProduct()
 // only one algorithm for now
 const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
   if (regex) {
-    const regexProductKey = productKey.match(regex)?.[0]
+    const regexProductKey = productKey.match(regex)?.[0];
     if (regexProductKey) {
       return regexProductKey.startsWith(dataKey)
     }
@@ -60,7 +60,7 @@ if (props.config.data) {
     </div>
     <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
-        <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
@@ -87,14 +87,10 @@ if (props.config.data) {
         </template>
       </template>
     </Slider>
-    <div
-      v-else
-      class="flex flex-row"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
-      :style="{ 'column-gap': config.columnGap }"
-    >
+    <div v-else class="flex flex-row" :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
+      :style="{ 'column-gap': config.columnGap }">
       <template v-for="item in items">
-        <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
