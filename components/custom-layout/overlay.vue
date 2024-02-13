@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import {
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    TransitionRoot,
-    TransitionChild
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  TransitionRoot,
+  TransitionChild
 } from '@headlessui/vue'
 
 import type { LayerParams } from '~/types'
-import type { ScrollDirection } from '../slider.vue';
+import type { ScrollDirection } from '../slider.vue'
 const props = defineProps<{ config: LayerParams }>()
 const product = useProduct()
 
 const customLayout = useCustomLayout()
-if (!customLayout) throw new Error("no custom layout initialized")
+if (!customLayout) throw new Error('no custom layout initialized')
 
 const overlayContent = ref(null)
 
@@ -29,8 +29,8 @@ const sliderProps = {
 }
 
 const transitionClass = computed(() => {
-  let transitionStart = '';
-  let transitionEnd = '';
+  let transitionStart = ''
+  let transitionEnd = ''
   if (props.config.position === 'bottom') {
     transitionStart = 'translate-y-full'
     transitionEnd = 'translate-y-0'
@@ -46,10 +46,10 @@ const transitionClass = computed(() => {
   }
 
   return {
-    enter: "transition-transform duration-300 ease-in-out",
+    enter: 'transition-transform duration-300 ease-in-out',
     enterFrom: transitionStart,
     enterTo: transitionEnd,
-    leave: "transition-transform duration-300 ease-in-out",
+    leave: 'transition-transform duration-300 ease-in-out',
     leaveFrom: transitionEnd,
     leaveTo: transitionStart
   }
@@ -85,7 +85,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
     <Dialog
       id="overlay"
       class="z-20 fixed flex inset-0"
-      :class="{'justify-end': config.position === 'right', 'flex-col justify-end': config.position === 'bottom'}"
+      :class="{ 'justify-end': config.position === 'right', 'flex-col justify-end': config.position === 'bottom' }"
       @close="customLayout.showOverlay.value = false"
     >
       <TransitionChild
@@ -113,7 +113,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
           <div v-if="config.sliderMode">
             <Slider v-bind="sliderProps" :items="items">
               <template #item="{ item }">
-                <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: props.config.itemStyle, item}" />
+                <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{ style: props.config.itemStyle, item }" />
                 <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
                 <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />
               </template>
@@ -135,7 +135,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
           </div>
           <div v-else :style="config.gridStyle">
             <template v-for="item in items">
-              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{style: config.itemStyle, item}" />
+              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{ style: config.itemStyle, item }" />
               <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
               <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />
             </template>

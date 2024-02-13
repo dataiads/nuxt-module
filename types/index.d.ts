@@ -2,11 +2,8 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
-import type { StyleValue } from 'nuxt/dist/app/compat/capi';
+import type { StyleValue } from 'nuxt/dist/app/compat/capi'
 
-
-
-declare global {
   export interface InlineLPOConfig {
     name: string;
     isDefault: string;
@@ -411,7 +408,6 @@ declare global {
   export interface PostalCode {
     begin: string;
   }
-}
 
 // a json serializable type
 type JSONValue =
@@ -619,7 +615,7 @@ export interface MainRecoParams {
   paginationButtonStyle: StyleValue;
   paginationActiveButtonStyle: StyleValue;
   paginationImageStyle: StyleValue;
-  paginationType: "none" | "page" | "more" | "scroll";
+  paginationType: 'none' | 'page' | 'more' | 'scroll';
   paginationLoadMoreText: string;
   paginationMaxVisibleButtons: number;
   paginationPreviousText: string;
