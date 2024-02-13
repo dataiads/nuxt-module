@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel } from '@headlessui/vue'
+import { useDynamicLpoConfig } from '~/composables/config'
 import { useCustomLayout } from '~/composables/custom-layout'
 
 const customLayout = useCustomLayout()
-if (!customLayout) throw new Error("no custom layout initialized")
 
-const layoutConfig = useLpoConfig().customLayout
+if (!customLayout) {
+  throw new Error('no custom layout initialized')
+}
+
+const dynamicLpoConfig = useDynamicLpoConfig()
+const layoutConfig = computed(() => dynamicLpoConfig.value.customLayout)
 
 // scroll top of the filters when returning less results
 onMounted(() => {
@@ -19,18 +24,18 @@ onMounted(() => {
   })
 })
 
-// global stylesheet from config
-if (layoutConfig?.global?.stylesheet) {
-  useHead({
-    style: [{ children: layoutConfig.global.stylesheet }]
-  })
-}
+watch(dynamicLpoConfig, () => console.log('DYNAMIC LPO CONFIG', dynamicLpoConfig.value), { deep: true })
+watch(layoutConfig, () => console.log('LAYOUT CONFIG', layoutConfig.value), { deep: true })
+
+useHead({
+  style: [{ children: () => layoutConfig.value?.global.stylesheet }]
+})
 </script>
 
 <template>
-  <div id="custom-layout" class="flex flex-col w-full justify-center">
+  <div v-if="layoutConfig" id="custom-layout" class="flex flex-col w-full justify-center">
     <!-- preHeader -->
-    <CustomLayoutInserts :config="layoutConfig.preHeader">
+    <CustomLayoutInserts insert-position="pre-header" :config="layoutConfig.preHeader">
       <template v-for="(_, name) in $slots" #[name]="scope">
         <slot :name="name" v-bind="scope" />
       </template>
@@ -44,7 +49,7 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutHeader>
 
     <!-- postHeader -->
-    <CustomLayoutInserts :config="layoutConfig.postHeader">
+    <CustomLayoutInserts insert-position="post-header" :config="layoutConfig.postHeader">
       <template v-for="(_, name) in $slots" #[name]="scope">
         <slot :name="name" v-bind="scope" />
       </template>
@@ -54,11 +59,18 @@ if (layoutConfig?.global?.stylesheet) {
     <slot v-else name="main-product-light-header" />
 
     <!-- high filters mode -->
-    <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
-      layoutConfig.mainReco.filtersDisplay === 'right-high'
-      " class="flex">
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'" id="filters-aside" class="flex-none"
-        :style="layoutConfig.mainReco.filterStyle">
+    <div
+      v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
+        layoutConfig.mainReco.filtersDisplay === 'right-high'
+      "
+      class="flex"
+    >
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'"
+        id="filters-aside"
+        class="flex-none"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -68,7 +80,7 @@ if (layoutConfig?.global?.stylesheet) {
 
       <div class="flex flex-col grow shrink min-w-0">
         <!-- preMainProduct -->
-        <CustomLayoutInserts :config="layoutConfig.preMainProduct">
+        <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
           <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope" />
           </template>
@@ -83,7 +95,7 @@ if (layoutConfig?.global?.stylesheet) {
         </main>
 
         <!-- postMainProduct -->
-        <CustomLayoutInserts :config="layoutConfig.postMainProduct">
+        <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
           <template v-for="(_, name) in $slots" #[name]="scope">
             <slot :name="name" v-bind="scope" />
           </template>
@@ -98,7 +110,7 @@ if (layoutConfig?.global?.stylesheet) {
 
             <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
               <template #filters-content-grid-item="ctx">
-                <slot name="filters-content-grid-item" v-bind="ctx"></slot>
+                <slot name="filters-content-grid-item" v-bind="ctx" />
               </template>
             </CustomLayoutCatalogGrid>
 
@@ -109,8 +121,12 @@ if (layoutConfig?.global?.stylesheet) {
         </div>
       </div>
 
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'" id="filters-aside" class="shrink-0"
-        :style="layoutConfig.mainReco.filterStyle">
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'"
+        id="filters-aside"
+        class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -120,7 +136,7 @@ if (layoutConfig?.global?.stylesheet) {
 
     <template v-else>
       <!-- preMainProduct -->
-      <CustomLayoutInserts :config="layoutConfig.preMainProduct">
+      <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope" />
         </template>
@@ -135,15 +151,19 @@ if (layoutConfig?.global?.stylesheet) {
       </main>
 
       <!-- postMainProduct -->
-      <CustomLayoutInserts :config="layoutConfig.postMainProduct">
+      <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
         <template v-for="(_, name) in $slots" #[name]="scope">
           <slot :name="name" v-bind="scope" />
         </template>
       </CustomLayoutInserts>
 
       <div id="filters" class="flex flex-row">
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'left'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -157,7 +177,7 @@ if (layoutConfig?.global?.stylesheet) {
 
           <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
             <template #filters-content-grid-item="ctx">
-              <slot name="filters-content-grid-item" v-bind="ctx"></slot>
+              <slot name="filters-content-grid-item" v-bind="ctx" />
             </template>
           </CustomLayoutCatalogGrid>
 
@@ -166,8 +186,12 @@ if (layoutConfig?.global?.stylesheet) {
           </div>
         </div>
 
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'right'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -177,7 +201,7 @@ if (layoutConfig?.global?.stylesheet) {
     </template>
 
     <!-- postMainReco -->
-    <CustomLayoutInserts :config="layoutConfig.postMainReco">
+    <CustomLayoutInserts insert-position="post-main-reco"  :config="layoutConfig.postMainReco">
       <template v-for="(_, name) in $slots" #[name]="scope">
         <slot :name="name" v-bind="scope" />
       </template>
@@ -203,15 +227,22 @@ if (layoutConfig?.global?.stylesheet) {
     </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
-    <Dialog v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'" :open="customLayout.showFiltersSlideover.value"
-      @close="customLayout.showFiltersSlideover.value = false">
+    <Dialog
+      v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
+      :open="customLayout.showFiltersSlideover.value"
+      @close="customLayout.showFiltersSlideover.value = false"
+    >
       <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
 
       <div class="fixed inset-0 overflow-y-auto">
         <DialogPanel :style="layoutConfig.mainReco.slideoverStyle">
           <div class="flex justify-end">
-            <img v-if="layoutConfig.mainReco.slideoverCloseButton" :src="layoutConfig.mainReco.slideoverCloseButton"
-              :style="layoutConfig.mainReco.slideoverCloseButtonStyle" @click="customLayout.toggleFiltersSlideover">
+            <img
+              v-if="layoutConfig.mainReco.slideoverCloseButton"
+              :src="layoutConfig.mainReco.slideoverCloseButton"
+              :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+              @click="customLayout.toggleFiltersSlideover"
+            >
             <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
               close
             </div>

@@ -3,6 +3,11 @@ export const useLpoConfig = (): LPOConfig => {
     return $lpoConfig as LPOConfig
 }
 
+export const useDynamicLpoConfig = () => {
+  const { $dynamicLpoConfig } = useNuxtApp()
+  return $dynamicLpoConfig
+}
+
 export const useMirroredDomain = (): string => {
     const lpoConfig = useLpoConfig()
     const serverMirroredDomain = !process.server ? window.__LPO_MIRRORED_DOMAIN__ : ''
