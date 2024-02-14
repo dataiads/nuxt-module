@@ -24,7 +24,10 @@ onMounted(() => {
   })
 })
 
-watch(dynamicLpoConfig, () => console.log('DYNAMIC LPO CONFIG', dynamicLpoConfig.value), { deep: true })
+watch(dynamicLpoConfig, () => {
+  console.log('DYNAMIC LPO CONFIG', dynamicLpoConfig.value)
+  refreshNuxtData()
+}, { deep: true })
 watch(layoutConfig, () => console.log('LAYOUT CONFIG', layoutConfig.value), { deep: true })
 
 useHead({
@@ -201,7 +204,7 @@ useHead({
     </template>
 
     <!-- postMainReco -->
-    <CustomLayoutInserts insert-position="post-main-reco"  :config="layoutConfig.postMainReco">
+    <CustomLayoutInserts insert-position="post-main-reco" :config="layoutConfig.postMainReco">
       <template v-for="(_, name) in $slots" #[name]="scope">
         <slot :name="name" v-bind="scope" />
       </template>
