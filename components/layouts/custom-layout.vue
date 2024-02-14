@@ -26,7 +26,6 @@ onMounted(() => {
 
 watch(dynamicLpoConfig, () => {
   console.log('DYNAMIC LPO CONFIG', dynamicLpoConfig.value)
-  refreshNuxtData()
 }, { deep: true })
 watch(layoutConfig, () => console.log('LAYOUT CONFIG', layoutConfig.value), { deep: true })
 
