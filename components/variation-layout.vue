@@ -9,6 +9,16 @@ if (props.slider) {
   const { data: sliderProductsData } = props.slider.results
   sliderProducts = sliderProductsData
 }
+
+let filter = props.filter
+if (lpoConfig?.variation !== 'custom-layout' && !filter) {
+  // to avoid crash when attempting to use a legacy variation
+  // with a template built for custom layout, initialize an empty filter
+  filter = useFilter({
+    productId: product.value.id
+  })
+}
+
 </script>
 
 <script lang="ts">
@@ -44,7 +54,8 @@ export type Variations =
     {{ lpoConfig.accessibilityVariant?.text }}
   </a>
 
-  <component :is="resolveComponent(lpoConfig.variation)" v-if="lpoConfig.variation" :filter="filter" :reco-slider-products="sliderProducts" :slider="slider">
+  <component :is="resolveComponent(lpoConfig.variation)" v-if="lpoConfig.variation" :filter="filter"
+    :reco-slider-products="sliderProducts" :slider="slider">
     <template v-for="(_, name) in $slots" #[name]="scope">
       <slot :name="name" v-bind="scope" />
     </template>
