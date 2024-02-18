@@ -2,7 +2,7 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
-import type { StyleValue } from 'nuxt/dist/app/compat/capi';
+import type { StyleValue } from 'nuxt/dist/app/compat/capi'
 
 
 
@@ -611,6 +611,8 @@ export interface MainRecoParams {
   filterParamsCheckboxStyle: StyleValue;
   filterParamsActiveCheckboxStyle: StyleValue;
   filterParamsDisableInteractions: boolean;
+  filterParamsButtonEraseStyle: StyleValue;
+  filterParamsButtonValidateStyle: StyleValue;
   gridStyle: StyleValue;
   itemLayout: ItemLayout;
   itemStyle: RecoItemStyleParams;
@@ -619,7 +621,7 @@ export interface MainRecoParams {
   paginationButtonStyle: StyleValue;
   paginationActiveButtonStyle: StyleValue;
   paginationImageStyle: StyleValue;
-  paginationType: "none" | "page" | "more" | "scroll";
+  paginationType: 'none' | 'page' | 'more' | 'scroll';
   paginationLoadMoreText: string;
   paginationMaxVisibleButtons: number;
   paginationPreviousText: string;
