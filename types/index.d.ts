@@ -202,10 +202,12 @@ declare global {
     regex?: string;
   }
 
+
   export interface CrossSellItem {
     text: string;
-    link: string;
     image?: string;
+    link?: string;
+    recommenderConfig?: UseStructuredRecommenderOptions;
   }
 
   export interface GoogleFont {
@@ -545,8 +547,18 @@ export interface CrossSellParams {
   type: 'cross-sell';
   enabled: boolean;
   title: string;
+
+  mode: "auto" | "manual";
+  // manual mode attributes
   key: CrossSellKey;
   data: CrossSellData;
+
+  // auto mode attributes
+  crossSellCriteria: string;
+  targeting: FilterRule[][];
+  limit: number;
+
+  // commmon attributes
   style: StyleValue;
   columnGap: string;
   scroll: boolean;
@@ -712,4 +724,14 @@ declare module '#app' {
   interface NuxtApp {
     $customLayout?: CustomLayoutContext
   }
+}
+
+export interface CrossSellResponseItem {
+  value: string;
+  image: string;
+  filters: FilterRule[][];
+}
+
+export interface CrossSellResponse {
+  items: CrossSellResponseItem[]
 }

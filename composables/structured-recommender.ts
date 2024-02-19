@@ -3,13 +3,16 @@ import { type UseStructuredRecommenderOptions, type StructuredFilterResponse, ty
 
 type FetchParams = Record<string, string | number | Ref<string> | Ref<number> | Ref<boolean> | ComputedRef<string> | ComputedRef<number> | ComputedRef<boolean>>;
 
+type State = Record<string, FilterRule[]>
+type CriteriaCache = Record<string, Record<string, number>>
+
 export const useStructuredRecommender = (options: UseStructuredRecommenderOptions) => {
   if (!options.fetchQuery) {
     options.fetchQuery = {}
   }
 
-  const initState = () => {
-    const init: Record<string, FilterRule[]> = {}
+  let initState = () => {
+    const init: State = {}
 
     // handle initial rules before setting up fetcher
     if (options.initialRules) {
@@ -32,7 +35,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
   }
 
   // main rules state. do not edit directly use functions below instead
-  const state = ref<Record<string, FilterRule[]>>(initState())
+  const state = ref<State>(initState())
 
   // watchable configuration for recommendation request.
   // can be manipulated directly and fetcher will update automatically
@@ -40,11 +43,13 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
   const limit = ref<number>(options.defaultLimit ?? 12)
   const page = ref<number>(1)
 
+  const baseRules = ref<FilterRule[][]>(options.baseRules || [])
+
   // cache criteria values to only request a single time
-  const criteriaValuesCache: Record<string, Record<string, number>> = reactive({})
+  const criteriaValuesCache: CriteriaCache = reactive({})
 
   // initial filters state (always active) computed property
-  const baseFilters = computed(() => JSON.stringify((options.baseRules || []).filter((group) => group.length > 0)))
+  const baseFilters = computed(() => JSON.stringify(baseRules.value.filter((group) => group.length > 0)))
 
   // current filters state (checkboxes) computed property
   const activeFilters = computed(() => JSON.stringify(Object.values(state.value).filter((group) => group.length > 0)))
@@ -307,7 +312,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     criteriaValuesMinMax,
     state: state,
     reset,
-    loadMore
+    loadMore,
   } as StructuredRecommender
 }
 
