@@ -21,7 +21,7 @@ export default defineNuxtPlugin(async () => {
     defaultSort: layoutConfig.mainReco.algo.sort,
     criteriaValues: getAutolistCriteriaFromFiltersParams(layoutConfig.mainReco.filterParams),
     initialRules: await getInitialRulesFromFiltersParams(product.value, layoutConfig.mainReco.filterParams),
-    disableInteractions: layoutConfig.mainReco.filterParamsDisableInteractions,
+    disableInteractions: layoutConfig.mainReco.filterParamsDisableInteractions
   })
 
   // setup filter slideover
