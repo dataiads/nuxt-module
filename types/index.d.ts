@@ -612,7 +612,11 @@ export interface MainRecoParams {
   filterParamsActiveCheckboxStyle: StyleValue;
   filterParamsDisableInteractions: boolean;
   filterParamsButtonEraseStyle: StyleValue;
+  filterParamsButtonEraseEnable: boolean;
+  filterParamsButtonEraseText: string;
   filterParamsButtonValidateStyle: StyleValue;
+  filterParamsButtonValidateEnable: boolean;
+  filterParamsButtonValidateText: string;
   gridStyle: StyleValue;
   itemLayout: ItemLayout;
   itemStyle: RecoItemStyleParams;
