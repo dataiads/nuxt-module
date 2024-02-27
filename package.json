@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.2.283",
+  "version": "0.2.284-beta.0",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
@@ -17,7 +17,7 @@
     "lint:fix": "eslint . --fix",
     "prepare": "nuxi prepare",
     "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish",
-    "release:beta": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish --tag beta"
+    "release:beta": "yarn publish --tag beta"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.16",
