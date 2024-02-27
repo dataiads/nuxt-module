@@ -158,25 +158,14 @@ if (props.allowEmptySearch) {
 
 <template>
   <form @submit.prevent="submit">
-    <slot
-      :value="value"
-      :input="input"
-      :toggle-overlay="toggleOverlay"
-      :overlay-open="overlayOpen"
-      :loading="loading"
-    >
+    <slot :value="value" :input="input" :toggle-overlay="toggleOverlay" :overlay-open="overlayOpen" :loading="loading">
       <input :value="value" placeholder="search..." @input="input">
     </slot>
   </form>
   <div v-if="lpoSearchReccomendations && !fullScreenOverlay && value" id="search-slider">
     <div v-if="!manualMode" class="absolute z-10">
       <slot name="search-slider-header" />
-      <Slider
-        v-if="searchRecoProducts.length"
-        :items="searchRecoProducts"
-        :autoscroll="false"
-        :direction="direction"
-      >
+      <Slider v-if="searchRecoProducts.length" :items="searchRecoProducts" :autoscroll="false" :direction="direction">
         <template #item="{ item }">
           <slot :key="item.id" name="search-slider-item" :item="item">
             <div class="bg-white flex content-center max-w-[540px] p-2.5">
@@ -184,14 +173,8 @@ if (props.allowEmptySearch) {
                 <div class="pr-1 h-[120px]">
                   <figure class="relative max-w-sm cursor-pointer">
                     <a aria-label="view search result" :href="$oriUrl(item.data.link)">
-                      <img
-                        :src="item.data.imageLink"
-                        width="120"
-                        height="120"
-                        class="mx-auto h-[120px] w-auto"
-                        loading="lazy"
-                        alt="recommended product image"
-                      >
+                      <img :src="item.data.imageLink" width="120" height="120" class="mx-auto h-[120px] w-auto"
+                        loading="lazy" alt="recommended product image">
                     </a>
                   </figure>
                 </div>
@@ -202,13 +185,13 @@ if (props.allowEmptySearch) {
 
                   <div class="flex items-center">
                     <PriceDisplay :product="item">
-                      <template #price="{ price }">
-                        <span class="text-[15px] font-medium">{{ price }}&euro;</span>
+                      <template #price="{ localPrice }">
+                        <span class="text-[15px] font-medium">{{ localPrice }}</span>
                       </template>
-                      <template #sale-price="{ price, salePrice }">
-                        <span class="text-[15px] font-medium">{{ salePrice }}&euro;</span>
+                      <template #sale-price="{ localPrice, localSalePrice }">
+                        <span class="text-[15px] font-medium">{{ localSalePrice }}</span>
                         <div class="line-through text-gray-400 text-right ml-1.5 text-[13px] leading-[14px]">
-                          {{ price }}&euro;
+                          {{ localPrice }}
                         </div>
                       </template>
                     </PriceDisplay>
@@ -235,14 +218,8 @@ if (props.allowEmptySearch) {
     </div>
     <slot v-else name="manuel-search-results" :search-reco-products="searchRecoProducts" :loading="loading" />
   </div>
-  <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event"> 
-    <slot
-      name="full-screen-overlay"
-      :close="() => overlayOpen = false"
-      :items="searchRecoProducts"
-      :value="value"
-      :input="input"
-      :loading="loading"
-    />
+  <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event">
+    <slot name="full-screen-overlay" :close="() => overlayOpen = false" :items="searchRecoProducts" :value="value"
+      :input="input" :loading="loading" />
   </Dialog>
 </template>
