@@ -668,6 +668,8 @@ export interface LayerParams {
   scrollSpeed: number;
   absoluteArrows: boolean;
   buttonStyle: StyleValue;
+  closeButtonStyle: StyleValue;
+  closeButtonText: string;
 }
 
 export interface RecoItemStyleParams {

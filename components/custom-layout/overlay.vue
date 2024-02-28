@@ -110,6 +110,9 @@ const items = computed(() => recommender.results.data.value as Product[][])
           <DialogTitle v-if="config.title" :style="config.titleStyle">
             {{ config.title }}
           </DialogTitle>
+          <button :style="config.closeButtonStyle" @click="customLayout.showOverlay.value = false">
+            <span>{{ config.closeButtonText }}</span>
+          </button>
           <div v-if="config.sliderMode">
             <Slider v-bind="sliderProps" :items="items">
               <template #item="{ item }">
