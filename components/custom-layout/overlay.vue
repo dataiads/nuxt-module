@@ -108,7 +108,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
           :style="config.style"
         >
           <DialogTitle v-if="config.title" :style="config.titleStyle">
-            {{ config.title }}
+            <DynamicLabel :value="config.title" />
           </DialogTitle>
           <div v-if="config.sliderMode">
             <Slider v-bind="sliderProps" :items="items">
