@@ -6,15 +6,16 @@ const props = defineProps<{
 }>()
 
 const product = useProduct()
+const config = toRef(props, 'config')
 
-const slider = useStructuredRecommender({
+const slider = computed(() => useStructuredRecommender({
   productId: product.value.id,
   baseRules: props.config.algo.filterRules,
   sortRules: props.config.algo.sortRules,
   deduplicate: props.config.algo.deduplicate,
   defaultLimit: props.config.algo.limit,
   defaultSort: props.config.algo.sort
-})
+}))
 
 const sliderProps = computed(() => ({
   autoscroll: props.config.autoscroll,
@@ -25,7 +26,7 @@ const sliderProps = computed(() => ({
   }
 }))
 
-const items = computed(() => slider.results.data.value as Product[][]);
+const items = computed(() => slider.value.results.data.value as Product[][])
 </script>
 
 <template>
@@ -41,7 +42,7 @@ const items = computed(() => slider.results.data.value as Product[][]);
             <slot v-if="item.id" :key="item.id" name="reco-slider-item" :item="item" />
             <slot v-else name="reco-slider-item" :item="item" />
           </template>
-          <CustomLayoutRecoItem v-else-if="config.itemLayout === 'default'" :config="{style: config.itemStyle, item}" />
+          <CustomLayoutRecoItem v-else-if="config.itemLayout === 'default'" :config="{ style: config.itemStyle, item }" />
           <template v-else-if="config.itemLayout === 'filters-content-grid-item'">
             <slot v-if="item.id" :key="item.id" name="filters-content-grid-item" :item="item" />
             <slot v-else name="filters-content-grid-item" :item="item" />
