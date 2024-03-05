@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import localeIncludes from '~/utils/local-includes'
+import localeIncludes from '~/utils/local-includes';
 
 const props = withDefaults(defineProps<{
   // filter values listing settings
@@ -93,7 +93,7 @@ const sortedValues = computed(() => {
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
+        <slot v-if="value" name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
           :count="displayCount ? count : null">
           <FiltersCheckbox :filter="props.filter" :criteria="props.criteria" :group="props.group"
             :value="value?.toString()" :class="props.class" :input-class="props.inputClass"
@@ -115,7 +115,7 @@ const sortedValues = computed(() => {
     <!-- default behavior: raw checkboxes without wrapper -->
     <template v-else>
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
+        <slot v-if="value" name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
           :count="displayCount ? count : null">
           <FiltersCheckbox :filter="props.filter" :criteria="props.criteria" :group="props.group"
             :value="useTranslation ? $t(value?.toString() || '') : value?.toString()" :class="props.class"
