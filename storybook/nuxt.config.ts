@@ -5,11 +5,13 @@ const mirroredDomain = "https://www.ultrapremiumdirect.com"
 const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
+  extends: ['../nuxt.config.ts'],
   // @ts-ignore
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
     '@vueuse/nuxt',
+    '@nuxtjs/storybook'
   ],
 
 
@@ -18,7 +20,7 @@ export default defineNuxtConfig({
     cdnURL: process.env.CDN_URL || ''
   },
 
-  css: [resolve('./assets/css/tailwind.css')],
+  css: [resolve('../assets/css/tailwind.css')],
 
   runtimeConfig: {
     public: {
@@ -415,6 +417,8 @@ export default defineNuxtConfig({
     exposeConfig: true,
     config: {
       content: [
+        './stories/**/*.{js,jsx,ts,tsx}',
+        // Tog
         resolve('./nuxt.config.ts'), // scan layer nuxt.config.ts for tailwind classes
         './nuxt.config.ts' // scan client nuxt.config.ts for tailwind classes
       ],
@@ -428,28 +432,4 @@ export default defineNuxtConfig({
       }
     }
   },
-
-  image: {
-    provider: 'imageProvider',
-    providers: {
-      imageProvider: {
-        name: 'imageProvider',
-        provider: resolve('./utils/image-provider'),
-        options: {
-          providerURL: ''
-        }
-      }
-    }
-  },
-
-  components: {
-    'dirs': [
-      {
-        'path': './components/layouts',
-        'global': false
-      },
-      './components',
-      '~/components'
-    ]
-  }
 })

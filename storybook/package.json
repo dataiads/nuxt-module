@@ -1,0 +1,71 @@
+{
+    "name": "dataiads-nuxt-layer",
+    "version": "0.2.284",
+    "type": "module",
+    "description": "Nuxt layer for Dataiads pages",
+    "main": "./nuxt.config.ts",
+    "repository": "git@github.com:dataiads/nuxt-module.git",
+    "contributors": [
+      "Emile Caron <emile@dataiads.io>"
+    ],
+    "private": false,
+    "license": "MIT",
+    "types": "../types",
+    "scripts": {
+      "type": "nuxi typecheck",
+      "lint": "eslint --ext .ts,.vue .",
+      "lint:fix": "eslint . --fix",
+      "prepare": "nuxi prepare",
+      "storybook": "storybook dev",
+      "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish"
+    },
+    "dependencies": {
+      "@headlessui/vue": "^1.7.16",
+      "@nuxt/image": "^1.1.0",
+      "@nuxt/kit": "^3.8.2",
+      "@nuxt/schema": "^3.8.2",
+      "@nuxt/types": "^2.17.2",
+      "@nuxtjs/tailwindcss": "^6.10.1",
+      "@tailwindcss/forms": "^0.5.7",
+      "@tailwindcss/typography": "^0.5.10",
+      "@vueuse/components": "^10.7.1",
+      "@vueuse/core": "^10.7.1",
+      "@vueuse/integrations": "^10.7.0",
+      "@vueuse/nuxt": "^10.7.0",
+      "focus-trap": "^7.5.1",
+      "nuxt": "^3.8.2",
+      "sass": "^1.69.5",
+      "sass-loader": "^13.3.2",
+      "vue-i18n": "^9.8.0"
+    },
+    "optionalDependencies": {
+      "standard-version": "^9.5.0"
+    },
+    "files": [
+      "assets",
+      "components",
+      "composables",
+      "plugins",
+      "types",
+      "utils",
+      "nuxt.config.ts"
+    ],
+    "devDependencies": {
+      "@nuxt/eslint-config": "^0.2.0",
+      "@nuxtjs/storybook": "7.0.0",
+      "eslint": "^8.56.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "storybook": "7.6.7",
+      "@types/node": "^18.17.5",
+      "@storybook/vue3": "7.6.7",
+      "@storybook-vue/nuxt": "0.2.1",
+      "@storybook/addon-links": "7.6.7",
+      "@storybook/builder-vite": "7.6.7",
+      "@storybook/addon-essentials": "7.6.7",
+      "@storybook/addon-interactions": "7.6.7",
+      "@storybook/testing-library": "^0.2.0",
+      "@storybook/blocks": "7.6.7"
+    }
+  }
+  

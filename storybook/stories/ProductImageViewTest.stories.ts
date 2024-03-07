@@ -10,7 +10,7 @@ const template =
                 <Button
               :product="product"
               :key="product.id"
-              :max-additional-images="3"
+              :max-additional-images="maxAdditionalImages"
               default-modal
               class="product-image flex flex-col-reverse md:flex-row md:mx-auto lg:mx-0"
               aside-class="aside-image hidden lg:grid grid-rows-3 mr-4 gap-4 flex-col min-w-[130px] max-w-[130px]"
@@ -96,11 +96,14 @@ type Story = StoryObj<typeof Button>;
  */
 
 export const Primary: Story = {
-    render: (args) => ({
-        components: {Button, Image, PriceDisplay},
-        setup() {
-            return args
-        },
-        template
-    }),
+  args: {
+    maxAdditionnalImages: 2
+  },
+  render: (args) => ({
+      components: {Button, Image, PriceDisplay},
+      setup() {
+          return args
+      },
+      template
+  }),
 };
