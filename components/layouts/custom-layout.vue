@@ -24,11 +24,6 @@ onMounted(() => {
   })
 })
 
-watch(dynamicLpoConfig, () => {
-  console.log('DYNAMIC LPO CONFIG', dynamicLpoConfig.value)
-}, { deep: true })
-watch(layoutConfig, () => console.log('LAYOUT CONFIG', layoutConfig.value), { deep: true })
-
 useHead({
   style: [{ children: () => layoutConfig.value?.global.stylesheet }]
 })
