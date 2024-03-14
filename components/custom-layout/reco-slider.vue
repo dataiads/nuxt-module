@@ -8,14 +8,14 @@ const props = defineProps<{
 const product = useProduct()
 const config = toRef(props, 'config')
 
-const slider = computed(() => useStructuredRecommender({
+const slider = useStructuredRecommender({
   productId: product.value.id,
   baseRules: props.config.algo.filterRules,
   sortRules: props.config.algo.sortRules,
   deduplicate: props.config.algo.deduplicate,
   defaultLimit: props.config.algo.limit,
   defaultSort: props.config.algo.sort
-}))
+})
 
 const sliderProps = computed(() => ({
   autoscroll: props.config.autoscroll,
@@ -26,7 +26,7 @@ const sliderProps = computed(() => ({
   }
 }))
 
-const items = computed(() => slider.value.results.data.value as Product[][])
+const items = computed(() => slider.results.data.value as Product[][])
 </script>
 
 <template>
