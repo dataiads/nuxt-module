@@ -16,22 +16,25 @@ const props = defineProps<{
 }>();
 
 const { ui } = useUI(defaultUI, toRefs(props.ui));
+
+const mirroredDomain = useMirroredDomain()
 </script>
 
 <template>
     <div :class="ui.container">
         <div :class="ui.left" v-if="$slots.left || $slots.logo">
-
-            <div v-if="$slots.logo" :class="ui.logo">
-                <slot name="logo" />
-            </div>
             <slot name="left" />
+            <div v-if="$slots.logo" :class="ui.logo">
+                <a :href="mirroredDomain">
+                    <slot name="logo" />
+                </a>
+            </div>
         </div>
         <ul :class="ui.center">
             <slot name="center">
                 <li class="relative" v-for="menu in headerMenu">
                     <ul>
-                        <a :href="menu.href" v-html="menu.text" :class="ui.item">
+                        <a :href="menu.href" v-html="menu.text" :class="ui.item" :style="{ color: menu.color }">
                         </a>
                     </ul>
                 </li>
@@ -43,8 +46,3 @@ const { ui } = useUI(defaultUI, toRefs(props.ui));
     </div>
 </template>
 
-<style>
-#header {
-    @apply bg-white backdrop-blur border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50;
-}
-</style>
