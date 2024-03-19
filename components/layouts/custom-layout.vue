@@ -25,6 +25,9 @@ if (layoutConfig?.global?.stylesheet) {
     style: [{ children: layoutConfig.global.stylesheet }]
   })
 }
+const route = useRoute();
+const routeState = computed(() => route.query.state);
+const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct'))
 </script>
 
 <template>
@@ -49,9 +52,10 @@ if (layoutConfig?.global?.stylesheet) {
         <slot :name="name" v-bind="scope" />
       </template>
     </CustomLayoutInserts>
-
-    <slot v-if="layoutConfig.mainProduct.light" name="main-product-light-header" />
-    <slot v-else name="main-product-light-header" />
+    <template v-if="showMainProduct">
+      <slot v-if="layoutConfig.mainProduct.light" name="main-product-light-header" />
+      <slot v-else name="main-product-light-header" />
+    </template>
 
     <!-- high filters mode -->
     <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
@@ -75,12 +79,14 @@ if (layoutConfig?.global?.stylesheet) {
         </CustomLayoutInserts>
 
         <!-- main product -->
-        <main v-if="layoutConfig.mainProduct.light" id="main-product">
-          <slot name="main-product-light" />
-        </main>
-        <main v-else id="main-product">
-          <slot name="main-product" />
-        </main>
+        <template v-if="showMainProduct">
+          <main v-if="layoutConfig.mainProduct.light" id="main-product">
+            <slot name="main-product-light" />
+          </main>
+          <main v-else id="main-product">
+            <slot name="main-product" />
+          </main>
+        </template>
 
         <!-- postMainProduct -->
         <CustomLayoutInserts :config="layoutConfig.postMainProduct">
@@ -127,12 +133,14 @@ if (layoutConfig?.global?.stylesheet) {
       </CustomLayoutInserts>
 
       <!-- main product -->
-      <main v-if="layoutConfig.mainProduct.light" id="main-product">
-        <slot name="main-product-light" />
-      </main>
-      <main v-else id="main-product">
-        <slot name="main-product" />
-      </main>
+      <template v-if="showMainProduct">
+        <main v-if="layoutConfig.mainProduct.light" id="main-product">
+          <slot name="main-product-light" />
+        </main>
+        <main v-else id="main-product">
+          <slot name="main-product" />
+        </main>
+      </template>
 
       <!-- postMainProduct -->
       <CustomLayoutInserts :config="layoutConfig.postMainProduct">

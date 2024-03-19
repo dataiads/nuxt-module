@@ -1,12 +1,11 @@
-
 <script setup lang="ts">
-import type { CrossSellParams, CrossSellResponse, UseStructuredRecommenderOptions } from '~/types'
-import { useUrlSearchParams } from '@vueuse/core'
+import type { CrossSellParams, CrossSellResponse } from '~/types'
 
 const props = defineProps<{
   config: CrossSellParams;
 }>()
 
+const customLayout = useCustomLayout();
 const product = useProduct()
 
 const sliderProps = computed(() => ({
@@ -20,11 +19,34 @@ const sliderProps = computed(() => ({
 
 let items: CrossSellItem[] = []
 
+const route = useRoute();
+
 const toggleItem = (item: CrossSellItem) => {
   if (item.recommenderConfig) {
-    // lets do the stuff !
+    // TODO :fix ts errors
+    // Filter against recommenderConfig base rules
+    // @ts-ignore
+    customLayout!.filter.state.value = item.recommenderConfig.baseRules
+    navigateTo({
+      query: {
+        ...route.query,
+        state: 'hideMainProduct'
+      }
+    })
   }
 }
+
+/**
+ * Watch the route and reset filter when going back
+ */
+watch(
+  () => route.path,
+  () => {
+    if (route.query.state !== 'hideMainProduct') {
+      customLayout!.filter.reset()
+    }
+  }
+);
 
 if (props.config.mode === "auto") {
   const resp = await $fetch<CrossSellResponse>(`/api/cross-sell/${encodeURIComponent(product.value.id)}/by-criteria`, {
