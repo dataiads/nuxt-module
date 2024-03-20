@@ -82,7 +82,7 @@ const sortedValues = computed(() => {
 </script>
 
 <template>
-  <template v-if="sortedValues">
+  <template v-if="sortedValues && sortedValues.length">
     <slot name="autolist-label" />
 
     <slot v-if="searchable" name="autolist-search-input">
