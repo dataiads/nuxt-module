@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.285](https://github.com/dataiads/nuxt-module/compare/v0.2.284...v0.2.285) (2024-03-21)
+
+
+### Features
+
+* addToCart composable ([ba99b67](https://github.com/dataiads/nuxt-module/commit/ba99b677770fa2233a4334705e60ba9198d4d7ac))
+
 ### [0.2.284](https://github.com/dataiads/nuxt-module/compare/v0.2.283...v0.2.284) (2024-02-20)
 
 ### [0.2.283](https://github.com/dataiads/nuxt-module/compare/v0.2.282...v0.2.283) (2024-02-15)
