@@ -48,7 +48,6 @@ module.exports = {
         }
       }
     ],
-    'vue/padding-line-between-blocks': ['error', 'always'],
-    'vue/require-default-prop': ['error', 'never']
+    'vue/padding-line-between-blocks': ['error', 'always']
   }
 }

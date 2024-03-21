@@ -60,8 +60,15 @@ const removeAllRulesFromGroups = (groups: string[]) => {
 
 <template>
   <div>
-    <AsideItem v-for="filterParam in filterParams" :header-class="headerButtonClass" :key="filterParam.title"
-      :display="open" :class="asideItemClass" :style="groupStyle" content-class="">
+    <AsideItem
+      v-for="filterParam in filterParams"
+      :key="filterParam.title"
+      :header-class="headerButtonClass"
+      :display="open"
+      :class="asideItemClass"
+      :style="groupStyle"
+      content-class=""
+    >
       <template #header="{ displayed }">
         <slot name="header" :displayed="displayed" :title="filterParam.title">
           <div :class="[{ headerClass: !headerStyle }, { '': displayed }]" :style="headerStyle">
@@ -80,14 +87,27 @@ const removeAllRulesFromGroups = (groups: string[]) => {
 
       <template #content>
         <slot name="prepend-content" :remove-all-filter="removeAllRulesFromGroups" :groups="getGroups(filterParam)" />
-        <slot name="content" :elements="filterParam.elements" :parameters="filterParam"
-          :remove-all-filter="() => removeAllRulesFromGroups(getGroups(filterParam))">
-          <FiltersElements :style="filterParam.style" :filter="filter" :elements="filterParam.elements"
-            :parameters="filterParam">
+        <slot
+          name="content"
+          :elements="filterParam.elements"
+          :parameters="filterParam"
+          :remove-all-filter="() => removeAllRulesFromGroups(getGroups(filterParam))"
+        >
+          <FiltersElements
+            :style="filterParam.style"
+            :filter="filter"
+            :elements="filterParam.elements"
+            :parameters="filterParam"
+          >
             <template #checkbox="{ get, set, info }">
-              <input v-bind="info" type="checkbox" :checked="get()"
+              <input
+                v-bind="info"
+                type="checkbox"
+                :checked="get()"
                 :style="get() ? [checkboxStyle, activeCheckboxStyle] : [checkboxStyle]"
-                class="appearance-none focus:ring-0" @change="set(($event.target as HTMLInputElement)?.checked)">
+                class="appearance-none focus:ring-0"
+                @change="set(($event.target as HTMLInputElement)?.checked)"
+              >
             </template>
           </FiltersElements>
         </slot>

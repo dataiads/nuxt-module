@@ -25,8 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
   min: '0',
   max: '',
   class: 'flex items-center relative',
-  inputClass: "focus:border-secondary text-primary focus:ring-black focus:ring-1 border-primary font-normal",
-  labelClass: "font-normal text-black"
+  inputClass: 'focus:border-secondary text-primary focus:ring-black focus:ring-1 border-primary font-normal',
+  labelClass: 'font-normal text-black'
 })
 
 const debounce = (callback: (_: Event) => void, wait: number) => {
@@ -70,7 +70,7 @@ const change = debounce((evt: Event) => {
       @keyup="change"
     >
     <div v-if="props.icon" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-      <img :src="props.icon" class="h-5 w-5" :alt="props.label ?? props.placeholder" />
+      <img :src="props.icon" class="h-5 w-5" :alt="props.label ?? props.placeholder">
     </div>
   </div>
 </template>
