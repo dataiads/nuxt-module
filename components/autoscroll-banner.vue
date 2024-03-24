@@ -35,10 +35,11 @@ onBeforeMount(() => {
       }
     }, props.interval)
   }
-})
+});
 
-const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners)
-const backgroundColor = lpoConfig.bannerBackground
+const repeatedBanners = ref(banners.length > 1 ? [...banners, banners[0]] : banners);
+const backgroundColor = lpoConfig.bannerBackground;
+const bannerColor = lpoConfig.bannerColor;
 </script>
 
 <template>
@@ -48,7 +49,7 @@ const backgroundColor = lpoConfig.bannerBackground
     role="list"
     :class="props.class"
     class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide list-none"
-    :style="{ backgroundColor: backgroundColor }"
+    :style="{ backgroundColor: backgroundColor, color: bannerColor }"
   >
     <li v-for="banner in repeatedBanners" class="min-h-full max-h-full w-full flex justify-center items-center snap-center">
       <a v-if="banner.href && $isSafeLink(banner.href)" :href="banner.href">
