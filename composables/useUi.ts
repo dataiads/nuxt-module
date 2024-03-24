@@ -1,8 +1,8 @@
 import { twMerge } from 'tailwind-merge';
 
-export const useUI = (defaultUI, props) => {
+export const useUI = <T extends Record<string, any>>(defaultUI: T, props: any) => {
     const ui = computed(() => {
-        const obj = {}
+        const obj = {} as { [key: string]: any };
         Object.keys(defaultUI).forEach((el) => {
             if (props[el]) {
                 obj[el] = twMerge(defaultUI[el], props[el].value)
@@ -10,7 +10,7 @@ export const useUI = (defaultUI, props) => {
                 obj[el] = defaultUI[el];
             }
         })
-        return obj
+        return obj as T
     });
     return { ui }
 }

@@ -181,7 +181,8 @@ declare global {
     text: string;
     href?: string;
     color?: string;
-    imageLink: string;
+    imageLink?: string;
+    children: MenuItem[]
   }
 
   export interface FooterColumn {

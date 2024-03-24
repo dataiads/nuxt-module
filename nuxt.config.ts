@@ -175,6 +175,7 @@ export default defineNuxtConfig({
         'path': './components/layouts',
         'global': true
       },
+      { path: './components/blocks', prefix: 'D' },
       './components',
       '~/components'
     ]
