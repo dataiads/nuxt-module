@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import type { CrossSellParams } from '~/types'
 
@@ -7,6 +6,8 @@ const props = defineProps<{
 }>()
 
 const config = toRef(props, 'config')
+const centerItems = computed(() => config.value?.center === undefined ? true : config.value.center)
+
 const product = useProduct()
 
 // only one algorithm for now
@@ -58,7 +59,7 @@ watch(config, () => {
 
 <template>
   <div v-if="items.length" :style="config.style">
-    <div v-if="config.title" :style="config.titleStyle">
+    <div v-if="config.title" class="flex-shrink-0" :style="config.titleStyle">
       {{ config.title }}
     </div>
     <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
@@ -92,8 +93,8 @@ watch(config, () => {
     </Slider>
     <div
       v-else
-      class="flex flex-row"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
+      class="flex flex-row xl:container"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll, 'items-center mx-auto justify-center': centerItems }"
       :style="{ 'column-gap': config.columnGap }"
     >
       <template v-for="item in items">

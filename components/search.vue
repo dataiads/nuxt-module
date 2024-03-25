@@ -173,8 +173,14 @@ if (props.allowEmptySearch) {
                 <div class="pr-1 h-[120px]">
                   <figure class="relative max-w-sm cursor-pointer">
                     <a aria-label="view search result" :href="$oriUrl(item.data.link)">
-                      <img :src="item.data.imageLink" width="120" height="120" class="mx-auto h-[120px] w-auto"
-                        loading="lazy" alt="recommended product image">
+                      <img
+                        :src="item.data.imageLink"
+                        width="120"
+                        height="120"
+                        class="mx-auto h-[120px] w-auto"
+                        loading="lazy"
+                        alt="recommended product image"
+                      >
                     </a>
                   </figure>
                 </div>
@@ -219,7 +225,13 @@ if (props.allowEmptySearch) {
     <slot v-else name="manuel-search-results" :search-reco-products="searchRecoProducts" :loading="loading" />
   </div>
   <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event">
-    <slot name="full-screen-overlay" :close="() => overlayOpen = false" :items="searchRecoProducts" :value="value"
-      :input="input" :loading="loading" />
+    <slot
+      name="full-screen-overlay"
+      :close="() => overlayOpen = false"
+      :items="searchRecoProducts"
+      :value="value"
+      :input="input"
+      :loading="loading"
+    />
   </Dialog>
 </template>

@@ -54,8 +54,13 @@ export type Variations =
     {{ lpoConfig.accessibilityVariant?.text }}
   </a>
 
-  <component :is="resolveComponent(lpoConfig.variation)" v-if="lpoConfig.variation" :filter="filter"
-    :reco-slider-products="sliderProducts" :slider="slider">
+  <component
+    :is="resolveComponent(lpoConfig.variation)"
+    v-if="lpoConfig.variation"
+    :filter="filter"
+    :reco-slider-products="sliderProducts"
+    :slider="slider"
+  >
     <template v-for="(_, name) in $slots" #[name]="scope">
       <slot :name="name" v-bind="scope" />
     </template>

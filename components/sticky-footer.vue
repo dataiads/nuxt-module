@@ -14,10 +14,11 @@ const props = withDefaults(defineProps<Props>(), {
   displayOnScroll: false
 })
 
-const display = ref(!props.displayOnScroll)
 
 let displayTimer: ReturnType<typeof setTimeout>|null = null
 let hideTimer: ReturnType<typeof setTimeout>|null = null
+
+const display = useState('addToCart.display', () => !props.displayOnScroll)
 
 onMounted(() => {
   if (props.displayOnScroll) {

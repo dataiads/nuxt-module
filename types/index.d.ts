@@ -2,7 +2,7 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
-import type { StyleValue } from 'nuxt/dist/app/compat/capi';
+import type { StyleValue } from 'nuxt/dist/app/compat/capi'
 
 
 
@@ -181,7 +181,8 @@ declare global {
     text: string;
     href?: string;
     color?: string;
-    imageLink: string;
+    imageLink?: string;
+    children: MenuItem[]
   }
 
   export interface FooterColumn {
@@ -560,6 +561,7 @@ export interface CrossSellParams {
   nextButton: string;
   previousButton: string;
   buttonStyle: StyleValue;
+  center?: boolean;
 }
 
 export interface BannerParams {
@@ -611,6 +613,12 @@ export interface MainRecoParams {
   filterParamsCheckboxStyle: StyleValue;
   filterParamsActiveCheckboxStyle: StyleValue;
   filterParamsDisableInteractions: boolean;
+  filterParamsButtonEraseStyle: StyleValue;
+  filterParamsButtonEraseEnable: boolean;
+  filterParamsButtonEraseText: string;
+  filterParamsButtonValidateStyle: StyleValue;
+  filterParamsButtonValidateEnable: boolean;
+  filterParamsButtonValidateText: string;
   gridStyle: StyleValue;
   itemLayout: ItemLayout;
   itemStyle: RecoItemStyleParams;
@@ -619,7 +627,7 @@ export interface MainRecoParams {
   paginationButtonStyle: StyleValue;
   paginationActiveButtonStyle: StyleValue;
   paginationImageStyle: StyleValue;
-  paginationType: "none" | "page" | "more" | "scroll";
+  paginationType: 'none' | 'page' | 'more' | 'scroll';
   paginationLoadMoreText: string;
   paginationMaxVisibleButtons: number;
   paginationPreviousText: string;

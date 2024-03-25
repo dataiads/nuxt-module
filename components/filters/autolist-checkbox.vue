@@ -60,7 +60,7 @@ const sortedValues = computed(() => {
       keys = keys.filter(v => !!(props.valuesFilter as RegExp).exec(v))
     } else if (props.valuesFilter instanceof Function) {
       keys = keys.filter(props.valuesFilter)
-    } else if (typeof props.valuesFilter === "string") {
+    } else if (typeof props.valuesFilter === 'string') {
       try {
         const reg = new RegExp(props.valuesFilter)
         keys = keys.filter(v => !!reg.exec(v))
@@ -82,25 +82,44 @@ const sortedValues = computed(() => {
 </script>
 
 <template>
-  <template v-if="sortedValues">
+  <template v-if="sortedValues && sortedValues.length">
     <slot name="autolist-label" />
 
     <slot v-if="searchable" name="autolist-search-input">
-      <input v-model="search" type="search" :placeholder="searchPlaceholder" class="sticky top-0 mr-1"
-        :class="searchInputClass">
+      <input
+        v-model="search"
+        type="search"
+        :placeholder="searchPlaceholder"
+        class="sticky top-0 mr-1"
+        :class="searchInputClass"
+      >
     </slot>
 
     <!-- wrapper-div enabled: wrap it all inside a div -->
     <div v-if="props.wrapperDiv" :class="props.wrapperClass">
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
-          :count="displayCount ? count : null">
-          <FiltersCheckbox :filter="props.filter" :criteria="props.criteria" :group="props.group"
-            :value="value?.toString()" :class="props.class" :input-class="props.inputClass"
-            :label-class="props.labelClass" :operator="props.operator">
+        <slot
+          v-if="value"
+          name="input"
+          :value="useTranslation ? $t(value?.toString() || '') : value"
+          :count="displayCount ? count : null"
+        >
+          <FiltersCheckbox
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
+          >
             <template #label="scope">
-              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value"
-                :count="displayCount ? count : null">
+              <slot
+                name="label"
+                :value="useTranslation ? $t(value?.toString() || '') : value"
+                :count="displayCount ? count : null"
+              >
                 {{ useTranslation ? $t(value?.toString() || '') : value }}
                 <template v-if="displayCount">
                   ({{ count }})
@@ -115,14 +134,29 @@ const sortedValues = computed(() => {
     <!-- default behavior: raw checkboxes without wrapper -->
     <template v-else>
       <template v-for="[value, count] in sortedValues" :key="value">
-        <slot name="input" :value="useTranslation ? $t(value?.toString() || '') : value"
-          :count="displayCount ? count : null">
-          <FiltersCheckbox :filter="props.filter" :criteria="props.criteria" :group="props.group"
-            :value="useTranslation ? $t(value?.toString() || '') : value?.toString()" :class="props.class"
-            :input-class="props.inputClass" :label-class="props.labelClass" :operator="props.operator">
+        <slot
+          v-if="value"
+          name="input"
+          :value="useTranslation ? $t(value?.toString() || '') : value"
+          :count="displayCount ? count : null"
+        >
+          <FiltersCheckbox
+            :filter="props.filter"
+            :criteria="props.criteria"
+            :group="props.group"
+            :value="useTranslation ? $t(value?.toString() || '') : value?.toString()"
+            :class="props.class"
+            :input-class="props.inputClass"
+            :label-class="props.labelClass"
+            :operator="props.operator"
+          >
             <template #label="scope">
-              <slot name="label" :value="useTranslation ? $t(value?.toString() || '') : value"
-                :count="displayCount ? count : null" :checked="scope.checked">
+              <slot
+                name="label"
+                :value="useTranslation ? $t(value?.toString() || '') : value"
+                :count="displayCount ? count : null"
+                :checked="scope.checked"
+              >
                 {{ useTranslation ? $t(value?.toString() || '') : value }}
                 <template v-if="displayCount">
                   ({{ count }})
@@ -130,8 +164,12 @@ const sortedValues = computed(() => {
               </slot>
             </template>
             <template #checkbox="scope">
-              <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get"
-                :set="scope.set" />
+              <slot
+                name="checkbox"
+                :info="{ id: scope.info.id, type: scope.info.type }"
+                :get="scope.get"
+                :set="scope.set"
+              />
             </template>
           </FiltersCheckbox>
         </slot>

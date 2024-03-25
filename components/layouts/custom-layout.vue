@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Dialog, DialogPanel } from '@headlessui/vue'
-import { useDynamicLpoConfig } from '~/composables/config'
+import { Dialog, DialogPanel, TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { useCustomLayout } from '~/composables/custom-layout'
 
 const customLayout = useCustomLayout()
+if (!customLayout) throw new Error('no custom layout initialized')
 
 if (!customLayout) {
   throw new Error('no custom layout initialized')
@@ -212,7 +212,7 @@ useHead({
     </CustomLayoutFooter>
 
     <!-- Sticky ATC -->
-    <StickyFooter v-if="layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
+    <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 
@@ -224,29 +224,41 @@ useHead({
     </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
-    <Dialog
-      v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
-      :open="customLayout.showFiltersSlideover.value"
-      @close="customLayout.showFiltersSlideover.value = false"
-    >
-      <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-      <div class="fixed inset-0 overflow-y-auto">
-        <DialogPanel :style="layoutConfig.mainReco.slideoverStyle">
-          <div class="flex justify-end">
-            <img
-              v-if="layoutConfig.mainReco.slideoverCloseButton"
-              :src="layoutConfig.mainReco.slideoverCloseButton"
-              :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
-              @click="customLayout.toggleFiltersSlideover"
-            >
-            <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
-              close
-            </div>
-          </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-        </DialogPanel>
-      </div>
-    </Dialog>
+    <TransitionRoot appear :show="customLayout.showFiltersSlideover.value" as="template">
+      <Dialog
+        v-if="layoutConfig.mainReco.filtersDisplay === 'slideover'"
+        :open="customLayout.showFiltersSlideover.value"
+        @close="customLayout.showFiltersSlideover.value = false"
+      >
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div class="fixed inset-0">
+          <TransitionChild
+            as="template"
+            enter="ease-in-out duration-500"
+            enter-from="opacity-0 translate-x-full"
+            enter-to="opacity-100"
+            leave="ease-in-out duration-500"
+            leave-from="opacity-100"
+            leave-to="opacity-0 translate-x-full"
+          >
+            <DialogPanel :style="layoutConfig.mainReco.slideoverStyle" class="grid grid-rows-[auto_1fr_auto]">
+              <div class="flex justify-end">
+                <img
+                  v-if="layoutConfig.mainReco.slideoverCloseButton"
+                  :src="layoutConfig.mainReco.slideoverCloseButton"
+                  :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+                  @click="customLayout.toggleFiltersSlideover"
+                >
+                <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
+                  close
+                </div>
+              </div>
+              <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
+              <CustomLayoutFiltersButtons :config="layoutConfig" />
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </div>
 </template>
