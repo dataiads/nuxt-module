@@ -53,6 +53,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
 
   // current filters state (checkboxes) computed property
   const activeFilters = computed(() => JSON.stringify(Object.values(state.value).filter((group) => group.length > 0)))
+  watch(activeFilters, () => page.value = 1)
 
   const activeFiltersCount = computed(() => Object.values(state.value).filter((group) => group.length > 0).length)
 
@@ -65,7 +66,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     activeFilters,
     limit,
     page,
-    disableInteractions: options.disableInteractions ? "true": "false",
+    disableInteractions: options.disableInteractions ? 'true' : 'false'
   }
 
   if (options.sortRules?.length) {

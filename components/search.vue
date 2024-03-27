@@ -158,25 +158,14 @@ if (props.allowEmptySearch) {
 
 <template>
   <form @submit.prevent="submit">
-    <slot
-      :value="value"
-      :input="input"
-      :toggle-overlay="toggleOverlay"
-      :overlay-open="overlayOpen"
-      :loading="loading"
-    >
+    <slot :value="value" :input="input" :toggle-overlay="toggleOverlay" :overlay-open="overlayOpen" :loading="loading">
       <input :value="value" placeholder="search..." @input="input">
     </slot>
   </form>
   <div v-if="lpoSearchReccomendations && !fullScreenOverlay && value" id="search-slider">
     <div v-if="!manualMode" class="absolute z-10">
       <slot name="search-slider-header" />
-      <Slider
-        v-if="searchRecoProducts.length"
-        :items="searchRecoProducts"
-        :autoscroll="false"
-        :direction="direction"
-      >
+      <Slider v-if="searchRecoProducts.length" :items="searchRecoProducts" :autoscroll="false" :direction="direction">
         <template #item="{ item }">
           <slot :key="item.id" name="search-slider-item" :item="item">
             <div class="bg-white flex content-center max-w-[540px] p-2.5">
@@ -202,13 +191,13 @@ if (props.allowEmptySearch) {
 
                   <div class="flex items-center">
                     <PriceDisplay :product="item">
-                      <template #price="{ price }">
-                        <span class="text-[15px] font-medium">{{ price }}&euro;</span>
+                      <template #price="{ localPrice }">
+                        <span class="text-[15px] font-medium">{{ localPrice }}</span>
                       </template>
-                      <template #sale-price="{ price, salePrice }">
-                        <span class="text-[15px] font-medium">{{ salePrice }}&euro;</span>
+                      <template #sale-price="{ localPrice, localSalePrice }">
+                        <span class="text-[15px] font-medium">{{ localSalePrice }}</span>
                         <div class="line-through text-gray-400 text-right ml-1.5 text-[13px] leading-[14px]">
-                          {{ price }}&euro;
+                          {{ localPrice }}
                         </div>
                       </template>
                     </PriceDisplay>
@@ -235,7 +224,7 @@ if (props.allowEmptySearch) {
     </div>
     <slot v-else name="manuel-search-results" :search-reco-products="searchRecoProducts" :loading="loading" />
   </div>
-  <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event"> 
+  <Dialog :model-value="overlayOpen" :initial-focus="dialogInitialFocus" @update:model-value="overlayOpen = $event">
     <slot
       name="full-screen-overlay"
       :close="() => overlayOpen = false"

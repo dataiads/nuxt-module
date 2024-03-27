@@ -5,8 +5,21 @@ const props = defineProps<{
   config: CrossSellParams;
 }>()
 
-const customLayout = useCustomLayout();
+const centerItems = computed(() => props.config?.center === undefined ? true : props.config.center)
+
 const product = useProduct()
+
+// only one algorithm for now
+const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
+  if (regex) {
+    const regexProductKey = productKey.match(regex)?.[0]
+    if (regexProductKey) {
+      return regexProductKey.startsWith(dataKey)
+    }
+  }
+  return productKey.startsWith(dataKey)
+}
+
 
 const sliderProps = computed(() => ({
   autoscroll: props.config.autoscroll,
@@ -19,7 +32,7 @@ const sliderProps = computed(() => ({
 
 let items: CrossSellItem[] = []
 
-const route = useRoute();
+const route = useRoute()
 
 const toggleItem = (item: CrossSellItem) => {
   if (item.recommenderConfig) {
@@ -46,14 +59,14 @@ watch(
       customLayout!.filter.reset()
     }
   }
-);
+)
 
-if (props.config.mode === "auto") {
+if (props.config.mode === 'auto') {
   const resp = await $fetch<CrossSellResponse>(`/api/cross-sell/${encodeURIComponent(product.value.id)}/by-criteria`, {
     params: {
       criteria: props.config.crossSellCriteria,
       targeting: JSON.stringify(props.config.targeting),
-      limit: props.config.limit,
+      limit: props.config.limit
     }
   })
   items = resp.items.map(item => ({
@@ -61,8 +74,8 @@ if (props.config.mode === "auto") {
     image: item.image,
     recommenderConfig: {
       productId: product.value.id,
-      baseRules: item.filters,
-    },
+      baseRules: item.filters
+    }
   }))
 
 } else {
@@ -71,7 +84,7 @@ if (props.config.mode === "auto") {
   // only one algorithm for now
   const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
     if (regex) {
-      const regexProductKey = productKey.match(regex)?.[0];
+      const regexProductKey = productKey.match(regex)?.[0]
       if (regexProductKey) {
         return regexProductKey.startsWith(dataKey)
       }
@@ -105,19 +118,23 @@ if (props.config.mode === "auto") {
 
 <template>
   <div v-if="items.length" :style="config.style">
-    <div v-if="config.title" :style="config.titleStyle">
+    <div v-if="config.title" class="flex-shrink-0" :style="config.titleStyle">
       {{ config.title }}
     </div>
 
     <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
-        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
 
-        <span v-else-if="item.recommenderConfig" :key="item.recommenderConfig" :style="config.itemStyle"
-          @click="() => toggleItem(item)">
+        <span
+          v-else-if="item.recommenderConfig"
+          :key="item.recommenderConfig"
+          :style="config.itemStyle"
+          @click="() => toggleItem(item)"
+        >
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </span>
@@ -147,17 +164,24 @@ if (props.config.mode === "auto") {
         </template>
       </template>
     </Slider>
-
-    <div v-else class="flex flex-row" :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll }"
-      :style="{ 'column-gap': config.columnGap }">
+    <div
+      v-else
+      class="flex flex-row xl:container"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll, 'items-center mx-auto justify-center': centerItems }"
+      :style="{ 'column-gap': config.columnGap }"
+    >
       <template v-for="item in items">
-        <a v-if="item.link" :href="item.link" :key="item.link" :style="config.itemStyle">
+        <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
 
-        <span v-else-if="item.recommenderConfig" :key="item.recommenderConfig" :style="config.itemStyle"
-          @click="() => toggleItem(item)">
+        <span
+          v-else-if="item.recommenderConfig"
+          :key="item.recommenderConfig"
+          :style="config.itemStyle"
+          @click="() => toggleItem(item)"
+        >
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </span>
