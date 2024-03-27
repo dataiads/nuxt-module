@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import type { CrossSellParams } from '~/types'
+import type { CrossSellParams, CrossSellResponse } from '~/types'
 
 const props = defineProps<{
   config: CrossSellParams;
 }>()
+const customLayout = useCustomLayout()
 
 const config = toRef(props, 'config')
 const centerItems = computed(() => config.value?.center === undefined ? true : config.value.center)
 
 const product = useProduct()
-
-// only one algorithm for now
-const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
-  if (regex) {
-    const regexProductKey = productKey.match(regex)?.[0]
-    if (regexProductKey) {
-      return regexProductKey.startsWith(dataKey)
-    }
-  }
-  return productKey.startsWith(dataKey)
-}
-
 
 const sliderProps = computed(() => ({
   autoscroll: config.value.autoscroll,
@@ -32,18 +21,77 @@ const sliderProps = computed(() => ({
 }))
 
 let items: CrossSellItem[] = []
-let crossSellKey: CrossSellKey = { key: config.value.key.key ?? '', caseInsensitive: false, regex: config.value.key.regex }
 
-watch(config, () => {
-  if (config.value.key.key === '') {
+const route = useRoute()
+
+const toggleItem = (item: CrossSellItem) => {
+  if (item.recommenderConfig) {
+    // TODO :fix ts errors
+    // Filter against recommenderConfig base rules
+    // @ts-ignore
+    customLayout!.filter.state.value = item.recommenderConfig.baseRules
+    navigateTo({
+      query: {
+        ...route.query,
+        state: 'hideMainProduct'
+      }
+    })
+  }
+}
+
+/**
+ * Watch the route and reset filter when going back
+ */
+watch(
+  () => route.path,
+  () => {
+    if (route.query.state !== 'hideMainProduct') {
+      customLayout!.filter.reset()
+    }
+  }
+)
+
+if (props.config.mode === 'auto') {
+  const resp = await $fetch<CrossSellResponse>(`/api/cross-sell/${encodeURIComponent(product.value.id)}/by-criteria`, {
+    params: {
+      criteria: props.config.crossSellCriteria,
+      targeting: JSON.stringify(props.config.targeting),
+      limit: props.config.limit
+    }
+  })
+  items = resp.items.map(item => ({
+    text: item.value,
+    image: item.image,
+    recommenderConfig: {
+      productId: product.value.id,
+      baseRules: item.filters
+    }
+  }))
+
+} else {
+  // mode = manual (legacy)
+
+  // only one algorithm for now
+  const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
+    if (regex) {
+      const regexProductKey = productKey.match(regex)?.[0]
+      if (regexProductKey) {
+        return regexProductKey.startsWith(dataKey)
+      }
+    }
+    return productKey.startsWith(dataKey)
+  }
+
+  let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false, regex: props.config.key.regex }
+  if (props.config.key.key === '') {
     // Empty key option, in case the xSell is the same for all products.
     crossSellKey.key = ''
   } else {
-    crossSellKey = { key: getAttr(product.value, config.value.key.key) ?? '', caseInsensitive: config.value.key.caseInsensitive, regex: config.value.key.regex }
+    crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive, regex: props.config.key.regex }
   }
 
-  if (config.value.data) {
-    for (const [dataKey, value] of Object.entries(config.value.data)) {
+  if (props.config.data) {
+    for (const [dataKey, value] of Object.entries(props.config.data)) {
       if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
         items = value
         break
@@ -54,7 +102,8 @@ watch(config, () => {
       }
     }
   }
-}, { immediate: true, deep: true })
+}
+
 </script>
 
 <template>
@@ -62,17 +111,30 @@ watch(config, () => {
     <div v-if="config.title" class="flex-shrink-0" :style="config.titleStyle">
       {{ config.title }}
     </div>
+
     <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
         <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
+
+        <span
+          v-else-if="item.recommenderConfig"
+          :key="item.recommenderConfig"
+          :style="config.itemStyle"
+          @click="() => toggleItem(item)"
+        >
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </span>
+
         <span v-else :key="item.text" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </span>
       </template>
+
       <template #previous-btn="scope">
         <template v-if="config.previousButton">
           <button @click="scope.click">
@@ -83,6 +145,7 @@ watch(config, () => {
           <slot name="cross-sell-previous-btn" v-bind="scope" />
         </template>
       </template>
+
       <template #next-btn="scope">
         <template v-if="config.nextButton">
           <button @click="scope.click">
@@ -102,6 +165,17 @@ watch(config, () => {
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
         </a>
+
+        <span
+          v-else-if="item.recommenderConfig"
+          :key="JSON.stringify(item.recommenderConfig)"
+          :style="config.itemStyle"
+          @click="() => toggleItem(item)"
+        >
+          <img v-if="item.image" :style="config.imageStyle" :src="item.image">
+          <div>{{ item.text }}</div>
+        </span>
+
         <span v-else :key="item.text" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
           <div>{{ item.text }}</div>
