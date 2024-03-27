@@ -4,6 +4,7 @@ import type { CrossSellParams, CrossSellResponse } from '~/types'
 const props = defineProps<{
   config: CrossSellParams;
 }>()
+const customLayout = useCustomLayout()
 
 const centerItems = computed(() => props.config?.center === undefined ? true : props.config.center)
 
