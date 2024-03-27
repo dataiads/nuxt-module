@@ -179,7 +179,7 @@ if (props.config.mode === 'auto') {
 
         <span
           v-else-if="item.recommenderConfig"
-          :key="item.recommenderConfig"
+          :key="JSON.stringify(item.recommenderConfig)"
           :style="config.itemStyle"
           @click="() => toggleItem(item)"
         >
