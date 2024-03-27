@@ -16,7 +16,8 @@
     "lint": "eslint --ext .ts,.vue .",
     "lint:fix": "eslint . --fix",
     "prepare": "nuxi prepare",
-    "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish"
+    "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish",
+    "release:beta": "yarn publish --tag beta"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.16",

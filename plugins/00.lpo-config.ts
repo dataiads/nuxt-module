@@ -71,7 +71,8 @@ export default defineNuxtPlugin(async () => {
 
   return {
     provide: {
-      lpoConfig: lpoConfig
+      lpoConfig: lpoConfig,
+      dynamicLpoConfig: ref(lpoConfig)
     }
   }
 })

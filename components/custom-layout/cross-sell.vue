@@ -5,7 +5,8 @@ const props = defineProps<{
   config: CrossSellParams;
 }>()
 
-const centerItems = computed(() => props.config?.center === undefined ? true : props.config.center)
+const config = toRef(props, 'config')
+const centerItems = computed(() => config.value?.center === undefined ? true : config.value.center)
 
 const product = useProduct()
 
@@ -22,36 +23,38 @@ const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
 
 
 const sliderProps = computed(() => ({
-  autoscroll: props.config.autoscroll,
-  scrollSpeed: props.config.scrollSpeed,
-  absoluteArrows: props.config.absoluteArrows,
+  autoscroll: config.value.autoscroll,
+  scrollSpeed: config.value.scrollSpeed,
+  absoluteArrows: config.value.absoluteArrows,
   scrollerStyle: {
-    columnGap: props.config.columnGap
+    columnGap: config.value.columnGap
   }
 }))
 
 let items: CrossSellItem[] = []
+let crossSellKey: CrossSellKey = { key: config.value.key.key ?? '', caseInsensitive: false, regex: config.value.key.regex }
 
-let crossSellKey: CrossSellKey = { key: props.config.key.key ?? '', caseInsensitive: false, regex: props.config.key.regex }
-if (props.config.key.key === '') {
-  // Empty key option, in case the xSell is the same for all products.
-  crossSellKey.key = ''
-} else {
-  crossSellKey = { key: getAttr(product.value, props.config.key.key) ?? '', caseInsensitive: props.config.key.caseInsensitive, regex: props.config.key.regex }
-}
+watch(config, () => {
+  if (config.value.key.key === '') {
+    // Empty key option, in case the xSell is the same for all products.
+    crossSellKey.key = ''
+  } else {
+    crossSellKey = { key: getAttr(product.value, config.value.key.key) ?? '', caseInsensitive: config.value.key.caseInsensitive, regex: config.value.key.regex }
+  }
 
-if (props.config.data) {
-  for (const [dataKey, value] of Object.entries(props.config.data)) {
-    if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
-      items = value
-      break
-    }
-    if (keyMatcher(crossSellKey.key, dataKey, crossSellKey.regex)) {
-      items = value
-      break
+  if (config.value.data) {
+    for (const [dataKey, value] of Object.entries(config.value.data)) {
+      if (crossSellKey.caseInsensitive && keyMatcher(crossSellKey.key.toLowerCase(), dataKey.toLowerCase(), crossSellKey.regex)) {
+        items = value
+        break
+      }
+      if (keyMatcher(crossSellKey.key, dataKey, crossSellKey.regex)) {
+        items = value
+        break
+      }
     }
   }
-}
+}, { immediate: true, deep: true })
 </script>
 
 <template>
