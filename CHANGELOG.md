@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.289](https://github.com/dataiads/nuxt-module/compare/v0.2.288...v0.2.289) (2024-03-27)
+
+
+### Bug Fixes
+
+* **ProductImageCarousel:** put image by default to screen ([c026d67](https://github.com/dataiads/nuxt-module/commit/c026d673ad0a73e01915efb793f3f422f6fd61b7))
+
 ### [0.2.288](https://github.com/dataiads/nuxt-module/compare/v0.2.287...v0.2.288) (2024-03-25)
 
 ### [0.2.287](https://github.com/dataiads/nuxt-module/compare/v0.2.286...v0.2.287) (2024-03-25)
