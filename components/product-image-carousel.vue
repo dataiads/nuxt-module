@@ -61,7 +61,7 @@ defineEmits(['previous', 'next'])
   <div class="h-screen flex items-center justify-center">
     <slot name="image" :image="images[selectedIndex]">
       <Image
-        class="object-contain"
+        class="object-contain h-screen w-auto"
         height="800"
         width="800"
         format="webp"
