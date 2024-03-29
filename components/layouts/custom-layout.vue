@@ -244,7 +244,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           <div class="fixed inset-0 bg-black/25" />
         </TransitionChild>
    
-        <div class="fixed inset-0 overflow-y-auto">
+        <div class="fixed inset-0">
           <TransitionChild
             as="template"
             enter="ease-in-out duration-500"
