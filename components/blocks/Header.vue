@@ -36,12 +36,20 @@ const handleLeave = (i: number) => {
     popoverBtn.value[i].$el.click()
   }, 150)
 }
+defineEmits(['clickDrawer'])
 </script>
 
 <template>
   <div :class="ui.container">
     <div v-if="$slots.left || $slots.logo" :class="ui.left">
+      <button class="lg:hidden block" @click="$emit('clickDrawer')">
+        <slot name="drawerIcon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill="#888888" fill-rule="evenodd" d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75M2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8m0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75" clip-rule="evenodd" /></svg>
+        </slot>
+      </button>
+      
       <slot name="left" />
+
       <div v-if="$slots.logo" :class="ui.logo">
         <a :href="mirroredDomain">
           <slot name="logo" />
