@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { useDynamicLpoConfig } from '~/composables/config'
 import { useCustomLayout } from '~/composables/custom-layout'
 
 const customLayout = useCustomLayout()
@@ -24,12 +25,11 @@ onMounted(() => {
   })
 })
 
-// global stylesheet from config
-if (layoutConfig?.global?.stylesheet) {
-  useHead({
-    style: [{ children: () => layoutConfig.value?.global.stylesheet }]
-  })
-}
+// global stylesheet from confi
+useHead({
+  style: [{ children: () => layoutConfig.value?.global.stylesheet }]
+})
+
 const route = useRoute()
 const routeState = computed(() => route.query.state)
 const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct'))
