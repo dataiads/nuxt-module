@@ -59,7 +59,7 @@ if (props.config.data) {
     <div v-if="config.title" class="flex-shrink-0" :style="config.titleStyle">
       {{ config.title }}
     </div>
-    <Slider v-if="config.sliderMode" v-bind="sliderProps" :items="items">
+    <Slider v-if="config.sliderMode" :class="{ 'xl:container mx-auto': centerItems }" :scroller-class="centerItems ? ['mx-auto'] : []" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
         <a v-if="item.link" :key="item.link" :href="item.link" :style="config.itemStyle">
           <img v-if="item.image" :style="config.imageStyle" :src="item.image">
@@ -91,7 +91,7 @@ if (props.config.data) {
     <div
       v-else
       class="flex flex-row xl:container"
-      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll, 'items-center mx-auto justify-center': centerItems }"
+      :class="{ 'flex-wrap': !config.scroll, 'overflow-x-auto': config.scroll, 'items-center mx-auto': centerItems }"
       :style="{ 'column-gap': config.columnGap }"
     >
       <template v-for="item in items">
