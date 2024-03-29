@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
   min: '0',
   max: '',
   class: 'flex items-center relative',
-  inputClass: 'focus:border-secondary text-primary focus:ring-black focus:ring-1 border-primary font-normal',
+  inputClass: 'w-full focus:border-secondary text-primary focus:ring-black focus:ring-1 border-primary font-normal',
   labelClass: 'font-normal text-black'
 })
 
