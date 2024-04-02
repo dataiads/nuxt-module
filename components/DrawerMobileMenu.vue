@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Dialog as HDialog, DialogPanel, TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { Dialog as HDialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 const lpoConfig = useLpoConfig()
-const headerMenu = lpoConfig?.menu ? lpoConfig?.menu : []
 
 function setIsOpen (value: boolean) {
   isOpen.value = value
 }
 
-const props = defineProps(['modelValue', 'initialFocus', 'ui'])
+const props = defineProps(['modelValue', 'initialFocus', 'ui', 'menu'])
+
+const headerMenu = computed(() => props.menu ? props.menu : lpoConfig.menu ? lpoConfig.menu : [])
 
 const emits = defineEmits(['close', 'update:modelValue'])
 
@@ -68,7 +69,7 @@ const { ui } = useUI(defaultUI, toRefs(props.ui))
                   width="16"
                   height="16"
                 >
-                  
+
                   <path
                     d="M16 14.586L28.293 2.293a1 1 0 011.414 1.414L17.414 16l12.293 12.293a1 1 0 01-1.414 1.414L16 17.414 3.707 29.707a1 1 0 11-1.414-1.414L14.586 16 2.293 3.707a1 1 0 011.414-1.414L16 14.586z"
                     fill="#1A2A34"
