@@ -58,6 +58,7 @@ const { ui } = useUI(defaultUI, toRefs(props.ui))
           leave-to="opacity-0 -translate-x-full"
         >
           <DialogPanel :class="ui.panel">
+            <slot name="top" />
             <button :class="ui.buttonClose" @click="setIsOpen(false)">
               <slot name="close" :close="() => setIsOpen(false)">
                 <svg
@@ -80,6 +81,7 @@ const { ui } = useUI(defaultUI, toRefs(props.ui))
             <ul :class="ui.wrapper">
               <li v-for="(item, itemIndex) in headerMenu" :key="itemIndex">
                 <a :href="item.href" :style="{ color: item.color }" :class="ui.base">
+                  <img v-if="item.imageLink" :src="item.imageLink">
                   {{ item.text }}
                   <div :class="ui.trailingIcon">
                     <slot name="trailingIcon">
