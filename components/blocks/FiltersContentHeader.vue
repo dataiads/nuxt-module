@@ -45,8 +45,7 @@ if (props.noBorder) {
   <div :class="ui.wrapper">
     <slot name="title">
       <span :class="ui.title">
-        {{ $t('discoverMore') }}
-        <DynamicLabel :value="$t('discoverMoreKey')" />
+        <DynamicLabel :value="$t('discoverMore')" />
       </span>
     </slot>
     <div :class="ui.filter">
