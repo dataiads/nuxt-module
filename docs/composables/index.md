@@ -28,9 +28,6 @@ const changeVariant((variant: Product) => product.value = variant)
 Note: Variant is a product object.
 
 
-## `useCollectorData`
-A shortcut to access the global collector data stored inside a global state. data is automatically fetched on application startup.
-
 ## `getCustomAttr`
 Access product custom attributes.
 

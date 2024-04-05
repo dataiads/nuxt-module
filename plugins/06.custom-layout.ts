@@ -7,20 +7,22 @@ export default defineNuxtPlugin(async () => {
   const lpoConfig = useLpoConfig()
   const layoutConfig = lpoConfig?.customLayout
 
+  console.log('LPOCONF', lpoConfig)
+
   if (lpoConfig?.variation !== 'custom-layout' || !layoutConfig) {
     return {}
   }
 
   // setup main recommender
   const filter = useStructuredRecommender({
-    productId: product.value.id,
+    productId: product.value?.id,
     baseRules: layoutConfig.mainReco.algo.filterRules,
     sortRules: layoutConfig.mainReco.algo.sortRules,
     deduplicate: layoutConfig.mainReco.algo.deduplicate,
     defaultLimit: layoutConfig.mainReco.algo.limit,
     defaultSort: layoutConfig.mainReco.algo.sort,
     criteriaValues: getAutolistCriteriaFromFiltersParams(layoutConfig.mainReco.filterParams),
-    initialRules: await getInitialRulesFromFiltersParams(product.value, layoutConfig.mainReco.filterParams),
+    initialRules: product.value && await getInitialRulesFromFiltersParams(product.value, layoutConfig.mainReco.filterParams),
     disableInteractions: layoutConfig.mainReco.filterParamsDisableInteractions
   })
 

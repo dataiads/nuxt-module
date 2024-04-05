@@ -13,10 +13,23 @@ import {
   handles compatibility with url based product match
   when no lpoid parameter is present
  */
-function fetchPageData (u: URL) {
-  const lpoid = u.searchParams.get('lpoid')
+function fetchPageData (u: URL, conf?: BaseProductConfig) {
 
-  if (lpoid == null) {
+  const baseProductMode = conf?.mode || 'auto'
+
+  let lpoid: string = ''
+  if (baseProductMode == 'manual' && conf?.productId) {
+    lpoid = conf.productId
+  } else if (baseProductMode == 'none') {
+    lpoid = 'none'
+  } else {
+    const urlId = u.searchParams.get('lpoid')
+    if (urlId) {
+      lpoid = urlId
+    }
+  }
+
+  if (!lpoid) {
     // backward compatibility: use path matching when no lpoid
     return useFetch<PageData>('/api/page-data', {
       params: {
@@ -33,7 +46,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
   const lpoConfig = useLpoConfig()
   const product = useState<Product | undefined>('product')
-  const collectorData = useState<AssocString | undefined>('collectorData')
   const mirroredDomain = useMirroredDomain()
 
   if (!runtimeConfig.public.mirroredDomain) {
@@ -92,7 +104,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   }
 
   const u = new URL(pageUrl)
-  const { data: pageData, error } = await fetchPageData(u)
+  const { data: pageData, error } = await fetchPageData(u, lpoConfig.baseProduct)
   clearTimeout(dataTimeout)
   if (error.value) {
     errorRedirect(error.value, mirroredDomain)
@@ -104,15 +116,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const data = pageData.value
   product.value = data?.product
-  collectorData.value = data?.collectorData
 
   if (!process.server && data?.product) {
     injectProductStructuredData(data.product)
   }
 
-  useHead({
-    title: data?.product.extraData?.title ?? data?.product.data.title
-  })
+  if (data?.product) {
+    useHead({
+      title: data?.product.extraData?.title ?? data?.product.data.title
+    })
+  }
 
   return {
     provide: {

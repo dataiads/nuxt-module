@@ -4,9 +4,6 @@ import { useState } from '#app'
 /* provide a shortcut to access the main product */
 export const useProduct = () => useState<Product>('product')
 
-/* access global collector data */
-export const useCollectorData = () => useState<AssocString>('collectorData')
-
 /**
  * provide a shortcut to access the region
  * the region is available when a valid query param "store" is in the url

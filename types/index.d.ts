@@ -107,7 +107,6 @@ declare global {
   export interface PageData {
     product: Product;
     config: ServerConfig;
-    collectorData: AssocString;
   }
 
   export interface Order {
@@ -224,6 +223,11 @@ declare global {
     src: string;
   }
 
+  export interface BaseProductConfig {
+    mode: 'auto' | 'manual' | 'none';
+    productId: string;
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     mirroredDomainOverride?: string;
@@ -260,6 +264,7 @@ declare global {
     customScripts?: CustomScripts[];
     productHook?: string;
     customLayout: CustomLayout;
+    baseProduct: BaseProductConfig;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
@@ -549,7 +554,7 @@ export interface CrossSellParams {
   enabled: boolean;
   title: string;
 
-  mode: "auto" | "manual";
+  mode: 'auto' | 'manual';
   // manual mode attributes
   key: CrossSellKey;
   data: CrossSellData;
