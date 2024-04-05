@@ -68,8 +68,14 @@ watchDebounced(
   <div class="w-full py-2">
     <div class="flex gap-2">
       <div class="relative flex-1">
-        <input v-model="sliderMin" :placeholder="props.placeholder" type="number" :min="props.min" :max="props.max"
-          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+        <input
+          v-model="sliderMin"
+          :placeholder="props.placeholder"
+          type="number"
+          :min="props.min"
+          :max="props.max"
+          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        >
         <slot name="trailing">
           <span class="absolute inset-y-0 end-0 flex items-center pointer-events-none px-2">
             €
@@ -77,8 +83,14 @@ watchDebounced(
         </slot>
       </div>
       <div class="relative flex-1">
-        <input v-model="sliderMax" :placeholder="props.placeholder" type="number" :min="props.min" :max="props.max"
-          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+        <input
+          v-model="sliderMax"
+          :placeholder="props.placeholder"
+          type="number"
+          :min="props.min"
+          :max="props.max"
+          class="focus:border-secondary focus:ring-black focus:ring-1 w-full text-black border-black font-normal [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        >
         <slot name="trailing">
           <span class="absolute inset-y-0 end-0 flex items-center pointer-events-none px-2">
             €
