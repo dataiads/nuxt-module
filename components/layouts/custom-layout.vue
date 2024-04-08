@@ -219,10 +219,7 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
     </CustomLayoutFooter>
 
     <!-- Sticky ATC -->
-    <StickyFooter
-      v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled"
-      v-bind="layoutConfig.stickyAtc"
-    >
+    <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 
@@ -247,7 +244,6 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
         >
           <div class="fixed inset-0 bg-black/25" />
         </TransitionChild>
-
         <div class="fixed inset-0">
           <TransitionChild
             as="template"
