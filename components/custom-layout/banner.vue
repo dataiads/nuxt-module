@@ -5,18 +5,27 @@ const props = defineProps<{
   config: BannerParams;
 }>()
 
-const activeIndex = ref(0)
-const element = computed(() => props.config.elements[activeIndex.value])
+const config = toRef(props, 'config')
 
-if (props.config.interval > 0) {
-  setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % props.config.elements.length
-  }, props.config.interval)
-}
+const activeIndex = ref(0)
+const element = computed(() => config.value.elements[activeIndex.value] || config.value.elements[0])
+
+let intervalId: NodeJS.Timeout | null = null
+watch(config, () => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+
+  if (config.value.interval > 0) {
+    intervalId = setInterval(() => {
+      activeIndex.value = (activeIndex.value + 1) % config.value.elements.length
+    }, config.value.interval)
+  }
+})
 </script>
 
 <template>
-  <div :style="config.style">
+  <div v-if="element" :style="config.style">
     <div v-if="element.type === 'html'" v-html="element.html" />
 
     <div

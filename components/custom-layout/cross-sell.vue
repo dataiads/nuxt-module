@@ -6,28 +6,17 @@ const props = defineProps<{
 }>()
 const customLayout = useCustomLayout()
 
-const centerItems = computed(() => props.config?.center === undefined ? true : props.config.center)
+const config = toRef(props, 'config')
+const centerItems = computed(() => config.value?.center === undefined ? true : config.value.center)
 
 const product = useProduct()
 
-// only one algorithm for now
-const keyMatcher = (productKey: string, dataKey: string, regex?: string) => {
-  if (regex) {
-    const regexProductKey = productKey.match(regex)?.[0]
-    if (regexProductKey) {
-      return regexProductKey.startsWith(dataKey)
-    }
-  }
-  return productKey.startsWith(dataKey)
-}
-
-
 const sliderProps = computed(() => ({
-  autoscroll: props.config.autoscroll,
-  scrollSpeed: props.config.scrollSpeed,
-  absoluteArrows: props.config.absoluteArrows,
+  autoscroll: config.value.autoscroll,
+  scrollSpeed: config.value.scrollSpeed,
+  absoluteArrows: config.value.absoluteArrows,
   scrollerStyle: {
-    columnGap: props.config.columnGap
+    columnGap: config.value.columnGap
   }
 }))
 
@@ -178,7 +167,7 @@ if (props.config.mode === 'auto') {
 
         <span
           v-else-if="item.recommenderConfig"
-          :key="item.recommenderConfig"
+          :key="JSON.stringify(item.recommenderConfig)"
           :style="config.itemStyle"
           @click="() => toggleItem(item)"
         >
