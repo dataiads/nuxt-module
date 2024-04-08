@@ -40,6 +40,9 @@ const hasLabelSlot = computed(() => {
 <template>
   <div>
     <template v-for="{ component, props } in elements">
+      <div v-if="props.subTitle" :key="'subtitle' + props.subTitle" class="text-sm">
+        {{ props.subTitle }}
+      </div>
       <FiltersAutolistCheckbox
         v-if="component === 'autolist-checkbox'"
         :key="`autolist-checkbox-${props}`"
@@ -79,7 +82,7 @@ const hasLabelSlot = computed(() => {
         :key="`range-${props}`"
         :filter="filter"
         :group="props.group || `${props.criteria}-${component}-filter`"
-        v-bind="props"
+        v-bind="Object.fromEntries(Object.entries(props).filter(([key, value]) => value !== 'text'))"
         :class="rangeClass"
         :input-class="inputClass"
         :label-class="labelClass"
@@ -95,7 +98,12 @@ const hasLabelSlot = computed(() => {
         v-bind="props"
       >
         <template #checkbox="scope">
-          <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
+          <slot
+            name="checkbox"
+            :info="{ id: scope.info.id, type: scope.info.type }"
+            :get="scope.get"
+            :set="scope.set"
+          />
         </template>
         <template #label="{ value, checked }">
           <slot name="checkbox_label" :value="value" :checked="checked">
@@ -116,13 +124,40 @@ const hasLabelSlot = computed(() => {
       >
         <template #text-min />
       </FiltersDoubleRange>
-      <FiltersInput 
+      <FiltersInput
         v-else-if="component === 'input'"
         :key="`input-${props}`"
         :filter="filter"
         :group="props.group || `${props.criteria}-${component}-filter`"
         v-bind="props"
       />
+
+      <div
+        v-else-if="component === 'colors'" 
+        :key="`colors-${props}`"
+        class="flex flex-wrap gap-4"
+      >
+        <FiltersCustomCheckbox
+          v-for="(value, key) of props.colors"
+          :key="'color_' + key"
+          :filter="filter"
+          v-bind="props"
+          :value="key"
+        >
+          <template #customCheckbox="{ set }">
+            <button class="flex flex-col items-center" @click="set(key)">
+              <div
+                class="h-[20px] w-[20px] rounded-full"
+                :class="{ 'border border-black': value === 'white' }"
+                :style="{ backgroundColor: value }"
+              />
+              <span class="mt-1 text-sm" :class="labelClass">
+                {{ key }}
+              </span>
+            </button>
+          </template>
+        </FiltersCustomCheckbox>
+      </div>
       <slot v-else :name="`filter_${parameters.title}`" />
     </template>
   </div>

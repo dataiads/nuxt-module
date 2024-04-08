@@ -129,7 +129,7 @@ const mainClass = [
   'relative',
   props.absoluteArrows ? 'block' : 'flex',
   props.direction === 'horizontal' ? 'w-full' : 'h-full',
-  ...props.class
+  props.class
 ]
 
 const scrollerClass = [

@@ -45,8 +45,8 @@ const sliderMax = computed({
 
 const progressStyle = computed(() => {
   return {
-    left: (sliderMin.value / props.max) * 100 + '%',
-    width: `${((sliderMax.value - sliderMin.value) / props.max) * 100}%`
+    left: ((sliderMin.value - props.min) / (props.max - props.min)) * 100 + '%',
+    width: `${(((sliderMax.value - props.min) - (sliderMin.value - props.min)) / (props.max - props.min)) * 100}%`
   }
 })
 

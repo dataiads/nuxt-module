@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const headerMenu = computed(() => props.menu ? props.menu : lpoConfig.menu ? lpoConfig.menu : [])
 
-const { ui } = useUI(defaultUI, toRefs(props.ui))
+const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 
 const mirroredDomain = useMirroredDomain()
 
@@ -42,6 +42,7 @@ const handleLeave = (i: number) => {
   <div :class="ui.container">
     <div v-if="$slots.left || $slots.logo" :class="ui.left">
       <slot name="left" />
+
       <div v-if="$slots.logo" :class="ui.logo">
         <a :href="mirroredDomain">
           <slot name="logo" />
