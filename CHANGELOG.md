@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.290](https://github.com/dataiads/nuxt-module/compare/v0.289.0-beta.1...v0.2.290) (2024-04-08)
+
+
+### Features
+
+* **Header:** add drawer icon on mobile only ([d65037b](https://github.com/dataiads/nuxt-module/commit/d65037b791eea60813520f2550fb1e4b9b072855))
+* new component content header ([153fea2](https://github.com/dataiads/nuxt-module/commit/153fea2f08e28cd4b6c17b0a8ddfe8f86bbbfc24))
+
+
+### Bug Fixes
+
+* **DrawerMobileMenu:** scroll when many items ([1dbb210](https://github.com/dataiads/nuxt-module/commit/1dbb210e1376edc925c139506b5ae85d935e3480))
+* ui reactivity ([5d6293d](https://github.com/dataiads/nuxt-module/commit/5d6293d1c608fb11345aaf405bf7158050aa38f5))
+
+### [0.2.289](https://github.com/dataiads/nuxt-module/compare/v0.288.0-beta.0...v0.2.289) (2024-03-27)
+
 ### [0.2.289](https://github.com/dataiads/nuxt-module/compare/v0.2.288...v0.2.289) (2024-03-27)
 
 
