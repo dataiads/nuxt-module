@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const headerMenu = computed(() => props.menu ? props.menu : lpoConfig.menu ? lpoConfig.menu : [])
 
-const { ui } = useUI(defaultUI, toRefs(props.ui))
+const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 
 const mirroredDomain = useMirroredDomain()
 
@@ -36,7 +36,6 @@ const handleLeave = (i: number) => {
     popoverBtn.value[i].$el.click()
   }, 150)
 }
-defineEmits(['clickDrawer'])
 </script>
 
 <template>
