@@ -29,7 +29,7 @@ const defaultUI = {
   base: 'flex p-4 items-center',
   trailingIcon: 'ml-auto h-[20px]'
 }
-const { ui } = useUI(defaultUI, toRefs(props.ui))
+const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 </script>
 
 <template>

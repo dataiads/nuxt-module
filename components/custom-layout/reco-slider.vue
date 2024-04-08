@@ -6,6 +6,7 @@ const props = defineProps<{
 }>()
 
 const product = useProduct()
+const config = toRef(props, 'config')
 
 const slider = useStructuredRecommender({
   productId: product.value.id,

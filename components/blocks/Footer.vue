@@ -14,7 +14,7 @@ const props = defineProps<{
   ui: typeof defaultUI
 }>()
 
-const { ui } = useUI(defaultUI, toRefs(props.ui))
+const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 </script>
 
 <template>
