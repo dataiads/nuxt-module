@@ -127,7 +127,7 @@ export const getCustomAttrFloat = (product: Product, attr: string): number | nul
   const strVal = getCustomAttr(product, attr)
   if (strVal) {
     try {
-      return strVal ? parseFloat(strVal.replace(',', '.')) : null;
+      return parseFloat(strVal.replace(',', '.'))
     } catch (e) {
       // Fail quietly
     }
