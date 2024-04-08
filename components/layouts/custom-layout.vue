@@ -59,11 +59,18 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
     </template>
 
     <!-- high filters mode -->
-    <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
-      layoutConfig.mainReco.filtersDisplay === 'right-high'
-      " class="flex">
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'" id="filters-aside" class="flex-none"
-        :style="layoutConfig.mainReco.filterStyle">
+    <div
+      v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
+        layoutConfig.mainReco.filtersDisplay === 'right-high'
+      "
+      class="flex"
+    >
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'"
+        id="filters-aside"
+        class="flex-none"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -116,8 +123,12 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
         </div>
       </div>
 
-      <div v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'" id="filters-aside" class="shrink-0"
-        :style="layoutConfig.mainReco.filterStyle">
+      <div
+        v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'"
+        id="filters-aside"
+        class="shrink-0"
+        :style="layoutConfig.mainReco.filterStyle"
+      >
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
@@ -151,8 +162,12 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
       </CustomLayoutInserts>
 
       <div id="filters" class="flex flex-row">
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'left'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -175,8 +190,12 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
           </div>
         </div>
 
-        <div v-if="layoutConfig.mainReco.filtersDisplay === 'right'" id="filters-aside" class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle">
+        <div
+          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
+          id="filters-aside"
+          class="shrink-0"
+          :style="layoutConfig.mainReco.filterStyle"
+        >
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
@@ -200,8 +219,10 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
     </CustomLayoutFooter>
 
     <!-- Sticky ATC -->
-    <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled"
-      v-bind="layoutConfig.stickyAtc">
+    <StickyFooter
+      v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled"
+      v-bind="layoutConfig.stickyAtc"
+    >
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 
@@ -215,19 +236,36 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
     <!-- Filters slideover -->
     <TransitionRoot appear :show="customLayout.showFiltersSlideover.value" as="template">
       <Dialog as="div" class="relative z-10" @close="customLayout.showFiltersSlideover.value = false">
-        <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
-          leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
+        <TransitionChild
+          as="template"
+          enter="duration-300 ease-out"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="duration-200 ease-in"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
           <div class="fixed inset-0 bg-black/25" />
         </TransitionChild>
 
         <div class="fixed inset-0">
-          <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0 translate-x-full"
-            enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100"
-            leave-to="opacity-0 translate-x-full">
+          <TransitionChild
+            as="template"
+            enter="ease-in-out duration-500"
+            enter-from="opacity-0 translate-x-full"
+            enter-to="opacity-100"
+            leave="ease-in-out duration-500"
+            leave-from="opacity-100"
+            leave-to="opacity-0 translate-x-full"
+          >
             <DialogPanel :style="layoutConfig.mainReco.slideoverStyle" class="grid grid-rows-[auto_1fr_auto]">
               <div class="flex justify-end">
-                <img v-if="layoutConfig.mainReco.slideoverCloseButton" :src="layoutConfig.mainReco.slideoverCloseButton"
-                  :style="layoutConfig.mainReco.slideoverCloseButtonStyle" @click="customLayout.toggleFiltersSlideover">
+                <img
+                  v-if="layoutConfig.mainReco.slideoverCloseButton"
+                  :src="layoutConfig.mainReco.slideoverCloseButton"
+                  :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+                  @click="customLayout.toggleFiltersSlideover"
+                >
                 <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
                   close
                 </div>
