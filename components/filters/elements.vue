@@ -12,7 +12,10 @@ const props = withDefaults(
     autoListClass?: string;
     rangeClass?: string;
     checkboxContainerClass?: string;
-    colors?: Record<string, string>;
+    colors?: {
+      name: string;
+      value: string;
+    }[];
     subTitleStyle?: Record<string, string>;
   }>(),
   {
@@ -23,7 +26,7 @@ const props = withDefaults(
     autoListClass: 'flex items-center gap-3',
     rangeClass: 'grid grid-cols-2 gap-2',
     checkboxContainerClass: 'flex items-center gap-3',
-    colors: () => ({}),
+    colors: () => ([]),
     subTitleStyle: () => ({})
   }
 )
@@ -142,7 +145,7 @@ const hasLabelSlot = computed(() => {
         class="flex flex-wrap gap-4"
       >
         <FiltersCustomCheckbox
-          v-for="(value, key) of props.colors"
+          v-for="({ name: key, value }) of colors"
           :key="'color_' + key"
           :filter="filter"
           v-bind="props"

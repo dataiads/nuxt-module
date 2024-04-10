@@ -20,7 +20,10 @@ const props = withDefaults(
     headerIconStyle?: StyleValue;
     checkboxStyle?: StyleValue;
     activeCheckboxStyle?: StyleValue;
-    colors?: Record<string, string>;
+    colors?: {
+      name: string;
+      value: string;
+    }[];
   }>(),
   {
     asideItemClass: '!h-auto',
@@ -36,7 +39,7 @@ const props = withDefaults(
     headerIconStyle: null,
     checkboxStyle: null,
     activeCheckboxStyle: null,
-    colors: () => ({})
+    colors: () => ([])
   }
 )
 

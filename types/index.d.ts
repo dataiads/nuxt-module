@@ -713,7 +713,10 @@ export interface StickyAtcParams {
 
 export interface GlobalParams {
   stylesheet: string;
-  colors: Record<string, string>;
+  colors: {
+    name: string;
+    value: string;
+  }[];
 }
 
 export interface BlockConfig {
