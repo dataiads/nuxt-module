@@ -5,13 +5,15 @@ const props = withDefaults(
   defineProps<{
     parameters: { title: string };
     filter: StructuredRecommender,
-    elements: { component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'input'; props: any }[];
+    elements: { component: 'autolist-checkbox' | 'colors' | 'checkbox' | 'range' | 'double-range' | 'input'; props: any }[];
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
     autoListClass?: string;
     rangeClass?: string;
     checkboxContainerClass?: string;
+    colors?: Record<string, string>;
+    subTitleStyle?: Record<string, string>;
   }>(),
   {
     inputClass: 'border-[#9E9E9E]',
@@ -20,7 +22,9 @@ const props = withDefaults(
     labelClass: 'leading-[15px] text-sm',
     autoListClass: 'flex items-center gap-3',
     rangeClass: 'grid grid-cols-2 gap-2',
-    checkboxContainerClass: 'flex items-center gap-3'
+    checkboxContainerClass: 'flex items-center gap-3',
+    colors: () => ({}),
+    subTitleStyle: () => ({})
   }
 )
 
@@ -40,7 +44,7 @@ const hasLabelSlot = computed(() => {
 <template>
   <div>
     <template v-for="{ component, props } in elements">
-      <div v-if="props.subTitle" :key="'subtitle' + props.subTitle" class="text-sm">
+      <div v-if="props.subTitle" :key="'subtitle' + props.subTitle" class="text-sm" :style="props.subTitleStyle">
         {{ props.subTitle }}
       </div>
       <FiltersAutolistCheckbox
@@ -133,7 +137,7 @@ const hasLabelSlot = computed(() => {
       />
 
       <div
-        v-else-if="component === 'colors'" 
+        v-else-if="component === 'colors'"
         :key="`colors-${props}`"
         class="flex flex-wrap gap-4"
       >

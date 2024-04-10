@@ -13,6 +13,7 @@ defineProps<{
     :filter="filter"
     :filter-params="config.mainReco.filterParams"
     :open="true"
+    :colors="config.global.colors"
     :group-style="config.mainReco.filterParamsGroupStyle"
     :header-style="config.mainReco.filterParamsHeaderStyle"
     :header-title-style="config.mainReco.filterParamsHeaderTitleStyle"

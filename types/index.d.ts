@@ -549,7 +549,7 @@ export interface CrossSellParams {
   enabled: boolean;
   title: string;
 
-  mode: "auto" | "manual";
+  mode: 'auto' | 'manual';
   // manual mode attributes
   key: CrossSellKey;
   data: CrossSellData;
@@ -713,6 +713,7 @@ export interface StickyAtcParams {
 
 export interface GlobalParams {
   stylesheet: string;
+  colors: Record<string, string>;
 }
 
 export interface BlockConfig {

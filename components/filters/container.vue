@@ -20,6 +20,7 @@ const props = withDefaults(
     headerIconStyle?: StyleValue;
     checkboxStyle?: StyleValue;
     activeCheckboxStyle?: StyleValue;
+    colors?: Record<string, string>;
   }>(),
   {
     asideItemClass: '!h-auto',
@@ -34,7 +35,8 @@ const props = withDefaults(
     headerTitleStyle: null,
     headerIconStyle: null,
     checkboxStyle: null,
-    activeCheckboxStyle: null
+    activeCheckboxStyle: null,
+    colors: () => ({})
   }
 )
 
@@ -98,6 +100,7 @@ const removeAllRulesFromGroups = (groups: string[]) => {
             :filter="filter"
             :elements="filterParam.elements"
             :parameters="filterParam"
+            :colors="colors"
           >
             <template #checkbox="{ get, set, info }">
               <input
