@@ -31,7 +31,8 @@ const props = withDefaults(defineProps<{
 })
 
 const customLayout = useCustomLayout()
-const { ui } = useUI(defaultUI, toRefs(props.ui))
+const { ui } = useUI(defaultUI, toRef(props, 'ui'))
+
 
 
 if (props.noBorder) {
@@ -45,7 +46,7 @@ if (props.noBorder) {
   <div :class="ui.wrapper">
     <slot name="title">
       <span :class="ui.title">
-        <DynamicLabel :value="$t('discoverMore')" />
+        <DynamicLabel :value="$t('discoverMore') + ' {' + $t('discoverMoreKey') + '}'" />
       </span>
     </slot>
     <div :class="ui.filter">
