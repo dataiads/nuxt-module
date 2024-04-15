@@ -105,12 +105,7 @@ const hasLabelSlot = computed(() => {
         v-bind="props"
       >
         <template #checkbox="scope">
-          <slot
-            name="checkbox"
-            :info="{ id: scope.info.id, type: scope.info.type }"
-            :get="scope.get"
-            :set="scope.set"
-          />
+          <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set" />
         </template>
         <template #label="{ value, checked }">
           <slot name="checkbox_label" :value="value" :checked="checked">
@@ -139,16 +134,12 @@ const hasLabelSlot = computed(() => {
         v-bind="props"
       />
 
-      <div
-        v-else-if="component === 'colors'"
-        :key="`colors-${props}`"
-        class="flex flex-wrap gap-4"
-      >
+      <div v-else-if="component === 'colors'" :key="`colors-${props}`" class="flex flex-wrap gap-4">
         <FiltersCustomCheckbox
           v-for="({ name: key, value }) of colors"
           :key="'color_' + key"
           :filter="filter"
-          v-bind="props"
+          v-bind="Object.fromEntries(Object.entries(props).filter(([key, value]) => value !== 'text'))"
           :value="key"
         >
           <template #customCheckbox="{ set }">

@@ -6,8 +6,21 @@ const lpoConfig = useLpoConfig()
 function setIsOpen (value: boolean) {
   isOpen.value = value
 }
+const defaultUI = {
+  overlay: 'fixed inset-0 bg-black/30',
+  panel: 'w-full max-w-sm bg-white overflow-y-auto',
+  buttonClose: 'flex flex-col ml-auto p-4',
+  wrapper: 'flex flex-col divide-y border-t border-grey1/20',
+  base: 'flex p-4 items-center',
+  trailingIcon: 'ml-auto h-[20px]'
+}
 
-const props = defineProps(['modelValue', 'initialFocus', 'ui', 'menu'])
+const props = defineProps<{
+  ui: Partial<typeof defaultUI>,
+  modelValue: boolean,
+  initialFocus: any,
+  menu?: MenuItem[]
+}>()
 
 const headerMenu = computed(() => props.menu ? props.menu : lpoConfig.menu ? lpoConfig.menu : [])
 
@@ -21,14 +34,6 @@ const isOpen = computed({
     emits('update:modelValue', value)
   }
 })
-const defaultUI = {
-  overlay: 'fixed inset-0 bg-black/30',
-  panel: 'w-full max-w-sm bg-white overflow-y-auto',
-  buttonClose: 'flex flex-col ml-auto p-4',
-  wrapper: 'flex flex-col divide-y border-t border-grey1/20',
-  base: 'flex p-4 items-center',
-  trailingIcon: 'ml-auto h-[20px]'
-}
 const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 </script>
 

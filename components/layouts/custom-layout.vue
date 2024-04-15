@@ -118,6 +118,13 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
               <template #filters-content-grid-item="ctx">
                 <slot name="filters-content-grid-item" v-bind="ctx" />
               </template>
+              <template #filters-no-results>
+                <slot name="filters-no-results">
+                  <div class="text-center">
+                    {{ $t('noResultsCatalog') }}
+                  </div>
+                </slot>
+              </template>
             </CustomLayoutCatalogGrid>
 
             <div id="filters-pagination">
@@ -165,7 +172,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         </template>
       </CustomLayoutInserts>
 
-      <div id="filters" class="flex flex-row">
+      <div id="filters" class="flex flex-row w-full">
         <div
           v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
           id="filters-aside"
@@ -186,6 +193,13 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
             <template #filters-content-grid-item="ctx">
               <slot name="filters-content-grid-item" v-bind="ctx" />
+            </template>
+            <template #filters-no-results>
+              <slot name="filters-no-results">
+                <div class="text-center">
+                  {{ $t('noResultsCatalog') }}
+                </div>
+              </slot>
             </template>
           </CustomLayoutCatalogGrid>
 
