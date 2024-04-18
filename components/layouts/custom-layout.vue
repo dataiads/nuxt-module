@@ -63,181 +63,194 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
     </template>
 
     <!-- high filters mode -->
-    <div
-      v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
-        layoutConfig.mainReco.filtersDisplay === 'right-high'
-      "
-      class="flex"
-    >
-      <div
-        v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'"
-        id="filters-aside"
-        class="flex-none"
-        :style="layoutConfig.mainReco.filterStyle"
-      >
-        <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-          {{ layoutConfig.mainReco.filtersTitle }}
-        </div>
+                      <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
+                        layoutConfig.mainReco.filtersDisplay === 'right-high'
+                        " class="flex">
+                        <div v-if="layoutConfig.mainReco.filtersDisplay === 'left-high'" id="filters-aside" class="flex-none"
+                          :style="layoutConfig.mainReco.filterStyle">
+                          <div id="filter-header-btn">
+                            <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+                              {{ layoutConfig.mainReco.filtersTitle }}
+                            </div>
+                                <div id="reset-btn">
+                                  <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
+                                    v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
+                                    {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
+                                  </button>
+                                </div>
+                              </div>
 
-        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-      </div>
+                              <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+                            </div>
 
-      <div class="flex flex-col grow shrink min-w-0">
-        <!-- preMainProduct -->
-        <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope" />
-          </template>
-        </CustomLayoutInserts>
+                            <div class="flex flex-col grow shrink min-w-0">
+                              <!-- preMainProduct -->
+                              <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
+                                <template v-for="(_, name) in $slots" #[name]="scope">
+                                  <slot :name="name" v-bind="scope" />
+                                </template>
+                              </CustomLayoutInserts>
 
-        <!-- main product -->
-        <template v-if="showMainProduct">
-          <main v-if="layoutConfig.mainProduct.light" id="main-product">
-            <slot name="main-product-light" />
-          </main>
-          <main v-else id="main-product">
-            <slot name="main-product" />
-          </main>
-        </template>
+                              <!-- main product -->
+                              <template v-if="showMainProduct">
+                                <main v-if="layoutConfig.mainProduct.light" id="main-product">
+                                  <slot name="main-product-light" />
+                                </main>
+                                <main v-else id="main-product">
+                                  <slot name="main-product" />
+                                </main>
+                              </template>
 
-        <!-- postMainProduct -->
-        <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
-          <template v-for="(_, name) in $slots" #[name]="scope">
-            <slot :name="name" v-bind="scope" />
-          </template>
-        </CustomLayoutInserts>
+                              <!-- postMainProduct -->
+                              <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
+                                <template v-for="(_, name) in $slots" #[name]="scope">
+                                  <slot :name="name" v-bind="scope" />
+                                </template>
+                              </CustomLayoutInserts>
 
-        <!-- main reco -->
-        <div id="filters">
-          <div id="filters-content">
-            <div id="filters-content-header">
-              <slot name="filters-content-header" />
-            </div>
+                              <!-- main reco -->
+                              <div id="filters">
+                                <div id="filters-content">
+                                  <div id="filters-content-header">
+                                    <slot name="filters-content-header" />
+                                  </div>
 
-            <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
-              <template #filters-content-grid-item="ctx">
-                <slot name="filters-content-grid-item" v-bind="ctx" />
-              </template>
-              <template #filters-no-results>
-                <slot name="filters-no-results">
-                  <div class="text-center">
-                    {{ $t('noResultsCatalog') }}
-                  </div>
-                </slot>
-              </template>
-            </CustomLayoutCatalogGrid>
+                                  <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
+                                    <template #filters-content-grid-item="ctx">
+                                      <slot name="filters-content-grid-item" v-bind="ctx" />
+                                    </template>
+                                    <template #filters-no-results>
+                                      <slot name="filters-no-results">
+                                        <div class="text-center">
+                                          {{ $t('noResultsCatalog') }}
+                                        </div>
+                                      </slot>
+                                    </template>
+                                  </CustomLayoutCatalogGrid>
 
-            <div id="filters-pagination">
-              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
-            </div>
-          </div>
-        </div>
-      </div>
+                                  <div id="filters-pagination">
+                                    <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
-      <div
-        v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'"
-        id="filters-aside"
-        class="shrink-0"
-        :style="layoutConfig.mainReco.filterStyle"
-      >
-        <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-          {{ layoutConfig.mainReco.filtersTitle }}
-        </div>
-        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-      </div>
-    </div>
+                              <div v-if="layoutConfig.mainReco.filtersDisplay === 'right-high'" id="filters-aside" class="shrink-0"
+                                :style="layoutConfig.mainReco.filterStyle">
+                                <div id="filter-header-btn">
+                                  <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+                                    {{ layoutConfig.mainReco.filtersTitle }}
+                                  </div>
+                                  <div id="reset-btn">
+                                    <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
+                                      v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
+                                      {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
+                                    </button>
+                                  </div>
+                                </div>
+                                <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+                              </div>
+                            </div>
 
-    <template v-else>
-      <!-- preMainProduct -->
-      <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope" />
-        </template>
-      </CustomLayoutInserts>
+                            <template v-else>
+                              <!-- preMainProduct -->
+                              <CustomLayoutInserts insert-position="pre-main-product" :config="layoutConfig.preMainProduct">
+                                <template v-for="(_, name) in $slots" #[name]="scope">
+                                  <slot :name="name" v-bind="scope" />
+                                </template>
+                              </CustomLayoutInserts>
 
-      <!-- main product -->
-      <template v-if="showMainProduct">
-        <main v-if="layoutConfig.mainProduct.light" id="main-product">
-          <slot name="main-product-light" />
-        </main>
-        <main v-else id="main-product">
-          <slot name="main-product" />
-        </main>
-      </template>
+                              <!-- main product -->
+                              <template v-if="showMainProduct">
+                                <main v-if="layoutConfig.mainProduct.light" id="main-product">
+                                  <slot name="main-product-light" />
+                                </main>
+                                <main v-else id="main-product">
+                                  <slot name="main-product" />
+                                </main>
+                              </template>
 
-      <!-- postMainProduct -->
-      <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
-        <template v-for="(_, name) in $slots" #[name]="scope">
-          <slot :name="name" v-bind="scope" />
-        </template>
-      </CustomLayoutInserts>
+                              <!-- postMainProduct -->
+                              <CustomLayoutInserts insert-position="post-main-product" :config="layoutConfig.postMainProduct">
+                                <template v-for="(_, name) in $slots" #[name]="scope">
+                                  <slot :name="name" v-bind="scope" />
+                                </template>
+                              </CustomLayoutInserts>
 
-      <div id="filters" class="flex flex-row w-full">
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-            {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-        </div>
+                              <div id="filters" class="flex flex-row w-full">
+                                <div v-if="layoutConfig.mainReco.filtersDisplay === 'left'" id="filters-aside" class="shrink-0"
+                                  :style="layoutConfig.mainReco.filterStyle">
+                                  <div id="filter-header-btn">
+                                    <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+                                      {{ layoutConfig.mainReco.filtersTitle }}
+                                    </div>
+                                    <div id="reset-btn">
+                                      <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
+                                        v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
+                                        {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+                                </div>
 
-        <div id="filters-content" class="grow">
-          <div id="filters-content-header">
-            <slot name="filters-content-header" />
-          </div>
+                                <div id="filters-content" class="grow">
+                                  <div id="filters-content-header">
+                                    <slot name="filters-content-header" />
+                                  </div>
 
-          <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
-            <template #filters-content-grid-item="ctx">
-              <slot name="filters-content-grid-item" v-bind="ctx" />
-            </template>
-            <template #filters-no-results>
-              <slot name="filters-no-results">
-                <div class="text-center">
-                  {{ $t('noResultsCatalog') }}
-                </div>
-              </slot>
-            </template>
-          </CustomLayoutCatalogGrid>
+                                  <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
+                                    <template #filters-content-grid-item="ctx">
+                                      <slot name="filters-content-grid-item" v-bind="ctx" />
+                                    </template>
+                                    <template #filters-no-results>
+                                      <slot name="filters-no-results">
+                                        <div class="text-center">
+                                          {{ $t('noResultsCatalog') }}
+                                        </div>
+                                      </slot>
+                                    </template>
+                                  </CustomLayoutCatalogGrid>
 
-          <div id="filters-pagination">
-            <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
-          </div>
-        </div>
+                                  <div id="filters-pagination">
+                                    <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+                                  </div>
+                                </div>
 
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-            {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-        </div>
-      </div>
-    </template>
+                                <div v-if="layoutConfig.mainReco.filtersDisplay === 'right'" id="filters-aside" class="shrink-0"
+                                  :style="layoutConfig.mainReco.filterStyle">
+                                  <div id="filter-header-btn">
+                                    <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+                                      {{ layoutConfig.mainReco.filtersTitle }}
+                                  </div>
+                                  <div id="reset-btn">
+                                    <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
+                                      v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
+                                      {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
+                                    </button>
+                                  </div>
+                                </div>
+                                <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+                              </div>
+                            </div>
+                          </template>
 
-    <!-- postMainReco -->
-    <CustomLayoutInserts insert-position="post-main-reco" :config="layoutConfig.postMainReco">
-      <template v-for="(_, name) in $slots" #[name]="scope">
-        <slot :name="name" v-bind="scope" />
-      </template>
-    </CustomLayoutInserts>
+                    <!-- postMainReco -->
+                    <CustomLayoutInserts insert-position="post-main-reco" :config="layoutConfig.postMainReco">
+                      <template v-for="(_, name) in $slots" #[name]="scope">
+                        <slot :name="name" v-bind="scope" />
+                      </template>
+                    </CustomLayoutInserts>
 
-    <!-- Footer -->
-    <CustomLayoutFooter :config="layoutConfig.header">
-      <template #footer>
-        <slot name="footer" />
-      </template>
-    </CustomLayoutFooter>
+                    <!-- Footer -->
+                    <CustomLayoutFooter :config="layoutConfig.header">
+                      <template #footer>
+                        <slot name="footer" />
+                      </template>
+                    </CustomLayoutFooter>
 
-    <!-- Sticky ATC -->
-    <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
+                  <!-- Sticky ATC -->
+                  <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 
@@ -262,7 +275,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         >
           <div class="fixed inset-0 bg-black/25" />
         </TransitionChild>
-   
+
         <div class="fixed inset-0">
           <TransitionChild
             as="template"
