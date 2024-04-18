@@ -49,7 +49,6 @@ if (props.noBorder) {
         <DynamicLabel :value="$t('discoverMore') + ' {' + $t('discoverMoreKey') + '}'" />
       </span>
     </slot>
-    <slot name="append-title" />
     <div :class="ui.filter">
       <slot name="button">
         <button :class="ui.button" @click="customLayout?.toggleFiltersSlideover">
