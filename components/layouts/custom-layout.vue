@@ -75,16 +75,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         class="flex-none"
         :style="layoutConfig.mainReco.filterStyle"
       >
-        <div id="filter-header-btn">
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-              {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <div id="reset-btn">
-            <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
-              v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
-                {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
-            </button>
-          </div>
+        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
 
         <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
@@ -148,16 +140,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         class="shrink-0"
         :style="layoutConfig.mainReco.filterStyle"
       >
-      <div id="filter-header-btn">
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-              {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <div id="reset-btn">
-            <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
-              v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
-                {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
-            </button>
-          </div>
+      <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
         <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
       </div>
@@ -195,16 +179,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
-        <div id="filter-header-btn">
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-              {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <div id="reset-btn">
-            <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
-              v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
-                {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
-            </button>
-          </div>
+        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
           <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
@@ -238,16 +214,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
-        <div id="filter-header-btn">
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-              {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <div id="reset-btn">
-            <button @click="customLayout?.filter.reset()" :style="layoutConfig.mainReco.filterParamsButtonEraseStyle"
-              v-if="layoutConfig.mainReco.filterParamsButtonEraseEnable">
-                {{ layoutConfig.mainReco.filterParamsButtonEraseText }}
-            </button>
-          </div>
+        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
           <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
