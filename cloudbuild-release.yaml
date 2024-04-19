@@ -10,3 +10,9 @@ steps:
   - id: "release"
     name: 'node:18'
     entrypoint: ['yarn', 'publish']
+    secretEnv: ['TOKEN']
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/212866786838/secrets/npm-publish-token/versions/1
+    env: 'TOKEN'
