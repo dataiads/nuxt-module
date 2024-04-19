@@ -1,0 +1,8 @@
+steps:
+  - id: "yarn-install"
+    name: 'node:16'
+    args: ['yarn', 'install']
+
+  - id: "typecheck"
+    name: 'node:16'
+    entrypoint: ['yarn', 'nuxi', 'typecheck']
