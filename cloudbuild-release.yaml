@@ -5,7 +5,7 @@ steps:
 
   - id: "typecheck"
     name: 'node:18'
-    entrypoint: ['yarn', 'nuxi', 'typecheck']
+    args: ['yarn', 'nuxi', 'typecheck']
 
   - id: "release"
     name: 'node:18'
