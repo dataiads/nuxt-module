@@ -6,6 +6,6 @@ steps:
     - -c
     - |
       echo hello
-      echo $TAG
-    env:
-    - "TAG_NAME=$TAG_NAME"
+      echo $TAG_NAME
+    #env:
+    #- "TAG_NAME=$TAG_NAME"
