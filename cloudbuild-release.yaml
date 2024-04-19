@@ -1,12 +1,12 @@
 steps:
   - id: "yarn-install"
-    name: 'node:16'
+    name: 'node:18'
     args: ['yarn', 'install']
 
   - id: "typecheck"
-    name: 'node:16'
+    name: 'node:18'
     entrypoint: ['yarn', 'nuxi', 'typecheck']
 
   - id: "release"
-    name: 'node:16'
+    name: 'node:18'
     entrypoint: ['yarn', 'publish']
