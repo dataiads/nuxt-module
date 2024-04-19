@@ -9,7 +9,7 @@ steps:
 
   - id: "release"
     name: 'node:18'
-    entrypoint: ['yarn', 'publish']
+    args: ['yarn', 'publish']
     secretEnv: ['TOKEN']
 
 availableSecrets:
