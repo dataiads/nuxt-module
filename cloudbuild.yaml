@@ -7,5 +7,5 @@ steps:
     - |
       echo hello
       echo $TAG_NAME
-    #env:
-    #- "TAG_NAME=$TAG_NAME"
+    env:
+    - "TAG_NAME=$TAG_NAME"
