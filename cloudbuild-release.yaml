@@ -10,9 +10,9 @@ steps:
   - id: "release"
     name: 'node:18'
     args: ['yarn', 'publish']
-    secretEnv: ['TOKEN']
+    secretEnv: ['NPM_AUTH_TOKEN']
 
 availableSecrets:
   secretManager:
   - versionName: projects/212866786838/secrets/npm-publish-token/versions/1
-    env: 'TOKEN'
+    env: 'NPM_AUTH_TOKEN'
