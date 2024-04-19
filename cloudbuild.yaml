@@ -1,0 +1,11 @@
+steps:
+  - id: "check-tag"
+    name: 'node:16'
+    entrypoint: 'bash'
+    args:
+    - -c
+    - |
+      echo hello
+      echo $TAG
+    env:
+    - "TAG_NAME=$TAG_NAME"
