@@ -15,6 +15,12 @@ export default defineNuxtPlugin(() => {
       if (cs.content) {
         el.innerHTML = cs.content
       }
+
+      if (cs.attrs?.length) {
+        cs.attrs.forEach(attr => {
+          el.setAttribute(attr.name, attr.value)
+        })
+      }
       
       if (cs.location === 'prependHead') {
         document.head?.prepend(el)
