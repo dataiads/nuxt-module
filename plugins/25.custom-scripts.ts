@@ -7,18 +7,14 @@ export default defineNuxtPlugin(() => {
   if (lpoConfig.customScripts?.length) {
     for (const cs of lpoConfig.customScripts) {
       if (cs.rawHtml) {
-        const parser = new DOMParser()
-        const html = parser.parseFromString(cs.rawHtml, 'text/html')
         if (cs.location === 'prependHead') {
-          html.head?.childNodes.forEach(node => document.head?.prepend(node))
+          document.head.insertAdjacentHTML('afterbegin', cs.rawHtml)
         } else if (cs.location === 'appendHead') {
-          html.head?.childNodes.forEach(node => document.head?.append(node))
+          document.head.insertAdjacentHTML('beforeend', cs.rawHtml)
         } else if (cs.location === 'prependBody') {
-          html.head?.childNodes.forEach(node => document.body?.prepend(node))
-          html.body?.childNodes.forEach(node => document.body?.prepend(node))
+          document.body.insertAdjacentHTML('afterbegin', cs.rawHtml)
         } else if (cs.location === 'appendBody') {
-          html.head?.childNodes.forEach(node => document.body?.append(node))
-          html.body?.childNodes.forEach(node => document.body?.append(node))
+          document.body.insertAdjacentHTML('beforeend', cs.rawHtml)
         }
         // Don't treat the rest of the code
         continue
