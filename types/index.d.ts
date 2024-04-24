@@ -227,6 +227,7 @@ declare global {
     defer: boolean;
     async: boolean;
     attrs: ScriptAttr[];
+    rawHtml: string;
     src: string;
   }
 
