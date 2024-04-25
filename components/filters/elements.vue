@@ -3,7 +3,7 @@ import type { StructuredRecommender } from '~/types'
 
 const props = withDefaults(
   defineProps<{
-    parameters: { title: string };
+    parameters: { title: string, style: Object };
     filter: StructuredRecommender,
     elements: { component: 'autolist-checkbox' | 'colors' | 'checkbox' | 'range' | 'double-range' | 'input'; props: any }[];
     inputClass?: string;
@@ -42,48 +42,62 @@ const hasLabelSlot = computed(() => {
   const instance = getCurrentInstance()
   return !!instance!.slots.checkbox_label
 })
+
+const hasSearch = computed(() => {
+  const instance = getCurrentInstance()
+  return !!instance!.props.elements[0].props.searchable
+})
+
+const displayMore = ref(false)
 </script>
 
 <template>
-  <div>
-    <template v-for="{ component, props } in elements">
+  <div :style="!hasSearch ? '' : parameters.style">
+    <template v-for="{ component, props } in elements" :key="props">
       <div v-if="props.subTitle" :key="'subtitle' + props.subTitle" class="text-sm" :style="props.subTitleStyle">
         {{ props.subTitle }}
       </div>
-      <FiltersAutolistCheckbox
-        v-if="component === 'autolist-checkbox'"
-        :key="`autolist-checkbox-${props}`"
-        v-bind="props"
-        :filter="filter"
-        :group="props.group || `${props.criteria}-${component}-filter`"
-        :class="autoListClass"
-        :input-class="!hasCheckboxSlot ? checkboxClass : ''"
-        :label-class="!hasLabelSlot ? labelClass : ''"
-      >
-        <template #checkbox="scope">
-          <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set">
-            <slot
-              name="auto_checkbox"
-              :info="{ id: scope.info.id, type: scope.info.type }"
-              :get="scope.get"
-              :set="scope.set"
-            />
-          </slot>
-        </template>
-        <template #label="{ value, count, checked }">
-          <slot name="checkbox_label" :value="value" :count="count" :checked="checked">
-            <slot name="auto_list_label" :value="value" :count="count" :checked="checked">
-              <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count" :checked="checked">
-                <template v-if="value">
-                  {{ value }} <template v-if="count">
-                    ({{ count }})
+      <template v-if="component === 'autolist-checkbox'">
+        <FiltersAutolistCheckbox
+          :key="`autolist-checkbox-${props}`"
+          v-bind="props"
+          :filter="filter"
+          :group="props.group || `${props.criteria}-${component}-filter`"
+          :class="autoListClass"
+          :input-class="!hasCheckboxSlot ? checkboxClass : ''"
+          :label-class="!hasLabelSlot ? labelClass : ''"
+          :wrapper-div="hasSearch"
+          :wrapper-style="hasSearch ? parameters.style : ''"
+          :display-more="displayMore"
+        >
+          <template #checkbox="scope">
+            <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set">
+              <slot
+                name="auto_checkbox"
+                :info="{ id: scope.info.id, type: scope.info.type }"
+                :get="scope.get"
+                :set="scope.set"
+              />
+            </slot>
+          </template>
+          <template #label="{ value, count, checked }">
+            <slot name="checkbox_label" :value="value" :count="count" :checked="checked">
+              <slot name="auto_list_label" :value="value" :count="count" :checked="checked">
+                <slot :name="`auto_list_label_${parameters.title}`" :value="value" :count="count" :checked="checked">
+                  <template v-if="value">
+                    {{ value }} <template v-if="count">
+                      ({{ count }})
+                    </template>
                   </template>
-                </template>
+                </slot>
               </slot>
             </slot>
-          </slot>
-        </template>
-      </FiltersAutolistCheckbox>
+          </template>
+        </FiltersAutolistCheckbox>
+        <button v-if="props.seeMore" :key="props" class="sticky bottom-0" @click="displayMore = !displayMore">
+          {{ displayMore ? props.seeLessText : props.seeMoreText }}
+        </button>
+      </template>
       <FiltersRangeInputs
         v-else-if="component === 'range'"
         :key="`range-${props}`"
