@@ -221,6 +221,7 @@ declare global {
     content: string;
     defer: boolean;
     async: boolean;
+    rawHtml: string;
     src: string;
   }
 
