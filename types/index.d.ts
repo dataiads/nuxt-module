@@ -216,17 +216,11 @@ declare global {
     weights: string[];
   }
 
-  export interface ScriptAttr {
-    name: string;
-    value: string;
-  }
-
   export interface CustomScripts {
     location: 'appendHead' | 'prependHead' | 'appendBody' | 'prependBody';
     content: string;
     defer: boolean;
     async: boolean;
-    attrs: ScriptAttr[];
     rawHtml: string;
     src: string;
   }
