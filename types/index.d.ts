@@ -542,6 +542,7 @@ export interface RecoSliderParams {
   style: StyleValue;
   itemLayout: ItemLayout;
   itemStyle: RecoItemStyleParams;
+  arrowPlacement: 'inside' | 'outside';
 }
 
 export interface CrossSellParams {

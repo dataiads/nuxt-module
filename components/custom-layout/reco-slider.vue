@@ -33,10 +33,40 @@ const items = computed(() => slider.results.data.value as Product[][])
   <div v-if="items?.length">
     <div :style="config.style">
       <slot name="reco-slider-header" />
-      <div v-if="config.title" :style="config.titleStyle">
-        <DynamicLabel :value="config.title" />
-      </div>
-      <Slider v-bind="sliderProps" :items="items">
+      <Slider v-bind="sliderProps" ref="sliderRef" :items="items">
+        <template #default="{ next, previous }">  
+          <div
+            v-if="config.title"
+            :style="config.titleStyle" 
+            :class="{ 'flex justify-between': config.arrowPlacement === 'outside' }"
+          >
+            <DynamicLabel :value="config.title" />
+            <div v-if="config.arrowPlacement === 'outside'">
+              <button @click="previous()">
+                <img v-if="config.previousButton" :style="config.buttonStyle" :src="config.previousButton">
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                /></svg>
+              </button> 
+              <button @click="next">
+                <img v-if="config.nextButton" :style="config.buttonStyle" :src="config.nextButton">
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="m8.25 4.5l7.5 7.5l-7.5 7.5"
+                /></svg>
+              </button>
+            </div>
+          </div>
+        </template>
         <template #item="{ item }">
           <template v-if="(config.itemLayout ?? 'reco-slider-slot') === 'reco-slider-slot'">
             <slot v-if="item.id" :key="item.id" name="reco-slider-item" :item="item" />
@@ -49,18 +79,36 @@ const items = computed(() => slider.results.data.value as Product[][])
           </template>
         </template>
         <template #previous-btn="scope">
-          <template v-if="config.previousButton">
+          <template v-if="config.previousButton && config.arrowPlacement === 'inside'">
             <button class="z-[10]" @click="scope.click">
-              <img :style="config.buttonStyle" :src="config.previousButton">
+              <img v-if="config.previousButton" :style="config.buttonStyle" :src="config.previousButton">
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              /></svg>
             </button>
           </template>
+          <div v-else />
         </template>
         <template #next-btn="scope">
-          <template v-if="config.nextButton">
+          <template v-if="config.nextButton && config.arrowPlacement === 'inside'">
             <button @click="scope.click">
-              <img :style="config.buttonStyle" :src="config.nextButton">
+              <img v-if="config.nextButton" :style="config.buttonStyle" :src="config.nextButton">
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="m8.25 4.5l7.5 7.5l-7.5 7.5"
+              /></svg>
             </button>
           </template>
+          <div v-else />
         </template>
       </Slider>
     </div>
