@@ -478,6 +478,7 @@ export interface FetchCriteriaValuesReturn {
 
 export interface StructuredRecommender {
   results: FilterResults;
+  activeFiltersCount:ComputedRef<number>;
   count: ComputedRef<number>;
   limit: Ref<number>;
   sort: Ref<string>;
