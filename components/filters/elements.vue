@@ -44,11 +44,14 @@ const hasLabelSlot = computed(() => {
 })
 
 const hasSearch = computed(() => {
-  const instance = getCurrentInstance()
-  return !!instance!.props.elements[0].props.searchable
+  props.elements.forEach(({ props }) => {
+    if (props.searchable) {
+      return true
+    }
+  })
+  return false
 })
 
-const displayMore = ref(false)
 </script>
 
 <template>
@@ -68,7 +71,6 @@ const displayMore = ref(false)
           :label-class="!hasLabelSlot ? labelClass : ''"
           :wrapper-div="hasSearch"
           :wrapper-style="hasSearch ? parameters.style : ''"
-          :display-more="displayMore"
         >
           <template #checkbox="scope">
             <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set">

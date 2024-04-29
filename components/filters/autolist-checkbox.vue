@@ -41,7 +41,8 @@ const props = withDefaults(defineProps<{
   useTranslation: false,
   displayCount: true,
   searchable: false,
-  searchPlaceholder: 'Search...'
+  searchPlaceholder: 'Search...',
+  displayMore: false
 })
 
 const search = ref('')
