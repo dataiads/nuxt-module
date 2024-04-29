@@ -52,6 +52,7 @@ const hasSearch = computed(() => {
   return false
 })
 
+const displayMore = ref(false)
 </script>
 
 <template>
