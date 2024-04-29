@@ -75,7 +75,10 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         class="flex-none"
         :style="layoutConfig.mainReco.filterStyle"
       >
-        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+        <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+          <span>
+            {{ layoutConfig.mainReco.filtersTitle }}
+          </span>
           <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
 
@@ -140,7 +143,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         class="shrink-0"
         :style="layoutConfig.mainReco.filterStyle"
       >
-      <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
           <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
         </div>
         <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
@@ -179,9 +182,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
-        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
-          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
-        </div>
+          <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+            <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
+          </div>
           <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
 
@@ -214,9 +217,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           class="shrink-0"
           :style="layoutConfig.mainReco.filterStyle"
         >
-        <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
-          <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
-        </div>
+          <div id="filter-header-btn" :style="layoutConfig.mainReco.filtersTitleStyle">
+            <CustomLayoutFiltersButtonReset :config="layoutConfig.mainReco" />
+          </div>
           <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
         </div>
       </div>
