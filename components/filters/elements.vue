@@ -97,7 +97,7 @@ const displayMore = ref(false)
             </slot>
           </template>
         </FiltersAutolistCheckbox>
-        <button v-if="props.seeMore" :key="props" class="sticky bottom-0" @click="displayMore = !displayMore">
+        <button v-if="props.seeMore" :key="props" class="filters-btn-see-more sticky bottom-0" @click="displayMore = !displayMore">
           {{ displayMore ? props.seeLessText : props.seeMoreText }}
         </button>
       </template>
