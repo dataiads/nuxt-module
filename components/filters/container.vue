@@ -99,7 +99,6 @@ const removeAllRulesFromGroups = (groups: string[]) => {
           :remove-all-filter="() => removeAllRulesFromGroups(getGroups(filterParam))"
         >
           <FiltersElements
-            :style="filterParam.style"
             :filter="filter"
             :elements="filterParam.elements"
             :parameters="filterParam"
