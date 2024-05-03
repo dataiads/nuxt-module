@@ -53,13 +53,6 @@ const set = (v: any) => {
   }
 }
 
-const binder = computed({
-  get: () => get(),
-  set: (val) => {
-    set(val)
-  }
-})
-
 </script>
 
 <template>
