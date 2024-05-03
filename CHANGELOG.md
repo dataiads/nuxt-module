@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.305](https://github.com/dataiads/nuxt-module/compare/v0.2.304...v0.2.305) (2024-04-29)
+
+### [0.2.304](https://github.com/dataiads/nuxt-module/compare/v0.2.293...v0.2.304) (2024-04-25)
+
+
+### Features
+
+* :sparkles: Custom scripts with custom attrs. ([db1b786](https://github.com/dataiads/nuxt-module/commit/db1b786fd4054b57c372832954c787233f0c510f))
+* **Breadcrumbs:** new component ([cd636fc](https://github.com/dataiads/nuxt-module/commit/cd636fc9914ad90f90c347542957bc7d764b4a4d))
+* **FiltersContentHeader:** add append title ([c28f4f4](https://github.com/dataiads/nuxt-module/commit/c28f4f4529c978da351080e9a1aec563aa7f6fab))
+* **SearchClient:** new component ([3c57bc1](https://github.com/dataiads/nuxt-module/commit/3c57bc1f3f704930e8199df4a7ccd7ae4a49ca5e))
+
+
+### Bug Fixes
+
+* **FiltersContentHeader:** Dynamic label value ([c9b5a38](https://github.com/dataiads/nuxt-module/commit/c9b5a38336215b79508e13dfdc944365a66d16f6))
+
 ### [0.2.303](https://github.com/dataiads/nuxt-module/compare/v0.2.302...v0.2.303) (2024-04-19)
 
 ### [0.2.302](https://github.com/dataiads/nuxt-module/compare/v0.2.301...v0.2.302) (2024-04-19)

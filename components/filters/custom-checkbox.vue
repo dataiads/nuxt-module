@@ -31,17 +31,20 @@ const binderGenerator = () => computed({
 })
 
 const set = (val: any) => {
-  console.log(val)
   if (val) {
     props.filter.pushRule(props.group, props.criteria, props.operator, props.value)
   } else {
     props.filter.removeRule(props.group, props.criteria, props.operator, props.value)
   }
 }
+
+const get = () => {
+  return props.filter.hasRule(props.group, props.criteria, props.operator, props.value)
+}
 </script>
 
 <template>
   <div :class="props.class">
-    <slot :id="uid" name="customCheckbox" :binder-generator="binderGenerator" :set="set" />
+    <slot :id="uid" name="customCheckbox" :binder-generator="binderGenerator" :set="set" :get="get" />
   </div>
 </template>
