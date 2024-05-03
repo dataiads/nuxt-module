@@ -270,7 +270,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'colors'; // Le nom du composant
+      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'colors' | 'rating'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
     style: StyleValue;
@@ -543,6 +543,7 @@ export interface RecoSliderParams {
   style: StyleValue;
   itemLayout: ItemLayout;
   itemStyle: RecoItemStyleParams;
+  arrowPlacement: 'inside' | 'outside';
 }
 
 export interface CrossSellParams {

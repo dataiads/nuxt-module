@@ -67,6 +67,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
       v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
         layoutConfig.mainReco.filtersDisplay === 'right-high'
       "
+      id="filters-high"
       class="flex"
     >
       <div

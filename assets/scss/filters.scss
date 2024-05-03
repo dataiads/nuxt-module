@@ -1,0 +1,21 @@
+.filters-color-selected {
+  @apply ring-2 ring-black ring-offset-1
+}
+
+.filters-rating {
+  & label {
+    @apply flex items-center cursor-pointer
+  }
+
+  & span {
+    @apply ml-2
+  }
+}
+
+.filters-rating-star__full, .filters-rating-star__empty {
+  @apply w-5 h-5
+}
+
+.filters-rating-star__empty {
+  @apply text-gray-300
+}
