@@ -44,19 +44,14 @@ const hasLabelSlot = computed(() => {
 })
 
 const hasSearch = computed(() => {
-  props.elements.forEach(({ props }) => {
-    if (props.searchable) {
-      return true
-    }
-  })
-  return false
+  return props.elements.find(({ props }) => props.searchable)
 })
 
 const displayMore = ref(false)
 </script>
 
 <template>
-  <div :style="!hasSearch ? '' : parameters.style">
+  <div :style="hasSearch ? '' : parameters.style">
     <template v-for="{ component, props } in elements" :key="props">
       <div v-if="props.subTitle" :key="'subtitle' + props.subTitle" class="text-sm" :style="props.subTitleStyle">
         {{ props.subTitle }}
@@ -72,6 +67,7 @@ const displayMore = ref(false)
           :label-class="!hasLabelSlot ? labelClass : ''"
           :wrapper-div="hasSearch"
           :wrapper-style="hasSearch ? parameters.style : ''"
+          :display-more="displayMore"
         >
           <template #checkbox="scope">
             <slot name="checkbox" :info="{ id: scope.info.id, type: scope.info.type }" :get="scope.get" :set="scope.set">
@@ -97,7 +93,7 @@ const displayMore = ref(false)
             </slot>
           </template>
         </FiltersAutolistCheckbox>
-        <button v-if="props.seeMore" :key="props" class="filters-btn-see-more sticky bottom-0" @click="displayMore = !displayMore">
+        <button v-if="props.seeMore" :key="props" class="filters-btn-see-more" @click="displayMore = !displayMore">
           {{ displayMore ? props.seeLessText : props.seeMoreText }}
         </button>
       </template>

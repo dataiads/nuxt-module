@@ -91,7 +91,7 @@ const sortedValues = computed(() => {
       v-model="search"
       type="search"
       :placeholder="searchPlaceholder"
-      class="sticky top-0 w-full"
+      class="sticky top-0 w-full mb-2"
       :class="searchInputClass"
     >
   </slot>
