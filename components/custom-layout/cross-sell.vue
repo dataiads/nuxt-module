@@ -109,7 +109,7 @@ if (props.config.mode === 'auto') {
 <template>
   <div v-if="items.length" :style="config.style">
     <div v-if="config.title" class="flex-shrink-0" :style="config.titleStyle">
-      {{ config.title }}
+      <DynamicLabel :value="config.title" />
     </div>
     <Slider v-if="config.sliderMode" :class="{ 'xl:container mx-auto': centerItems }" :scroller-class="centerItems ? ['mx-auto'] : []" v-bind="sliderProps" :items="items">
       <template #item="{ item }">
