@@ -27,6 +27,8 @@ const sliderProps = computed(() => ({
 }))
 
 const items = computed(() => slider.results.data.value as Product[][])
+
+const arrowPlacement = computed(() => !props.config.arrowPlacement ? 'inside' : props.config.arrowPlacement)  
 </script>
 
 <template>
@@ -38,10 +40,10 @@ const items = computed(() => slider.results.data.value as Product[][])
           <div
             v-if="config.title"
             :style="config.titleStyle" 
-            :class="{ 'flex justify-between': config.arrowPlacement === 'outside' }"
+            :class="{ 'flex justify-between': arrowPlacement === 'outside' }"
           >
             <DynamicLabel :value="config.title" />
-            <div v-if="config.arrowPlacement === 'outside'">
+            <div v-if="arrowPlacement === 'outside'">
               <button @click="previous()">
                 <img v-if="config.previousButton" :style="config.buttonStyle" :src="config.previousButton">
                 <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
@@ -79,7 +81,7 @@ const items = computed(() => slider.results.data.value as Product[][])
           </template>
         </template>
         <template #previous-btn="scope">
-          <template v-if="config.previousButton && config.arrowPlacement === 'inside'">
+          <template v-if="config.previousButton && arrowPlacement === 'inside'">
             <button class="z-[10]" @click="scope.click">
               <img v-if="config.previousButton" :style="config.buttonStyle" :src="config.previousButton">
               <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
@@ -95,7 +97,7 @@ const items = computed(() => slider.results.data.value as Product[][])
           <div v-else />
         </template>
         <template #next-btn="scope">
-          <template v-if="config.nextButton && config.arrowPlacement === 'inside'">
+          <template v-if="config.nextButton && arrowPlacement === 'inside'">
             <button @click="scope.click">
               <img v-if="config.nextButton" :style="config.buttonStyle" :src="config.nextButton">
               <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path
