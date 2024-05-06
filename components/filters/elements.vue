@@ -229,6 +229,7 @@ const displayMore = ref(false)
           </span>
         </template>
       </FiltersCheckbox>
+      <FiltersSwitch v-else-if="component === 'switch'" :key="`switch-${props}`" v-bind="props" :filter="filter" />
       <slot v-else :name="`filter_${parameters.title}`" />
     </template>
   </div>
