@@ -31,10 +31,10 @@ const binderGenerator = () => computed({
 })
 
 const set = (val: any) => {
-  if (val) {
-    props.filter.pushRule(props.group, props.criteria, props.operator, props.value)
+  if (props.filter.hasRule(props.group, props.criteria, props.operator, val)) {
+    props.filter.removeRule(props.group, props.criteria, props.operator, val)
   } else {
-    props.filter.removeRule(props.group, props.criteria, props.operator, props.value)
+    props.filter.pushRule(props.group, props.criteria, props.operator, val)
   }
 }
 
