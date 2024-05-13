@@ -153,6 +153,8 @@ const displayMore = ref(false)
           :key="'color_' + key"
           :filter="filter"
           v-bind="Object.fromEntries(Object.entries(props).filter(([key, value]) => value !== 'text'))"
+          criteria="color"
+          operator="CONTAINS_CI"
           :value="key"
         >
           <template #customCheckbox="{ set, get }">
