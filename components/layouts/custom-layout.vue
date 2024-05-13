@@ -173,52 +173,56 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         </template>
       </CustomLayoutInserts>
 
-      <div id="filters" class="flex flex-row w-full">
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-            {{ layoutConfig.mainReco.filtersTitle }}
-          </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
-        </div>
-
-        <div id="filters-content" class="grow">
-          <div id="filters-content-header">
-            <slot name="filters-content-header" />
+      <div id="filters" class="flex flex-col">
+        <slot name="filters-header" />
+      
+        <div class="flex flex-row w-full">
+          <div
+            v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
+            id="filters-aside"
+            class="shrink-0"
+            :style="layoutConfig.mainReco.filterStyle"
+          >
+            <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+              {{ layoutConfig.mainReco.filtersTitle }}
+            </div>
+            <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
           </div>
 
-          <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
-            <template #filters-content-grid-item="ctx">
-              <slot name="filters-content-grid-item" v-bind="ctx" />
-            </template>
-            <template #filters-no-results>
-              <slot name="filters-no-results">
-                <div class="text-center">
-                  {{ $t('noResultsCatalog') }}
-                </div>
-              </slot>
-            </template>
-          </CustomLayoutCatalogGrid>
+          <div id="filters-content" class="grow">
+            <div id="filters-content-header">
+              <slot name="filters-content-header" />
+            </div>
 
-          <div id="filters-pagination">
-            <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
-          </div>
-        </div>
+            <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
+              <template #filters-content-grid-item="ctx">
+                <slot name="filters-content-grid-item" v-bind="ctx" />
+              </template>
+              <template #filters-no-results>
+                <slot name="filters-no-results">
+                  <div class="text-center">
+                    {{ $t('noResultsCatalog') }}
+                  </div>
+                </slot>
+              </template>
+            </CustomLayoutCatalogGrid>
 
-        <div
-          v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
-          id="filters-aside"
-          class="shrink-0"
-          :style="layoutConfig.mainReco.filterStyle"
-        >
-          <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
-            {{ layoutConfig.mainReco.filtersTitle }}
+            <div id="filters-pagination">
+              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+            </div>
           </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+
+          <div
+            v-if="layoutConfig.mainReco.filtersDisplay === 'right'"
+            id="filters-aside"
+            class="shrink-0"
+            :style="layoutConfig.mainReco.filterStyle"
+          >
+            <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+              {{ layoutConfig.mainReco.filtersTitle }}
+            </div>
+            <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+          </div>
         </div>
       </div>
     </template>
