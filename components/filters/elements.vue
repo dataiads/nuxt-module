@@ -48,6 +48,20 @@ const hasSearch = computed(() => {
 })
 
 const displayMore = ref(false)
+
+const moreElementsThanLimit = (criteria: string, limit: number) => {
+  const { data: availableValues } = props.filter.fetchCriteriaValues(criteria)
+  
+  if (availableValues.value == null) {
+    return false
+  }
+
+  const keys = Object.keys(availableValues.value)
+
+  if (keys.length > limit) {
+    return true
+  }
+}
 </script>
 
 <template>
@@ -93,7 +107,7 @@ const displayMore = ref(false)
             </slot>
           </template>
         </FiltersAutolistCheckbox>
-        <button v-if="props.seeMore" :key="props" class="filters-btn-see-more" @click="displayMore = !displayMore">
+        <button v-if="props.seeMore && moreElementsThanLimit(props.criteria, props.limit)" :key="props" class="filters-btn-see-more" @click="displayMore = !displayMore">
           {{ displayMore ? props.seeLessText : props.seeMoreText }}
         </button>
       </template>
