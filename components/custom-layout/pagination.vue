@@ -54,7 +54,7 @@ if (!paginationType) {
         alt="load more results"
         @click="filter.loadMore"
       >
-        {{ config.paginationLoadMoreText }}
+        <DynamicLabel :value="config.paginationLoadMoreText" />
       </button>
     </template>
 

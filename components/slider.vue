@@ -182,6 +182,7 @@ const largeEnoughToScroll = computed(() => {
 
 <template>
   <div v-if="props.items" :class="mainClass" @mouseenter="hover = true" @mouseleave="hover = false">
+    <slot :next="next" :previous="previous" :left-arrived="(props.direction === 'horizontal' && x === 0)" />
     <div :class="previousClass">
       <div :class="previousContentClass">
         <slot v-if="(props.direction === 'horizontal' && x > 0) || (props.direction === 'vertical' && y > 0)" name="previous-btn" :click="previous">

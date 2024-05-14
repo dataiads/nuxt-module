@@ -70,6 +70,7 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
       v-if="layoutConfig.mainReco.filtersDisplay === 'left-high' ||
         layoutConfig.mainReco.filtersDisplay === 'right-high'
       "
+      id="filters-high"
       class="flex"
     >
       <div
@@ -121,6 +122,16 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
               <template #filters-content-grid-item="ctx">
                 <slot name="filters-content-grid-item" v-bind="ctx" />
               </template>
+              <template #filters-no-results>
+                <slot name="filters-no-results">
+                  <div class="text-center">
+                    {{ $t('noResultsCatalog') }}
+                  </div>
+                </slot>
+              </template>
+              <template v-for="(_, name) in $slots" #[name]="scope">
+                <slot :name="name" v-bind="scope" />
+              </template>
             </CustomLayoutCatalogGrid>
 
             <div id="filters-pagination">
@@ -168,7 +179,7 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
         </template>
       </CustomLayoutInserts>
 
-      <div id="filters" class="flex flex-row">
+      <div id="filters" class="flex flex-row w-full">
         <div
           v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
           id="filters-aside"
@@ -189,6 +200,16 @@ const showMainProduct = computed(() => !!product.value && !(routeState.value ===
           <CustomLayoutCatalogGrid :config="layoutConfig.mainReco">
             <template #filters-content-grid-item="ctx">
               <slot name="filters-content-grid-item" v-bind="ctx" />
+            </template>
+            <template #filters-no-results>
+              <slot name="filters-no-results">
+                <div class="text-center">
+                  {{ $t('noResultsCatalog') }}
+                </div>
+              </slot>
+            </template>
+            <template v-for="(_, name) in $slots" #[name]="scope">
+              <slot :name="name" v-bind="scope" />
             </template>
           </CustomLayoutCatalogGrid>
 

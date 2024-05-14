@@ -1,6 +1,6 @@
 {
   "name": "dataiads-nuxt-layer",
-  "version": "0.2.290",
+  "version": "0.2.307",
   "type": "module",
   "description": "Nuxt layer for Dataiads pages",
   "main": "./nuxt.config.ts",
@@ -16,7 +16,7 @@
     "lint": "eslint --ext .ts,.vue .",
     "lint:fix": "eslint . --fix",
     "prepare": "nuxi prepare",
-    "release": "nuxi typecheck && standard-version && git push --follow-tags && yarn publish",
+    "release": "standard-version && git push --follow-tags",
     "release:beta": "yarn publish --tag beta"
   },
   "dependencies": {
@@ -53,6 +53,7 @@
   ],
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
-    "eslint": "^8.56.0"
+    "eslint": "^8.56.0",
+    "vue-tsc": "^2.0.13"
   }
 }
