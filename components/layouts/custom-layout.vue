@@ -26,11 +26,9 @@ onMounted(() => {
 })
 
 // global stylesheet from config
-if (layoutConfig?.global?.stylesheet) {
-  useHead({
-    style: [{ children: layoutConfig.global.stylesheet }]
-  })
-}
+useHead({
+  style: [{ children: () => layoutConfig.value?.global.stylesheet }]
+})
 const product = useProduct()
 
 const route = useRoute()

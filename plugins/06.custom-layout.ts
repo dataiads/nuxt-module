@@ -7,8 +7,6 @@ export default defineNuxtPlugin(async () => {
   const lpoConfig = useLpoConfig()
   const layoutConfig = lpoConfig?.customLayout
 
-  console.log('LPOCONF', lpoConfig)
-
   if (lpoConfig?.variation !== 'custom-layout' || !layoutConfig) {
     return {}
   }
