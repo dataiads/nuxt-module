@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.307](https://github.com/dataiads/nuxt-module/compare/v0.2.306...v0.2.307) (2024-05-14)
+
+
+### Features
+
+* **DrawerMobileMenu:** add side ([#85](https://github.com/dataiads/nuxt-module/issues/85)) ([87c2325](https://github.com/dataiads/nuxt-module/commit/87c2325e0c6d9943685c676400b503d8efc35185))
+
+
+### Bug Fixes
+
+* **FiltersColor:** fix color activation ([#91](https://github.com/dataiads/nuxt-module/issues/91)) ([c8cdf5c](https://github.com/dataiads/nuxt-module/commit/c8cdf5ce39e044a73eca2d1255f71f1bbe40fe97))
+* **RecoSlider:** default value for arrow placement ([#87](https://github.com/dataiads/nuxt-module/issues/87)) ([fb3aa30](https://github.com/dataiads/nuxt-module/commit/fb3aa30241c4ebff369a63db004536ac39702ea5))
+
 ### [0.2.306](https://github.com/dataiads/nuxt-module/compare/v0.2.305...v0.2.306) (2024-05-03)
 
 ### [0.2.305](https://github.com/dataiads/nuxt-module/compare/v0.2.304...v0.2.305) (2024-04-29)
