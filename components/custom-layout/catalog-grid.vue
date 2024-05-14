@@ -26,6 +26,7 @@ const onIntersect = () => {
   }
 }
 
+const layoutConfig = useLpoConfig().customLayout
 </script>
 
 
@@ -33,6 +34,11 @@ const onIntersect = () => {
   <div v-if="customLayout?.filter.results?.data?.value?.length" id="catalog-grid" :style="config.gridStyle">
     <template v-for="(item, index) in customLayout.filter.results.data.value" :key="item.id ? item.id : JSON.stringify(item)">
       <slot v-if="(config.itemLayout ?? 'filters-content-grid-item') === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" :index="index" />
+      <CustomLayoutInserts v-if="index === layoutConfig.mainReco.gridInsertIndex && layoutConfig.mainReco.gridInsertParams" insert-position="catalog" :config="layoutConfig.mainReco.gridInsertParams">
+        <template v-for="(_, name) in $slots" #[name]="scope">
+          <slot :name="name" v-bind="scope" />
+        </template>
+      </CustomLayoutInserts>
       <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" :index="index" />
       <CustomLayoutRecoItem v-else-if="config.itemLayout === 'default'" :config="{ style: config.itemStyle, item }" />
     </template>

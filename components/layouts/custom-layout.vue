@@ -126,6 +126,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   </div>
                 </slot>
               </template>
+              <template v-for="(_, name) in $slots" #[name]="scope">
+                <slot :name="name" v-bind="scope" />
+              </template>
             </CustomLayoutCatalogGrid>
 
             <div id="filters-pagination">
@@ -201,6 +204,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   {{ $t('noResultsCatalog') }}
                 </div>
               </slot>
+            </template>
+            <template v-for="(_, name) in $slots" #[name]="scope">
+              <slot :name="name" v-bind="scope" />
             </template>
           </CustomLayoutCatalogGrid>
 
