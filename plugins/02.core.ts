@@ -8,15 +8,29 @@ import {
   useFetch,
   useLazyFetch
 } from '#app'
+import localLabel from '~/composables/local-label'
 
 /* fetch main product data for this page
   handles compatibility with url based product match
   when no lpoid parameter is present
  */
-function fetchPageData (u: URL) {
-  const lpoid = u.searchParams.get('lpoid')
+function fetchPageData (u: URL, conf?: BaseProductConfig) {
 
-  if (lpoid == null) {
+  const baseProductMode = conf?.mode || 'auto'
+
+  let lpoid: string = ''
+  if (baseProductMode == 'manual' && conf?.productId) {
+    lpoid = conf.productId
+  } else if (baseProductMode == 'none') {
+    lpoid = 'none'
+  } else {
+    const urlId = u.searchParams.get('lpoid')
+    if (urlId) {
+      lpoid = urlId
+    }
+  }
+
+  if (!lpoid) {
     // backward compatibility: use path matching when no lpoid
     return useFetch<PageData>('/api/page-data', {
       params: {
@@ -33,14 +47,12 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const runtimeConfig = useRuntimeConfig()
   const lpoConfig = useLpoConfig()
   const product = useState<Product | undefined>('product')
-  const collectorData = useState<AssocString | undefined>('collectorData')
   const mirroredDomain = useMirroredDomain()
 
   if (!runtimeConfig.public.mirroredDomain) {
     throw new Error('mirroredDomain is expected in public runtime config')
   }
 
-  // force robots noindex meta tag
   // the associated canonical link is provided by the server using a header
   useHead({
     htmlAttrs: {
@@ -49,10 +61,14 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'robots', content: 'noindex' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   })
+
+  // force robots noindex meta tag unless specified
+  if (!lpoConfig.seo || !lpoConfig.seo.enableIndexing) {
+    useHead({ meta: [{ name: 'robots', content: 'noindex' }] })
+  }
 
   // register error handlers
   if (!process.server) {
@@ -92,7 +108,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   }
 
   const u = new URL(pageUrl)
-  const { data: pageData, error } = await fetchPageData(u)
+  const { data: pageData, error } = await fetchPageData(u, lpoConfig.baseProduct)
   clearTimeout(dataTimeout)
   if (error.value) {
     errorRedirect(error.value, mirroredDomain)
@@ -104,15 +120,26 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const data = pageData.value
   product.value = data?.product
-  collectorData.value = data?.collectorData
 
   if (!process.server && data?.product) {
     injectProductStructuredData(data.product)
   }
 
-  useHead({
-    title: data?.product.extraData?.title ?? data?.product.data.title
-  })
+  if (lpoConfig.seo) {
+    if (lpoConfig.seo.description) {
+      useHead({ meta: [{ name: 'description', content: localLabel(lpoConfig.seo.description, data?.product?.data || {}) }] })
+    }
+    if (lpoConfig.seo.title) {
+      useHead({ title: localLabel(lpoConfig.seo.title, data?.product?.data || {}) })
+    }
+    if (lpoConfig.seo.keywords) {
+      useHead({ meta: [{ name: 'keywords', content: localLabel(lpoConfig.seo.keywords, data?.product?.data || {}) }] })
+    }
+  } else {
+    useHead({
+      title: data?.product?.extraData?.title ?? data?.product?.data.title
+    })
+  }
 
   return {
     provide: {

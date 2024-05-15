@@ -115,6 +115,8 @@ function deserializeServerConfig (
     productHook: StringLoader,
     filterParams: JSONLoader,
     customLayout: JSONLoader,
+    baseProduct: JSONLoader,
+    seo: JSONLoader,
     // unused but kept for compat compatibility
     breadcrumbs: JSONLoader,
     carousel: JSONLoader

@@ -107,7 +107,6 @@ declare global {
   export interface PageData {
     product: Product;
     config: ServerConfig;
-    collectorData: AssocString;
   }
 
   export interface Order {
@@ -225,6 +224,18 @@ declare global {
     src: string;
   }
 
+  export interface BaseProductConfig {
+    mode: 'auto' | 'manual' | 'none';
+    productId: string;
+  }
+
+  export interface SeoConfig {
+    enableIndexing: boolean;
+    title: string;
+    description: string;
+    keywords: string;
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     mirroredDomainOverride?: string;
@@ -261,6 +272,8 @@ declare global {
     customScripts?: CustomScripts[];
     productHook?: string;
     customLayout: CustomLayout;
+    baseProduct: BaseProductConfig;
+    seo?: SeoConfig;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;

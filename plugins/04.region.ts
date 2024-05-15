@@ -11,7 +11,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       storeCode = route.params.store?.[0] ?? route.params.store
     }
 
-    const productId = useProduct().value.id
+    const productId = useProduct().value?.id
 
     if (runtimeConfig.public.fetchRegion && storeCode && productId) {
       $fetch<Region>(`/api/products/${productId}/regions/${storeCode.padStart(6, '0')}`).then((res) => {

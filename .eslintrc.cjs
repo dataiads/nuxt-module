@@ -49,5 +49,6 @@ module.exports = {
       }
     ],
     'vue/padding-line-between-blocks': ['error', 'always']
+
   }
 }

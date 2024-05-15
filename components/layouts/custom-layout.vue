@@ -25,14 +25,15 @@ onMounted(() => {
   })
 })
 
-// global stylesheet from confi
+// global stylesheet from config
 useHead({
   style: [{ children: () => layoutConfig.value?.global.stylesheet }]
 })
+const product = useProduct()
 
 const route = useRoute()
 const routeState = computed(() => route.query.state)
-const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct'))
+const showMainProduct = computed(() => !!product.value && !(routeState.value === 'hideMainProduct'))
 </script>
 
 <template>
@@ -269,7 +270,6 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         >
           <div class="fixed inset-0 bg-black/25" />
         </TransitionChild>
-   
         <div class="fixed inset-0">
           <TransitionChild
             as="template"
