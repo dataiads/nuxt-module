@@ -8,6 +8,7 @@ import {
   useFetch,
   useLazyFetch
 } from '#app'
+import localLabel from '~/composables/local-label'
 
 /* fetch main product data for this page
   handles compatibility with url based product match
@@ -52,7 +53,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     throw new Error('mirroredDomain is expected in public runtime config')
   }
 
-  // force robots noindex meta tag
   // the associated canonical link is provided by the server using a header
   useHead({
     htmlAttrs: {
@@ -61,10 +61,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'robots', content: 'noindex' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   })
+
+  console.log('SEO: ', lpoConfig.seo)
+
+  // force robots noindex meta tag unless specified
+  if (!lpoConfig.seo || !lpoConfig.seo.enableIndexing) {
+    useHead({ meta: [{ name: 'robots', content: 'noindex' }] })
+  }
 
   // register error handlers
   if (!process.server) {
@@ -121,7 +127,17 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     injectProductStructuredData(data.product)
   }
 
-  if (data?.product) {
+  if (lpoConfig.seo) {
+    if (lpoConfig.seo.description) {
+      useHead({ meta: [{ name: 'description', content: localLabel(lpoConfig.seo.description, data?.product.data || {}) }] })
+    }
+    if (lpoConfig.seo.title) {
+      useHead({ title: localLabel(lpoConfig.seo.title, data?.product.data || {}) })
+    }
+    if (lpoConfig.seo.keywords) {
+      useHead({ meta: [{ name: 'keywords', content: localLabel(lpoConfig.seo.keywords, data?.product.data || {}) }] })
+    }
+  } else {
     useHead({
       title: data?.product.extraData?.title ?? data?.product.data.title
     })

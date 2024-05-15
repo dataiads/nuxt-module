@@ -229,6 +229,13 @@ declare global {
     productId: string;
   }
 
+  export interface SeoConfig {
+    enableIndexing: boolean;
+    title: string;
+    description: string;
+    keywords: string;
+  }
+
   // Add available LPO Config fields here.
   export interface LPOConfig {
     mirroredDomainOverride?: string;
@@ -266,6 +273,7 @@ declare global {
     productHook?: string;
     customLayout: CustomLayout;
     baseProduct: BaseProductConfig;
+    seo?: SeoConfig;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
