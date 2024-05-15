@@ -65,8 +65,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     ]
   })
 
-  console.log('SEO: ', lpoConfig.seo)
-
   // force robots noindex meta tag unless specified
   if (!lpoConfig.seo || !lpoConfig.seo.enableIndexing) {
     useHead({ meta: [{ name: 'robots', content: 'noindex' }] })
