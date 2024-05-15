@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.16",
+    "@nuxt/content": "^2.12.1",
     "@nuxt/image": "^1.1.0",
     "@nuxt/kit": "^3.8.2",
     "@nuxt/schema": "^3.8.2",

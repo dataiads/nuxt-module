@@ -5,11 +5,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   // @ts-ignore
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/image',
-    '@vueuse/nuxt'
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/nuxt', "@nuxt/content"],
 
 
   app: {
