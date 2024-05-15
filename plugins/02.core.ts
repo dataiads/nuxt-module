@@ -127,17 +127,17 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   if (lpoConfig.seo) {
     if (lpoConfig.seo.description) {
-      useHead({ meta: [{ name: 'description', content: localLabel(lpoConfig.seo.description, data?.product.data || {}) }] })
+      useHead({ meta: [{ name: 'description', content: localLabel(lpoConfig.seo.description, data?.product?.data || {}) }] })
     }
     if (lpoConfig.seo.title) {
-      useHead({ title: localLabel(lpoConfig.seo.title, data?.product.data || {}) })
+      useHead({ title: localLabel(lpoConfig.seo.title, data?.product?.data || {}) })
     }
     if (lpoConfig.seo.keywords) {
-      useHead({ meta: [{ name: 'keywords', content: localLabel(lpoConfig.seo.keywords, data?.product.data || {}) }] })
+      useHead({ meta: [{ name: 'keywords', content: localLabel(lpoConfig.seo.keywords, data?.product?.data || {}) }] })
     }
   } else {
     useHead({
-      title: data?.product.extraData?.title ?? data?.product.data.title
+      title: data?.product?.extraData?.title ?? data?.product?.data.title
     })
   }
 
