@@ -6,5 +6,5 @@
 ## Installation
 
 ```bash
-npx shadcn-vue@latest add carousel
+npx shadcn-vue@latest add breadcrumb
 ```

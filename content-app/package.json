@@ -10,8 +10,11 @@
   "dependencies": {
     "@nuxt/content": "^2.12.1",
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel": "^8.0.4",
+    "embla-carousel-vue": "^8.0.4",
     "lucide-vue-next": "^0.378.0",
     "nuxt": "^3.11.2",
     "radix-vue": "^1.7.4",
@@ -21,6 +24,7 @@
   },
   "devDependencies": {
     "@nuxt-themes/typography": "^1.0.1",
+    "dataiads-nuxt-layer": "^0.2.307",
     "nuxt-icon": "^0.6.10",
     "shiki": "^1.5.2"
   }

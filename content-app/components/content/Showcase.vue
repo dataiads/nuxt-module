@@ -35,9 +35,7 @@ onMounted(async () => {
         </div>
       </TabsContent>
       <TabsContent value="code" class="relative">
-        <ProseCode language="vue" code="npx shadcn-vue@latest add carousel">
-          npx shadcn-vue@latest add carousel
-        </ProseCode>
+        <BlockCopyButton class="absolute top-4 right-8" :code="rawString" />
         <div
           v-if="codeHtml"
           class="language-vue [&_pre]:rounded-md [&>pre]:p-4 font-mono text-sm [&_pre]:max-h-[350px] [&_pre]:my-0 [&_pre]:overflow-auto"

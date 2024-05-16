@@ -5,7 +5,7 @@ const mirroredDomain = 'https://www.becquet.fr'
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
-  extends: ['../../nuxt-module', '@nuxt-themes/typography'],
+  extends: ['dataiads-nuxt-layer', '@nuxt-themes/typography'],
   content: {
     highlight: {
       preload: [
@@ -937,6 +937,10 @@ export default defineNuxtConfig({
           }
         : {}
     }
+  },
+  tailwindcss: {
+    cssPath: '~/assets/css/generic.scss',
+    configPath: 'tailwind.config.js'
   },
   nitro: {
     devProxy: {

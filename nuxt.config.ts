@@ -5,7 +5,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   // @ts-ignore
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/nuxt', "@nuxt/content"],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/nuxt'],
 
 
   app: {
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     cdnURL: process.env.CDN_URL || ''
   },
 
-  css: [resolve('./assets/css/tailwind.css')],
+  css: [],
 
   runtimeConfig: {
     public: {
@@ -135,13 +135,14 @@ export default defineNuxtConfig({
   },
 
   tailwindcss: {
+    cssPath: ['~/assets/css/generic.scss', { injectPosition: 'first' }],
     exposeConfig: true,
     config: {
       content: [
         resolve('./nuxt.config.ts'), // scan layer nuxt.config.ts for tailwind classes
         './nuxt.config.ts' // scan client nuxt.config.ts for tailwind classes
       ],
-      plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+      plugins: [require('@tailwindcss/typography')],
       theme: {
         extend: {
           transitionProperty: {
