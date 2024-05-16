@@ -281,7 +281,11 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
             leave-to="opacity-0 translate-x-full"
           >
             <DialogPanel :style="layoutConfig.mainReco.slideoverStyle" class="grid grid-rows-[auto_1fr_auto]">
-              <div class="flex justify-end">
+              <div class="flex flex-row justify-between items-end">
+                <div class="ml-3 " v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
+                  {{ layoutConfig.mainReco.filtersTitle }}
+                </div>
+                <div class="flex justify-end">
                 <img
                   v-if="layoutConfig.mainReco.slideoverCloseButton"
                   :src="layoutConfig.mainReco.slideoverCloseButton"
@@ -292,6 +296,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   close
                 </div>
               </div>
+
+              </div>
+        
               <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
               <CustomLayoutFiltersButtons :config="layoutConfig" />
             </DialogPanel>
