@@ -1,6 +1,6 @@
 # Layer
 
-::Showcase{name="DocsLayer"}
+::Showcase{name="DocsLayer" :responsive="false"}
 ::
 
 ## Installation

@@ -22,6 +22,7 @@ const { config, displayLayer, items, onScroll, customLayout } = useLayer()
         :opts="{
           align: 'start',
           loop: true,
+          slidesToScroll: 'auto'
         }"
       >
         <CarouselPrevious class="left-4 z-[20]" />

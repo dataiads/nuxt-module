@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const open = ref(false)
 const layoutConfig = useLpoConfig().customLayout
 const defineLayoutConfigLayer = () => {
   layoutConfig.layer = layoutConfig.layer = {
@@ -135,34 +134,13 @@ const defineLayoutConfigLayer = () => {
   }
 }
 defineLayoutConfigLayer()
+
+const route = useRoute()
+const componentName = computed(() => route.params.slug[0])
 </script>
 
 <template>
-  <header class="sticky z-40 top-0 bg-background/80 backdrop-blur-lg border-b border-border">
-    <div class="container flex h-14 max-w-screen-2xl items-center">
-      <Button class="relative h-8 w-full justify-start rounded-[0.5rem] bg-background text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64 ml-auto" variant="outline" @click="open = !open">
-        <span>
-          Search documentation...
-        </span>
-        <kbd
-          class="absolute pointer-events-none right-[0.3rem] top-[0.3rem] inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
-        >
-          <span class="text-xs">⌘</span>K
-        </kbd>
-      </Button>
-      <CommandSearch v-model="open" />
-    </div>
-  </header>
-  <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
-    <div class="py-6">
-      <nav>
-        <ContentNavigation v-slot="{ navigation }">
-          <DocsNavLink class="flex flex-col gap-4" :links="navigation" />
-        </ContentNavigation>
-      </nav>
-    </div>
-    <div class="xl:grid xl:grid-cols-[1fr,100px] xl:gap-5 py-6">
-      <slot />
-    </div>
+  <div class="w-fit flex justify-center mx-auto h-screen items-center">
+    <component :is="componentName" />
   </div>
 </template>
