@@ -124,6 +124,11 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   <div class="text-center">
                     {{ $t('noResultsCatalog') }}
                   </div>
+                  <div class="flex justify-center">
+                    <button class="reset-btn" @click="customLayout.filter.reset()">
+                      {{ $t('resetBtnCatalog') }}
+                    </button>
+                  </div>
                 </slot>
               </template>
               <template v-for="(_, name) in $slots" #[name]="scope">
@@ -202,6 +207,11 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
               <slot name="filters-no-results">
                 <div class="text-center">
                   {{ $t('noResultsCatalog') }}
+                </div>
+                <div class="flex justify-center">
+                  <button class="reset-btn" @click="customLayout.filter.reset()">
+                    {{ $t('resetBtnCatalog') }}
+                  </button>
                 </div>
               </slot>
             </template>
