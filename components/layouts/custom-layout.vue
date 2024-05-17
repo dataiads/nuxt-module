@@ -291,17 +291,22 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
             leave-to="opacity-0 translate-x-full"
           >
             <DialogPanel :style="layoutConfig.mainReco.slideoverStyle" class="grid grid-rows-[auto_1fr_auto]">
-              <div class="flex justify-end">
-                <img
-                  v-if="layoutConfig.mainReco.slideoverCloseButton"
-                  :src="layoutConfig.mainReco.slideoverCloseButton"
-                  :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
-                  @click="customLayout.toggleFiltersSlideover"
-                >
-                <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
-                  close
+              <div class="flex flex-row justify-between items-end">
+                <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle" class="ml-3">
+                  {{ layoutConfig.mainReco.filtersTitle }}
                 </div>
-              </div>
+                <div class="flex justify-end">
+                  <img
+                    v-if="layoutConfig.mainReco.slideoverCloseButton"
+                    :src="layoutConfig.mainReco.slideoverCloseButton"
+                    :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+                    @click="customLayout.toggleFiltersSlideover"
+                  >
+                  <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
+                    close
+                  </div>
+                </div>
+              </div>       
               <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
               <CustomLayoutFiltersButtons :config="layoutConfig" />
             </DialogPanel>
