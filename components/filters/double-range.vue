@@ -11,8 +11,9 @@ const props = withDefaults(
     placeholder?: string;
     min?: number;
     max?: number;
+    reverse?: boolean;
   }>(),
-  { min: 0, max: 1000, step: 5, trailling: '€', placeholder: '' }
+  { min: 0, max: 1000, step: 5, trailling: '€', placeholder: '', reverse: false}
 )
 
 
@@ -65,8 +66,8 @@ watchDebounced(
 </script>
 
 <template>
-  <div class="w-full py-2">
-    <div class="flex gap-2">
+  <div class="w-full py-2 flex flex-col">
+    <div class="flex gap-2" :class="{'order-1': !reverse, 'order-2': reverse}">
       <div class="relative flex-1">
         <input
           v-model="sliderMin"
@@ -98,7 +99,7 @@ watchDebounced(
         </slot>
       </div>
     </div>
-    <div class="range-slider h-[12px] mt-4 w-full relative">
+    <div class="range-slider h-[12px] mt-4 w-full relative" :class="{'order-2': !reverse, 'order-1': reverse}">
       <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
       <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
       <span class="absolute bg-primary h-[var(--double-range-height)] bottom-0 top-10" :style="{ ...progressStyle }">

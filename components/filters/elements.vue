@@ -150,6 +150,7 @@ const moreElementsThanLimit = (criteria: string, limit: number) => {
         :group="props.group || `${props.criteria}-${component}-filter`"
         :min="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.min !== undefined) ? criteriaValuesMinMax[props.criteria].min : props.min"
         :max="(props.autoMinMax && criteriaValuesMinMax?.[props.criteria]?.max !== undefined) ? criteriaValuesMinMax[props.criteria].max : props.max"
+        :reverse="props.reverse"
       >
         <template #text-min />
       </FiltersDoubleRange>
