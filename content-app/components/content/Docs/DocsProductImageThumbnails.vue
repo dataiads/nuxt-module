@@ -1,69 +1,51 @@
 <script setup lang="ts">
-import { ChevronRight, ChevronLeft } from 'lucide-vue-next'
-
-const product = useProduct()
-
-const api = ref()
-
-function setApi (val) {
-  api.value = val
-}
-
-const thumbnailApi = ref()
-const selectedIndex = ref()
-
-function onSelect () {
-  if (!api.value || !thumbnailApi.value) return
-  selectedIndex.value = api.value.selectedScrollSnap()
-  thumbnailApi.value.scrollTo(api.value.selectedScrollSnap())
-}
-
-function onThumbClick (index: number) {
-  if (!api.value || !thumbnailApi.value) return
-  api.value.scrollTo(index)
-}
-
-watchOnce(api, (api) => {
-  if (!api) return
-
-  onSelect()
-  api.on('select', onSelect)
-  api.on('reInit', onSelect)
-})
-
-const images = computed(() => product.value.data.additionalImageLinks )
+import { ChevronRight, ChevronLeft } from "lucide-vue-next";
+const { isDesktop, thumbnailApi, images, selectedIndex, onThumbClick, api } =
+  useProductImage();
 </script>
 
 <template>
-  <div class="flex gap-4">
+  <div class="flex max-w-[200px] flex-col lg:max-w-[400px] lg:flex-row">
     <Carousel
-      orientation="vertical"
-      class="relative max-w-[80px]"
-      :opts="{
-        align: 'start',
-      }"
-      @init-api="(val) => (thumbnailApi = val)"
-    >
-      <CarouselContent class="-mt-1 h-[420px]">
-        <CarouselItem v-for="(data, index) in images" :key="index" class="p-1 basis-auto shrink-1" @click="onThumbClick(index)">
-          <img class="border" :class="index === selectedIndex ? 'border-primary' : 'border-transparent'" :src="data">
-        </CarouselItem>
-      </CarouselContent>
-    </Carousel>
-    <Carousel
-      class="relative w-[200px]"
+      :orientation="isDesktop ? 'vertical' : 'horizontal'"
+      class="relative order-2 mt-4 flex-[1_0_auto] lg:order-1 lg:mr-4 lg:mt-0 lg:max-w-[80px]"
       :opts="{
         align: 'start',
         loop: true,
       }"
-      @init-api="setApi"
+      @init-api="(val) => (thumbnailApi = val)"
+    >
+      <CarouselContent class="justify-center">
+        <CarouselItem
+          v-for="(data, index) in images"
+          :key="index"
+          class="max-w-[80px] flex-auto"
+          @click="onThumbClick(index)"
+        >
+          <img
+            class="aspect-square w-full border"
+            :class="
+              index === selectedIndex ? 'border-primary' : 'border-transparent'
+            "
+            :src="data"
+          >
+        </CarouselItem>
+      </CarouselContent>
+    </Carousel>
+    <Carousel
+      class="relative self-start lg:order-2"
+      :opts="{
+        align: 'start',
+        loop: true,
+      }"
+      @init-api="(val) => (api = val)"
     >
       <CarouselPrevious class="absolute left-4 z-10">
         <ChevronLeft :stroke-width="1" />
       </CarouselPrevious>
       <CarouselContent>
         <CarouselItem v-for="(data, index) in images" :key="index">
-          <img :src="data">
+          <img :src="data" class="h-full w-full object-cover">
         </CarouselItem>
       </CarouselContent>
       <CarouselNext class="absolute right-4 z-10">

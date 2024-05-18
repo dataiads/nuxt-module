@@ -17,3 +17,8 @@ npx shadcn-vue@latest add carousel
 
 ::Showcase{name="DocsProductImageThumbnails"}
 ::
+
+### Hovering
+
+::Showcase{name="DocsProductImageHover"}
+::

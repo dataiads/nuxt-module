@@ -153,7 +153,7 @@ defineLayoutConfigLayer()
       <CommandSearch v-model="open" />
     </div>
   </header>
-  <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+  <div class="flex-1 items-start md:grid md:grid-cols-[120px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[120px_minmax(0,1fr)] px-4">
     <div class="py-6">
       <nav>
         <ContentNavigation v-slot="{ navigation }">
@@ -161,7 +161,7 @@ defineLayoutConfigLayer()
         </ContentNavigation>
       </nav>
     </div>
-    <div class="xl:grid xl:grid-cols-[1fr,100px] xl:gap-5 py-6">
+    <div class="xl:grid xl:grid-cols-[minmax(0,1fr)_16px] xl:gap-5 py-6">
       <slot />
     </div>
   </div>
