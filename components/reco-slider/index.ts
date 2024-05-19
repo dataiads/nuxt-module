@@ -1,0 +1,1 @@
+export { default as RecoSliderBtn } from './RecoSliderBtn.vue'
