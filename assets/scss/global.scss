@@ -1,0 +1,26 @@
+@use './filters.scss';
+
+:root {
+  --catalog-grid-cols: repeat(2, minmax(0, 1fr));
+  --md-catalog-grid-cols: repeat(2, minmax(0, 1fr));
+  --lg-catalog-grid-cols: repeat(3, minmax(0, 1fr));
+  --xl-catalog-grid-cols: repeat(4, minmax(0, 1fr));
+  --2xl-catalog-grid-cols: repeat(4, minmax(0, 1fr));
+  --3xl-catalog-grid-cols: repeat(4, minmax(0, 1fr));
+
+  --catalog-grid-gap: 1rem;
+  --md-catalog-grid-gap: 2rem;
+  --lg-catalog-grid-gap: 2rem;
+  --xl-catalog-grid-gap: 2rem;
+  --2xl-catalog-grid-gap: 2rem;
+  --3xl-catalog-grid-gap: 2rem;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
