@@ -102,20 +102,19 @@ watchDebounced(
     <div class="range-slider h-[12px] mt-4 w-full relative" :class="{'order-2': !reverse, 'order-1': reverse}">
       <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
       <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
-      <span class="absolute bg-primary h-[var(--double-range-height)] bottom-0 top-0" :style="{ ...progressStyle }">
-        <!--
-
-                <div class="absolute left-[-8px] top-[-25px]">
-                  <slot name="text-min" :value="sliderMin">
-                    {{ sliderMin }} {{ props.criteria === 'price' || 'salePrice' ? ' €' : '' }}
-                  </slot>
-                </div>
-                <div class="absolute right-[-16px] top-[-25px]">
-                  <slot name="text-max" :value="sliderMax">
-                    {{ sliderMax }} {{ props.criteria === 'price' || 'salePrice' ? ' €': '' }}
-                  </slot>
-                </div>
-             -->
+      <span class="absolute bg-primary h-[var(--double-range-height)] bottom-0 top-10" :style="{ ...progressStyle }">
+        
+        <div class="absolute left-[-8px] top-[-25px]">
+          <slot name="text-min" :value="sliderMin">
+            {{ sliderMin }} {{ props.criteria === 'price' || 'salePrice' ? ' €' : '' }}
+          </slot>
+        </div>
+        <div class="absolute right-[-16px] top-[-25px]">
+          <slot name="text-max" :value="sliderMax">
+            {{ sliderMax }} {{ props.criteria === 'price' || 'salePrice' ? ' €' : '' }}
+          </slot>
+        </div>
+            
       </span>
     </div>
   </div>
@@ -131,6 +130,7 @@ watchDebounced(
 .range-slider {
   text-align: center;
   position: relative;
+  padding-bottom: 35px;
 }
 
 .range-slider input[type="range"] {
