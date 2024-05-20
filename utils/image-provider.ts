@@ -1,7 +1,4 @@
-import { joinURL } from 'ufo'
-
-
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 interface GetImageParameters {
   modifiers: {
     width: number;

@@ -50,7 +50,7 @@ const backgroundColor = lpoConfig.bannerBackground
     class="flex flex-col flex-nowrap overflow-scroll snap-y scrollbar-hide list-none"
     :style="{ backgroundColor: backgroundColor }"
   >
-    <li v-for="banner in repeatedBanners" class="min-h-full max-h-full w-full flex justify-center items-center snap-center">
+    <li v-for="(banner, index) in repeatedBanners" :key="index" class="min-h-full max-h-full w-full flex justify-center items-center snap-center">
       <a v-if="banner.href && $isSafeLink(banner.href)" :href="banner.href">
         <slot v-bind="banner" />
       </a>

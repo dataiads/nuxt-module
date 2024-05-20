@@ -18,7 +18,7 @@ const props = defineProps<{
           <input
             :placeholder="$t('searchPlaceholder')"
             :value="value"
-            :class="class"
+            :class="props.class"
             @input="input"
           >
         </slot>

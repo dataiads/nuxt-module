@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 const lpoConfig = useLpoConfig()

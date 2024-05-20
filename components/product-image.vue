@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable @typescript-eslint/no-unused-vars */
 interface Props {
   product: Product;
 
@@ -244,7 +245,7 @@ const onPrevLightbox = () => {
     </slot>
 
     <div :class="props.asideClass">
-      <template v-for="(additionalImage, index) in allImages" v-if="!scroller">
+      <template v-for="(additionalImage, index) in allImages" v-if="!scroller" :key="index">
         <div
           @click="selectImage(index)"
           @mouseenter="selectImage(index)"
@@ -260,7 +261,7 @@ const onPrevLightbox = () => {
             <Image
               :src="additionalImage"
               :alt="props.alt"
-              height="80"
+              height="80" 
               width="80"
               class="cursor-pointer"
             />
@@ -312,6 +313,7 @@ const onPrevLightbox = () => {
         <div
           v-for="(image, index) in imageSets"
           v-if="imageSets.length > 0"
+          :key="index"
           ref="mainImagesRef"
           class="flex-none snap-center max-w-fit min-w-full"
           @click="() => onImageClick(index)"
@@ -334,11 +336,12 @@ const onPrevLightbox = () => {
           </slot>
         </div>
         <div
-          v-for="(additionalImage, index) in allImages"
+          v-for="(additionalImage, i) in allImages"
           v-else
+          :key="i"
           ref="mainImagesRef"
           class="flex-none snap-center max-w-fit min-w-full"
-          @click="() => onImageClick(index)"
+          @click="() => onImageClick(i)"
         >
           <slot name="main-image" :src="additionalImage" :alt="props.alt">
             <!-- default content for slot for main image -->

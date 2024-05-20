@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
   class: 'flex space-x-1 items-center'
 })
 
-const fullStarsCount = ref(props.value % 1 < 0.5 ? Math.floor(props.value) : Math.ceil(props.value));
+const fullStarsCount = ref(props.value % 1 < 0.5 ? Math.floor(props.value) : Math.ceil(props.value))
 const emptyStarsCount = ref(Math.max(props.maxValue - fullStarsCount.value, 0))
 
 </script>

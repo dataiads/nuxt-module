@@ -25,6 +25,8 @@ module.exports = {
     // Vuejs
     'vue/multi-word-component-names': 0,
     'vue/no-multiple-template-root': 0,
+    "vue/no-use-v-if-with-v-for":0,
+    "vue/no-parsing-error": "off",
     'vue/require-v-for-key': 1,
     'vue/html-indent': ['error', 2],
     'vue/comma-spacing': ['error', { before: false, after: true }],
@@ -40,6 +42,7 @@ module.exports = {
     'vue/block-spacing': ['error', 'always'],
     'vue/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     'vue/space-infix-ops': ['error', { int32Hint: false }],
+    'vue/require-default-prop': 'off',
     'vue/max-attributes-per-line': [
       'error',
       {

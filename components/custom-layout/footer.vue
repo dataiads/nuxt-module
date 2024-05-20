@@ -1,5 +1,6 @@
 
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 import type { FooterParams, BlockConfig } from '~/types'
 
 const props = defineProps<{config: FooterParams}>()

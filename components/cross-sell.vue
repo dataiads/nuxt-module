@@ -104,7 +104,7 @@ if (props.dataTransformer) {
         </template>
       </Slider>
 
-      <a v-for="item in items" v-else :href="item.link">
+      <a v-for="(item, index) in items" v-else :key="index" :href="item.link">
         <slot name="item" :text="item.text" :image="item.image" />
       </a>
     </div>

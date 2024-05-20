@@ -19,12 +19,16 @@ if (props.product?.extraData?.[props.priceProperty]?.value) {
   try {
     price.value = parseFloat(props.product.extraData[props.priceProperty].value)
     currency.value = props.product.extraData[props.priceProperty].currency
-  } catch {}
+  } catch (error) {
+    console.error(error)
+  }
 } else if (props.product.data?.[props.priceProperty]) {
   try {
     price.value = parseFloat(props.product.data[props.priceProperty].value)
     currency.value = props.product.data[props.priceProperty].currency
-  } catch {}
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const salePrice = ref<number | null>()
@@ -33,12 +37,16 @@ if (props.product?.extraData?.[props.salePriceProperty]) {
   try {
     salePrice.value = parseFloat(props.product.extraData[props.salePriceProperty].value)
     saleCurrency.value = props.product.extraData[props.salePriceProperty].currency
-  } catch {}
+  } catch (error) {
+    console.error(error)
+  }
 } else if (props.product?.data?.[props.salePriceProperty]) {
   try {
     salePrice.value = parseFloat(props.product.data[props.salePriceProperty].value)
     saleCurrency.value = props.product.data[props.salePriceProperty].currency
-  } catch {}
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const displaySalePrice = ref(false)

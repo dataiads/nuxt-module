@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const StringLoader = (v: string, _?: string) => v
 
 const JSONLoader = (v: string, debugInfo?: string) => {
@@ -56,7 +57,7 @@ export default defineNuxtPlugin(async () => {
     }
 
     Object.keys(config.public).forEach((c) => {
-      if (!lpoConfig.hasOwnProperty(c)) {
+      if (!Object.prototype.hasOwnProperty.call(lpoConfig, 'c')) {
         return
       }
 

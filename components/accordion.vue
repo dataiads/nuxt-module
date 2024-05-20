@@ -49,7 +49,8 @@ const onLeave = (el: any, done: any) => {
 
 <template>
   <Disclosure
-    v-for="column in columns"
+    v-for="(column, index) in columns"
+    :key="index" 
     v-slot="{ open }"
     as="div"
     :class="class"
