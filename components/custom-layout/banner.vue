@@ -21,7 +21,7 @@ watch(config, () => {
       activeIndex.value = (activeIndex.value + 1) % config.value.elements.length
     }, config.value.interval)
   }
-})
+}, { immediate: true })
 </script>
 
 <template>
