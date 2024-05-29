@@ -55,7 +55,6 @@ const transitionClass = computed(() => {
   }
 })
 
-onClickOutside(overlayContent, () => customLayout.showOverlay.value = false)
 const onScroll = () => {
   if (props.config.hideOnScroll) {
     customLayout.showOverlay.value = false
@@ -97,7 +96,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
         leave-to="opacity-0"
       >
         <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-        <div class="fixed inset-0" aria-hidden="true" :style="config.backdropStyle" @wheel="onScroll()" />
+        <div class="fixed inset-0" aria-hidden="true" :style="config.backdropStyle" @wheel="onScroll()" @click="customLayout.showOverlay.value = false" />
       </TransitionChild>
 
       <TransitionChild v-bind="transitionClass" as="template">
