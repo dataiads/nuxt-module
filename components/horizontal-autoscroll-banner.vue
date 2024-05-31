@@ -55,7 +55,7 @@ for (let i = 0; i < 8; i++) {
     class="flex flex-nowrap overflow-x-scroll scrollbar-hide"
     :style="{ color: textColor, backgroundColor: backgroundColor }"
   >
-    <div v-for="banner in banners">
+    <div v-for="(banner, index) in banners" :key="index">
       <a v-if="banner.href && $isSafeLink(banner.href)" :href="banner.href">
         <slot v-bind="banner" />
       </a>

@@ -1,5 +1,6 @@
 
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 import type { HeaderParams, BlockConfig } from '~/types'
 
 const props = defineProps<{config: HeaderParams}>()

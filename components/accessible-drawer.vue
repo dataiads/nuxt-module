@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Dialog } from '@headlessui/vue'
 
+const emit = defineEmits(['close'])
+
 const props = withDefaults(
   defineProps<{
     open: boolean;
@@ -18,8 +20,8 @@ const open = toRef(props, 'open')
 </script>
 
 <template>
-  <Dialog :open="open" @close="$emit('close')">
-    <div v-if="withInset" :class="outsideClass" class="fixed inset-0 z-50 bg-black/30 cursor-pointer" aria-hidden="true" @click="$emit('close')" />
+  <Dialog :open="open" @close="emit('close')">
+    <div v-if="withInset" :class="outsideClass" class="fixed inset-0 z-50 bg-black/30 cursor-pointer" aria-hidden="true" @click="emit('close')" />
     <nav v-show="open" class="bg-grey1 self-start overflow-x-scroll fixed h-full w-[80%] top-0 right-0" :class="class">
       <slot name="drawer-content" />
     </nav>

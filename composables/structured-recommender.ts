@@ -11,7 +11,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     options.fetchQuery = {}
   }
 
-  let initState = () => {
+  const initState = () => {
     const init: State = {}
 
     // handle initial rules before setting up fetcher
@@ -313,7 +313,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     criteriaValuesMinMax,
     state: state,
     reset,
-    loadMore,
+    loadMore
   } as StructuredRecommender
 }
 

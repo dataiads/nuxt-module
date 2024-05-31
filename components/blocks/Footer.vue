@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 const lpoConfig = useLpoConfig()
 const footerColumns = lpoConfig?.footerColumns ? lpoConfig?.footerColumns : []
 const defaultUI = {
@@ -24,16 +25,16 @@ const { ui } = useUI(defaultUI, toRef(props, 'ui'))
     </div>
     <div :class="ui.center">
       <slot name="center">
-        <div v-for="footer in footerColumns">
+        <div v-for="(footer, index) in footerColumns" :key="index">
           <div :class="ui.label">
             <slot name="label" :label="footer.title">
               {{ footer.title }}
             </slot>
           </div>
           <ul :class="ui.list">
-            <li v-for="column in footer.items" class="relative">
+            <li v-for="(column, i) in footer.items" :key="i" class="relative">
               <slot name="column" :column="column">
-                <a :href="column.href" :class="ui.item" v-html="column.text" />
+                <a :key="i" :href="column.href" :class="ui.item" v-html="column.text" />
               </slot>
             </li>
           </ul>

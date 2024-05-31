@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 import type { BannerParams } from '~/types'
 
 const props = defineProps<{

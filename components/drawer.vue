@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 
+const emit = defineEmits(['clickOutside'])
+
 const props = withDefaults(defineProps<{
   open: boolean;
   class?: string;
@@ -47,13 +49,13 @@ watch(openRef, () => {
       ref="nav"
       class="bg-grey1 self-start overflow-x-scroll fixed h-full w-[80%] top-0 right-0"
       :class="class"
-      @keydown.esc="$emit('clickOutside')"
+      @keydown.esc="emit('clickOutside')"
     >
       <slot name="drawer-content" />
       <div
         class="bg-black opacity-50 fixed bottom-0 left-0 right-unset h-full w-[20%] max-w-[48rem] overflow-auto cursor-pointer"
         :class="outsideClass"
-        @click="$emit('clickOutside')"
+        @click="emit('clickOutside')"
       />
     </nav>
   </transition>

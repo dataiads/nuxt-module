@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const uuid = Math.floor(Math.random() * 10 ** 16).toString()
 
-
 interface Props {
   label?: string
   filter: Recommender
@@ -52,7 +51,7 @@ const change = debounce((evt: Event) => {
 </script>
 
 <template>
-  <div :class="class">
+  <div :class="props.class">
     <label :class="labelClass" :for="uuid">
       <span v-if="props.label">{{ props.label }}</span>
       <slot v-else />

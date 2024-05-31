@@ -134,10 +134,10 @@ const items = computed(() => recommender.results.data.value as Product[][])
             </Slider>
           </div>
           <div v-else :style="config.gridStyle">
-            <template v-for="item in items">
-              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{ style: config.itemStyle, item }" />
-              <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
-              <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />
+            <template v-for="(item, index) in items">
+              <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :key="'default-' + index" :config="{ style: config.itemStyle, item }" />
+              <slot v-else-if="config.itemLayout === 'reco-slider-slot'" :key="'reco-slider-' + index" name="reco-slider-item" :item="item" />
+              <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" :key="'filters-content-grid-' + index" name="filters-content-grid-item" :item="item" />
             </template>
           </div>
         </DialogPanel>
