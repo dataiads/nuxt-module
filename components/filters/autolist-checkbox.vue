@@ -80,6 +80,11 @@ const sortedValues = computed(() => {
     keys = props.sort(keys)
   }
 
+  // Remove duplicate
+  keys = [...new Set(keys)].filter((value, index, self) => 
+    index === self.findIndex((v) => v.toLowerCase() === value.toLowerCase())
+  )
+
   return keys.map(k => [k, availableValues.value ? availableValues.value[k] : null])
 })
 </script>

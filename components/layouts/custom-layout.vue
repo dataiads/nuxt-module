@@ -124,6 +124,11 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   <div class="text-center">
                     {{ $t('noResultsCatalog') }}
                   </div>
+                  <div class="flex justify-center">
+                    <button class="filters-reset-btn" @click="customLayout.filter.reset()">
+                      {{ $t('resetBtnCatalog') }}
+                    </button>
+                  </div>
                 </slot>
               </template>
               <template v-for="(_, name) in $slots" #[name]="scope">
@@ -132,7 +137,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
             </CustomLayoutCatalogGrid>
 
             <div id="filters-pagination">
-              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+              <slot name="filters-pagination">
+                <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+              </slot>
             </div>
           </div>
         </div>
@@ -203,6 +210,11 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                 <div class="text-center">
                   {{ $t('noResultsCatalog') }}
                 </div>
+                <div class="flex justify-center">
+                  <button class="filters-reset-btn" @click="customLayout.filter.reset()">
+                    {{ $t('resetBtnCatalog') }}
+                  </button>
+                </div>
               </slot>
             </template>
             <template v-for="(_, name) in $slots" #[name]="scope">
@@ -211,7 +223,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           </CustomLayoutCatalogGrid>
 
           <div id="filters-pagination">
-            <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+            <slot name="filters-pagination">
+              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+            </slot>
           </div>
         </div>
 
@@ -275,17 +289,22 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
             leave-to="opacity-0 translate-x-full"
           >
             <DialogPanel :style="layoutConfig.mainReco.slideoverStyle" class="grid grid-rows-[auto_1fr_auto]">
-              <div class="flex justify-end">
-                <img
-                  v-if="layoutConfig.mainReco.slideoverCloseButton"
-                  :src="layoutConfig.mainReco.slideoverCloseButton"
-                  :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
-                  @click="customLayout.toggleFiltersSlideover"
-                >
-                <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
-                  close
+              <div class="flex flex-row justify-between items-end">
+                <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle" class="ml-3">
+                  {{ layoutConfig.mainReco.filtersTitle }}
                 </div>
-              </div>
+                <div class="flex justify-end">
+                  <img
+                    v-if="layoutConfig.mainReco.slideoverCloseButton"
+                    :src="layoutConfig.mainReco.slideoverCloseButton"
+                    :style="layoutConfig.mainReco.slideoverCloseButtonStyle"
+                    @click="customLayout.toggleFiltersSlideover"
+                  >
+                  <div v-else class="cursor-pointer" @click="customLayout.toggleFiltersSlideover">
+                    close
+                  </div>
+                </div>
+              </div>       
               <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
               <CustomLayoutFiltersButtons :config="layoutConfig" />
             </DialogPanel>

@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { createResolver } from '@nuxt/kit'
+import { createResolver, resolvePath } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -135,14 +135,14 @@ export default defineNuxtConfig({
   },
 
   tailwindcss: {
-    cssPath: ['~/assets/css/generic.scss', { injectPosition: 'first' }],
+    cssPath: ['~/assets/css/generic.scss', { injectPosition: 'last' }],
     exposeConfig: true,
     config: {
       content: [
         resolve('./nuxt.config.ts'), // scan layer nuxt.config.ts for tailwind classes
         './nuxt.config.ts' // scan client nuxt.config.ts for tailwind classes
       ],
-      plugins: [require('@tailwindcss/typography')],
+      plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
       theme: {
         extend: {
           transitionProperty: {
@@ -176,5 +176,11 @@ export default defineNuxtConfig({
       './components',
       '~/components'
     ]
+  },
+  hooks: {
+    'ready': async (nuxt) => {
+      const cssPath = await resolvePath('~/assets/css/custom.scss')
+      nuxt.options.css.push(cssPath)
+    }
   }
 })
