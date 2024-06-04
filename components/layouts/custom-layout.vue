@@ -125,7 +125,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                     {{ $t('noResultsCatalog') }}
                   </div>
                   <div class="flex justify-center">
-                    <button class="reset-btn" @click="customLayout.filter.reset()">
+                    <button class="filters-reset-btn" @click="customLayout.filter.reset()">
                       {{ $t('resetBtnCatalog') }}
                     </button>
                   </div>
@@ -137,7 +137,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
             </CustomLayoutCatalogGrid>
 
             <div id="filters-pagination">
-              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+              <slot name="filters-pagination">
+                <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+              </slot>
             </div>
           </div>
         </div>
@@ -209,7 +211,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   {{ $t('noResultsCatalog') }}
                 </div>
                 <div class="flex justify-center">
-                  <button class="reset-btn" @click="customLayout.filter.reset()">
+                  <button class="filters-reset-btn" @click="customLayout.filter.reset()">
                     {{ $t('resetBtnCatalog') }}
                   </button>
                 </div>
@@ -221,7 +223,9 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           </CustomLayoutCatalogGrid>
 
           <div id="filters-pagination">
-            <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+            <slot name="filters-pagination">
+              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+            </slot>
           </div>
         </div>
 
