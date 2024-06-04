@@ -10,6 +10,7 @@ const { config, arrowPlacement } = useRecoSlider()
   <div
     v-if="config.title"
     :style="config.titleStyle"
+    class="reco-slider-title"
     :class="cn({
       'flex justify-between items-center': arrowPlacement === 'outside',
     }, props.class)"

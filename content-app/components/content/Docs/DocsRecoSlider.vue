@@ -138,18 +138,19 @@ const config = {
     }
   }
 }
-const { api } = useProductImage()
 </script>
 
 <template>
-  <RecoSlider :config="config">
-    <RecoSliderHeader />
-    <RecoSliderContent class="-ml-2">
-      <RecoSliderItems>
-        <template #default="{ item }">
-          <img :src="item[0].data.imageLink" class="w-[125px] h-[125px]">
-        </template>
-      </RecoSliderItems>
-    </RecoSliderContent>
-  </RecoSlider>
+  <CustomLayoutRecoSlider :config="config">
+    <template #reco-slider-item="{ item }">
+      <img :src="item[0].data.imageLink" class="w-[150px]">
+    </template>
+  </CustomLayoutRecoSlider>
 </template>
+
+<style lang="scss">
+.reco-slider-title {
+  @apply text-2xl font-bold;
+}
+
+</style>

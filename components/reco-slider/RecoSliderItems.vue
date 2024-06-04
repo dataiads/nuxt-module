@@ -4,17 +4,16 @@ const props = defineProps<{
   class?: string;
 }>()
 
-const { items } = useRecoSlider()
+const { items, config } = useRecoSlider()
 </script>
 
 <template>
   <CarouselItem
     v-for="(item, index) in items"
     :key="'layeritem_' + index"
-    :class="cn('shrink-1 basis-auto pl-2', props.class)"
+    :class="cn('', props.class)"
+    :style="{ paddingLeft: config.columnGap }"
   >
-    <a :href="$oriUrl(item[0].data.link)" class="flex">
-      <slot :item="item" />
-    </a>
+    <slot :item="item" />
   </CarouselItem>
 </template>

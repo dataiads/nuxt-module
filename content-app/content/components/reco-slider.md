@@ -1,11 +1,9 @@
 # Reco Slider
 
-::Showcase{name="DocsRecoSlider"}
+This component is internal to the custom layout
+
+::ClassTable{:data='[{"class":"reco-slider-title","desc":"Title of the reco-slider"}, {"class": "reco-slider-item", "desc":"Item style used to define the size for example"}]'}
 ::
 
-
-## Installation
-
-```bash
-npx shadcn-vue@latest add carousel
-```
+::Showcase{name="DocsRecoSlider"}
+::

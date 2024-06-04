@@ -1,6 +1,7 @@
-@use './filters/colors.scss';
-@use './filters/rating.scss';
-@use './filters/switch.scss';
+@import './filters/colors.scss';
+@import './filters/rating.scss';
+@import './filters/switch.scss';
+@import './reco-slider.scss';
 
 .filters-reset-btn {
   @apply underline

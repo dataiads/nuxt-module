@@ -4,7 +4,7 @@ const { arrowPlacement } = useRecoSlider()
 </script>
 
 <template>
-  <CarouselContent class="-ml-2">
+  <CarouselContent>
     <slot />
     <template v-if="arrowPlacement === 'inside'">
       <RecoSliderBtn />
