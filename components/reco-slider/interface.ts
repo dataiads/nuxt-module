@@ -1,4 +1,4 @@
-import type { HTMLAttributes, Ref } from 'vue'
+import type { HTMLAttributes } from 'vue'
 
 export interface WithClassAsProps {
   class?: HTMLAttributes['class']

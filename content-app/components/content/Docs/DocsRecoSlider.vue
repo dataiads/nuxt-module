@@ -152,5 +152,4 @@ const config = {
 .reco-slider-title {
   @apply text-2xl font-bold;
 }
-
 </style>

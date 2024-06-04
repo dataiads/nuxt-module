@@ -938,10 +938,6 @@ export default defineNuxtConfig({
         : {}
     }
   },
-  tailwindcss: {
-    cssPath: '~/assets/css/generic.scss',
-    configPath: 'tailwind.config.js'
-  },
   nitro: {
     devProxy: {
       '/api/': {
