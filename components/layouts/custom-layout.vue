@@ -183,6 +183,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         </template>
       </CustomLayoutInserts>
 
+      <slot name="filters-header" />
+
       <div id="filters" class="flex flex-row w-full">
         <div
           v-if="layoutConfig.mainReco.filtersDisplay === 'left'"
