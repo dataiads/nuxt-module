@@ -12,26 +12,24 @@ const arrowPlacement = computed(() => !props.config.arrowPlacement ? 'inside' : 
 
 <template>
   <div>
-    <h2 v-if="arrowPlacement === 'inside'" class="reco-slider-title" :style="config.titleStyle">
-      <DynamicLabel :value="config.title" />
-    </h2>
-    <RecoSlider
-      :config="config"
-      class="relative w-full"
-      :opts="{
-        align: 'start',
-        loop: false,
-        slidesToScroll: 'auto',
-      }"
-    >
-      <RecoSliderHeader v-if="arrowPlacement === 'outside'" />
-      <CarouselContent :style="{ marginLeft: '-' + config.columnGap }">
-        <RecoSliderItems v-slot="{ item }" class="reco-slider-item">
-          <slot name="reco-slider-item" :item="item" />
-        </RecoSliderItems>
-      </CarouselContent>
-      <RecoSliderBtn v-if="arrowPlacement === 'inside'" />
-    </RecoSlider>
+    <RecoSliderWrapper :config="config">
+      <RecoSlider
+        class="relative w-full"
+        :opts="{
+          align: 'start',
+          loop: false,
+          slidesToScroll: 'auto',
+        }"
+      >
+        <RecoSliderHeader v-if="arrowPlacement === 'outside'" />
+        <CarouselContent :style="{ marginLeft: '-' + config.columnGap }">
+          <RecoSliderItems v-slot="{ item }" class="reco-slider-item">
+            <slot name="reco-slider-item" :item="item" />
+          </RecoSliderItems>
+        </CarouselContent>
+        <RecoSliderBtn v-if="arrowPlacement === 'inside'" />
+      </RecoSlider>
+    </RecoSliderWrapper>
   </div>
   <!-- 
      <RecoSlider :config="config">
