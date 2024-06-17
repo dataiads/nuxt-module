@@ -261,7 +261,6 @@ declare global {
     customScripts?: CustomScripts[];
     productHook?: string;
     customLayout: CustomLayout;
-    optimizeLCP?: boolean;
 
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;

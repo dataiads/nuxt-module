@@ -1,7 +1,7 @@
 import lcpSvg from '~/assets/img/lcp.svg'
 
 export default defineNuxtPlugin(() => {
-  if (!useLpoConfig()?.optimizeLCP) {
+  if (!useRuntimeConfig()?.public?.optimizeLCP) {
     return
   }
   const img = new Image(1000, 1000)
@@ -9,5 +9,5 @@ export default defineNuxtPlugin(() => {
   img.style.cssText = 'pointer-events: none; position: absolute; top: 0px; left: 0px; width: 1000px;'
   img.fetchPriority = 'high'
   img.alt = '.'
-  document.body.appendChild(img)
+  document.body.prepend(img)
 })
