@@ -121,7 +121,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
-          :allow-single-checkbox="props.singleChoice"
+          :single-choice="props.singleChoice"
         >
           <template #label="scope">
             <slot
@@ -167,7 +167,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
-          :allow-single-checkbox="props.singleChoice"
+          :single-choice="props.singleChoice"
         >
           <template #label="scope">
             <slot
