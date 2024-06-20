@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<{
   useTranslation?: boolean
   displayCount?: boolean
   displayMore?: boolean
+  singleChoice: boolean
 }>(), {
   operator: 'EQUAL',
   wrapperDiv: false,
@@ -42,7 +43,8 @@ const props = withDefaults(defineProps<{
   displayCount: true,
   searchable: false,
   searchPlaceholder: 'Search...',
-  displayMore: false
+  displayMore: false,
+  singleChoice: false
 })
 
 const search = ref('')
@@ -119,6 +121,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
+          :single-choice="props.singleChoice"
         >
           <template #label="scope">
             <slot
@@ -164,6 +167,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
+          :single-choice="props.singleChoice"
         >
           <template #label="scope">
             <slot
