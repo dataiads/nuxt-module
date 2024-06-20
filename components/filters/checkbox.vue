@@ -16,7 +16,7 @@ const props = withDefaults(
     inputClass?: string;
     inputStyle?: string | Record<string, any>;
     labelClass?: string;
-    allowSingleCheckbox: boolean
+    singleChoice: boolean
   }>(),
   {
     label: '',
@@ -27,7 +27,7 @@ const props = withDefaults(
     class: 'flex items-center gap-1 my-1',
     inputClass: 'hover:cursor-pointer',
     labelClass: '',
-    allowSingleCheckbox: false
+    singleChoice: false
   }
 )
 
@@ -44,7 +44,7 @@ const get = () => {
 
 const set = (v: any) => {
   if (v) {
-    if (props.allowSingleCheckbox) {
+    if (props.singleChoice) {
       props.filter.setOnlyRule(
         props.group,
         props.criteria,

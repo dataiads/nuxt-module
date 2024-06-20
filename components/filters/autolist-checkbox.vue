@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
   useTranslation?: boolean
   displayCount?: boolean
   displayMore?: boolean
-  allowSingleCheckbox: boolean
+  singleChoice: boolean
 }>(), {
   operator: 'EQUAL',
   wrapperDiv: false,
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<{
   searchable: false,
   searchPlaceholder: 'Search...',
   displayMore: false,
-  allowSingleCheckbox: false
+  singleChoice: false
 })
 
 const search = ref('')
@@ -121,7 +121,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
-          :allow-single-checkbox="props.allowSingleCheckbox"
+          :allow-single-checkbox="props.singleChoice"
         >
           <template #label="scope">
             <slot
@@ -167,7 +167,7 @@ const sortedValues = computed(() => {
           :input-class="props.inputClass"
           :label-class="props.labelClass"
           :operator="props.operator"
-          :allow-single-checkbox="props.allowSingleCheckbox"
+          :allow-single-checkbox="props.singleChoice"
         >
           <template #label="scope">
             <slot
