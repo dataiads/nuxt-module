@@ -61,6 +61,7 @@ const getGroups = (filterParam: FilterElement) => {
 const removeAllRulesFromGroups = (groups: string[]) => {
   groups.forEach((g) => props.filter.removeAllRules(g))
 }
+// filterParams[0].elements[0].props.allowSingleCheckbox = true
 </script>
 
 <template>

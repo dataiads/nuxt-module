@@ -16,6 +16,7 @@ const props = withDefaults(
     inputClass?: string;
     inputStyle?: string | Record<string, any>;
     labelClass?: string;
+    allowSingleCheckbox: boolean
   }>(),
   {
     label: '',
@@ -25,7 +26,8 @@ const props = withDefaults(
     baseProductCriteria: '',
     class: 'flex items-center gap-1 my-1',
     inputClass: 'hover:cursor-pointer',
-    labelClass: ''
+    labelClass: '',
+    allowSingleCheckbox: false
   }
 )
 
@@ -42,14 +44,25 @@ const get = () => {
 
 const set = (v: any) => {
   if (v) {
-    props.filter.pushRule(
-      props.group,
-      props.criteria,
-      props.operator,
-      props.value,
-      props.valueCriteria,
-      props.baseProductCriteria
-    )
+    if (props.allowSingleCheckbox) {
+      props.filter.setOnlyRule(
+        props.group,
+        props.criteria,
+        props.operator,
+        props.value,
+        props.valueCriteria,
+        props.baseProductCriteria
+      )
+    } else {
+      props.filter.pushRule(
+        props.group,
+        props.criteria,
+        props.operator,
+        props.value,
+        props.valueCriteria,
+        props.baseProductCriteria
+      )
+    } 
   } else {
     props.filter.removeRule(
       props.group,
