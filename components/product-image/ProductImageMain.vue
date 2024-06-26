@@ -21,14 +21,12 @@ const stop = watch(mainApi, (api) => {
   nextTick(() => stop())
 
   api.on('select', () => {
-    console.log('onselect')
     setIndex(api.selectedScrollSnap())
   })
 })
 
 const onClickMainImage = (i: number) => {
   setIndex(i)
-  console.log(index.value)
   openDialog()
 }
 
