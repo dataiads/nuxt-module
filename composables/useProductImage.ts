@@ -1,54 +1,56 @@
-import { breakpointsTailwind } from '@vueuse/core'
-export interface UseProductImageOptions {
-  hover?: boolean
+export interface ProductImageProps {
+  product: Product,
 }
 
-export const useProductImage = (options: UseProductImageOptions = {}) => {
-  const {
-    hover = false
-  } = options
+const [useProvideProductImage, useInjectProductImage] = createInjectionState((p) => {
+  const product = ref(p)
+  const index = ref(0)
+  const dialog = ref(false)
 
-
-  const product = useProduct()
-  const api = ref()
-  const thumbnailApi = ref()
-  
-  const carouselRef = ref()
-  const isHovered = useElementHover(carouselRef)
-  const selectedIndex = ref()
-
-  const onSelect = () => {
-    if (api.value) selectedIndex.value = api.value.selectedScrollSnap()
-    if (thumbnailApi.value) thumbnailApi.value.scrollTo(api.value.selectedScrollSnap())
-  }
-
-  const onThumbClick = (index: number) => {
-    if (!api.value || !thumbnailApi.value) return
-    api.value.scrollTo(index)
-  }
-
-  watchOnce(api, (api) => {
-    if (!api) return
-
-    onSelect()
-    api.on('select', onSelect)
-    api.on('reInit', onSelect)
+  const images = computed(() => {
+    let allImages: string[] = []
+    if (
+      product.value.extraData?.additionalImageLinks?.length ||
+      product.value.extraData?.imageLink
+    ) {
+      // use collected images in priority
+      if (product.value.extraData?.imageLink) {
+        allImages.push(product.value.extraData.imageLink)
+      }
+      if (product.value.extraData?.additionalImageLinks) {
+        allImages = allImages.concat(product.value.extraData.additionalImageLinks)
+      }
+    } else {
+      // fallback on feed images otherwise
+      if (product.value.data?.imageLink) {
+        allImages.push(product.value.data.imageLink)
+      }
+      if (product.value.data?.additionalImageLinks) {
+        allImages = allImages.concat(product.value.data.additionalImageLinks)
+      }
+    }
+    return allImages
   })
 
-  const images = computed(() => product.value.data.additionalImageLinks)
-  const breakpoints = useBreakpoints(breakpointsTailwind)
-  const isDesktop = breakpoints.greaterOrEqual('lg')
-
-  if (hover) {
-    watch(() => isHovered.value, (value) => {
-      if (value) {
-        api.value.scrollTo(selectedIndex.value + 1)
-      } else {
-        api.value.scrollTo(selectedIndex.value - 1)
-      }
-    })
+  function setIndex (i: number) {
+    index.value = i
   }
 
-  return { api, thumbnailApi, images, onThumbClick, isDesktop, selectedIndex, carouselRef, isHovered }
+  function openDialog () {
+    dialog.value = true
+  }
 
+  return { product, images, setIndex, index, dialog, openDialog } 
+})
+
+
+function useProductImage () {
+  const productImageState = useInjectProductImage()
+
+  if (!productImageState)
+    throw new Error('useProductImage must be used within a <ProductImageWrapper />')
+
+  return productImageState
 }
+
+export { useProductImage, useProvideProductImage }

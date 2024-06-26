@@ -1,35 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{product: Product}>()
+import { cn } from '@/lib/utils'
+const props = defineProps<{class?: string, contentClass?: string}>()
+const { images, setIndex, index } = useProductImage()
 
-const images = computed(() => {
-  let allImages: string[] = []
-  if (
-    props.product?.extraData?.additionalImageLinks?.length ||
-    props.product?.extraData?.imageLink
-  ) {
-    // use collected images in priority
-    if (props.product?.extraData?.imageLink) {
-      allImages.push(props.product.extraData.imageLink)
-    }
-    if (props.product?.extraData?.additionalImageLinks) {
-      allImages = allImages.concat(props.product.extraData.additionalImageLinks)
-    }
-  } else {
-    // fallback on feed images otherwise
-    if (props.product?.data?.imageLink) {
-      allImages.push(props.product.data.imageLink)
-    }
-    if (props.product?.data?.additionalImageLinks) {
-      allImages = allImages.concat(props.product.data.additionalImageLinks)
-    }
-  }
-  return allImages
-})
 </script>
 
 <template>
   <Carousel
-    class="relative w-fit mr-4"
+    :class="cn('relative w-fit', props.class)"
     orientation="vertical"
     :opts="{
       align: 'start',
@@ -37,21 +15,35 @@ const images = computed(() => {
       loop: false,
     }"
   >
-    <CarouselContent class="max-h-[350px]">
+    <CarouselContent :class="cn('max-h-[350px]', contentClass)">
       <CarouselItem
-        v-for="(src, index) in images"
-        :key="index"
+        v-for="(src, i) in images"
+        :key="i"
         class="basis-auto cursor-pointer"
+        @click="setIndex(i)"
       >
-        <img
-          :src="src"
-          width="40"
-          height="40"
-          format="webp"
-        >
+        <slot name="image">
+          <img
+            :src="src"
+            class="product-image-thumbnails"
+            :class="{ 'product-image-thumbnails--selected': i === index }"
+            format="webp"
+          >
+        </slot>
       </CarouselItem>
     </CarouselContent>
-    <CarouselPrevious class="top-0 border-none" />
-    <CarouselNext class="bottom-0 border-none" />
+    <slot name="actions">
+      <CarouselPrevious class="top-0 border-none" />
+      <CarouselNext class="bottom-0 border-none" />
+    </slot>
   </Carousel>
 </template>
+
+<style lang="scss">
+.product-image-thumbnails {
+  @apply w-[64px] h-[64px] border border-transparent;
+  &--selected {
+    @apply border-primary;
+  }
+}
+</style>

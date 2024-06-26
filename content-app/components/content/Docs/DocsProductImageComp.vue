@@ -5,10 +5,14 @@ const product = useProduct()
 <template>
   <ProductImageWrapper :product="product">
     <div class="flex gap-4">
-      <ProductImageThumbnails />
-      <ProductImageMain class="max-w-[400px]">
-        <ProductImageActions />
-      </ProductImageMain>
+      <ProductImageThumbnails>
+        <ProductImageMain
+          class="max-w-[400px]"
+        >
+          <ProductImageActions />
+        </ProductImageMain>
+      </ProductImageThumbnails>
     </div>
-  </productimagewrapper>
+    <ProductImageDialog />
+  </ProductImageWrapper>
 </template>

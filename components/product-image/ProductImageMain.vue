@@ -1,30 +1,36 @@
 <script setup lang="ts">
-const props = defineProps<{product: Product}>()
+const { images, index, setIndex, openDialog } = useProductImage()
+const mainApi = ref()
 
-const images = computed(() => {
-  let allImages: string[] = []
-  if (
-    props.product?.extraData?.additionalImageLinks?.length ||
-    props.product?.extraData?.imageLink
-  ) {
-    // use collected images in priority
-    if (props.product?.extraData?.imageLink) {
-      allImages.push(props.product.extraData.imageLink)
-    }
-    if (props.product?.extraData?.additionalImageLinks) {
-      allImages = allImages.concat(props.product.extraData.additionalImageLinks)
-    }
-  } else {
-    // fallback on feed images otherwise
-    if (props.product?.data?.imageLink) {
-      allImages.push(props.product.data.imageLink)
-    }
-    if (props.product?.data?.additionalImageLinks) {
-      allImages = allImages.concat(props.product.data.additionalImageLinks)
-    }
-  }
-  return allImages
+const setApi = (val) => {
+  mainApi.value = val
+}
+watch(index, () => {
+  if (!mainApi.value) return
+  mainApi.value.scrollTo(index.value)
 })
+onMounted(() => {
+  mainApi.value.scrollTo(index.value)
+})
+
+const stop = watch(mainApi, (api) => {
+  if (!api)
+    return
+
+  // Watch only once or use watchOnce() in @vueuse/core
+  nextTick(() => stop())
+
+  api.on('select', () => {
+    console.log('onselect')
+    setIndex(api.selectedScrollSnap())
+  })
+})
+
+const onClickMainImage = (i: number) => {
+  setIndex(i)
+  console.log(index.value)
+  openDialog()
+}
 
 </script>
 
@@ -36,6 +42,7 @@ const images = computed(() => {
       loop: false,
       slidesToScroll: 'auto',
     }"
+    @init-api="setApi"
   >
     <div class="absolute z-10"> 
       <slot name="badge" />
@@ -44,6 +51,7 @@ const images = computed(() => {
       <CarouselItem
         v-for="(src, index) in images"
         :key="'images' + index"
+        @click="onClickMainImage(index)"
       >
         <slot name="main-image" :src="src">
           <img :src="src" class="w-full h-auto">

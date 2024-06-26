@@ -26,7 +26,7 @@ function useRecoSlider () {
   const recoSliderState = useInjectRecoSlider()
 
   if (!recoSliderState)
-    throw new Error('useRecoSlider must be used within a <RecoSlider />')
+    throw new Error('useRecoSlider must be used within a <RecoSliderWrapper />')
 
   return recoSliderState
 }
