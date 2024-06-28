@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { cn } from '@/lib/utils'
+
+defineProps<{classContent?: string, classItem?: string }>()
+
 const { images, index, setIndex, openDialog } = useProductImage()
 const mainApi = ref()
 
@@ -45,10 +49,11 @@ const onClickMainImage = (i: number) => {
     <div class="absolute z-10"> 
       <slot name="badge" />
     </div>
-    <CarouselContent>
+    <CarouselContent :class="cn('', classContent)">
       <CarouselItem
         v-for="(src, index) in images"
         :key="'images' + index"
+        :class="cn('', classItem)"
         @click="onClickMainImage(index)"
       >
         <slot name="main-image" :src="src">
