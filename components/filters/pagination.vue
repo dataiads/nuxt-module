@@ -1,12 +1,14 @@
 
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types'
+
 interface Props {
-  filter: Recommender
+  filter: StructuredRecommender
   maxVisibleButtons?: number
   class?: string | string[]
-  previousHandler?: (filter: Recommender, pageCount: number) => void
-  nextHandler?: (filter: Recommender, pageCount: number) => void
-  loadMoreHandler?: (filter: Recommender, nb: number) => void
+  previousHandler?: (filter: StructuredRecommender, pageCount: number) => void
+  nextHandler?: (filter: StructuredRecommender, pageCount: number) => void
+  loadMoreHandler?: (filter: StructuredRecommender, nb: number) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -244,7 +244,7 @@ const onPrevLightbox = () => {
     </slot>
 
     <div :class="props.asideClass">
-      <template v-for="(additionalImage, index) in allImages" v-if="!scroller">
+      <template v-for="(additionalImage, index) in allImages" v-if="!scroller" :key="index">
         <div
           @click="selectImage(index)"
           @mouseenter="selectImage(index)"

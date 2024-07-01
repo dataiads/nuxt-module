@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types'
+
 interface Props {
-  filter: Recommender;
+  filter: StructuredRecommender;
   criteria: string;
   group: string;
   min?: string;

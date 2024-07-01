@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types'
 import localeIncludes from '~/utils/local-includes'
 
 const props = withDefaults(defineProps<{
   // filter values listing settings
-  filter: Recommender
+  filter: StructuredRecommender
   criteria: string
   group: string
 
@@ -13,7 +14,7 @@ const props = withDefaults(defineProps<{
   // customize wrapper element
   wrapperClass?: string
 
-  wrapperStyle?: array<string>
+  wrapperStyle?: Array<string>
 
   // optional sorting function for value items
   sort?: (values: string[]) => string[]

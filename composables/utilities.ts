@@ -1,5 +1,6 @@
 // @ts-ignore
 import { useState } from '#app'
+import type { StructuredRecommender } from '~/types'
 
 /* provide a shortcut to access the main product */
 export const useProduct = () => useState<Product>('product')
@@ -200,37 +201,37 @@ export const showLoader = (message?: string): void => {
 }
 
 // For pagination, decrement current page index
-export const previousPaginationHandler = (filter: Recommender, _pageCount: number) => {
+export const previousPaginationHandler = (filter: StructuredRecommender, _pageCount: number) => {
   if (filter.page.value > 1) {
     filter.page.value -= 1
   }
 }
 
 // For pagination, increment page index
-export const nextPaginationHandler = (filter: Recommender, pageCount: number) => {
+export const nextPaginationHandler = (filter: StructuredRecommender, pageCount: number) => {
   if (filter.page.value < pageCount) {
     filter.page.value += 1
   }
 }
 
 // For pagination, go to first page
-export const firstPaginationHandler = (filter: Recommender, _pageCount: number) => {
+export const firstPaginationHandler = (filter: StructuredRecommender, _pageCount: number) => {
   filter.page.value = 1
 }
 
 // For pagination, increment page index
-export const lastPaginationHandler = (filter: Recommender, pageCount: number) => {
+export const lastPaginationHandler = (filter: StructuredRecommender, pageCount: number) => {
   filter.page.value = pageCount
 }
 
 // Used for "one page" pagination (a "load more" button)
-export const loadMorePaginationHandler = (filter: Recommender, nb: number) => {
+export const loadMorePaginationHandler = (filter: StructuredRecommender, nb: number) => {
   filter.limit.value += nb
 }
 
 export const layoutProps = {
   recoSliderProducts: { type: Array as PropType<Product[]>, required: false, default: () => [] },
-  filter: { type: Object as PropType<Recommender>, required: true, default: () => ({}) },
-  slider: { type: Object as PropType<Recommender>, required: false },
+  filter: { type: Object as PropType<StructuredRecommender>, required: true, default: () => ({}) },
+  slider: { type: Object as PropType<StructuredRecommender>, required: false },
   extraProducts: { type: Array as PropType<Product[]>, required: false }
 }

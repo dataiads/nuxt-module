@@ -36,7 +36,7 @@ interface Props {
   manualMode?: boolean;
 
   // In dialog select an element to focus
-  dialogInitialFocus: Ref<HTMLElement>
+  dialogInitialFocus?: Ref<HTMLElement>
 }
 
 const props = withDefaults(defineProps<Props>(), {

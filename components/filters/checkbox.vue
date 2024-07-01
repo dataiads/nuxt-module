@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types'
+
 // random id to link label to the input
 const uid = Math.floor(Math.random() * 10 ** 16).toString()
 
 const props = withDefaults(
   defineProps<{
     label?: string;
-    filter: Recommender;
+    filter: StructuredRecommender;
     criteria: string;
     operator?: string;
     value?: string;

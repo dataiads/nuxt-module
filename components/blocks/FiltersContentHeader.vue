@@ -33,13 +33,9 @@ const props = withDefaults(defineProps<{
 const customLayout = useCustomLayout()
 const { ui } = useUI(defaultUI, toRef(props, 'ui'))
 
-
-
 if (props.noBorder) {
   ui.value.select = twMerge(ui.value.select, 'border-none focus:ring-0 focus:border-none')
 }
-
-
 </script>
 
 <template>
@@ -64,6 +60,7 @@ if (props.noBorder) {
       <div>
         <slot name="select">
           <select
+            v-if="customLayout"
             v-model="customLayout.filter.sort.value"
             :class="ui.select"
           >
