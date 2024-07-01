@@ -21,11 +21,6 @@ const recoSliderArgs = useProvideRecoSlider({ config: props.config, arrowPlaceme
 
 <template>
   <div v-if="recoSliderArgs.items" class="reco-slider-wrapper">
-    <h2 v-if="arrowPlacement === 'inside'" class="reco-slider-title" :style="config.titleStyle">
-      <slot name="header" :config="config" :items="slider.results.data.value">
-        <DynamicLabel :value="config.title" />
-      </slot>
-    </h2>
     <slot v-bind="recoSliderArgs" />
   </div>
 </template>

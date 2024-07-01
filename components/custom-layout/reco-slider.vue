@@ -13,10 +13,14 @@ const arrowPlacement = computed(() => !props.config.arrowPlacement ? 'inside' : 
 <template>
   <div>
     <RecoSliderWrapper :config="config" :style="config.style">
-      <template #header="{ items }">
-        <slot name="reco-slider-header" :config="config" :items="items" />
-      </template>
-
+      <RecoSliderHeader v-if="arrowPlacement === 'inside'">
+        <template #default>
+          <slot name="reco-slider-header" :config="config" />
+        </template>
+        <template #arrow="{ items }">
+          <slot name="reco-slider-header-arrow" :config="config" :items="items" />
+        </template>
+      </RecoSliderHeader>
       <RecoSlider
         class="relative w-full"
         :opts="{
@@ -26,7 +30,14 @@ const arrowPlacement = computed(() => !props.config.arrowPlacement ? 'inside' : 
         }"
       >
         <slot name="reco-slider" :config="config">
-          <RecoSliderHeader v-if="arrowPlacement === 'outside'" />
+          <RecoSliderHeader v-if="arrowPlacement === 'outside'">
+            <template #default>
+              <slot name="reco-slider-header" :config="config" />
+            </template>
+            <template #arrow="{ items }">
+              <slot name="reco-slider-header-arrow" :config="config" :items="items" />
+            </template>
+          </RecoSliderHeader>
           <CarouselContent :style="{ marginLeft: '-' + config.columnGap }">
             <RecoSliderItems v-slot="{ item }" class="reco-slider-item">
               <slot name="reco-slider-item" :item="item" />
