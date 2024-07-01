@@ -80,7 +80,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
 
-        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+        <CustomLayoutFiltersAside v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig" />
       </div>
 
       <div class="flex flex-col grow shrink min-w-0">
@@ -125,7 +125,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                     {{ $t('noResultsCatalog') }}
                   </div>
                   <div class="flex justify-center">
-                    <button class="filters-reset-btn" @click="customLayout.filter.reset()">
+                    <button v-if="customLayout" class="filters-reset-btn" @click="customLayout.filter.reset()">
                       {{ $t('resetBtnCatalog') }}
                     </button>
                   </div>
@@ -138,7 +138,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
 
             <div id="filters-pagination">
               <slot name="filters-pagination">
-                <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+                <CustomLayoutPagination v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig.mainReco" />
               </slot>
             </div>
           </div>
@@ -154,7 +154,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
         <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
           {{ layoutConfig.mainReco.filtersTitle }}
         </div>
-        <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+        <CustomLayoutFiltersAside v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig" />
       </div>
     </div>
 
@@ -195,7 +195,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+          <CustomLayoutFiltersAside v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig" />
         </div>
 
         <div id="filters-content" class="grow">
@@ -213,7 +213,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   {{ $t('noResultsCatalog') }}
                 </div>
                 <div class="flex justify-center">
-                  <button class="filters-reset-btn" @click="customLayout.filter.reset()">
+                  <button v-if="customLayout" class="filters-reset-btn" @click="customLayout.filter.reset()">
                     {{ $t('resetBtnCatalog') }}
                   </button>
                 </div>
@@ -226,7 +226,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
 
           <div id="filters-pagination">
             <slot name="filters-pagination">
-              <CustomLayoutPagination :filter="customLayout.filter" :config="layoutConfig.mainReco" />
+              <CustomLayoutPagination v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig.mainReco" />
             </slot>
           </div>
         </div>
@@ -240,7 +240,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
           <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle">
             {{ layoutConfig.mainReco.filtersTitle }}
           </div>
-          <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" />
+          <CustomLayoutFiltersAside v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig" />
         </div>
       </div>
     </template>
@@ -260,7 +260,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
     </CustomLayoutFooter>
 
     <!-- Sticky ATC -->
-    <StickyFooter v-if="!customLayout.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
+    <StickyFooter v-if="!customLayout?.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
 
@@ -272,7 +272,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
     </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
-    <TransitionRoot appear :show="customLayout.showFiltersSlideover.value" as="template">
+    <TransitionRoot appear :show="customLayout?.showFiltersSlideover.value" as="template">
       <Dialog as="div" class="relative z-10" @close="customLayout.showFiltersSlideover.value = false">
         <TransitionChild
           as="template"
@@ -301,7 +301,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                 <div v-if="layoutConfig.mainReco.filtersTitle" :style="layoutConfig.mainReco.filtersTitleStyle" class="ml-3">
                   {{ layoutConfig.mainReco.filtersTitle }}
                 </div>
-                <div class="flex justify-end">
+                <div v-if="customLayout" class="flex justify-end">
                   <img
                     v-if="layoutConfig.mainReco.slideoverCloseButton"
                     :src="layoutConfig.mainReco.slideoverCloseButton"
@@ -313,7 +313,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
                   </div>
                 </div>
               </div>       
-              <CustomLayoutFiltersAside :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
+              <CustomLayoutFiltersAside v-if="customLayout" :filter="customLayout.filter" :config="layoutConfig" class="overflow-y-auto" />
               <CustomLayoutFiltersButtons :config="layoutConfig" />
             </DialogPanel>
           </TransitionChild>

@@ -5,7 +5,7 @@ const props = withDefaults(
   defineProps<{
     parameters: { title: string, style: Object };
     filter: StructuredRecommender,
-    elements: { component: 'autolist-checkbox' | 'colors' | 'checkbox' | 'range' | 'double-range' | 'input'; props: any }[];
+    elements: FilterElement['elements'];
     inputClass?: string;
     checkboxClass?: string;
     labelClass?: string;
@@ -171,6 +171,7 @@ const moreElementsThanLimit = (criteria: string, limit: number) => {
           criteria="color"
           operator="CONTAINS_CI"
           :value="key"
+          :group="`${props.criteria}-${component}-filter`"
         >
           <template #customCheckbox="{ set, get }">
             <button class="flex flex-col items-center" @click="set(key)">

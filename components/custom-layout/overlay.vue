@@ -79,7 +79,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
 <template>
   <TransitionRoot
     appear
-    :show="customLayout.showOverlay.value"
+    :show="customLayout && customLayout.showOverlay.value"
     as="template"
   >
     <Dialog
@@ -134,7 +134,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
             </Slider>
           </div>
           <div v-else :style="config.gridStyle">
-            <template v-for="item in items">
+            <template v-for="item in items" :key="item">
               <CustomLayoutRecoItem v-if="(config.itemLayout ?? 'default') === 'default'" :config="{ style: config.itemStyle, item }" />
               <slot v-else-if="config.itemLayout === 'reco-slider-slot'" name="reco-slider-item" :item="item" />
               <slot v-else-if="config.itemLayout === 'filters-content-grid-item'" name="filters-content-grid-item" :item="item" />

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { StyleValue } from 'nuxt/dist/app/compat/capi'
+import type { StructuredRecommender } from '~/types'
 
 const props = withDefaults(
   defineProps<{
-    filter: Recommender;
+    filter: StructuredRecommender;
     group: string;
     criteria: string;
     step: number;
@@ -13,7 +13,7 @@ const props = withDefaults(
     max?: number;
     reverse?: boolean;
   }>(),
-  { min: 0, max: 1000, step: 5, trailling: '€', placeholder: '', reverse: false}
+  { min: 0, max: 1000, step: 5, trailling: '€', placeholder: '', reverse: false }
 )
 
 
@@ -67,7 +67,7 @@ watchDebounced(
 
 <template>
   <div class="w-full py-2 flex flex-col">
-    <div class="flex gap-2" :class="{'order-1': !reverse, 'order-2': reverse}">
+    <div class="flex gap-2" :class="{ 'order-1': !reverse, 'order-2': reverse }">
       <div class="relative flex-1">
         <input
           v-model="sliderMin"
@@ -99,7 +99,7 @@ watchDebounced(
         </slot>
       </div>
     </div>
-    <div class="range-slider h-[12px] mt-4 w-full relative" :class="{'order-2': !reverse, 'order-1': reverse}">
+    <div class="range-slider h-[12px] mt-4 w-full relative" :class="{ 'order-2': !reverse, 'order-1': reverse }">
       <input v-model.number="sliderMin" type="range" :min="props.min" :max="props.max" :step="props.step">
       <input v-model.number="sliderMax" type="range" :min="props.min" :max="props.max" :step="props.step">
       <span class="absolute bg-primary h-[var(--double-range-height)] bottom-0 top-0" :style="{ ...progressStyle }">

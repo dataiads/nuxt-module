@@ -15,7 +15,7 @@ const props = defineProps<{
   sizes?: string;
   picture?: boolean;
   zoom?: boolean;
-  provider: string;
+  provider?: string;
   // optional: remove elements from the DOM when link is broken
   removeOnError?: boolean;
 }>()
