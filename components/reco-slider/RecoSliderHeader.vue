@@ -11,7 +11,7 @@ const { config, arrowPlacement, items } = useRecoSlider()
     class="reco-slider-title"
     :class="cn('flex justify-between items-center', props.class)"
   >
-    <slot>
+    <slot :items="items">
       <h2 :style="config.titleStyle">
         <DynamicLabel :value="config.title" />
       </h2>
