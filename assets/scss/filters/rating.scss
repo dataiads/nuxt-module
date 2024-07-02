@@ -1,0 +1,22 @@
+.filters-rating {
+  & label {
+    @apply flex items-center cursor-pointer;
+  }
+
+  & span {
+    @apply ml-2;
+  }
+
+  &-star {
+
+    &__full,
+    &__empty {
+      @apply w-5 h-5;
+    }
+
+    &__empty {
+      @apply text-gray-300;
+    }
+  }
+
+}

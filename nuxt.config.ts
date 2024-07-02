@@ -5,11 +5,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   // @ts-ignore
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/image',
-    '@vueuse/nuxt'
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@vueuse/nuxt'],
 
 
   app: {
@@ -17,7 +13,7 @@ export default defineNuxtConfig({
     cdnURL: process.env.CDN_URL || ''
   },
 
-  css: [resolve('./assets/scss/global.scss')],
+  css: [],
 
   runtimeConfig: {
     public: {
@@ -176,6 +172,11 @@ export default defineNuxtConfig({
         'path': './components/layouts',
         'global': true
       },
+      {
+        'path': './components/ui',
+        global: true,
+        extensions: ['.vue']
+      },
       { path: './components/blocks', prefix: 'D' },
       './components',
       '~/components'
@@ -184,6 +185,8 @@ export default defineNuxtConfig({
   hooks: {
     'ready': async (nuxt) => {
       const cssPath = await resolvePath('~/assets/css/custom.scss')
+      const globalPath = resolve('./assets/scss/global.scss')
+      nuxt.options.css.push(globalPath)
       nuxt.options.css.push(cssPath)
     }
   }
