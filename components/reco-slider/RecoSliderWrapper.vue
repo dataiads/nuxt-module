@@ -20,7 +20,7 @@ const recoSliderArgs = useProvideRecoSlider({ config: props.config, arrowPlaceme
 </script>
 
 <template>
-  <div v-if="recoSliderArgs.items" class="reco-slider-wrapper">
+  <div v-if="recoSliderArgs.items.value && recoSliderArgs.items.value.length" class="reco-slider-wrapper">
     <slot v-bind="recoSliderArgs" />
   </div>
 </template>

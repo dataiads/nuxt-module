@@ -4,7 +4,16 @@ const props = defineProps<{
   class?: string;
 }>()
 
-const { items, config } = useRecoSlider()
+const { items, config, itemWidth } = useRecoSlider()
+const carouselRef = ref([])
+
+onMounted(() => {
+  itemWidth.value = carouselRef.value[0].getBoundingClientRect().width
+})
+
+useEventListener('resize', () => {
+  itemWidth.value = carouselRef.value[0].getBoundingClientRect().width
+}, { passive: true })
 </script>
 
 <template>
@@ -14,6 +23,8 @@ const { items, config } = useRecoSlider()
     :class="cn('', props.class)"
     :style="{ paddingLeft: config.columnGap }"
   >
-    <slot :item="item" />
+    <div ref="carouselRef">
+      <slot :item="item" />
+    </div>
   </CarouselItem>
 </template>
