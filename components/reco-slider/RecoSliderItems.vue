@@ -23,8 +23,6 @@ useEventListener('resize', () => {
     :class="cn('', props.class)"
     :style="{ paddingLeft: config.columnGap }"
   >
-    <div ref="carouselRef">
-      <slot :item="item" />
-    </div>
+    <slot :item="item" />
   </CarouselItem>
 </template>

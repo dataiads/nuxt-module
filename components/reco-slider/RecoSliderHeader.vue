@@ -16,11 +16,13 @@ const { config, arrowPlacement, items, getDisplayCount } = useRecoSlider()
       <h2 :style="config.titleStyle">
         <DynamicLabel :value="config.title" />
       </h2>
-      <div v-if="arrowPlacement === 'outside'">
+      <template v-if="arrowPlacement === 'outside'">
         <slot name="arrow" :items="items" :display-count="getDisplayCount">
-          <RecoSliderBtn />
+          <div>
+            <RecoSliderBtn />
+          </div>
         </slot>
-      </div>
+      </template>
     </slot>
   </div>
 </template>
