@@ -1,11 +1,11 @@
 import { createInjectionState } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { RecoSliderParams } from 'dataiads-nuxt-layer/types'
 
 export interface RecoSliderProps {
   config: RecoSliderParams,
   arrowPlacement: 'inside' | 'outside'
-  items: Product[][]
+  items: Ref<Product[][]>
 }
 
 const [useProvideRecoSlider, useInjectRecoSlider] = createInjectionState(
@@ -14,10 +14,20 @@ const [useProvideRecoSlider, useInjectRecoSlider] = createInjectionState(
     config,
     items
   }: RecoSliderProps) => {
+    const currentIndex = ref(1)
+    const slideInView = ref(1)
+
+    const getDisplayCount = computed<number>(() => 
+      Math.min(currentIndex.value * slideInView.value, items?.value?.length)
+    )
+
     return {
       arrowPlacement,
       config,
-      items
+      items,
+      currentIndex,
+      getDisplayCount,
+      slideInView
     }
   }
 )
