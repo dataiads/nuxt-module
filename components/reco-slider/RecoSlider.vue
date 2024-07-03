@@ -12,20 +12,16 @@ watchOnce(api, (api) => {
     return
 
   api.on('init', () => {
-    slideInView.value = api.slidesInView().length - 1
-    currentIndex.value = api.selectedScrollSnap() + 1
+    slideInView.value = Math.floor(window.innerWidth / api.slideNodes()[0].getBoundingClientRect().width)
   })
-  
-  api.on('slidesInView', () => {
-    slideInView.value = api.slidesInView().length - 1
+
+  api.on('select', () => {
     currentIndex.value = api.selectedScrollSnap() + 1
   })
 
   api.on('resize', () => {
-    slideInView.value = api.slidesInView().length - 1
-    currentIndex.value = api.selectedScrollSnap() + 1 
+    slideInView.value = Math.floor(window.innerWidth / api.slideNodes()[0].getBoundingClientRect().width)
   })
-
 })
 </script>
 

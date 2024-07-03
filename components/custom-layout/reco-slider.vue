@@ -14,7 +14,7 @@ const arrowPlacement = computed(() => !props.config.arrowPlacement ? 'inside' : 
   <div>
     <RecoSliderWrapper :config="config" :style="config.style">
       <RecoSliderHeader v-if="arrowPlacement === 'inside'">
-        <template #default="{ displayCount }">
+        <template #default="{ items, displayCount }">
           <slot name="reco-slider-header" :config="config" :items="items" :display-count="displayCount" />
         </template>
         <template #arrow="{ items, displayCount }">

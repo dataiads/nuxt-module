@@ -4,16 +4,7 @@ const props = defineProps<{
   class?: string;
 }>()
 
-const { items, config, itemWidth } = useRecoSlider()
-const carouselRef = ref([])
-
-onMounted(() => {
-  itemWidth.value = carouselRef.value[0].getBoundingClientRect().width
-})
-
-useEventListener('resize', () => {
-  itemWidth.value = carouselRef.value[0].getBoundingClientRect().width
-}, { passive: true })
+const { items, config } = useRecoSlider()
 </script>
 
 <template>
