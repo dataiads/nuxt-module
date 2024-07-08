@@ -2,6 +2,9 @@
  * Allows users to inject custom scripts to the page, weather it's in the body or head.
  */
 export default defineNuxtPlugin(() => {
+  if (blockTrackingScripts()) {
+    return
+  }
   const lpoConfig = useLpoConfig()
 
   if (lpoConfig.customScripts?.length) {

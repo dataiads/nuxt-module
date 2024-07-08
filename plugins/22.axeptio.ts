@@ -11,6 +11,9 @@ function prependBody (tag: string, content: string) {
 }
 
 export default defineNuxtPlugin(() => {
+  if (blockTrackingScripts()) {
+    return
+  }
   const lpoConfig = useLpoConfig()
   const config = useRuntimeConfig()
 

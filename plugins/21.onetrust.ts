@@ -6,6 +6,9 @@ import { defineNuxtPlugin, useHead } from '#app'
  */
 
 export default defineNuxtPlugin(() => {
+  if (blockTrackingScripts()) {
+    return
+  }
   const config = useLpoConfig()?.onetrust
 
   if (config?.dataDomainScript) {

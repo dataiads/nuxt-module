@@ -47,6 +47,9 @@ export default defineNuxtConfig({
       // toggle LCP score optimization
       optimizeLCP: false,
 
+      // toggle TBT score optimization
+      optimizeTBT: false,
+
       // activate region fetching
       fetchRegion: false,
 

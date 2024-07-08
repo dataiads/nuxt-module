@@ -2,6 +2,9 @@
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  if (blockTrackingScripts()) {
+    return
+  }
   const lpoConfig = useLpoConfig()
   const product = useProduct()
 
