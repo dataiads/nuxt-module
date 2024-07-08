@@ -18,11 +18,13 @@ const props = defineProps<{
   provider?: string;
   // optional: remove elements from the DOM when link is broken
   removeOnError?: boolean;
+  placeholder?: boolean;
 }>()
 
-const format = props.format ?? 'webp'
+const format = props.format ?? 'avif,webp'
 const loading = props.loading ?? 'eager'
 const picture = props.picture ?? false
+const placeholder = props.placeholder === false ? false : true
 
 const fallbackToUncompressed = (event: Event) => {
   if (!event.target) {
@@ -86,7 +88,7 @@ const translateStyle = computed(() => {
 
 <template>
   <div @mouseover="hover = true" @mouseleave="handleMouseLeave">
-    <nuxt-img
+    <NuxtPicture
       v-if="config.public.optimizeImageLoad && !picture && !props.srcset"
       :src="src"
       :alt="props.alt"
@@ -98,11 +100,13 @@ const translateStyle = computed(() => {
       :sizes="sizes"
       :provider="provider"
       :style="translateStyle"
+      :placeholder="placeholder"
+      :placeholder-class="['animate-pulse']"
       @error="fallbackToUncompressed"
     />
     <picture v-else-if="config.public.optimizeImageLoad && picture && !props.srcset">
       <slot :translate-style="translateStyle" />
-      <nuxt-img
+      <NuxtPicture
         :src="src"
         :alt="props.alt"
         :width="props.width"
@@ -110,6 +114,8 @@ const translateStyle = computed(() => {
         :class="props.class"
         :format="format"
         :loading="loading"
+        :placeholder="placeholder"
+        :placeholder-class="['animate-pulse']"
         @error="fallbackToUncompressed"
       />
     </picture>
