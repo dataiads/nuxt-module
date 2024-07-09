@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const config = useRuntimeConfig()
-
 const props = defineProps<{
   src: string;
   hoverSrc?: string;
@@ -87,8 +85,10 @@ const translateStyle = computed(() => {
 <template>
   <div @mouseover="hover = true" @mouseleave="handleMouseLeave">
     <NuxtPicture
-      v-if="config.public.optimizeImageLoad && !picture && !props.srcset"
+      v-if="!picture"
+      ref="imageRef"
       :src="src"
+      :srcset="srcset"
       :alt="props.alt"
       :width="props.width"
       :height="props.height"
@@ -99,11 +99,13 @@ const translateStyle = computed(() => {
       :provider="provider"
       :style="translateStyle"
       @error="fallbackToUncompressed"
+      @mousemove="handleMouseMove"
     />
-    <picture v-else-if="config.public.optimizeImageLoad && picture && !props.srcset">
+    <picture v-else>
       <slot :translate-style="translateStyle" />
       <NuxtPicture
         :src="src"
+        :srcset="srcset"
         :alt="props.alt"
         :width="props.width"
         :height="props.height"
@@ -111,21 +113,8 @@ const translateStyle = computed(() => {
         :format="format"
         :loading="loading"
         @error="fallbackToUncompressed"
+        @mousemove="handleMouseMove"
       />
     </picture>
-    <img
-      v-else
-      ref="imageRef"
-      :src="src"
-      :srcset="srcset"
-      :sizes="props.sizes"
-      :alt="props.alt"
-      :class="props.class"
-      :width="props.width"
-      :height="props.height"
-      :loading="loading"
-      :style="translateStyle"
-      @mousemove="handleMouseMove"
-    >
   </div>
 </template>
