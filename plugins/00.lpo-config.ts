@@ -56,7 +56,7 @@ export default defineNuxtPlugin(async () => {
     }
 
     Object.keys(config.public).forEach((c) => {
-      if (!lpoConfig.hasOwnProperty(c)) {
+      if (!Object.prototype.hasOwnProperty.call(lpoConfig, c)) {
         return
       }
 
@@ -115,6 +115,8 @@ function deserializeServerConfig (
     productHook: StringLoader,
     filterParams: JSONLoader,
     customLayout: JSONLoader,
+    optimizeLCP: JSONLoader,
+    optimizeTBT: JSONLoader,
     // unused but kept for compat compatibility
     breadcrumbs: JSONLoader,
     carousel: JSONLoader
