@@ -99,7 +99,7 @@ const config = {
   'buttonStyle': {
     'width': '40px',
     'height': '40px',
-    'backgroundColor': '#E75113',
+    'backgroundColor': 'white',
     'color': '#FFF',
     'borderRadius': '99999px',
     'zIndex': '21'
@@ -136,8 +136,10 @@ const config = {
       'color': '#000000',
       'textDecoration': 'line-through'
     }
-  }
+  },
+  arrowPlacement: 'outside'
 }
+
 </script>
 
 <template>
@@ -145,6 +147,14 @@ const config = {
     <template #reco-slider-item="{ item }">
       <img :src="item[0].data.imageLink" class="w-[150px]">
     </template>
+    <template #reco-slider-header-arrow="{ items, displayCount }">
+      <div class="flex items-baseline text-[17px] font-thin">
+        <RecoSliderPrev display-disable></RecoSliderPrev>
+        {{ displayCount }}/{{ items?.length ?? 0 }}
+        <RecoSliderNext display-disable></RecoSliderNext>
+      </div>
+    </template>
+
   </CustomLayoutRecoSlider>
 </template>
 
