@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
 
-defineProps<{classContent?: string, classItem?: string }>()
+const props = withDefaults(defineProps<{classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean }>(), {
+  displayHoverImage: false,
+  classContent: '',
+  classItem: '',
+  zoom: false
+})
 
 const { images, index, setIndex, openDialog } = useProductImage()
 const mainApi = ref()
@@ -34,6 +39,16 @@ const onClickMainImage = (i: number) => {
   openDialog()
 }
 
+const onMouseover = () => {
+  if (!props.displayHoverImage) return
+
+  if (index.value === 0 && index.value + 1 !== images.value.length) setIndex(1)
+}
+
+const onMouseleave = () => {
+  if (!props.displayHoverImage) return
+  if (index.value === 1) setIndex(0)
+}
 </script>
 
 <template>
@@ -51,13 +66,15 @@ const onClickMainImage = (i: number) => {
     </div>
     <CarouselContent :class="cn('', classContent)">
       <CarouselItem
-        v-for="(src, index) in images"
-        :key="'images' + index"
+        v-for="(src, i) in images"
+        :key="'images' + i"
         :class="cn('', classItem)"
-        @click="onClickMainImage(index)"
+        @click="onClickMainImage(i)"
+        @mouseover="onMouseover"
+        @mouseleave="onMouseleave"
       >
         <slot name="main-image" :src="src">
-          <img :src="src" class="w-full h-auto">
+          <ProductImageItem :src="src" :zoom="zoom" />
         </slot>
       </CarouselItem>
     </CarouselContent>

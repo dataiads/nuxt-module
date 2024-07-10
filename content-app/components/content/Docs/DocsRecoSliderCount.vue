@@ -149,12 +149,11 @@ const config = {
     </template>
     <template #reco-slider-header-arrow="{ items, displayCount }">
       <div class="flex items-baseline text-[17px] font-thin">
-        <RecoSliderPrev display-disable></RecoSliderPrev>
+        <RecoSliderPrev display-disable />
         {{ displayCount }}/{{ items?.length ?? 0 }}
-        <RecoSliderNext display-disable></RecoSliderNext>
+        <RecoSliderNext display-disable />
       </div>
     </template>
-
   </CustomLayoutRecoSlider>
 </template>
 
@@ -162,6 +161,7 @@ const config = {
 .reco-slider-title {
   @apply text-2xl font-bold;
 }
+
 .reco-slider-item {
   @apply basis-[150px]
 }

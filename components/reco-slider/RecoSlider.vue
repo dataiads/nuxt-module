@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import type { CarouselApi } from '~/carousel'
 
 const { currentIndex, slideInView } = useRecoSlider()
@@ -33,6 +34,7 @@ watchOnce(api, (api) => {
       loop: true,
       slidesToScroll: 'auto',
     }"
+    :plugins="[WheelGesturesPlugin()]"
     @init-api="setApi"
   >
     <slot />

@@ -1,21 +1,37 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-const props = defineProps<{class?: string, contentClass?: string}>()
+const props = withDefaults(defineProps<{orientation?: 'horizontal' | 'vertical', class?: string, contentClass?: string}>(), { orientation: 'vertical', class: '', contentClass: '' })
 const { images, setIndex, index } = useProductImage()
 
+const api = ref()
+const canScrollNext = ref(false)
+const canScrollPrev = ref(false)
+
+const onSelect = () => {
+  canScrollNext.value = api.value.canScrollNext()
+  canScrollPrev.value = api.value.canScrollPrev()
+}
+watchOnce(api, (api) => {
+  if (!api)
+    return
+
+  onSelect()
+  api.on('select', onSelect)
+})
 </script>
 
 <template>
   <Carousel
     :class="cn('relative w-fit', props.class)"
-    orientation="vertical"
+    :orientation="orientation"
     :opts="{
       align: 'start',
       slidesToScroll: 'auto',
       loop: false,
     }"
+    @init-api="(val) => (api = val)"
   >
-    <CarouselContent :class="cn('max-h-[350px]', contentClass)">
+    <CarouselContent :class="cn('max-h-[350px]', orientation === 'horizontal' ? 'max-w-[calc(100vw-32px)]' : '', contentClass)">
       <CarouselItem
         v-for="(src, i) in images"
         :key="i"
@@ -33,8 +49,8 @@ const { images, setIndex, index } = useProductImage()
       </CarouselItem>
     </CarouselContent>
     <slot name="actions">
-      <CarouselPrevious class="top-0 border-none" />
-      <CarouselNext class="bottom-0 border-none" />
+      <CarouselPrevious v-if="canScrollPrev" :class="cn('border-none', orientation === 'vertical' ? 'top-0 border-none' : '')" />
+      <CarouselNext v-if="canScrollNext" :class="cn('border-none', orientation === 'vertical' ? 'bottom-0 border-none' : '')" />
     </slot>
   </Carousel>
 </template>
