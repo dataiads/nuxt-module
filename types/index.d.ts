@@ -653,6 +653,11 @@ export interface MainRecoParams {
 
 export interface MainProductParams {
   light: boolean;
+  seeMoreEnable: boolean;
+  seeMoreTitle: string;  
+  seeMoreBtnTitle: string;
+  seeMoreBtnVariant: 'outline'; // list all possiblity
+
 }
 
 export interface HeaderParams {
