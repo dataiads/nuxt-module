@@ -7,3 +7,9 @@ This component is internal to the custom layout
 
 ::Showcase{name="DocsRecoSlider"}
 ::
+
+## Count progression
+
+You need to be in display arrow outside to show the progression `arrowPlacement: 'outside'`
+::Showcase{name="DocsRecoSliderCount"}
+::

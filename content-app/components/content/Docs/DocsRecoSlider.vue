@@ -143,7 +143,7 @@ const config = {
 <template>
   <CustomLayoutRecoSlider :config="config">
     <template #reco-slider-item="{ item }">
-      <img :src="item[0].data.imageLink" class="w-[150px]">
+      <img :src="item[0].data.imageLink">
     </template>
   </CustomLayoutRecoSlider>
 </template>
