@@ -3,24 +3,25 @@ const props = defineProps<{
   modelValue?: boolean,
 }>()
 
-const { seeMoreEnable, seeMoreTitle, seeMoreBtnTitle, seeMoreBtnVariant } = useLpoConfig().customLayout.mainProduct
+const dynamicLpoConfig = useDynamicLpoConfig()
+const mainProductConfig = computed(() => dynamicLpoConfig.value.customLayout?.mainProduct)
 const { images } = useProductImage()
 
 const scrollToMainReco = () => {
   const mainReco = document.getElementById('catalog-grid')
-  if (mainReco) mainReco.scrollTo({ top: 0, behavior: 'smooth' })
+  if (mainReco) mainReco.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
 <template>
-  <CarouselItem v-if="seeMoreEnable">
+  <CarouselItem v-if="mainProductConfig && mainProductConfig.seeMoreEnable">
     <img :src="images[0]" class="blur-lg">
     <div class="flex flex-col absolute top-1/2 -translate-y-1/2 translate-x-1/2 right-1/2">
-      <span>
-        {{ seeMoreTitle }}
+      <span :style="mainProductConfig.seeMoreTitleStyle">
+        {{ mainProductConfig.seeMoreTitle }}
       </span>
-      <Button :variant="seeMoreBtnVariant" @click="scrollToMainReco">
-        {{ seeMoreBtnTitle }}
+      <Button :variant="mainProductConfig.seeMoreBtnVariant" @click="scrollToMainReco">
+        {{ mainProductConfig.seeMoreBtnTitle }}
       </Button>
     </div>
   </CarouselItem>
