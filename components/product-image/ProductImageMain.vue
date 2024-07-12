@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
 
-const props = withDefaults(defineProps<{classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean }>(), {
+const props = withDefaults(defineProps<{classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
   displayHoverImage: false,
   classContent: '',
   classItem: '',
-  zoom: false
+  zoom: false,
+  getZoomedSrc: (src: string) => src // Default to returning the same src
 })
 
 const { images, index, setIndex, openDialog } = useProductImage()
@@ -74,7 +75,7 @@ const onMouseleave = () => {
         @mouseleave="onMouseleave"
       >
         <slot name="main-image" :src="src">
-          <ProductImageItem :src="src" :zoom="zoom" />
+          <ProductImageItem :src="src" :zoom="zoom" :get-zoomed-src="getZoomedSrc" />
         </slot>
       </CarouselItem>
     </CarouselContent>

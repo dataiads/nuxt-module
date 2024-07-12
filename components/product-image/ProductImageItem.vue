@@ -5,15 +5,18 @@ interface Props {
   src: string;
   zoomFactor?: number;
   zoom: boolean;
+  getZoomedSrc?: (src: string) => string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  zoomFactor: 2
+  zoomFactor: 2,
+  getZoomedSrc: (src) => src // Default to returning the same src
 })
 
 const containerRef = ref<HTMLDivElement | null>(null)
 const imageRef = ref<HTMLImageElement | null>(null)
 const isZoomed = ref(false)
+const currentSrc = ref(props.src)
 
 const imageStyle = reactive({
   transition: 'transform 0.3s ease-out',
@@ -31,8 +34,10 @@ const handleClick = (event: MouseEvent) => {
   
   if (!isZoomed.value) {
     zoomIn(event)
+    currentSrc.value = props.getZoomedSrc(props.src)
   } else {
     zoomOut()
+    currentSrc.value = props.src
   }
   
   isZoomed.value = !isZoomed.value
@@ -74,7 +79,7 @@ const handleMouseMove = (event: MouseEvent) => {
   >
     <img 
       ref="imageRef" 
-      :src="src" 
+      :src="currentSrc" 
       :style="imageStyle"
     >
   </div>
