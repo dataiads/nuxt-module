@@ -3,6 +3,7 @@ import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
 import type { StyleValue } from 'nuxt/dist/app/compat/capi'
+import { type ButtonVariants } from '~/components/ui/button/index.ts'
 
 
 
@@ -655,9 +656,9 @@ export interface MainProductParams {
   light: boolean;
   seeMoreEnable: boolean;
   seeMoreTitle: string;  
+  seeMoreTitleStyle: StyleValue;
   seeMoreBtnTitle: string;
-  seeMoreBtnVariant: 'outline'; // list all possiblity
-
+  seeMoreBtnVariant: ButtonVariants['variant']; // list all possiblity
 }
 
 export interface HeaderParams {
