@@ -24,7 +24,7 @@ const config = {
               'max': '0',
               'minPlaceholder': '',
               'maxPlaceholder': '',
-              'label': 'Switch',
+              'label': 'Not activated',
               'value': '',
               'value-criteria': 'price',
               'step': 0,
@@ -55,14 +55,19 @@ const config = {
   }
 }
 
-const isActivated = ref(false)
+const state = ref(config.mainReco.filterParams[0].elements[0].props.label)
+
+const setActivated = () => {
+  state.value = state.value !== 'Activated' ? 'Activated' : 'Not activated'
+}
+
 </script>
 
 <template>
-  <Switch :class="[`data-[state=unchecked]:bg-input`, `data-[state=checked]:bg-primary`]" @update:checked="isActivated = !isActivated">
-    <template #default>
-      {{ isActivated ? 'Activated' : 'Not activated' }}
-    </template>
-  </Switch>
+  <div class="flex flex-col items-center gap-2">
+    <p>{{ state }}</p>
+    
+    <Switch :class="[`data-[state=unchecked]:bg-input`, `data-[state=checked]:bg-primary`, `data-[disabled]:bg-input`]" :disabled="false" @update:checked="setActivated" />
+  </div>
 </template>
 

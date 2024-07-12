@@ -33,7 +33,6 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <div class="flex flex-col">
-    <slot />
     <SwitchRoot
       v-bind="forwarded"
       :class="cn(switchVariants({ variant, size }), props.class)"
