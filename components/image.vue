@@ -84,7 +84,7 @@ const translateStyle = computed(() => {
 
 <template>
   <div @mouseover="hover = true" @mouseleave="handleMouseLeave">
-    <NuxtPicture
+    <NuxtImg
       v-if="!picture"
       ref="imageRef"
       :src="src"
@@ -101,7 +101,7 @@ const translateStyle = computed(() => {
       @error="fallbackToUncompressed"
       @mousemove="handleMouseMove"
     />
-    <picture v-else>
+    <template v-else>
       <slot :translate-style="translateStyle" />
       <NuxtPicture
         :src="src"
@@ -115,6 +115,6 @@ const translateStyle = computed(() => {
         @error="fallbackToUncompressed"
         @mousemove="handleMouseMove"
       />
-    </picture>
+    </template>
   </div>
 </template>
