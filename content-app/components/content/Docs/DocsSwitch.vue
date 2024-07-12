@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Switch } from '@/components/ui/Switch'
 
 const config = {
   'global': {
@@ -23,7 +24,7 @@ const config = {
               'max': '0',
               'minPlaceholder': '',
               'maxPlaceholder': '',
-              'label': 'Toggle',
+              'label': 'Switch',
               'value': '',
               'value-criteria': 'price',
               'step': 0,
@@ -54,36 +55,14 @@ const config = {
   }
 }
 
-const customLayout = useCustomLayout()
+const isActivated = ref(false)
 </script>
 
 <template>
-  <CustomLayoutFiltersAside :config="config" :filter="customLayout.filter" />
+  <Switch :class="[`data-[state=unchecked]:bg-input`, `data-[state=checked]:bg-primary`]" @update:checked="isActivated = !isActivated">
+    <template #default>
+      {{ isActivated ? 'Activated' : 'Not activated' }}
+    </template>
+  </Switch>
 </template>
 
-<style lang="scss">
-
-.filters-switch {
-  @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#E75113] focus:ring-offset-2;
-
-  &>span {
-    @apply inline-block h-4 w-4 transform rounded-full bg-white transition-transform;
-  }
-
-  &__on {
-    @apply bg-[#E75113];
-
-    & span {
-      @apply translate-x-6;
-    }
-  }
-
-  &__off {
-    @apply bg-gray-200;
-
-    & span {
-      @apply translate-x-1
-    }
-  }
-}
-</style>
