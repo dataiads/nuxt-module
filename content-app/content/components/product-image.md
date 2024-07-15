@@ -18,4 +18,9 @@ You can use dots for swiping and changing the image you want to see in the produ
 To enable the dots feature, include `ProductImageDots` in your `ProductImageMain` component.
 
 ::Showcase{name="DocsProductsImageDots"}
+
+## See more
+
+When you arrive at the end of the carousel it displays a blur on the first img to show other product
+::Showcase{name="DocsProductImageSeeMore"}
 ::

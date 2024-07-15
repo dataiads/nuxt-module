@@ -4,7 +4,6 @@ const props = defineProps<{
   config: RecoSliderParams,
 }>()
 
-const arrowPlacement = props.config?.arrowPlacement || 'inside'
 const product = useProduct()
 
 const slider = useStructuredRecommender({
@@ -16,7 +15,10 @@ const slider = useStructuredRecommender({
   defaultSort: props.config.algo.sort
 })
 
-const recoSliderArgs = useProvideRecoSlider({ config: props.config, arrowPlacement, items: slider.results.data as Product[][] })
+const config = computed(() => props.config)
+const arrowPlacement = computed(() => props.config?.arrowPlacement || 'inside')
+
+const recoSliderArgs = useProvideRecoSlider({ config, arrowPlacement, items: slider.results.data as Product[][] })
 </script>
 
 <template>
