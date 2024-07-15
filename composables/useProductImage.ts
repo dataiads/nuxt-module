@@ -29,7 +29,7 @@ const [useProvideProductImage, useInjectProductImage] = createInjectionState((p)
         allImages = allImages.concat(product.value.data.additionalImageLinks)
       }
     }
-    return allImages
+    return allImages.filter(image => image !== '')
   })
 
   function setIndex (i: number) {
