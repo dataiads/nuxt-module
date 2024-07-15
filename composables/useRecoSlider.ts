@@ -3,8 +3,8 @@ import { ref, computed } from 'vue'
 import type { RecoSliderParams } from 'dataiads-nuxt-layer/types'
 
 export interface RecoSliderProps {
-  config: RecoSliderParams,
-  arrowPlacement: 'inside' | 'outside'
+  config: Ref<RecoSliderParams>,
+  arrowPlacement: Ref<'inside' | 'outside'>,
   items: Ref<Product[][]>
 }
 
