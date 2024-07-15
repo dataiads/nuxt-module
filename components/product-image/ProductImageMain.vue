@@ -78,6 +78,7 @@ const onMouseleave = () => {
           <ProductImageItem :src="src" :zoom="zoom" :get-zoomed-src="getZoomedSrc" />
         </slot>
       </CarouselItem>
+      <ProductImageSeeMore :class="cn('relative', classItem)" />
     </CarouselContent>
     <slot />
   </Carousel>
