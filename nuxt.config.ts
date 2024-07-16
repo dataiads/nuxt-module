@@ -44,6 +44,9 @@ export default defineNuxtConfig({
       // toggle optimized images component
       optimizeImageLoad: true,
 
+      // toggle LCP score optimization
+      optimizeLCP: false,
+
       // activate region fetching
       fetchRegion: false,
 
