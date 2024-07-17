@@ -107,10 +107,18 @@ const config = {
 
 <template>
       <CustomLayoutLayer :config="config">
-        <template #reco-slider-item="{ item }">
+        <template #layer-item="{ item }">
           <img :src="item[0].data.imageLink">
         </template>
     </CustomLayoutLayer>
 
   
 </template>
+
+<style lang="scss">
+
+.layer-item {
+  flex-basis: 20%;
+}
+
+</style>
