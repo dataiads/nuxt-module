@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { SplitterGroup, SplitterPanel, SplitterResizeHandle } from 'radix-vue'
-import { GripVertical } from 'lucide-vue-next'
 import { codeToHtml } from 'shiki'
+import { ResizablePanel } from '@/components/custom/resizable'
 
 const props = withDefaults(defineProps<{
   name: string;
@@ -51,12 +50,16 @@ const product = useProduct()
             ref="splitterPanel"
             :default-size="100"
             :min-size="30"
+          
             class="bg-white rounded-xl flex items-center justify-center"
           >
-            <div
-              class="preview flex min-h-[350px] w-full justify-center p-4 items-center"
-            >
-              <iframe v-if="responsive" height="400px" class="w-full bg-background" :src="`/render/${props.name}?lpoid=${product.id}`" />
+            <div class="preview flex min-h-[350px] w-full justify-center p-4 items-center">
+              <iframe
+                v-if="responsive"
+                height="400px"
+                class="w-full bg-background"
+                :src="`/render/${props.name}?lpoid=${product.id}`"
+              />
               <component :is="props.name" v-else />
             </div>
           </ResizablePanel>

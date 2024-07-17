@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Monitor, Tablet, Smartphone } from 'lucide-vue-next'
 
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { ToggleGroup, ToggleGroupItem } from '@/components/custom/toggle-group'
 const value = defineModel('modelValue', { type: String, default: '100' })
 </script>
 

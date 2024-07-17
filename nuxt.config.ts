@@ -175,7 +175,8 @@ export default defineNuxtConfig({
       {
         'path': './components/ui',
         global: true,
-        extensions: ['.vue']
+        extensions: ['.vue'],
+        priority: 1
       },
       { path: './components/blocks', prefix: 'D' },
       './components',

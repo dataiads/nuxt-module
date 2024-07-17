@@ -31,7 +31,7 @@ export default defineNuxtConfig({
       baseURL: '/_my_content'
     }
   },
-  modules: ['@nuxt/content', '@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-icon'],
+  modules: ['@nuxt/content', '@nuxtjs/tailwindcss', 'nuxt-icon'],
   runtimeConfig: {
     public: {
       mirroredDomain,
@@ -937,6 +937,16 @@ export default defineNuxtConfig({
           }
         : {}
     }
+  },
+  components: {
+    'dirs': [
+      {
+        'path': './components/custom',
+        global: true,
+        extensions: ['.vue'],
+        priority: 9
+      }
+    ]
   },
   nitro: {
     devProxy: {
