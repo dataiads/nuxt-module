@@ -99,7 +99,7 @@ const config = {
   'buttonStyle': {
     'width': '40px',
     'height': '40px',
-    'backgroundColor': '#E75113',
+    'backgroundColor': 'white',
     'color': '#FFF',
     'borderRadius': '99999px',
     'zIndex': '21'
@@ -136,7 +136,8 @@ const config = {
       'color': '#000000',
       'textDecoration': 'line-through'
     }
-  }
+  },
+  arrowPlacement: 'inside'
 }
 </script>
 
