@@ -19,7 +19,7 @@ const config = computed(() => props.config)
                     </Button>
                 </div>
             </SheetTrigger>
-            <SheetContent :side="config.position" :backdrop-style="config.backdropStyle" >
+            <SheetContent :side="config.position" :backdrop-style="config.backdropStyle">
                 <SheetHeader v-if="config.title">
                     <SheetTitle>
                         <DynamicLabel :value="config.title" />
@@ -32,9 +32,9 @@ const config = computed(() => props.config)
                 }">
                     <CarouselPrevious class="left-4 z-[20] mt-5" />
                     <CarouselNext class="right-4 z-[20] mt-5" />
-                    <CarouselContent class="-ml-6">
-                        <LayerItems v-slot="{ item }" class="layer-item">
-                            <slot name="layer-item" :item="item" />
+                    <CarouselContent>
+                        <LayerItems v-slot="{ item }">
+                            <slot name="reco-slider-item" :item="item" />
                         </LayerItems>
                     </CarouselContent>
                 </Carousel>

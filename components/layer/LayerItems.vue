@@ -9,12 +9,8 @@ console.log('items', items)
 </script>
 
 <template>
-  <CarouselItem
-    v-for="(item, index) in items"
-    :key="'layeritem_' + index"
-    :class="cn('', props.class)"
-    :style="{ paddingLeft: config.columnGap }"
-  >
+  <CarouselItem v-for="(item, index) in items" :key="'layeritem_' + index" :class="cn('', props.class)"
+    :style="{ paddingLeft: config.columnGap }">
     <slot :item="item" />
   </CarouselItem>
 </template>

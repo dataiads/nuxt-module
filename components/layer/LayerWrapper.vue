@@ -16,10 +16,14 @@ const layer = useStructuredRecommender({
   defaultLimit: props.config.algo.limit,
   defaultSort: props.config.algo.sort
 })
+console.log('layerlayer', props.config)
 
-const layerArgs = useProvideLayer({ 
-  config: props.config, 
-  items:  layer.results.data as Product[][] })
+
+
+const layerArgs = useProvideLayer({
+  config: props.config,
+  items: layer.results.data as Product[][]
+})
 </script>
 
 <template>
@@ -27,3 +31,4 @@ const layerArgs = useProvideLayer({
     <slot v-bind="layerArgs" />
   </div>
 </template>
+
