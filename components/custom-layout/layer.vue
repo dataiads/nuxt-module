@@ -32,9 +32,9 @@ const config = computed(() => props.config)
                 }">
                     <CarouselPrevious class="left-4 z-[20] mt-5" />
                     <CarouselNext class="right-4 z-[20] mt-5" />
-                    <CarouselContent>
+                    <CarouselContent >
                         <LayerItems v-slot="{ item }">
-                            <slot name="reco-slider-item" :item="item" />
+                            <slot name="layer-item" :item="item" />
                         </LayerItems>
                     </CarouselContent>
                 </Carousel>

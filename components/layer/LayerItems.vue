@@ -5,11 +5,11 @@ const props = defineProps<{
 }>()
 
 const { items, config } = useLayer()
-console.log('items', items)
+
 </script>
 
 <template>
-  <CarouselItem v-for="(item, index) in items" :key="'layeritem_' + index" :class="cn('', props.class)"
+  <CarouselItem v-for="(item, index) in items" :key="'layeritem_' + index" :class="cn('', props.class)" class="layer-item"
     :style="{ paddingLeft: config.columnGap }">
     <slot :item="item" />
   </CarouselItem>
