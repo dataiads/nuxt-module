@@ -1,6 +1,6 @@
 import { createInjectionState } from '@vueuse/core'
 import { ref, computed } from 'vue'
-import type { RecoSliderParams } from 'dataiads-nuxt-layer/types'
+import type { RecoSliderParams } from '../types'
 
 export interface RecoSliderProps {
   config: Ref<RecoSliderParams>,
