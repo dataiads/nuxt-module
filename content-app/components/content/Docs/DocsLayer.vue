@@ -1,51 +1,124 @@
 <script setup lang="ts">
-const { config, displayLayer, items, onScroll, customLayout } = useLayer();
+const config = {
+  enabled: true,
+  position: 'bottom',
+  delay: 0,
+  hideOnScroll: false,
+  style: {},
+  backdropStyle: {},
+  title: 'Mon titre',
+  titleStyle: {},
+  gridStyle: {},
+  algo: {
+    'filterRules': [
+      [
+        {
+          'criteria': 'productType',
+          'operator': 'EQUAL',
+          'type': 'baseProductValue',
+          'value': '',
+          'valueCriteria': '',
+          'baseProductValue': 'productType',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ],
+      [
+        {
+          'criteria': 'uri',
+          'operator': 'NOT_EQUAL',
+          'type': 'baseProductValue',
+          'value': '',
+          'valueCriteria': '',
+          'baseProductValue': 'uri',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ]
+    ],
+    'sortRules': [
+      [
+        {
+          'criteria': 'customLabel1',
+          'operator': 'EQUAL',
+          'type': 'value',
+          'value': 'PLA Promo',
+          'valueCriteria': '',
+          'baseProductValue': '',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ],
+      [
+        {
+          'criteria': 'price',
+          'operator': 'GREATER',
+          'type': 'baseProductValue',
+          'value': '',
+          'valueCriteria': '',
+          'baseProductValue': 'multiply(price, 0.80)',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ],
+      [
+        {
+          'criteria': 'price',
+          'operator': 'LOWER',
+          'type': 'baseProductValue',
+          'value': '',
+          'valueCriteria': '',
+          'baseProductValue': 'multiply(price, 1.30)',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ],
+      [
+        {
+          'criteria': 'color',
+          'operator': 'EQUAL',
+          'type': 'baseProductValue',
+          'value': '',
+          'valueCriteria': '',
+          'baseProductValue': 'color',
+          'baseProductRegexpMatch': '',
+          'baseProductRegexpReplace': ''
+        }
+      ]
+    ],
+    'sort': '',
+    'limit': 10,
+    'deduplicate': 'mpn'
+  },
+
+  itemLayout: 'default',
+  itemStyle: {}
+
+  // sliderMode: boolean;
+  //nextButton: string;
+  //previousButton: string;
+  //columnGap: string;
+  // autoscroll: boolean;
+  //  scrollSpeed: number;
+  // absoluteArrows: boolean;
+  // buttonStyle: StyleValue;
+}
 </script>
 
 <template>
-  <Sheet v-if="displayLayer" v-model:open="customLayout.showOverlay.value">
-    <SheetTrigger as-child>
-      <div class="fixed bottom-0 left-0 z-[10] w-full bg-white">
-        <Button variant="ghost" class="hover:bg-transparent">
-          <DynamicLabel :value="config.title" />
-        </Button>
-      </div>
-    </SheetTrigger>
-    <SheetContent
-      :side="config.position"
-      :backdrop-style="config.backdropStyle"
-      @wheeloutside="onScroll"
-    >
-      <SheetHeader v-if="config.title">
-        <SheetTitle>
-          <DynamicLabel :value="config.title" />
-        </SheetTitle>
-      </SheetHeader>
-      <Carousel
-        class="relative w-full"
-        :opts="{
-          align: 'start',
-          loop: true,
-          slidesToScroll: 'auto',
-        }"
-      >
-        <CarouselPrevious class="left-4 z-[20]" />
-        <CarouselNext class="right-4 z-[20]" />
-        <CarouselContent class="-ml-6">
-          <CarouselItem
-            v-for="(item, index) in items"
-            :key="'layeritem_' + index"
-            class="shrink-1 basis-auto pl-6"
-          >
-            <a
-              :href="$oriUrl(item[0].data.link)"
-              class="block h-[200px] w-[200px] p-1"
-            >
-              <img :src="item[0].data.imageLink">
-            </a>
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-    </SheetContent>
-  </Sheet>
+      <CustomLayoutLayer :config="config">
+        <template #layer-item="{ item }">
+          <img :src="item[0].data.imageLink">
+        </template>
+    </CustomLayoutLayer>
+
+  
 </template>
+
+<style lang="scss">
+
+.layer-item {
+  flex-basis: 20%;
+}
+
+</style>

@@ -265,6 +265,8 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
     </StickyFooter>
     <!-- Layers -->
 
+    <CustomLayoutDataLayer :config="layoutConfig.layer"/>
+
     <!-- Filters slideover -->
     <TransitionRoot appear :show="customLayout.showFiltersSlideover.value" as="template">
       <Dialog as="div" class="relative z-10" @close="customLayout.showFiltersSlideover.value = false">

@@ -1,35 +1,30 @@
-export const useLayer = () => {
-  const layoutConfig = useLpoConfig().customLayout
-  const customLayout = useCustomLayout()
-  const product = useProduct()
-  const config = computed(() => layoutConfig.layer)
+import { createInjectionState } from '@vueuse/core'
+import type { LayerParams } from 'dataiads-nuxt-layer/types'
 
-  setTimeout(() => customLayout!.showOverlay.value = true, config.value.delay)
+export interface LayerProps {
+  config: LayerParams,
+  items: Ref<Product[][]>
+}
 
-  // get product suggestions
-  const recommender = useStructuredRecommender({
-    productId: product.value.id,
-    baseRules: config.value.algo.filterRules,
-    sortRules: config.value.algo.sortRules,
-    deduplicate: config.value.algo.deduplicate,
-    defaultLimit: config.value.algo.limit,
-    defaultSort: config.value.algo.sort
-  })
-
-  const items = computed(() => recommender.results.data.value as Product[][])
-  const displayLayer = computed(() => config.value.enabled && items.value)
-
-  const onScroll = () => {
-    if (config.value.hideOnScroll) {
-      customLayout.showOverlay.value = false
+const [useProvideLayer, useInjectLayer] = createInjectionState(
+  ({
+    config,
+    items
+  }: LayerProps) => {
+    return {
+      config,
+      items,
     }
   }
+)
 
-  return {
-    customLayout,
-    config,
-    displayLayer,
-    items,
-    onScroll
-  }
+function useLayer () {
+  const layerState = useInjectLayer()
+
+  if (!layerState)
+    throw new Error('useLayer must be used within a <LayerWrapper />')
+
+  return layerState
 }
+
+export { useLayer, useProvideLayer }
