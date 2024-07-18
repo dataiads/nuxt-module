@@ -1,4 +1,5 @@
 @use './filters.scss';
+@use './reco-slider.scss';
 
 :root {
   --catalog-grid-cols: repeat(2, minmax(0, 1fr));
