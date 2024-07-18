@@ -10,7 +10,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   zoomFactor: 2,
-  getZoomedSrc: (src) => src // Default to returning the same src
+  getZoomedSrc: (src: string) => src // Default to returning the same src
 })
 
 const containerRef = ref<HTMLDivElement | null>(null)

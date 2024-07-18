@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
+import type { CarouselApi } from '../ui/carousel'
 
 const props = withDefaults(defineProps<{classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
   displayHoverImage: false,
@@ -12,7 +13,7 @@ const props = withDefaults(defineProps<{classContent?: string, classItem?: strin
 const { images, index, setIndex, openDialog } = useProductImage()
 const mainApi = ref()
 
-const setApi = (val) => {
+const setApi = (val: CarouselApi) => {
   mainApi.value = val
 }
 watch(index, () => {

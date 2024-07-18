@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
-import type { CarouselApi } from '~/carousel'
+import type { CarouselApi } from '../ui/carousel'
 
 const { currentIndex, slideInView } = useRecoSlider()
 const api = ref<CarouselApi>()

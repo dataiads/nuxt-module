@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
+import type { CarouselApi } from '../ui/carousel'
+
 const props = withDefaults(defineProps<{orientation?: 'horizontal' | 'vertical', class?: string, contentClass?: string}>(), { orientation: 'vertical', class: '', contentClass: '' })
 const { images, setIndex, index } = useProductImage()
 
-const api = ref()
+const api = ref<CarouselApi>()
 const canScrollNext = ref(false)
 const canScrollPrev = ref(false)
 
 const onSelect = () => {
-  canScrollNext.value = api.value.canScrollNext()
-  canScrollPrev.value = api.value.canScrollPrev()
+  canScrollNext.value = api.value!.canScrollNext()
+  canScrollPrev.value = api.value!.canScrollPrev()
 }
 watchOnce(api, (api) => {
   if (!api)
@@ -18,6 +20,10 @@ watchOnce(api, (api) => {
   onSelect()
   api.on('select', onSelect)
 })
+
+const setApi = (val: CarouselApi) => {
+  api.value = val
+}
 </script>
 
 <template>
@@ -29,7 +35,7 @@ watchOnce(api, (api) => {
       slidesToScroll: 'auto',
       loop: false,
     }"
-    @init-api="(val) => (api = val)"
+    @init-api="setApi"
   >
     <CarouselContent :class="cn('max-h-[350px]', orientation === 'horizontal' ? 'max-w-[calc(100vw-32px)]' : '', contentClass)">
       <CarouselItem

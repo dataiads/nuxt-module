@@ -18,7 +18,7 @@ const slider = useStructuredRecommender({
 const config = computed(() => props.config)
 const arrowPlacement = computed(() => props.config?.arrowPlacement || 'inside')
 
-const recoSliderArgs = useProvideRecoSlider({ config, arrowPlacement, items: slider.results.data as Product[][] })
+const recoSliderArgs = useProvideRecoSlider({ config, arrowPlacement, items: slider.results.data as Ref<Product[][]> })
 </script>
 
 <template>
