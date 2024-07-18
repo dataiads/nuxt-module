@@ -135,7 +135,9 @@ export const useRecommender = (options: UseRecommenderOptions) => {
       return data
     }),
     pending: _fetcher.pending,
+    //@ts-ignore
     refresh: _fetcher.refresh,
+    //@ts-ignore
     execute: _fetcher.execute,
     error: _fetcher.error
   }

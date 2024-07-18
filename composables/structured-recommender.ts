@@ -11,7 +11,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     options.fetchQuery = {}
   }
 
-  let initState = () => {
+  const initState = () => {
     const init: State = {}
 
     // handle initial rules before setting up fetcher
@@ -96,6 +96,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
 
   if (options.baseRules?.length) {
     // Core fetch is not exposed direcly
+    // @ts-ignore
     _fetcher = useFetch<StructuredFilterResponse>(() => '/api/recommendations/default/structured-filter', {
       params: fetchParams,
       ...(options.fetchOptions ?? {}),
@@ -313,7 +314,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     criteriaValuesMinMax,
     state: state,
     reset,
-    loadMore,
+    loadMore
   } as StructuredRecommender
 }
 

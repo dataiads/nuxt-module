@@ -273,7 +273,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
 
     <!-- Filters slideover -->
     <TransitionRoot appear :show="customLayout?.showFiltersSlideover.value" as="template">
-      <Dialog as="div" class="relative z-10" @close="customLayout.showFiltersSlideover.value = false">
+      <Dialog v-if="customLayout" as="div" class="relative z-10" @close="customLayout.showFiltersSlideover.value = false">
         <TransitionChild
           as="template"
           enter="duration-300 ease-out"

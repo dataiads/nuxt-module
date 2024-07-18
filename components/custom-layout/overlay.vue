@@ -83,6 +83,7 @@ const items = computed(() => recommender.results.data.value as Product[][])
     as="template"
   >
     <Dialog
+      v-if="customLayout"
       id="overlay"
       class="z-20 fixed flex inset-0"
       :class="{ 'justify-end': config.position === 'right', 'flex-col justify-end': config.position === 'bottom' }"

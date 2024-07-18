@@ -20,11 +20,10 @@
     "release:beta": "yarn publish --tag beta"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.16",
+    "@headlessui/vue": "^1.7.22",
     "@nuxt/image": "^1.1.0",
-    "@nuxt/kit": "^3.8.2",
-    "@nuxt/schema": "^3.8.2",
-    "@nuxt/types": "^2.17.2",
+    "@nuxt/kit": "^3.12.3",
+    "@nuxt/schema": "^3.12.3",
     "@nuxtjs/tailwindcss": "^6.10.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
@@ -54,6 +53,7 @@
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
     "eslint": "^8.56.0",
+    "typescript": "^5.5.3",
     "vue-tsc": "^2.0.13"
   }
 }

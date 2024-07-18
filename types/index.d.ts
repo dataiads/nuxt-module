@@ -2,7 +2,7 @@ import { AsyncData, UseFetchOptions } from '#app'
 import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
-import type { StyleValue } from 'nuxt/dist/app/compat/capi'
+import type { StyleValue } from 'vue'
 
 
 
@@ -273,7 +273,7 @@ declare global {
   export interface FilterElement {
     title: string; // Titre de la section
     elements: {
-      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'colors' | 'rating'; // Le nom du composant
+      component: 'autolist-checkbox' | 'checkbox' | 'range' | 'double-range' | 'colors' | 'rating' | 'input'; // Le nom du composant
       props: any; // Les props associé à ce composant
     }[];
     style: StyleValue;
@@ -652,6 +652,8 @@ export interface MainRecoParams {
   paginationPreviousImage: string;
   paginationNextImage: string;
   paginationLoadMoreMode: boolean; // DEPRECATED use paginationType instead
+  gridInsertParams: InsertParams;
+  gridInsertIndex: number;
 }
 
 export interface MainProductParams {
