@@ -3,7 +3,7 @@ import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
 import type { StyleValue } from 'nuxt/dist/app/compat/capi'
-import { type ButtonVariants } from '~/components/ui/button/index.ts'
+import { type ButtonVariants } from '~/components/custom/button'
 
 
 
