@@ -58,6 +58,8 @@ jobs:
           cd content-app
           ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Static HTML export with Nuxt
+        env:
+          NUXT_APP_BASE_URL: '/nuxt-module/'
         run: |
           cd content-app
           ${{ steps.detect-package-manager.outputs.manager }} run generate
