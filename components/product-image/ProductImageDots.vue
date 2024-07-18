@@ -9,7 +9,7 @@ const props = defineProps<{class?: string}>()
     <button
       v-for="(_, i) in images"
       :key="'dot_' + index"
-      class="basis-full w-2 h-2 rounded-full cursor-pointer"
+      class="w-2 h-2 rounded-full cursor-pointer shrink-0 grow-0"
       :class="{
         'dots-btn': index !== i,
         'dots-btn-current': index === i,
