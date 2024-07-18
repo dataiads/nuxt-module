@@ -157,19 +157,6 @@ export default defineNuxtConfig({
     }
   },
 
-  image: {
-    provider: 'imageProvider',
-    providers: {
-      imageProvider: {
-        name: 'imageProvider',
-        provider: resolve('./utils/image-provider'),
-        options: {
-          providerURL: ''
-        }
-      }
-    }
-  },
-
   components: {
     'dirs': [
       {

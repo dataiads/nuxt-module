@@ -33,7 +33,7 @@
     "@vueuse/integrations": "^10.7.0",
     "@vueuse/nuxt": "^10.7.0",
     "focus-trap": "^7.5.1",
-    "nuxt": "^3.8.2",
+    "nuxt": "^3.12.3",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "tailwind-merge": "^2.2.2",

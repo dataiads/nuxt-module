@@ -14,7 +14,7 @@ let filter = props.filter
 if (lpoConfig?.variation !== 'custom-layout' && !filter) {
   // to avoid crash when attempting to use a legacy variation
   // with a template built for custom layout, initialize an empty filter
-  filter = useFilter({
+  filter = useStructuredFilter({
     productId: product.value.id
   })
 }

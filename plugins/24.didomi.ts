@@ -1,4 +1,7 @@
 export default defineNuxtPlugin(() => {
+  if (blockTrackingScripts()) {
+    return
+  }
   const didomi = useLpoConfig().didomi
 
   if (!didomi || !didomi.id) {

@@ -6,6 +6,9 @@ import { defineNuxtPlugin, useHead } from '#app'
  * Injects GTM in the page
  */
 export default defineNuxtPlugin(() => {
+  if (blockTrackingScripts()) {
+    return
+  }
   let gtmId = useLpoConfig()?.gtm?.id
 
   if (!gtmId) {

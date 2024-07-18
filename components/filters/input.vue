@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { StructuredRecommender } from '~/types'
+
 const uuid = Math.floor(Math.random() * 10 ** 16).toString()
 
 
 interface Props {
   label?: string
-  filter: Recommender
+  filter: StructuredRecommender
   criteria: string
   operator: string
   group: string

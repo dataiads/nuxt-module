@@ -262,6 +262,9 @@ declare global {
     productHook?: string;
     customLayout: CustomLayout;
 
+    optimizeLCP: false;
+    optimizeTBT: false;
+
     // Non-standard fields, do not use !
     breadcrumbs: Record<string, Array<Record<string, string>>>;
     carousel: Record<string, Array<Record<string, string>>>;
