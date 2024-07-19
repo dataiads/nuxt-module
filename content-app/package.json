@@ -29,6 +29,6 @@
     "nuxt-icon": "^0.6.10",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "shiki": "^1.5.2"
+    "shiki": "^1.10.3"
   }
 }
