@@ -74,6 +74,18 @@ const recommender = useStructuredRecommender({
   defaultSort: props.config.algo.sort
 })
 const items = computed(() => recommender.results.data.value as Product[][])
+
+/**
+ * Allowing to scroll the body with the overlay
+ */
+watch(() => customLayout.showOverlay.value, (value) => {
+  if(value) {
+    nextTick(() => {
+      const rootHtml = document.getElementsByTagName('html')[0]
+      rootHtml.style.overflow = 'visible'
+    })
+  }
+})
 </script>
 
 <template>
@@ -108,8 +120,11 @@ const items = computed(() => recommender.results.data.value as Product[][])
           class="relative z-21"
           :style="config.style"
         >
-          <DialogTitle v-if="config.title" :style="config.titleStyle">
+          <DialogTitle v-if="config.title || config.openedButtonText" :style="config.titleStyle">
             <DynamicLabel :value="config.title" />
+            <button :style="config.openedButtonStyle" @click="customLayout.showOverlay.value = false">
+              {{ config.openedButtonText }}
+            </button>
           </DialogTitle>
           <div v-if="config.sliderMode">
             <Slider v-bind="sliderProps" :items="items">
@@ -145,4 +160,12 @@ const items = computed(() => recommender.results.data.value as Product[][])
       </TransitionChild>
     </Dialog>
   </TransitionRoot>
+  <div v-if="!customLayout.showOverlay.value" class="sticky bottom-0 z-20" :style="config.closedStyle">
+    <div v-if="config.closedTitle" :style="config.closedTitleStyle">
+      <DynamicLabel :value="config.closedTitle" />
+      <button v-if="config.closedButtonText" :style="config.closedButtonStyle" @click="customLayout.showOverlay.value = true">
+        {{ config.closedButtonText }}
+      </button>
+    </div>
+  </div>
 </template>

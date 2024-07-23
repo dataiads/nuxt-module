@@ -695,6 +695,17 @@ export interface LayerParams {
   scrollSpeed: number;
   absoluteArrows: boolean;
   buttonStyle: StyleValue;
+
+  /** Button to close the overlay */
+  openedButtonStyle: StyleValue; 
+  openedButtonText: string;
+
+  /** Config to open the overlay */
+  closedStyle: StyleValue;
+  closedTitle: string;
+  closedTitleStyle: StyleValue;
+  closedButtonText: string;
+  closedButtonStyle: string;
 }
 
 export interface RecoItemStyleParams {
