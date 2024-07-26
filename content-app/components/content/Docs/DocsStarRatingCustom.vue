@@ -19,7 +19,7 @@ const style = 'flex gap-1 '
       <Star color="#FF0000" fill="none" :size="20" />
     </template>
 
-    <template #count="{ count, value }">
+    <template #count="{ count }">
       <div class="flex gap-1 ml-2 text-base font-bold ">
         <div>{{ count }} avis</div>
       </div>
