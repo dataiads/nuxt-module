@@ -44,7 +44,7 @@ const setApi = (val: CarouselApi) => {
         class="basis-auto cursor-pointer"
         @click="setIndex(i)"
       >
-        <slot name="image">
+        <slot name="image" :src="src">
           <img
             :src="src"
             class="product-image-thumbnails"
