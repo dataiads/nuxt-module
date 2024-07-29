@@ -18,6 +18,7 @@ You can use dots for swiping and changing the image you want to see in the produ
 To enable the dots feature, include `ProductImageDots` in your `ProductImageMain` component.
 
 ::Showcase{name="DocsProductsImageDots"}
+::
 
 ## See more
 
