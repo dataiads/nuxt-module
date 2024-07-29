@@ -8,7 +8,7 @@ const { dialog, index } = useProductImage()
     <SheetContent side="full">
       <ProductImageMain>
         <template #main-image="{ src }">
-          <img :src="src" class="w-full max-h-screen object-contain">
+          <img :src="src" class="w-full max-h-[calc(100vh-48px)] object-contain">
         </template>
         <slot />
         <ProductImageActions />
