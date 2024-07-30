@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<{
   useTranslation?: boolean
   displayCount?: boolean
   displayMore?: boolean
-  singleChoice: boolean
+  singleChoice?: boolean
 }>(), {
   operator: 'EQUAL',
   wrapperDiv: false,

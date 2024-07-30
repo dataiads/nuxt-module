@@ -3,6 +3,9 @@ const lpoDomain = 'https://lp.becquet.fr'
 const mirroredDomain = 'https://www.becquet.fr'
 
 export default defineNuxtConfig({
+  devServer: {
+    port: 4000
+  },
   ssr: false,
   devtools: { enabled: true },
   extends: ['dataiads-nuxt-layer', '@nuxt-themes/typography'],
