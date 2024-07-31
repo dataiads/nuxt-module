@@ -6,11 +6,17 @@ interface Props {
   zoomFactor?: number;
   zoom: boolean;
   getZoomedSrc?: (src: string) => string;
+  width?: string;
+  height?: string;
+  sizes?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   zoomFactor: 2,
-  getZoomedSrc: (src: string) => src // Default to returning the same src
+  getZoomedSrc: (src: string) => src, // Default to returning the same src
+  width: '500',
+  height: '500',
+  sizes: '50vw lg:700px'
 })
 
 const containerRef = ref<HTMLDivElement | null>(null)
@@ -68,6 +74,8 @@ const handleMouseMove = (event: MouseEvent) => {
   
   imageStyle.transformOrigin = `${x * 100}% ${y * 100}%`
 }
+
+const { optimize, provider } = useProductImage()
 </script>
 
 <template>
@@ -77,7 +85,16 @@ const handleMouseMove = (event: MouseEvent) => {
     @click="handleClick"
     @mousemove="handleMouseMove"
   >
-    <img 
+    <NuxtImg
+      v-if="optimize" 
+      ref="imageRef"
+      :provider="provider"
+      :sizes="sizes"
+      :style="imageStyle"
+      :src="src"
+    />
+    <img
+      v-else
       ref="imageRef" 
       :src="currentSrc" 
       :style="imageStyle"

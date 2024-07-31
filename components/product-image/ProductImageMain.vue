@@ -2,11 +2,14 @@
 import { cn } from '@/lib/utils'
 import type { CarouselApi } from '../ui/carousel'
 
-const props = withDefaults(defineProps<{classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
+const props = withDefaults(defineProps<{sizes?: string, width?: string, height?: string, classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
   displayHoverImage: false,
   classContent: '',
   classItem: '',
   zoom: false,
+  width: '400',
+  height: '400',
+  sizes: '50vw lg:700px',
   getZoomedSrc: (src: string) => src // Default to returning the same src
 })
 
@@ -76,7 +79,7 @@ const onMouseleave = () => {
         @mouseleave="onMouseleave"
       >
         <slot name="main-image" :src="src">
-          <ProductImageItem :src="src" :zoom="zoom" :get-zoomed-src="getZoomedSrc" />
+          <ProductImageItem :src="src" :zoom="zoom" :get-zoomed-src="getZoomedSrc" :height="height" :width="width" />
         </slot>
       </CarouselItem>
       <ProductImageSeeMore :class="cn('relative', classItem)" />

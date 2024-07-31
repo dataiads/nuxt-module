@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'
 import type { CarouselApi } from '../ui/carousel'
 
-const props = withDefaults(defineProps<{orientation?: 'horizontal' | 'vertical', class?: string, contentClass?: string}>(), { orientation: 'vertical', class: '', contentClass: '' })
+const props = withDefaults(defineProps<{sizes?: string, orientation?: 'horizontal' | 'vertical', class?: string, contentClass?: string}>(), { sizes: '80px', orientation: 'vertical', class: '', contentClass: '' })
 const { images, setIndex, index } = useProductImage()
 
 const api = ref<CarouselApi>()
@@ -24,6 +24,8 @@ watchOnce(api, (api) => {
 const setApi = (val: CarouselApi) => {
   api.value = val
 }
+
+const { provider, optimize } = useProductImage()
 </script>
 
 <template>
@@ -45,7 +47,17 @@ const setApi = (val: CarouselApi) => {
         @click="setIndex(i)"
       >
         <slot name="image" :src="src">
+          <NuxtImg
+            v-if="optimize"
+            :provider="provider"
+            :sizes="sizes"
+            :src="src"
+            format="webp"
+            class="product-image-thumbnails"
+            :class="{ 'product-image-thumbnails--selected': i === index }"
+          />
           <img
+            v-else
             :src="src"
             class="product-image-thumbnails"
             :class="{ 'product-image-thumbnails--selected': i === index }"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const props = defineProps<{product: Product}>()
-const productImageArgs = useProvideProductImage(props.product)
+const props = defineProps<{product: Product, optimize: boolean, provider: string}>()
+const productImageArgs = useProvideProductImage({ p: props.product, optimize: props.optimize, provider: props.provider })
 </script>
 
 <template>

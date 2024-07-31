@@ -2,7 +2,7 @@ export interface ProductImageProps {
   product: Product,
 }
 
-const [useProvideProductImage, useInjectProductImage] = createInjectionState((p) => {
+const [useProvideProductImage, useInjectProductImage] = createInjectionState(({ p, optimize, provider }) => {
   const product = ref(p)
   const index = ref(0)
   const dialog = ref(false)
@@ -40,7 +40,7 @@ const [useProvideProductImage, useInjectProductImage] = createInjectionState((p)
     dialog.value = true
   }
 
-  return { product, images, setIndex, index, dialog, openDialog } 
+  return { product, images, setIndex, index, dialog, openDialog, optimize, provider }
 })
 
 
