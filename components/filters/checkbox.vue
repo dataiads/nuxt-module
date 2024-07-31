@@ -83,6 +83,9 @@ const binder = computed({
     set(val)
   }
 })
+defineOptions({
+  inheritAttrs: false
+})
 </script>
 
 <template>

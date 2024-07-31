@@ -30,6 +30,10 @@ const props = withDefaults(defineProps<Props>(), {
 // so group is actually more of a prefix, but still called group for clarity
 const minGroup = props.group + '-min'
 const maxGroup = props.group + '-max'
+
+defineOptions({
+  inheritAttrs: false
+})
 </script>
 
 <template>
@@ -38,7 +42,7 @@ const maxGroup = props.group + '-max'
       type="number"
       :filter="filter"
       :group="minGroup"
-      :criteria="props.criteria"
+      criteria="test"
       :operator="props.minOperator"
       :class="props.inputClass"
       :min="props.min"
@@ -60,3 +64,10 @@ const maxGroup = props.group + '-max'
     />
   </div>
 </template>
+
+
+<style lang="scss">
+.filters-range-inputs {
+  @apply grid grid-cols-2 gap-2;
+}
+</style>
