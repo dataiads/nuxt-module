@@ -20,7 +20,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel()
       props.class,
     )"
     variant="outline"
-    @click="scrollPrev"
+    @click.prevent="scrollPrev"
   >
     <slot>
       <ChevronLeft class="h-[16px] w-[16px] text-current" />
