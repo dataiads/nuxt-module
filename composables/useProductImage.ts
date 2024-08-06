@@ -1,56 +1,65 @@
 export interface ProductImageProps {
-  product: Product,
+	product: Product,
 }
 
-const [useProvideProductImage, useInjectProductImage] = createInjectionState(({ p, optimize, provider }) => {
-  const product = ref(p)
-  const index = ref(0)
-  const dialog = ref(false)
+const [useProvideProductImage, useInjectProductImage] = createInjectionState(({ p, optimize, provider, maxAdditionalImages }) => {
+	const product = ref(p)
+	const index = ref(0)
+	const dialog = ref(false)
 
-  const images = computed(() => {
-    let allImages: string[] = []
-    if (
-      product.value.extraData?.additionalImageLinks?.length ||
-      product.value.extraData?.imageLink
-    ) {
-      // use collected images in priority
-      if (product.value.extraData?.imageLink) {
-        allImages.push(product.value.extraData.imageLink)
-      }
-      if (product.value.extraData?.additionalImageLinks) {
-        allImages = allImages.concat(product.value.extraData.additionalImageLinks)
-      }
-    } else {
-      // fallback on feed images otherwise
-      if (product.value.data?.imageLink) {
-        allImages.push(product.value.data.imageLink)
-      }
-      if (product.value.data?.additionalImageLinks) {
-        allImages = allImages.concat(product.value.data.additionalImageLinks)
-      }
-    }
-    return [...new Set(allImages.filter(image => image !== ''))]
-  })
+	const images = computed(() => {
+		let allImages: string[] = []
+		if (
+			product.value.extraData?.additionalImageLinks?.length ||
+			product.value.extraData?.imageLink
+		) {
+			// use collected images in priority
+			if (product.value.extraData?.imageLink) {
+				allImages.push(product.value.extraData.imageLink)
+			}
+			if (product.value.extraData?.additionalImageLinks) {
+				allImages = allImages.concat(product.value.extraData.additionalImageLinks)
+			}
+		} else {
+			// fallback on feed images otherwise
+			if (product.value.data?.imageLink) {
+				allImages.push(product.value.data.imageLink)
+			}
+			if (product.value.data?.additionalImageLinks) {
+				allImages = allImages.concat(product.value.data.additionalImageLinks)
+			}
+		}
 
-  function setIndex (i: number) {
-    index.value = i
-  }
+		// Remove duplicates and empty strings
+		allImages = [...new Set(allImages.filter(image => image !== ''))]
+		console.log(maxAdditionalImages)
+		// Limit the number of images if maxAdditionalImages is set
+		if (maxAdditionalImages !== undefined) {
+			allImages = allImages.slice(0, maxAdditionalImages)
+		}
 
-  function openDialog () {
-    dialog.value = true
-  }
+		return allImages
+	})
 
-  return { product, images, setIndex, index, dialog, openDialog, optimize, provider }
+	function setIndex (i: number) {
+		index.value = i
+	}
+
+	function openDialog () {
+		dialog.value = true
+	}
+
+	return { product, images, setIndex, index, dialog, openDialog, optimize, provider, maxAdditionalImages }
 })
 
 
 function useProductImage () {
-  const productImageState = useInjectProductImage()
+	const productImageState = useInjectProductImage()
 
-  if (!productImageState)
-    throw new Error('useProductImage must be used within a <ProductImageWrapper />')
+	if (!productImageState)
+		throw new Error('useProductImage must be used within a <ProductImageWrapper />')
 
-  return productImageState
+	return productImageState
 }
 
 export { useProductImage, useProvideProductImage }
