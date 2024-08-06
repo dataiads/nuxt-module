@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import Fade from 'embla-carousel-fade'
 import { cn } from '@/lib/utils'
 import type { CarouselApi } from '../ui/carousel'
 
-const props = withDefaults(defineProps<{sizes?: string, width?: string, height?: string, classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
+const props = withDefaults(defineProps<{fade?: boolean, sizes?: string, width?: string, height?: string, classContent?: string, classItem?: string, displayHoverImage?: boolean, zoom?: boolean, getZoomedSrc?: (src: string) => string; }>(), {
   displayHoverImage: false,
+  fade: false,
   classContent: '',
   classItem: '',
   zoom: false,
@@ -54,6 +56,14 @@ const onMouseleave = () => {
   if (!props.displayHoverImage) return
   if (index.value === 1) setIndex(0)
 }
+
+const plugins = computed(() => {
+  const res = []
+  if (props.fade) {
+    res.push(Fade())
+  }
+  return res 
+})
 </script>
 
 <template>
@@ -64,6 +74,7 @@ const onMouseleave = () => {
       loop: false,
       slidesToScroll: 'auto',
     }"
+    :plugins="plugins"
     @init-api="setApi"
   >
     <div class="absolute z-10"> 
