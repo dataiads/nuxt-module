@@ -144,7 +144,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
           }
         }
         if (_fetcher.data.value) {
-          if (_fetcher.data.value?.criteriaValues[criteria]) {
+          if (_fetcher.data.value?.criteriaValues?.[criteria]) {
             criteriaValuesCache[criteria] = _fetcher.data.value.criteriaValues[criteria]
             return criteriaValuesCache[criteria]
           }
