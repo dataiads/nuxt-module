@@ -100,7 +100,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
     _fetcher = useFetch<StructuredFilterResponse>(() => '/api/recommendations/default/structured-filter', {
       params: fetchParams,
       ...(options.fetchOptions ?? {}),
-      onRequest ({ options }) {
+      onRequest({ options }) {
         // criteriaValues is injected with hook
         // as we want to update it before every call
         // but we cant use a computed property as it would be watched
@@ -144,7 +144,7 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
           }
         }
         if (_fetcher.data.value) {
-          if (_fetcher.data.value.criteriaValues[criteria]) {
+          if (_fetcher.data.value?.criteriaValues?.[criteria]) {
             criteriaValuesCache[criteria] = _fetcher.data.value.criteriaValues[criteria]
             return criteriaValuesCache[criteria]
           }
@@ -284,9 +284,9 @@ export const useStructuredRecommender = (options: UseStructuredRecommenderOption
 
   const loadMore = () => {
     // if limit is already over the count, do nothing
-    if (count.value > 0 && limit.value > count.value ) {
+    if (count.value > 0 && limit.value > count.value) {
       return
-    } 
+    }
 
     if (options.defaultLimit) {
       limit.value += options.defaultLimit
