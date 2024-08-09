@@ -2,6 +2,17 @@
 const customLayout = useCustomLayout()
 const config = useLpoConfig().customLayout.mainReco
 
+const validateFilter = () => {
+  customLayout?.toggleFiltersSlideover()
+  if(config.filtersDisplay === 'left-high') {
+    nextTick(() => {
+      const catalogGrid = document.getElementById('catalog-grid')
+      if(catalogGrid) catalogGrid.scrollIntoView({behavior: 'smooth'})
+    })
+  }
+}
+
+
 </script>
 
 <template>
@@ -16,7 +27,7 @@ const config = useLpoConfig().customLayout.mainReco
     <button
       v-if="config.filterParamsButtonValidateEnable"
       :style="config.filterParamsButtonValidateStyle"
-      @click="customLayout?.toggleFiltersSlideover"
+      @click="validateFilter"
     >
       {{ config.filterParamsButtonValidateText }}
     </button>

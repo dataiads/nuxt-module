@@ -3,6 +3,7 @@ import { Ref, ComputedRef } from 'vue'
 import { FetchError } from 'ofetch'
 import { Variations } from '~~/components/variation-layout.vue'
 import type { StyleValue } from 'vue'
+import { type ButtonVariants } from '~/components/custom/button'
 
 
 
@@ -658,6 +659,11 @@ export interface MainRecoParams {
 
 export interface MainProductParams {
   light: boolean;
+  seeMoreEnable: boolean;
+  seeMoreTitle: string;  
+  seeMoreTitleStyle: StyleValue;
+  seeMoreBtnTitle: string;
+  seeMoreBtnVariant: ButtonVariants['variant']; // list all possiblity
 }
 
 export interface HeaderParams {

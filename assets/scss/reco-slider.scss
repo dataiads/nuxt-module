@@ -1,0 +1,11 @@
+.reco-slider {
+  &-title {
+    @apply lg:text-lg font-medium mb-[16px];
+  }
+
+  &-item {
+    @apply basis-auto;
+  }
+
+
+}

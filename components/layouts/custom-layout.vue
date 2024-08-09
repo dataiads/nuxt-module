@@ -263,13 +263,7 @@ const showMainProduct = computed(() => !(routeState.value === 'hideMainProduct')
     <StickyFooter v-if="!customLayout?.showFiltersSlideover.value && layoutConfig.stickyAtc.enabled" v-bind="layoutConfig.stickyAtc">
       <slot name="sticky-add-to-cart" />
     </StickyFooter>
-
     <!-- Layers -->
-    <CustomLayoutOverlay v-if="layoutConfig.layer.enabled" :config="layoutConfig.layer">
-      <template v-for="(_, name) in $slots" #[name]="scope">
-        <slot :name="name" v-bind="scope" />
-      </template>
-    </CustomLayoutOverlay>
 
     <!-- Filters slideover -->
     <TransitionRoot appear :show="customLayout?.showFiltersSlideover.value" as="template">
