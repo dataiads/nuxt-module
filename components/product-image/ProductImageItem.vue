@@ -91,7 +91,10 @@ const { optimize, provider } = useProductImage()
       :provider="provider"
       :sizes="sizes"
       :style="imageStyle"
-      :src="src"
+      :width="width"
+      :height="height"
+      :src="currentSrc"
+      loading="lazy"
     />
     <img
       v-else
